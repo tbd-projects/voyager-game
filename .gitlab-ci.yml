@@ -1,0 +1,81 @@
+image: gcc
+
+before_script:
+  - apt-get update --yes
+  - apt-get install --yes cmake
+  - apt-get install --yes libgtest-dev
+  - git clone https://github.com/linux-test-project/lcov.git
+  - cd lcov && make install && cd ..
+  - lcov --version
+  - git clone https://github.com/google/googletest.git -b release-1.10.0
+  - cd googletest
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make install
+
+variables:
+  COVER_LOG: cover.log
+  PROG: main.out
+  UNIT: unit.out
+  LINTER: linter.sh
+  VALGRIND_LOG: valgrind.log
+  NO_LOST_PATTERN: "All heap blocks were freed -- no leaks are possible"
+  NO_ERROR_PATTERN: "ERROR SUMMARY: 0 errors"
+
+
+stages:
+  - test_style
+  - build
+  - test
+
+test_style:
+  stage: test_style
+  script:
+    - ./${LINTER}
+  needs: [ ]
+
+build:
+  stage: build
+  script:
+    - git submodule init
+    - git submodule update
+    - cmake -B ./build
+    - make -C ./build
+  needs: [ ]
+  artifacts:
+    paths:
+      - ./build
+      - ./cmake_modules
+    expire_in: 15 minutes
+
+
+unit_tests:
+  stage: test
+  script:
+    - cd build && ./${UNIT}
+  needs: [ "build" ]
+
+coverage:
+  stage: test
+  script:
+    - cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..
+    - make codeCoverage > ${COVER_LOG}
+    - cat ${COVER_LOG}
+  artifacts:
+    paths:
+      - ./build/${COVER_LOG}
+  needs: [ "build" ]
+
+memory:
+  stage: test
+  script:
+    - apt-get update && apt-get install -y valgrind
+    - valgrind --tool=memcheck --leak-check=summary --log-file=${VALGRIND_LOG} ./build/${UNIT}
+    - export NO_LOST=$(grep "${NO_LOST_PATTERN}" ${VALGRIND_LOG})
+    - export NO_ERROR=$(grep "${NO_ERROR_PATTERN}" ${VALGRIND_LOG_DATA})
+    - if [ -z "${NO_LOST}" ] || [ -z "${NO_ERROR}" ]; then cat ${VALGRIND_LOG}; exit 1; fi
+  artifacts:
+    paths:
+      - ./${VALGRIND_LOG_DATA}
+  needs: [ "build" ]
