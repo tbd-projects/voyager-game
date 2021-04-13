@@ -9,10 +9,9 @@ before_script:
   - lcov --version
   - git clone https://github.com/google/googletest.git -b release-1.10.0
   - cd googletest
-  - mkdir build
-  - cd build
-  - cmake ..
-  - make install
+  - mkdir build && cd build
+  - cmake .. && make install
+  - cd ../../
 
 variables:
   COVER_LOG: cover.log
