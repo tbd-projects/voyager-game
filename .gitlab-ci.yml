@@ -1,17 +1,4 @@
-image: gcc
-
-before_script:
-  - apt-get update --yes
-  - apt-get install --yes cmake
-  - apt-get install --yes libgtest-dev
-  - git clone https://github.com/linux-test-project/lcov.git
-  - cd lcov && make install && cd ..
-  - lcov --version
-  - git clone https://github.com/google/googletest.git -b release-1.10.0
-  - cd googletest
-  - mkdir build && cd build
-  - cmake .. && make install
-  - cd ../../
+image: volodyalarin/tp_cpp_course_env:project
 
 variables:
   COVER_LOG: cover.log
@@ -31,7 +18,7 @@ stages:
 test_style:
   stage: test_style
   script:
-    - ./${LINTER}
+    - sh ./${LINTER}
   needs: [ ]
 
 build:
@@ -45,7 +32,7 @@ build:
   artifacts:
     paths:
       - ./build
-      - ./cmake_modules
+      - ./cmake-modules
     expire_in: 15 minutes
 
 
@@ -69,7 +56,6 @@ coverage:
 memory:
   stage: test
   script:
-    - apt-get update && apt-get install -y valgrind
     - valgrind --tool=memcheck --leak-check=summary --log-file=${VALGRIND_LOG} ./build/${UNIT}
     - export NO_LOST=$(grep "${NO_LOST_PATTERN}" ${VALGRIND_LOG})
     - export NO_ERROR=$(grep "${NO_ERROR_PATTERN}" ${VALGRIND_LOG_DATA})
