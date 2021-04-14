@@ -9,7 +9,9 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCE ${SOURCE_DIR}/main.cpp)
 set(LIBRARIES_DIR ${CMAKE_SOURCE_DIR}/libs)
 
-#set(LIBRARIES A B)
+set(LIBRARIES
+        graphics
+)
 
 project(${PROJECT_NAME})
 
