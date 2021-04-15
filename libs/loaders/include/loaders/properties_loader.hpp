@@ -1,5 +1,8 @@
 #pragma once
 
+#include <cstddef>
+#include <string>
+
 struct Properties {
     size_t fuel;
     size_t health;

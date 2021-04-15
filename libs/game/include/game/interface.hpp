@@ -1,16 +1,22 @@
 #pragma once
 
+#include <iostream>
+
 using coords_t = std::pair<int, int>;
 
-class ISprite;
-class Collision;
+class ISprite {
+
+};
+class Collision {
+
+};
 
 
-class IGameObject : {
+class IGameObject {
 public:
     IGameObject();
 
-    bool check_collision(const Collision &collision);
+    virtual bool check_collision(const Collision &collision) = 0;
 
     virtual bool create_object(IGameObject &object) = 0;
 
@@ -20,12 +26,11 @@ public:
 
     virtual ISprite &get_sprite() = 0;
 
-    virtual set_sprite_id(size_t
-    id) = 0;
+    virtual void set_sprite_id(size_t id) = 0;
 
-    ~IGameObject() = default;
+    virtual ~IGameObject() = 0;
 
 private:
-    virtual set_object_collision() = 0;
+    virtual void set_object_collision() = 0;
 };
 

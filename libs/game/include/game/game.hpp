@@ -1,27 +1,30 @@
 #pragma once
 
+#include <cstddef>
+#include <vector>
+
 #include "objects.hpp"
-#include "level_loader.hpp"
+#include "loaders/level_loader.hpp"
 #include "loaders/progress_loader.hpp"
 
 class ISprite;
 
-class Map : {
+class Map {
 public:
     Map(CreatorLevel *level);
 
     Map(const Map &map);
 
-    Map() = delete;
+    Map();
 
     bool update();
 
 private:
-    std::vector <SpaceBody> _space_objects;
-    std::vector <Star> _stars;
-    SpaceShip _ship;
+    std::vector<SpaceBody> _space_objects{};
+    std::vector<Star> _stars{};
+    SpaceShip _ship{};
 
-    ISprite *_bg;
+    ISprite *_bg{};
 
     void check_all_collision();
 };
@@ -32,15 +35,16 @@ struct progress_t {
     size_t stars;
     size_t time;
 };
-class Progress : {
+
+class Progress {
 public:
-    Progress() = delete;
+    Progress() = default;
 
     Progress(ProgressLoader *loader);
 
     Progress(const progress_t &progress);
 
-    Progress& operator=(const Progress& progress);
+    Progress &operator=(const Progress &progress);
 
     ~Progress() = default;
 
@@ -53,7 +57,13 @@ private:
 
 };
 
-class ISubscriber;
+class ISubscriber {
+
+};
+
+class IController {
+
+};
 
 class Progress;
 

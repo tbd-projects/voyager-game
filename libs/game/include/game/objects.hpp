@@ -5,7 +5,7 @@
 
 class SpaceShip : public GameObject {
 public:
-    SpaceShip();
+    SpaceShip() = default;
 
     ~SpaceShip() = default;
 
@@ -13,7 +13,7 @@ public:
 
     SpaceShip &operator=(const SpaceShip &ship);
 
-    bool check_collision(const Collision &collision) override;
+    bool check_collision(const ICollisionable& collision);
 
     Properties &get_properties();
 
@@ -27,15 +27,26 @@ public:
 
     size_t get_engine();
 
-    size_t set_fuel();
+    void set_fuel();
 
-    size_t set_health();
+    void set_health();
 
-    size_t set_battery();
+    void set_battery();
 
-    size_t set_engine();
+    void set_engine();
+
+    bool create_object(IGameObject &object);
+
+    void move(coords_t coords) override;
+
+    bool set_sprite() override;
+
+    ISprite &get_sprite() override;
+
+    void set_sprite_id(size_t id) override;
 
 private:
+    void set_object_collision() override;
     Properties _properties;
 };
 
@@ -47,9 +58,9 @@ public:
 
     SpaceBody &operator=(const SpaceBody &obj);
 
-    ~SpaceBody() = default;
+    ~SpaceBody();
 
-    bool check_collision(const Collision &collision) override;
+    bool check_collision(const ICollisionable& collision);
 
 };
 
@@ -62,5 +73,5 @@ public:
     ~Star() = default;
 
 
-    bool check_collision(const Collision &collision) override;
+    bool check_collision(const ICollisionable& collision);
 };

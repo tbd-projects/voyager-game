@@ -1,17 +1,19 @@
 #pragma once
 
+#include <vector>
 #include "objects.hpp"
 
-class CreatorLevel : {
+class CreatorLevel {
 public:
     virtual void create_level() = 0;
+    virtual ~CreatorLevel() = 0;
 };
 
 class JsonCreateLevel : public CreatorLevel {
 public:
     JsonCreateLevel() = delete;
 
-    JsonCreateLevel(std::string &path) : _file_path(path) {}
+    JsonCreateLevel(std::string &path);
 
     JsonCreateLevel &operator=(const JsonCreateLevel &level) = default;
 

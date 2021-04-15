@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1X)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -Wpadded -ggdb3")
+set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -ggdb3")
 
 set(PROJECT_NAME voyager)
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
