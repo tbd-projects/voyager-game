@@ -1,10 +1,10 @@
-#include "utilits.h"
-#include "vector2d.h"
+#include "utilits.hpp"
+#include "vector2d.hpp"
 
 namespace math {
 
 
-//---------------------------------coords_t------------------------------------
+//  ---------------------------------coords_t----------------------------------
 
 
 coords_t::coords_t()
@@ -52,10 +52,11 @@ coords_t &coords_t::operator+=(decimal_t offset) {
 }
 
 
-//---------------------------Utilits-------------------------------------------
+//  ---------------------------Utilits-----------------------------------------
 
 
-coords_t Utilits::rotate_point(coords_t point, decimal_t angle, coords_t basis) {
+coords_t Utilits::rotate_point(coords_t point, decimal_t angle
+                               , coords_t basis) {
     return coords_t();
 }
 
@@ -63,4 +64,4 @@ bool Utilits::point_relative_line(Vector2d line, coords_t point) {
     return false;
 }
 
-}
+}  // namespace math

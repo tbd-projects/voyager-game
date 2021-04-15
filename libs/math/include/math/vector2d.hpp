@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math/utilits.h>
+#include <math/utilits.hpp>
 
 namespace math {
 
@@ -33,10 +33,9 @@ class Vector2d {
     Vector2d operator*(decimal_t k) const;
 
     friend Vector2d operator*(decimal_t k, Vector2d vector);
+
   private:
     coords_t _coords;
 };
 
-
-
-}
+}  // namespace math

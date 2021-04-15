@@ -1,8 +1,8 @@
 #pragma once
 
-#include <umath.h>
-#include <physics/engine.h>
-#include <physics/interface.h>
+#include <math.hpp>
+#include <physics/engine.hpp>
+#include <physics/interface.hpp>
 
 namespace physics {
 
@@ -12,18 +12,19 @@ class Orbit {
         math::coords_t variables;
         math::coords_t pos;
         bool is_ellipse;
+
+        orbit_properties_t();
     };
 
 
-    Orbit() = delete;
-
-    explicit Orbit(Engine& physical_engine);
+    Orbit() = default;
 
     explicit Orbit(orbit_properties_t orbit_properties);
 
-    math::coords_t get_current_pos(IInfluenceableByForce& object, Engine& physical_engine);
+    math::coords_t get_current_pos(IInfluenceableByForce& object
+                                   , const Engine& physical_engine);
 
-    orbit_properties_t get_orbit_properties();
+    orbit_properties_t get_orbit_properties() const;
 
     void move_by_angle(math::decimal_t angle);
 
@@ -37,4 +38,4 @@ class Orbit {
     bool _use_kepler;
 };
 
-}
+}  // namespace physics

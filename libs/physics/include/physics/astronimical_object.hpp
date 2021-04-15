@@ -1,9 +1,10 @@
 #pragma once
 
-#include <physics/interface.h>
-#include <physics/engine.h>
-#include <physics/orbit_tests.h>
-#include <umath.h>
+#include <memory>
+#include <physics/interface.hpp>
+#include <physics/engine.hpp>
+#include <physics/orbit.hpp>
+#include <math.hpp>
 
 namespace physics {
 
@@ -14,13 +15,13 @@ class AstronomicalObject : public IMovable, public IInfluenceableByForce {
     AstronomicalObject(size_t weight
             , math::Vector2d velocity
             , math::coords_t pos
-            , Engine& physical_engine);
+            , std::unique_ptr<Engine>&& physical_engine);
 
     explicit AstronomicalObject(size_t weight
                        , math::Vector2d velocity
                        , math::coords_t pos
                        , Orbit::orbit_properties_t orbit
-                       , IConnectToEngine& physical_engine);
+                       , std::unique_ptr<Engine>&& physical_engine);
 
     AstronomicalObject(const AstronomicalObject& object) = delete;
 
@@ -32,21 +33,21 @@ class AstronomicalObject : public IMovable, public IInfluenceableByForce {
 
     void move_on_orbit(math::decimal_t angle);
 
-    void move(Engine &physical_engine) final;
+    void move(const Engine &physical_engine) final;
 
-    size_t get_weight() final;
+    size_t get_weight() const final;
 
-    math::coords_t get_position() final;
+    math::coords_t get_position() const final;
 
     math::Vector2d &get_velocity() final;
 
-    bool have_some_trust() final;
+    bool have_some_trust() const final;
 
-    math::decimal_t target_trust() final;
+    math::decimal_t target_trust() const final;
 
     void free_current_trust() final;
 
-    ~AstronomicalObject();
+    ~AstronomicalObject() override = default;
 
   private:
     Orbit _orbit;
@@ -54,8 +55,7 @@ class AstronomicalObject : public IMovable, public IInfluenceableByForce {
     math::coords_t _pos;
     size_t _weight;
     math::decimal_t _target_add_trust;
-    IConnectToEngine& _engine;
     bool _need_add_trust;
 };
 
-}
+}  // namespace physics

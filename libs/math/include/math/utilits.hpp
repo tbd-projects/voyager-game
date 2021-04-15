@@ -41,4 +41,4 @@ class Utilits {
     bool point_relative_line(Vector2d line, coords_t point);
 };
 
-}
+}  // namespace math

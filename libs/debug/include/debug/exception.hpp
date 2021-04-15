@@ -27,4 +27,4 @@ class MathException: public debug::Exception {
     explicit MathException(std::string&& error);
 };
 
-}
+}  // namespace debug

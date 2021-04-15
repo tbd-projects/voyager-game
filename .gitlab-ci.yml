@@ -3,7 +3,7 @@ image: volodyalarin/tp_cpp_course_env:project
 variables:
   COVER_LOG: cover.log
   PROG: voyager
-  UNIT: gtests
+  UNIT: gtest
   LINTER: linter.sh
   VALGRIND_LOG: valgrind.log
   NO_LOST_PATTERN: "All heap blocks were freed -- no leaks are possible"

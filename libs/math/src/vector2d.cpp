@@ -1,10 +1,10 @@
-#include "vector2d.h"
+#include "vector2d.hpp"
 
 
 namespace math {
 
 
-//-------------------------------Vector2d--------------------------------------
+//  -------------------------------Vector2d------------------------------------
 
 
 Vector2d::Vector2d(coords_t coords)
@@ -56,5 +56,4 @@ Vector2d operator*(decimal_t k, Vector2d vector) {
     return Vector2d();
 }
 
-
-}
+}  // namespace math

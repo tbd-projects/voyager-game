@@ -1,7 +1,7 @@
 #pragma once
 
-#include <physics/interface.h>
-#include <umath.h>
+#include <physics/interface.hpp>
+#include <math.hpp>
 
 namespace physics {
 
@@ -10,7 +10,7 @@ class Collision: public ICollisionable {
     Collision() = default;
     explicit Collision(math::coords_t pos, math::decimal_t angle);
 
-    math::coords_t get_pos();
+    math::coords_t get_pos() const;
 
     void set_pos(math::coords_t pos);
 
@@ -24,7 +24,10 @@ class Collision: public ICollisionable {
 
     virtual bool is_in_collision(math::coords_t point) const = 0;
 
-    bool check_collision(const Collision &collision) override = 0;
+    bool check_collision(const ICollisionable &collision) const override = 0;
+
+    virtual ~Collision() = default;
+
   private:
     math::coords_t _pos;
     math::decimal_t _angle;
@@ -43,7 +46,7 @@ class RestangleCollision: public Collision {
 
     bool is_in_collision(math::coords_t point) const override;
 
-    bool check_collision(const Collision &collision) override;
+    bool check_collision(const ICollisionable &collision) const override;
 
   private:
     math::decimal_t _height;
@@ -63,7 +66,7 @@ class TriangleCollision: public Collision {
 
     bool is_in_collision(math::coords_t point) const override;
 
-    bool check_collision(const Collision &collision) override;
+    bool check_collision(const ICollisionable &collision) const override;
 
   private:
     math::decimal_t _height;
@@ -83,10 +86,11 @@ class CircleCollision: public Collision {
 
     bool is_in_collision(math::coords_t point) const override;
 
-    bool check_collision(const Collision &collision) override;
+    bool check_collision(const ICollisionable &collision) const override;
 
   private:
     math::decimal_t _radius;
 };
 
-}
+}  // namespace physics
+

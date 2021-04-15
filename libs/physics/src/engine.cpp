@@ -1,13 +1,13 @@
 #include <functional>
 
-#include "engine.h"
+#include "engine.hpp"
 
 namespace physics {
 
 #define G 6.67
 #define BASE_TRUST 25
 
-//---------------------------------Engine--------------------------------------
+//  ---------------------------------Engine------------------------------------
 
 Engine::Engine()
     : _G(G)
@@ -16,43 +16,51 @@ Engine::Engine()
     , _objects()
     , _deleted_objects() {}
 
-math::decimal_t Engine::calc_force_by_object(size_t obj_index) {
+math::decimal_t Engine::calc_force_by_object(size_t obj_index) const {
     return 0;
 }
 
-math::decimal_t Engine::get_effective_circle_orbit(const IInfluenceableByForce &object) {
+math::decimal_t Engine::get_effective_circle_orbit
+                                (const IInfluenceableByForce &object) const {
     return 0;
 }
 
-math::decimal_t Engine::solve_kepler(math::decimal_t eccentricity, math::decimal_t mean_anomaly) {
+math::decimal_t Engine::solve_kepler(math::decimal_t eccentricity
+                                     , math::decimal_t mean_anomaly) const {
     return 0;
 }
 
-void Engine::add_object(IInfluenceableByForce &object) {
+void Engine::add_object(std::unique_ptr<IInfluenceableByForce> object) {
     if (_deleted_objects.empty()) {
-        object._index = _objects.size();
-        _objects.push_back(std::ref(object));
+        object->_index = _objects.size();
+        _objects.push_back(std::ref(*object));
     } else {
-        object._index = *_deleted_objects.begin();
-        _objects[*_deleted_objects.begin()] = std::ref(object);
+        object->_index = *_deleted_objects.begin();
+        _objects[*_deleted_objects.begin()] = std::ref(*object);
         _deleted_objects.erase(_deleted_objects.begin());
     }
 }
 
-void Engine::delete_object(IInfluenceableByForce &object) {
-    _deleted_objects.insert(object._index);
+void Engine::delete_object(std::unique_ptr<IInfluenceableByForce> object) {
+    _deleted_objects.insert(object->_index);
 }
 
-math::decimal_t Engine::_base_solve_kepler(math::decimal_t eccentricity, math::decimal_t mean_anomaly) {
+math::decimal_t Engine::_base_solve_kepler
+                        (math::decimal_t eccentricity
+                         , math::decimal_t mean_anomaly) const {
     return 0;
 }
 
-math::decimal_t Engine::_advance_solve_kepler(math::decimal_t eccentricity, math::decimal_t mean_anomaly) {
+math::decimal_t Engine::_advance_solve_kepler
+                        (math::decimal_t eccentricity
+                        , math::decimal_t mean_anomaly) const {
     return 0;
 }
 
-math::decimal_t Engine::_hyp_solve_kepler(math::decimal_t eccentricity, math::decimal_t mean_anomaly) {
+math::decimal_t Engine::_hyp_solve_kepler
+                        (math::decimal_t eccentricity
+                        , math::decimal_t mean_anomaly) const {
     return 0;
 }
 
-}
+}  // namespace physics

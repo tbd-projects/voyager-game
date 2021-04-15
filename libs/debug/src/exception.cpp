@@ -1,9 +1,9 @@
-#include "exception.h"
+#include "exception.hpp"
 
 namespace debug {
 
 
-//-------------------------------Exception-------------------------------------
+//  -------------------------------Exception-----------------------------------
 
 
 Exception::Exception()
@@ -13,7 +13,7 @@ Exception::Exception(std::string&& error)
         : _name_error(error) {}
 
 
-//--------------------------PhysicalException----------------------------------
+//  --------------------------PhysicalException--------------------------------
 
 
 PhysicalException::PhysicalException()
@@ -23,7 +23,7 @@ PhysicalException::PhysicalException(std::string&& error)
         : Exception("Error in physics: " + error) {}
 
 
-//--------------------------MathException--------------------------------------
+//  --------------------------MathException------------------------------------
 
 
 MathException::MathException()
@@ -31,4 +31,5 @@ MathException::MathException()
 
 MathException::MathException(std::string&& error)
         : Exception("Error in math: " + error) {}
-}
+
+}  // namespace debug

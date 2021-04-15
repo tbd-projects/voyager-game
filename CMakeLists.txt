@@ -29,7 +29,7 @@ append_coverage_compiler_flags()
 #########
 
 enable_testing()
-find_package(GTest REQUIRED)
+find_package(GTest)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 add_executable(gtest ${CMAKE_SOURCE_DIR}/src/test_main.cpp)
