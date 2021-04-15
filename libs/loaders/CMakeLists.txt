@@ -1,26 +1,16 @@
 cmake_minimum_required(VERSION 3.0.0)
 
 set(PROJECT_NAME loaders_lib)
-set(LIBRARY_NAME loaders)
+set(LIBRARY_NAME loaders_lib)
 
-set(LIBRARY_HEADERS_DIR include/${LIBRARY_NAME})
-file(GLOB LIBRARY_HEADERS ${LIBRARY_HEADERS_DIR}/*.h)
+connect_lib(${LIBRARY_NAME} ${PROJECT_NAME} loaders)
 
-set(LIBRARY_SOURCE_DIR src)
-file(GLOB LIBRARY_SOURCE ${LIBRARY_SOURCE_DIR}/*.cpp)
+if (NOT (TARGET shop_lib))
+    message(FATAL_ERROR "shop_lib targets NOT found")
+endif ()
 
-project(${PROJECT_NAME})
+target_link_libraries(${LIBRARY_NAME} game_lib)
+target_link_libraries(${LIBRARY_NAME} shop_lib)
 
-add_library(${LIBRARY_NAME} STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCE})
-
-target_include_directories(${LIBRARY_NAME} PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${LIBRARY_NAME}>
-        $<INSTALL_INTERFACE:include/${LIBRARY_NAME}>
-        )
-
-target_include_directories(${LIBRARY_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-        )
 
 add_subdirectory(test)
