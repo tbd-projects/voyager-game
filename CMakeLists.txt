@@ -42,9 +42,9 @@ add_test(gtest gtest)
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
+add_subdirectory("${LIBRARIES_DIR}/shop")
 add_subdirectory("${LIBRARIES_DIR}/loaders")
 add_subdirectory("${LIBRARIES_DIR}/game")
-add_subdirectory("${LIBRARIES_DIR}/shop")
 
 
 

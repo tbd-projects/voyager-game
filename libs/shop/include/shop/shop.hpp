@@ -3,7 +3,7 @@
 #include "products.hpp"
 #include "loaders/progress_loader.hpp"
 #include "loaders/properties_loader.hpp"
-#include "loaders/products_loader.hpp"
+#include "products_loader.hpp"
 
 
 class Shop {

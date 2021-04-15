@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shop/products.hpp"
+#include "products.hpp"
 
 class ProductsLoader {
 public:
