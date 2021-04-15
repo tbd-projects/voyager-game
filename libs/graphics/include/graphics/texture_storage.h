@@ -18,6 +18,9 @@ namespace graphics {
     class TextureStorage
     {
     public:
+
+        TextureStorage(ITextureLoader *loader);
+
         ITexture *get(const std::string& filename);
         void load(const std::vector<std::string>& filenames);
     private:

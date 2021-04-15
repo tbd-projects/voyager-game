@@ -16,4 +16,6 @@ namespace graphics {
     void TextureStorage::load(const std::vector<std::string> &filenames) {
 
     }
+
+    TextureStorage::TextureStorage(ITextureLoader *loader) : _loader(loader) {}
 }

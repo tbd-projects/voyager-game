@@ -1,26 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
 
 set(PROJECT_NAME menu_lib)
-set(LIBRARY_NAME menu)
+set(LIBRARY_NAME menu_lib)
 
-set(LIBRARY_HEADERS_DIR include/${LIBRARY_NAME})
-file(GLOB LIBRARY_HEADERS ${LIBRARY_HEADERS_DIR}/*.h)
+connect_lib(${LIBRARY_NAME} ${PROJECT_NAME} menu)
 
-set(LIBRARY_SOURCE_DIR src)
-file(GLOB LIBRARY_SOURCE ${LIBRARY_SOURCE_DIR}/*.cpp)
+target_link_libraries(${LIBRARY_NAME} graphics_lib)
 
-project(${PROJECT_NAME})
-
-add_library(${LIBRARY_NAME} STATIC ${LIBRARY_HEADERS} ${LIBRARY_SOURCE})
-
-target_include_directories(${LIBRARY_NAME} PRIVATE
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${LIBRARY_NAME}>
-        $<INSTALL_INTERFACE:include/${LIBRARY_NAME}>
-        )
-
-target_include_directories(${LIBRARY_NAME} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-        )
-
-add_subdirectory(test)
+#add_subdirectory(test)
