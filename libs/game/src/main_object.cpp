@@ -9,6 +9,7 @@ GameObject::GameObject(ISprite *sprite) {
 GameObject::GameObject(size_t sprite_id) {
 
 }
+
 bool GameObject::check_collision(const Collision &collision) {
     return false;
 }

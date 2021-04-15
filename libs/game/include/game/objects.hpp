@@ -13,7 +13,7 @@ public:
 
     SpaceShip &operator=(const SpaceShip &ship);
 
-    bool check_collision(const ICollisionable& collision);
+    bool check_collision(const ICollisionable &collision);
 
     Properties &get_properties();
 
@@ -47,6 +47,7 @@ public:
 
 private:
     void set_object_collision() override;
+
     Properties _properties;
 };
 
@@ -60,7 +61,7 @@ public:
 
     ~SpaceBody();
 
-    bool check_collision(const ICollisionable& collision);
+    bool check_collision(const ICollisionable &collision);
 
 };
 
@@ -73,5 +74,5 @@ public:
     ~Star() = default;
 
 
-    bool check_collision(const ICollisionable& collision);
+    bool check_collision(const ICollisionable &collision);
 };

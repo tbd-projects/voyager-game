@@ -8,6 +8,10 @@ Map::Map(CreatorLevel *level) {
 Map::Map(const Map &map) {
 }
 
+Map::Map() {
+
+}
+
 bool Map::update() {
     return false;
 }

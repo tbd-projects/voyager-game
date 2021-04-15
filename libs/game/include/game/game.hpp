@@ -11,7 +11,7 @@ class ISprite;
 
 class Map {
 public:
-    Map(CreatorLevel *level);
+    explicit Map(CreatorLevel *level);
 
     Map(const Map &map);
 
@@ -40,9 +40,9 @@ class Progress {
 public:
     Progress() = default;
 
-    Progress(ProgressLoader *loader);
+    explicit Progress(ProgressLoader *loader);
 
-    Progress(const progress_t &progress);
+    explicit Progress(const progress_t &progress);
 
     Progress &operator=(const Progress &progress);
 
@@ -69,7 +69,7 @@ class Progress;
 
 class Game : public ISubscriber {
 public:
-    Game(IController *controller);
+    explicit Game(IController *controller);
 
     ~Game();
 

@@ -25,7 +25,7 @@ private:
     std::vector <SpaceBody> _objects_active;
     std::vector <Star> _objects_not_active;
     SpaceShip _ship;
-    ISprite *_level_texture;
+    ISprite *_level_texture{};
     std::string _file_path;
 
     void create_ship();

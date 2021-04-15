@@ -7,6 +7,7 @@ using coords_t = std::pair<int, int>;
 class ISprite {
 
 };
+
 class Collision {
 
 };

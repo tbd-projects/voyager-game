@@ -9,7 +9,7 @@ SpaceShip &SpaceShip::operator=(const SpaceShip &ship) {
     return *this;
 }
 
-bool SpaceShip::check_collision(const ICollisionable& collision) {
+bool SpaceShip::check_collision(const ICollisionable &collision) {
     return false;
 }
 
@@ -85,7 +85,7 @@ SpaceBody &SpaceBody::operator=(const SpaceBody &obj) {
     return *this;
 }
 
-bool SpaceBody::check_collision(const ICollisionable& collision) {
+bool SpaceBody::check_collision(const ICollisionable &collision) {
     return false;
 }
 
@@ -97,7 +97,7 @@ Star &Star::operator=(const Star &obj) {
     return *this;
 }
 
-bool Star::check_collision(const ICollisionable& collision) {
+bool Star::check_collision(const ICollisionable &collision) {
     return false;
 
 }
