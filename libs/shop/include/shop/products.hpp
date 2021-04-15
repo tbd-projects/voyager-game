@@ -2,6 +2,8 @@
 
 #include "base_product.hpp"
 
+class ISprite;
+
 class ProductShip : public Product {
 private:
     SpaceShip _ship;
@@ -23,7 +25,7 @@ public:
 
 class ProductMap : public Product {
 private:
-    std::vector <Texture> _maps;
+    std::vector <ISprite*> _maps;
 public:
-    Texture &get_texture(size_t id);
+    ISprite &get_texture(size_t id);
 };

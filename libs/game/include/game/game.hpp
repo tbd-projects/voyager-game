@@ -4,7 +4,7 @@
 #include "level_loader.hpp"
 #include "loaders/progress_loader.hpp"
 
-class Texture;
+class ISprite;
 
 class Map : {
 public:
@@ -21,7 +21,7 @@ private:
     std::vector <Star> _stars;
     SpaceShip _ship;
 
-    Texture _bg;
+    ISprite *_bg;
 
     void check_all_collision();
 };

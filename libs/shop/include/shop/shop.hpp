@@ -27,7 +27,7 @@ private:
     std::vector <ProductShip> _ships;
     ProductBattery _battery;
     ProductEngine _engine;
-    std::vector <Textures> _maps_bg;
+    std::vector <ISprite*> _maps_bg;
 
     void fill_store(PlayerProperiesLoader *loader_properties, BaseProgressLoader *loader_progress);
 };

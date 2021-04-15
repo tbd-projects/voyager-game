@@ -2,7 +2,7 @@
 
 using coords_t = std::pair<int, int>;
 
-class Sprite;
+class ISprite;
 class Collision;
 
 
@@ -18,7 +18,7 @@ public:
 
     virtual bool set_sprite() = 0;
 
-    virtual Sprite &get_sprite() = 0;
+    virtual ISprite &get_sprite() = 0;
 
     virtual set_sprite_id(size_t
     id) = 0;
