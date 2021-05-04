@@ -14,10 +14,6 @@ class AstronomicalObject {
 
 };
 
-class Trigger {
-
-};
-
 class GameObject : public IGameObject, public AstronomicalObject, public ICollisionable {
 public:
     explicit GameObject(ISprite *sprite);
@@ -35,7 +31,6 @@ protected:
 
 private:
     size_t _sprite_id{};
-    Trigger _trigger;
     Collision _base_collision;
 };
 
@@ -47,6 +42,5 @@ public:
 private:
     ISprite *_sprite;
     size_t _sprite_id;
-    Trigger _trigger;
     Collision _base_collision;
 };

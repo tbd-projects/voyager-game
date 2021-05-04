@@ -36,11 +36,19 @@ add_executable(gtest ${CMAKE_SOURCE_DIR}/src/test_main.cpp)
 target_link_libraries(gtest ${GTEST_LIBRARIES} pthread)
 add_test(gtest gtest)
 
+#########
+# Boost #
+#########
+#message(${CMAKE_SOURCE_DIR}/tmp/boost_1_72_0/boost/)
+#set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/tmp/boost_1_72_0/boost/)
+find_package(Boost 1.71.0 REQUIRED COMPONENTS filesystem)
+include_directories(${Boost_INCLUDE_DIRS})
 ###########
 # Project #
 ###########
 
 add_executable(${PROJECT_NAME} ${SOURCE})
+
 
 add_subdirectory("${LIBRARIES_DIR}/shop")
 add_subdirectory("${LIBRARIES_DIR}/loaders")
@@ -48,7 +56,7 @@ add_subdirectory("${LIBRARIES_DIR}/game")
 
 
 
-target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
 
 #setup_target_for_coverage_lcov (
 #        NAME coverage
