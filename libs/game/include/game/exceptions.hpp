@@ -8,26 +8,25 @@
 #include <string>
 #include <cstring>
 #include <chrono>
-#include <time.h>
 
 class BaseExceptions : public std::exception {
 public:
     BaseExceptions(std::string filename, std::string classname, std::string methodname, std::string arg = "") {
-        error_info = "\nFile: " + filename + \
+        _error_info = "\nFile: " + filename + \
                      "\nClass: " + classname + \
                      "\nMethod: " + methodname;
         if (!arg.empty()) {
-            error_info += "\n Argument: " + arg;
+            _error_info += "\n Argument: " + arg;
         }
     }
 
     virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Something is wrong with your game." + error_info;
+        std::string message = "\nERROR: Something is wrong with your game." + _error_info;
         return message.c_str();
     }
 
 protected:
-    std::string error_info;
+    std::string _error_info;
 };
 
 class InvalidArg : public BaseExceptions {
@@ -36,7 +35,7 @@ public:
             BaseExceptions(filename, classname, methodname) {};
 
     virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Invalid argument. " + error_info;
+        std::string message = "\nERROR: Invalid argument. " + _error_info;
         return message.c_str();
     }
 };
@@ -46,7 +45,17 @@ public:
             BaseExceptions(filename, classname, methodname, arg) {};
 
     virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Invalid argument. " + error_info;
+        std::string message = "\nERROR: Invalid argument. " + _error_info;
+        return message.c_str();
+    }
+};
+class LoadError: public BaseExceptions {
+public:
+    LoadError(std::string filename, std::string classname, std::string methodname, std::string arg) :
+    BaseExceptions(filename, classname, methodname, arg) {};
+
+    virtual const char *what() const noexcept override {
+        std::string message = "\nERROR: Error load data from file. " + _error_info;
         return message.c_str();
     }
 };

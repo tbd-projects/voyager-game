@@ -1,12 +1,16 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 struct progress_t {
     size_t coins;
-    size_t level;
-    size_t stars;
     size_t time;
+    std::vector<std::pair<int, int>> level_stat;
+
+    bool is_empty() {
+        return !coins && !time && level_stat.empty();
+    }
 };
 
 class ProgressLoader {
@@ -22,7 +26,7 @@ class BaseProgressLoader : public ProgressLoader {
 public:
     BaseProgressLoader() = delete;
 
-    ~BaseProgressLoader() = default;
+    ~BaseProgressLoader() override = default;
 
     BaseProgressLoader(const BaseProgressLoader &) = delete;
 
