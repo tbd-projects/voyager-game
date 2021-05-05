@@ -39,8 +39,6 @@ add_test(gtest gtest)
 #########
 # Boost #
 #########
-#message(${CMAKE_SOURCE_DIR}/tmp/boost_1_72_0/boost/)
-#set(BOOST_ROOT ${CMAKE_SOURCE_DIR}/tmp/boost_1_72_0/boost/)
 find_package(Boost 1.71.0 REQUIRED COMPONENTS filesystem)
 include_directories(${Boost_INCLUDE_DIRS})
 ###########
@@ -49,7 +47,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
-
+add_subdirectory("${LIBRARIES_DIR}/debug")
 add_subdirectory("${LIBRARIES_DIR}/shop")
 add_subdirectory("${LIBRARIES_DIR}/loaders")
 add_subdirectory("${LIBRARIES_DIR}/game")
