@@ -4,7 +4,7 @@
 
 #include "i_drawable.h"
 #include "i_spite_loader.h"
-#include "i_sprite.h"
+#include "sprite.h"
 #include "i_texture.h"
 #include "i_texture_loader.h"
 #include "texture_storage.h"

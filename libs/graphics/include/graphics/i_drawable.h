@@ -5,14 +5,30 @@
 #ifndef VOYAGER_I_DRAWABLE_H
 #define VOYAGER_I_DRAWABLE_H
 
+#include <utility>
+
 namespace graphics {
 
-    class ICanvas;
+    class ICanvas {
+    public:
+        ICanvas() = default;
+
+        virtual ~ICanvas() = default;
+
+        virtual int get_width() = 0;
+
+        virtual int get_height() = 0;
+
+        virtual void clear() = 0;
+
+        virtual void apply() = 0;
+    };
 
     class IDrawable {
     public:
-        virtual void draw(ICanvas &) = 0;
-        virtual ~IDrawable() = 0;
+        virtual void draw(ICanvas *) = 0;
+
+        virtual ~IDrawable() = default;
     };
 
 }

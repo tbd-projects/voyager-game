@@ -12,7 +12,7 @@
 
 namespace graphics::sf {
 
-    class SfTextureLoader: public ITextureLoader{
+    class SfTextureLoader : public ITextureLoader {
     public:
         std::unique_ptr<ITexture> load(const std::string &filename) override;
     };

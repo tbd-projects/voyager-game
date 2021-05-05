@@ -5,13 +5,17 @@
 #include "sf_texture.h"
 
 int graphics::sf::SfTexture::get_height() {
-    return 0;
+    return static_cast<int>(_texture.getSize().y);
 }
 
 int graphics::sf::SfTexture::get_width() {
-    return 0;
+    return static_cast<int>(_texture.getSize().x);
 }
 
-graphics::sf::SfTexture::SfTexture(::sf::Texture &&_texture) {
+graphics::sf::SfTexture::SfTexture(::sf::Texture &&texture) {
+    _texture = texture;
+}
 
+::sf::Texture &graphics::sf::SfTexture::get_sf_texture() {
+    return _texture;
 }

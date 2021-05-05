@@ -6,50 +6,32 @@
 #define VOYAGER_SF_SPRITE_H
 
 #include <utility>
-#include "graphics/i_sprite.h"
+#include "graphics/sprite.h"
 #include "graphics/sf_texture.h"
 
 namespace graphics::sf {
 
-    class SfSprite: public ISprite{
+    class SfSprite : public Sprite {
     public:
-        SfSprite(std::pair<int, int> pos, std::pair<int, int> size, SfTexture &texture);
-        std::pair<int, int> get_pos() override;
-        std::pair<int, int> get_size() override;
-        SfTexture &get_texture() override;
+        SfSprite(
+                const std::pair<int, int> &pos, const std::pair<int, int> &size, graphics::sf::SfTexture *texture
+        );
 
-        void draw(ICanvas &canvas) override;
-
-    private:
-        SfTexture *_texture;
-        std::pair<int,int> _size;
-        std::pair<int,int> _pos;
+        void draw(ICanvas *canvas) override;
     };
 
-    class SfHorizontalAnimatedSprite: public IAnimatedSprite{
+    class SfHorizontalAnimatedSprite : public AnimatedSprite {
     public:
         SfHorizontalAnimatedSprite(int frames, SfSprite &&sprite);
-        int get_frames() override;
-        int get_current_frame() override;
-        void next_frame() override;
-        void draw(ICanvas &canvas) override;
+
+        SfHorizontalAnimatedSprite(int frames, const std::pair<int, int> &pos, const std::pair<int, int> &size,
+                                   ITexture *texture);
+
+        void draw(ICanvas *canvas) override;
+
         ~SfHorizontalAnimatedSprite() override;
-
-    private:
-        SfSprite _sprite;
-        std::pair<int, int> get_pos() override;
-
-        std::pair<int, int> get_size() override;
-
-        SfTexture &get_texture() override;
-
-
-    private:
-        int _current_frame = 0;
-        int _frames;
     };
 }
-
 
 
 #endif //VOYAGER_SF_SPRITE_H

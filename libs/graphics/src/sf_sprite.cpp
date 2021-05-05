@@ -3,60 +3,58 @@
 //
 
 #include "sf_sprite.h"
+#include "sf_canvas.h"
 
-std::pair<int, int> graphics::sf::SfSprite::get_pos() {
-    return _pos;
-}
 
-std::pair<int, int> graphics::sf::SfSprite::get_size() {
-    return _size;
-}
-
-graphics::sf::SfTexture &graphics::sf::SfSprite::get_texture() {
-    return *_texture;
-}
-
-graphics::sf::SfSprite::SfSprite(std::pair<int, int> pos, std::pair<int, int> size,
-                                 graphics::sf::SfTexture &texture): _texture(&texture) {
+graphics::sf::SfSprite::SfSprite(
+        const std::pair<int, int> &pos, const std::pair<int, int> &size, graphics::sf::SfTexture *texture
+) : Sprite(pos, size, texture) {
 
 }
 
-void graphics::sf::SfSprite::draw(graphics::ICanvas &canvas) {
+void graphics::sf::SfSprite::draw(graphics::ICanvas *canvas) {
+    ::sf::RenderWindow &window = dynamic_cast<graphics::SfCanvas *>(canvas)->window;
 
+    ::sf::Sprite sprite;
+
+    auto &texture = dynamic_cast<SfTexture &>(get_texture());
+    auto crop_pos = get_texture_pos();
+    auto crop_size = get_texture_size();
+
+    sprite.setTexture(texture.get_sf_texture());
+
+    sprite.setTextureRect(::sf::IntRect(
+            crop_pos.first, crop_pos.second,
+            crop_size.first, crop_size.second
+    ));
+
+    auto pos = static_cast<std::pair<float, float>>(get_pos());
+    sprite.setPosition(::sf::Vector2f(pos.first, pos.second));
+
+    window.draw(sprite);
 }
 
 graphics::sf::SfHorizontalAnimatedSprite::SfHorizontalAnimatedSprite(int frames, graphics::sf::SfSprite &&sprite)
-: _sprite(sprite) , _frames(frames)  {
-    if (!frames) throw;
+        : AnimatedSprite(frames, sprite) {
+    if (!frames) throw std::exception();
 }
 
-int graphics::sf::SfHorizontalAnimatedSprite::get_frames() {
-    return _frames;
+void graphics::sf::SfHorizontalAnimatedSprite::draw(graphics::ICanvas *canvas) {
+    auto pos = get_texture_pos();
+    auto size = get_texture_size();
+
+    pos.first += get_current_frame() * size.first;
+    SfSprite sprite(pos, size, &dynamic_cast<SfTexture &>(get_texture()));
+    sprite.set_pos(get_pos());
+    sprite.draw(canvas);
 }
 
-int graphics::sf::SfHorizontalAnimatedSprite::get_current_frame() {
-    return _current_frame;
-}
+graphics::sf::SfHorizontalAnimatedSprite::SfHorizontalAnimatedSprite(
+        int frames, const std::pair<int, int> &pos,
+        const std::pair<int, int> &size,
+        graphics::ITexture *texture) :
+        AnimatedSprite(frames, SfSprite(pos, size, dynamic_cast<SfTexture *>(texture))) {
 
-void graphics::sf::SfHorizontalAnimatedSprite::next_frame() {
-    ++_current_frame;
-    _current_frame %= _frames;
-}
-
-void graphics::sf::SfHorizontalAnimatedSprite::draw(graphics::ICanvas &canvas) {
-    _sprite.draw(canvas);
 }
 
 graphics::sf::SfHorizontalAnimatedSprite::~SfHorizontalAnimatedSprite() = default;
-
-std::pair<int, int> graphics::sf::SfHorizontalAnimatedSprite::get_pos() {
-    return _sprite.get_pos();
-}
-
-std::pair<int, int> graphics::sf::SfHorizontalAnimatedSprite::get_size() {
-    return _sprite.get_size();
-}
-
-graphics::sf::SfTexture &graphics::sf::SfHorizontalAnimatedSprite::get_texture() {
-    return _sprite.get_texture();
-}

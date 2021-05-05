@@ -12,5 +12,4 @@ namespace graphics {
 }
 
 
-
 #endif //VOYAGER_I_TEXT_H

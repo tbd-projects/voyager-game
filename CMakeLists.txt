@@ -29,12 +29,10 @@ append_coverage_compiler_flags()
 #########
 
 enable_testing()
-find_package(GTest REQUIRED)
+find_package(GTest)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-add_executable(gtest ${CMAKE_SOURCE_DIR}/src/test_main.cpp)
-target_link_libraries(gtest ${GTEST_LIBRARIES} pthread)
-add_test(gtest gtest)
+set(GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_main.cpp )
 
 ###########
 # Project #
@@ -47,12 +45,5 @@ add_subdirectory("${LIBRARIES_DIR}/menu")
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
-#setup_target_for_coverage_lcov (
-#        NAME coverage
-#        EXECUTABLE gtest
-#        BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
-#        EXCLUDE "/usr/*"
-#)
-
-
-
+add_executable(gtest ${GTEST_SOURCE_TEST_DIR})
+target_link_libraries(gtest ${GTEST_LIBRARIES} pthread)
