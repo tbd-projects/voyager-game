@@ -38,7 +38,7 @@ set_property(GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_
 #########
 # Boost #
 #########
-find_package(Boost 1.71.0 REQUIRED COMPONENTS filesystem)
+find_package(Boost 1.65.0 REQUIRED COMPONENTS filesystem)
 include_directories(${Boost_INCLUDE_DIRS})
 
 
@@ -62,7 +62,7 @@ add_subdirectory("${LIBRARIES_DIR}/game")
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
 
 get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
-message("${tmp}")
+
 add_executable(gtest ${tmp})
 target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread)
 #add_test(gtest gtest)
