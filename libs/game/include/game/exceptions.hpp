@@ -52,7 +52,7 @@ public:
 class LoadError: public BaseExceptions {
 public:
     LoadError(std::string filename, std::string classname, std::string methodname, std::string arg) :
-            BaseExceptions(filename, classname, methodname, arg) {};
+    BaseExceptions(filename, classname, methodname, arg) {};
 
     virtual const char *what() const noexcept override {
         std::string message = "\nERROR: Error load data from file. " + _error_info;

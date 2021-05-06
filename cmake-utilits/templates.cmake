@@ -3,29 +3,17 @@ macro( connect_test project_test_name lib_name main_project_test_name )
 
     enable_testing()
 
-    file(GLOB LIBRARY_TESTS_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
+    file(GLOB LIBRARY_TESTS_SOURCE *.cpp)
 
     if (NOT (TARGET ${main_project_test_name}))
         message(FATAL_ERROR "${main_project_test_name} targets NOT found")
     endif()
 
-    if (EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests")
+    add_executable(${project_test_name} ${LIBRARY_TESTS_SOURCE})
+    message(${lib_name})
+    target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread)
 
-        add_library("${project_test_name}_lib" STATIC ${LIBRARY_TESTS_SOURCE})
-
-        add_executable(${project_test_name} "${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp")
-
-        target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread "${project_test_name}_lib")
-
-        target_link_libraries(${main_project_test_name} "${project_test_name}_lib")
-
-    else()
-
-        add_executable(${project_test_name} ${LIBRARY_TESTS_SOURCE} "${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp")
-
-        target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread)
-
-    endif()
+    add_test(${project_test_name} ${project_test_name})
 
 endmacro( connect_test )
 
@@ -50,5 +38,4 @@ macro( connect_lib lib_name project_name include_lib_name)
             $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
             $<INSTALL_INTERFACE:include>
             )
-
 endmacro( connect_lib )
