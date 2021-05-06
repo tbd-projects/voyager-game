@@ -10,29 +10,41 @@ class Vector2d {
 
     explicit Vector2d(coords_t coords);
 
-    Vector2d(coords_t first_point, coords_t second_point);
+    explicit Vector2d(coords_t first_point, coords_t second_point);
 
-    Vector2d(decimal_t angle, decimal_t len);
+    explicit Vector2d(decimal_t angle, decimal_t len);
 
+    [[nodiscard]]
     coords_t get_coords() const;
 
+    [[nodiscard]]
     decimal_t len() const;
 
+    [[nodiscard]]
     decimal_t sqr_len() const;
 
+    [[nodiscard]]
     bool is_zero() const;
 
+    [[nodiscard]]
     Vector2d normalize() const;
 
+    [[nodiscard]]
     bool is_normal() const;
 
-    decimal_t operator^(Vector2d vector) const;
+    bool operator==(const Vector2d& vector) const;
 
-    decimal_t operator*(Vector2d vector) const;
+    Vector2d operator+(const Vector2d& vector) const;
+
+    Vector2d& operator+=(const Vector2d& vector);
+
+    decimal_t operator^(const Vector2d& vector) const;
+
+    decimal_t operator*(const Vector2d& vector) const;
 
     Vector2d operator*(decimal_t k) const;
 
-    friend Vector2d operator*(decimal_t k, Vector2d vector);
+    friend Vector2d operator*(decimal_t k, const Vector2d& vector);
 
   private:
     coords_t _coords;

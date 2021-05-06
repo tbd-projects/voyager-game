@@ -3,6 +3,8 @@
 #include <math.hpp>
 #include <physics/engine.hpp>
 #include <physics/interface.hpp>
+#include <physics/physical_object.hpp>
+
 
 namespace physics {
 
@@ -21,12 +23,13 @@ class Orbit {
 
     explicit Orbit(orbit_properties_t orbit_properties);
 
-    math::coords_t get_current_pos(IInfluenceableByForce& object
-                                   , const Engine& physical_engine);
+    math::coords_t get_current_pos(PhysicalObject &object
+                                   , const Engine &physical_engine);
 
+    [[nodiscard]]
     orbit_properties_t get_orbit_properties() const;
 
-    void move_by_angle(math::decimal_t angle);
+    void relocate_on_orbit(math::decimal_t angle);
 
   private:
     math::decimal_t _major_axis;

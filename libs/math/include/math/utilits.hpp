@@ -36,9 +36,29 @@ struct coords_t {
 
 class Utilits {
   public:
+    static bool is_null(math::decimal_t value);
+
+    static bool is_equal(math::decimal_t value_1, math::decimal_t value_2);
+
+    static math::decimal_t to_rad(math::decimal_t angle);
+
+    static math::decimal_t to_grad(math::decimal_t angle);
+
+    static math::decimal_t decimal_epsilon;
+};
+
+class GeometryFunction {
+  public:
+    enum class point_relative {
+        at_left,
+        at_right,
+        on_line
+    };
+
     coords_t rotate_point(coords_t point, decimal_t angle, coords_t basis);
 
-    bool point_relative_line(Vector2d line, coords_t point);
+    point_relative point_relative_line(Vector2d line, coords_t start_line
+                                        , coords_t point);
 };
 
 }  // namespace math
