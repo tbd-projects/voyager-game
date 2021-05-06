@@ -25,14 +25,6 @@ namespace graphics {
 
     }
 
-    std::pair<double, double> Sprite::get_pos() {
-        return _pos;
-    }
-
-    void Sprite::set_pos(const std::pair<double, double> &pos) {
-        _pos = pos;
-    }
-
 
     int AnimatedSprite::get_frames() {
         return _frames;

@@ -22,8 +22,9 @@ namespace graphics {
     }
 
     void TextureStorage::load(const std::string &filename) {
-        _textures[filename] = _loader->load(filename);
+        _textures[filename] = _factory.create_texture(filename);
     }
 
-    TextureStorage::TextureStorage(ITextureLoader *loader) : _loader(loader) {}
+    TextureStorage::TextureStorage(IGraphicsFactory &factory) : _factory(factory) {}
+
 }

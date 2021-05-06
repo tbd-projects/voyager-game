@@ -32,4 +32,16 @@ namespace graphics {
     SfCanvas::~SfCanvas() {
         window.close();
     }
+
+    ::sf::RenderWindow &SfCanvas::get_sf_window() {
+        return window;
+    }
+
+    SfCanvas::SfCanvas(int width, int height, bool is_full) : window(
+            ::sf::RenderWindow(
+                    ::sf::VideoMode(width, height),
+                    "MyApp",
+                    is_full ? sf::Style::Fullscreen : sf::Style::Default
+            )
+    ) {}
 }

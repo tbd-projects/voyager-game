@@ -11,14 +11,13 @@
 #include <memory>
 
 #include "graphics/i_texture.h"
-#include "graphics/i_texture_loader.h"
+#include "graphics/i_graphics_factory.h"
 
 
 namespace graphics {
     class TextureStorage {
     public:
-
-        explicit TextureStorage(ITextureLoader *loader);
+        explicit TextureStorage(IGraphicsFactory &factory);
 
         ITexture *get(const std::string &filename);
 
@@ -28,7 +27,7 @@ namespace graphics {
 
     private:
         std::map<std::string, std::unique_ptr<ITexture>> _textures;
-        ITextureLoader *_loader;
+        IGraphicsFactory &_factory;
     };
 
 }

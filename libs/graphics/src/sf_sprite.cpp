@@ -4,6 +4,7 @@
 
 #include "sf_sprite.h"
 #include "sf_canvas.h"
+#include "pos_drawable.h"
 
 
 graphics::sf::SfSprite::SfSprite(

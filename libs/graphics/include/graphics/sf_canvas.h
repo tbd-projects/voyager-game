@@ -6,6 +6,8 @@
 #define VOYAGER_SFCANVAS_H
 
 #include <SFML/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+
 #include "i_drawable.h"
 
 namespace graphics {
@@ -16,8 +18,9 @@ namespace graphics {
         ::sf::RenderWindow window;
 
         SfCanvas();
+        SfCanvas(int width, int height, bool is_full);
 
-        virtual ~SfCanvas();
+        ~SfCanvas() override;
 
         int get_width() override;
 
@@ -26,6 +29,8 @@ namespace graphics {
         void clear() override;
 
         void apply() override;
+
+        ::sf::RenderWindow& get_sf_window();
     };
 
 }

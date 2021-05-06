@@ -27,6 +27,9 @@ namespace graphics {
     class IDrawable {
     public:
         virtual void draw(ICanvas *) = 0;
+        virtual void draw(std::unique_ptr<ICanvas> &canvas) {
+            draw(canvas.get());
+        }
 
         virtual ~IDrawable() = default;
     };

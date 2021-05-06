@@ -7,14 +7,14 @@
 
 #include "graphics/i_drawable.h"
 #include "graphics/i_texture.h"
+#include "pos_drawable.h"
 
 namespace graphics {
-    class Sprite : public IDrawable {
+    class Sprite : public PosDrawable {
     private:
         std::pair<int, int> _texture_pos;
         std::pair<int, int> _texture_size;
         ITexture *_texture;
-        std::pair<double, double> _pos = std::pair<double, double>(0, 0);
     public:
         Sprite(std::pair<int, int> pos, std::pair<int, int> size, ITexture *texture);
 
@@ -25,10 +25,6 @@ namespace graphics {
         virtual ITexture &get_texture();
 
         ~Sprite() override = default;
-
-        virtual std::pair<double, double> get_pos();
-
-        virtual void set_pos(const std::pair<double, double> &pos);
 
 
     };

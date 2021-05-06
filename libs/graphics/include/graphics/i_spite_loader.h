@@ -9,20 +9,12 @@
 #include "graphics/sprite.h"
 
 #include <memory>
+#include "sprite_info.h"
 
 namespace graphics {
-    struct SpriteInfo {
-        std::pair<int, int> pos;
-        std::pair<int, int> size;
-        int frames;
-        std::string filename;
-    };
-
     class ISpiteLoader {
     public:
         virtual std::unique_ptr<Sprite> load(int id, TextureStorage &storage) = 0;
-
-        virtual std::unique_ptr<Sprite> load(const SpriteInfo &info, TextureStorage &storage) = 0;
     };
 }
 
