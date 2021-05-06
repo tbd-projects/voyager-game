@@ -41,14 +41,18 @@ set_property(GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
-add_subdirectory("${LIBRARIES_DIR}/debug")
-add_subdirectory("${LIBRARIES_DIR}/math")
-add_subdirectory("${LIBRARIES_DIR}/physics")
+foreach(LIBRARY ${LIBRARIES})
+    string(REPLACE "_lib" "" LIBRARY ${LIBRARY})
+    add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
+endforeach(LIBRARY)
+
+target_link_libraries(math_lib debug_lib)
+target_link_libraries(physics_lib debug_lib math_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
 get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
-message("${tmp}")
+
 add_executable(gtest ${tmp})
 target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread)
 #add_test(gtest gtest)
