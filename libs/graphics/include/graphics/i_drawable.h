@@ -6,6 +6,7 @@
 #define VOYAGER_I_DRAWABLE_H
 
 #include <utility>
+#include <memory>
 
 namespace graphics {
 

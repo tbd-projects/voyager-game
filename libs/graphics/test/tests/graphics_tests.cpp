@@ -27,7 +27,7 @@ TEST (GraphicsTextureStorage, GetSprite) {
 
     graphics::TextureStorage storage(loader);
 
-    graphics::sf::JsonSpriteSheetLoader sheet_loader(loader);
+    graphics::JsonSpriteSheetLoader sheet_loader(loader);
 
     auto sprite = sheet_loader.load(0, storage);
     auto canvas = loader.create_canvas();
@@ -47,7 +47,7 @@ TEST (GraphicsTextureStorage, SpriteAnimation) {
 
     graphics::TextureStorage storage(loader);
 
-    graphics::sf::JsonSpriteSheetLoader sheet_loader(loader);
+    graphics::JsonSpriteSheetLoader sheet_loader(loader);
 
     auto sprite = dynamic_cast<graphics::AnimatedSprite *>(sheet_loader.load(1, storage).release());
     auto canvas = loader.create_canvas();
