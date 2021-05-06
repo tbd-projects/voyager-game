@@ -1,0 +1,45 @@
+{
+  "stars": [
+    {
+      "orbit_properties": {
+        "x_с": 0.0,
+        "y_с": 30.0,
+        "a": 10,
+        "b": 20
+      },
+      "sprite_id": 1
+    },
+    {
+      "orbit_properties": {
+        "x_с": 0.0,
+        "y_с": 20.0,
+        "a": 10,
+        "b": 20
+      },
+      "sprite_id": 2
+    }
+  ],
+  "planets": [
+    {
+      "orbit_properties": {
+        "x_с": 10.0,
+        "y_с": 0.0,
+        "a": 10,
+        "b": 20
+      },
+      "sprite_id": 3
+    },
+    {
+      "orbit_properties ": {
+        "x_с": 10.0,
+        "y_с": 20.0,
+        "a": 10,
+        "b": 20
+      },
+      "sprite_id": 4
+    }
+  ],
+  "background": {
+    "sprite_id": 5
+  }
+}
