@@ -46,7 +46,7 @@ coverage:
   stage: test
   script:
     - cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..
-    - make codeCoverage > ${COVER_LOG}
+    - make coverage > ${COVER_LOG}
     - cat ${COVER_LOG}
   artifacts:
     paths:
