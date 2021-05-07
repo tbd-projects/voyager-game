@@ -7,6 +7,17 @@
         "a": 10,
         "b": 20
       },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      },
+      "weight": 0,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
       "sprite_id": 1
     },
     {
@@ -27,6 +38,17 @@
         "a": 10,
         "b": 20
       },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      },
+      "weight": 0,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
       "sprite_id": 3
     },
     {
@@ -35,6 +57,17 @@
         "y_с": 20.0,
         "a": 10,
         "b": 20
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      },
+      "weight": 0,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
       },
       "sprite_id": 4
     }

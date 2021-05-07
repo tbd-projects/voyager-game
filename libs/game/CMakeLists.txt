@@ -15,6 +15,7 @@ if (NOT (TARGET loaders_lib))
 endif()
 
 target_link_libraries(${LIBRARY_NAME} debug_lib)
+target_link_libraries(${LIBRARY_NAME} physics_lib)
 target_link_libraries(${LIBRARY_NAME} loaders_lib)
 
 add_subdirectory(test)

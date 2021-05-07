@@ -1,20 +1,10 @@
 #pragma once
 
 #include "interface.hpp"
+#include "physics/astronimical_object.hpp"
 
-class IMovable {
 
-};
-
-class ICollisionable {
-
-};
-
-class AstronomicalObject {
-
-};
-
-class GameObject : public IGameObject, public AstronomicalObject, public ICollisionable {
+class GameObject : public IGameObject, public physics::AstronomicalObject {
 public:
     explicit GameObject(ISprite *sprite);
 
@@ -22,25 +12,21 @@ public:
 
     GameObject();
 
-    //set sprite usage ISprite
-    bool check_collision(const Collision &collision) override;
-    // + redefine virtual funcs
-
 protected:
-    ISprite *_sprite{};
+    ISprite *_sprite;
 
 private:
-    size_t _sprite_id{};
-    Collision _base_collision;
+    size_t _sprite_id;
 };
 
 
-class NotActiveObject : public IGameObject, public IMovable, public ICollisionable {
+class NotActiveObject : public IGameObject, public physics::IMovable {
 public:
     NotActiveObject();
 
-private:
+protected:
     ISprite *_sprite;
+
+private:
     size_t _sprite_id;
-    Collision _base_collision;
 };
