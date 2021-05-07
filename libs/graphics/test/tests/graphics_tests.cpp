@@ -111,3 +111,26 @@ TEST (GraphicsTextureStorage, TextAnimation) {
     }
 }
 
+
+TEST (GraphicsTextureStorage, RectAnimation) {
+    graphics::sf::SfGraphicsFactory loader;
+
+    auto rect = loader.create_rect();
+
+    rect->resize(120.2, 300);
+    rect->set_border_color(Color(255, 0 , 0, 128));
+    rect->set_border_width(2);
+    rect->set_fill_color(Color(255,255,255));
+
+    auto canvas = loader.create_canvas();
+
+    for (int i = 0; i <= 5000; ++i) {
+        double x = i / 10.;
+        double y = 100 + x * (1 + sin(x / 100));
+        canvas->clear();
+        rect->set_pos(math::coords_t(x, y));
+        rect->draw(canvas);
+        canvas->apply();
+    }
+}
+

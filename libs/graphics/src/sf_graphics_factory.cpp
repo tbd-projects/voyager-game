@@ -4,6 +4,7 @@
 
 #include "sf/sf_graphics_factory.h"
 #include <SFML/Graphics/Texture.hpp>
+#include <sf/sf_rect.h>
 #include "sf/sf_sprite.h"
 #include "sf/sf_texture.h"
 #include "sf/sf_font.h"
@@ -45,5 +46,9 @@ namespace graphics::sf {
 
     std::unique_ptr<ICanvas> SfGraphicsFactory::create_canvas(int width, int height, bool is_full) {
         return std::unique_ptr<ICanvas>(new SfCanvas(width, height,is_full));
+    }
+
+    std::unique_ptr<Rect> SfGraphicsFactory::create_rect() {
+        return std::make_unique<SfRect>();
     }
 }

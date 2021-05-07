@@ -17,6 +17,8 @@ namespace graphics::sf {
 
         std::unique_ptr<Text> create_text() override;
 
+        std::unique_ptr<Rect> create_rect() override;
+
         std::unique_ptr<ICanvas> create_canvas() override;
 
         std::unique_ptr<ICanvas> create_canvas(int width, int height, bool is_full) override;
