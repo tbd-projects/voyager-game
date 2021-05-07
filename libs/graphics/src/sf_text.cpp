@@ -2,9 +2,9 @@
 // Created by volodya on 06.05.2021.
 //
 
-#include "graphics/sf_text.h"
-#include "graphics/sf_font.h"
-#include "graphics/sf_canvas.h"
+#include "sf/sf_text.h"
+#include "sf/sf_font.h"
+#include "sf/sf_canvas.h"
 
 
 void graphics::sf::SfText::draw(graphics::ICanvas *canvas) {

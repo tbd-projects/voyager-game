@@ -1,12 +1,12 @@
 
 #include <gtest/gtest.h>
-#include "graphics/graphics.h"
-#include "graphics/sf_graphics_factory.h"
+#include "graphics.h"
+#include "graphics/sf/sf_graphics_factory.h"
 #include "graphics/json_sprite_sheet_loader.h"
-#include "graphics/sf_texture.h"
-#include "graphics/sf_canvas.h"
-#include "graphics/sf_text.h"
-#include "graphics/sf_font.h"
+#include "graphics/sf/sf_texture.h"
+#include "graphics/sf/sf_canvas.h"
+#include "graphics/sf/sf_text.h"
+#include "graphics/sf/sf_font.h"
 #include <cmath>
 #include <memory>
 

@@ -8,7 +8,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 
-#include "i_drawable.h"
+#include "graphics/i_drawable.h"
 
 namespace graphics {
 

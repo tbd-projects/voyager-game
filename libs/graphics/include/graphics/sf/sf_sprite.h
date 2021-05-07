@@ -7,7 +7,7 @@
 
 #include <utility>
 #include "graphics/sprite.h"
-#include "graphics/sf_texture.h"
+#include "sf_texture.h"
 
 namespace graphics::sf {
 

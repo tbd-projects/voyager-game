@@ -2,7 +2,7 @@
 // Created by volodya on 15.04.2021.
 //
 
-#include "sf_texture.h"
+#include "sf/sf_texture.h"
 
 int graphics::sf::SfTexture::get_height() {
     return static_cast<int>(_texture.getSize().y);

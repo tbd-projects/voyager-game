@@ -2,13 +2,13 @@
 // Created by volodya on 06.05.2021.
 //
 
-#include "sf_graphics_factory.h"
+#include "sf/sf_graphics_factory.h"
 #include <SFML/Graphics/Texture.hpp>
-#include "sf_sprite.h"
-#include "sf_texture.h"
-#include "sf_font.h"
-#include "sf_text.h"
-#include "sf_canvas.h"
+#include "sf/sf_sprite.h"
+#include "sf/sf_texture.h"
+#include "sf/sf_font.h"
+#include "sf/sf_text.h"
+#include "sf/sf_canvas.h"
 #include "texture_storage.h"
 
 namespace graphics::sf {

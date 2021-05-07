@@ -2,8 +2,8 @@
 // Created by volodya on 15.04.2021.
 //
 
-#include "sf_sprite.h"
-#include "sf_canvas.h"
+#include "sf/sf_sprite.h"
+#include "sf/sf_canvas.h"
 
 graphics::sf::SfSprite::SfSprite(
         const std::pair<int, int> &pos, const std::pair<int, int> &size, graphics::sf::SfTexture *texture

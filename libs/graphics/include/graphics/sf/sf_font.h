@@ -4,7 +4,7 @@
 
 #ifndef VOYAGER_SF_FONT_H
 #define VOYAGER_SF_FONT_H
-#include "font.h"
+#include "graphics/font.h"
 #include <SFML/Graphics/Font.hpp>
 
 namespace graphics::sf {

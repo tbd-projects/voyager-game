@@ -6,7 +6,7 @@
 #define VOYAGER_SF_TEXT_H
 
 #include <SFML/Graphics/Text.hpp>
-#include "text.h"
+#include "graphics/text.h"
 namespace graphics::sf {
     class SfText: public Text{
     public:
