@@ -1,18 +1,31 @@
 #include "main_object.hpp"
 
-GameObject::GameObject(ISprite *sprite) {
-    if (!sprite) {
-        throw std::invalid_argument("Sprite ptr is invalid");
-    }
+Sprite *GameObject::get_sprite() {
+    return this->_sprite;
 }
 
-GameObject::GameObject(size_t sprite_id) {
-
+void GameObject::set_sprite(Sprite *sprite) {
+    this->_sprite = sprite;
 }
 
-bool GameObject::check_collision(const Collision &collision) {
-    return false;
+void GameObject::set_sprite_id(size_t id) {
+    this->_sprite_id = id;
+}
+size_t GameObject::get_sprite_id() {
+    return this->_sprite_id;
 }
 
-GameObject::GameObject() {}
+Sprite *NotActiveObject::get_sprite() {
+    return this->_sprite;
+}
 
+void NotActiveObject::set_sprite(Sprite *sprite) {
+    this->_sprite = sprite;
+}
+
+void NotActiveObject::set_sprite_id(size_t id) {
+    this->_sprite_id = id;
+}
+size_t NotActiveObject::get_sprite_id() {
+    return this->_sprite_id;
+}

@@ -19,19 +19,20 @@ public:
 
     JsonCreateLevel(std::string path);
 
-    JsonCreateLevel &operator=(const JsonCreateLevel &level) = default;
+    JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
+
+    JsonCreateLevel(const JsonCreateLevel&) = delete;
 
     void create_level() override;
 
 
 private:
     std::string _path;
-    std::vector <SpaceBody> _objects_active;
-    std::vector <Star> _objects_not_active;
-    SpaceShip _ship;
-    ISprite *_level_texture{};
+    std::vector <std::shared_ptr<SpaceBody>> _objects_active;
+    std::vector <std::shared_ptr<Star>> _objects_not_active;
 
-    void create_ship();
+    Sprite *_level_texture{};
+    size_t bg_id;
 
     void create_objects();
 

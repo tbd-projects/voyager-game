@@ -1,11 +1,12 @@
 #pragma once
 
 #include "main_object.hpp"
+#include "physics/astronomical_object.hpp"
 #include "loaders/properties_loader.hpp"
 
 class SpaceShip : public GameObject {
 public:
-    SpaceShip() = default;
+    SpaceShip() = delete;
 
     ~SpaceShip() = default;
 
@@ -33,37 +34,39 @@ public:
 
     void set_engine();
 
-    bool set_sprite() override;
-
-    ISprite &get_sprite() override;
-
-    void set_sprite_id(size_t id) override;
-
 private:
-
     properties_t _properties;
 };
 
 class SpaceBody : public GameObject {
 public:
-    SpaceBody();
+    SpaceBody() = delete;
+
+    SpaceBody(size_t sprite_id, Sprite *sprite, std::unique_ptr<math::Polygon> &&pol,
+              size_t weight, math::Vector2d velocity,
+              math::coords_t pos, physics::Orbit::orbit_properties_t orbit) :
+            GameObject(sprite_id, sprite, std::move(pol), weight, velocity, pos, orbit) {};
 
     SpaceBody(const SpaceBody &obj) = delete;
 
     SpaceBody &operator=(const SpaceBody &obj) = delete;
 
-    ~SpaceBody();
+    ~SpaceBody() override = default;
 
 };
 
 class Star : public NotActiveObject {
 public:
-    Star();
+    Star() = delete;
+
+    Star(size_t sprite_id, Sprite *sprite, std::unique_ptr<math::Polygon> &&pol, math::coords_t pos,
+         math::Vector2d velocity, size_t weight) :
+            NotActiveObject(sprite_id, sprite, std::move(pol), pos, velocity, weight) {};
 
     Star(const Star &) = delete;
 
     Star &operator=(const Star &obj) = delete;
 
-    ~Star() = default;
+    ~Star() override = default;
 
 };
