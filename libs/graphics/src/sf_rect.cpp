@@ -21,8 +21,15 @@ void graphics::sf::SfRect::draw(graphics::ICanvas *canvas) {
     auto width = static_cast<float>(get_border_width());
     rect.setOutlineThickness(width);
 
+
     auto pos = get_pos();
     rect.setPosition(pos.x, pos.y);
+
+    rect.setOrigin(get_width() / 2, get_height() / 2);
+
+    rect.setRotation(get_rotation());
+
+
 
     sf_canvas.get_sf_window().draw(rect);
 }

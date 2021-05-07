@@ -51,4 +51,8 @@ namespace graphics::sf {
     std::unique_ptr<Rect> SfGraphicsFactory::create_rect() {
         return std::make_unique<SfRect>();
     }
+
+    Button SfGraphicsFactory::create_button() {
+        return Button(create_rect().release(), create_text().release());
+    }
 }

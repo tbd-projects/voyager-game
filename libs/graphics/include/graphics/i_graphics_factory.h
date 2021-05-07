@@ -14,7 +14,7 @@
 #include "sprite_info.h"
 #include "text.h"
 #include "rect.h"
-
+#include "button.h"
 
 
 namespace graphics {
@@ -36,6 +36,8 @@ namespace graphics {
         virtual std::unique_ptr<ICanvas> create_canvas(int width, int height, bool is_full) = 0;
 
         virtual std::unique_ptr<Rect> create_rect() = 0;
+
+        virtual Button create_button() = 0;
 
         virtual ~IGraphicsFactory() = default;
     };
