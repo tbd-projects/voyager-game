@@ -26,13 +26,13 @@ public:
 
     size_t get_engine();
 
-    void set_fuel();
+    void set_fuel(size_t fuel);
 
-    void set_health();
+    void set_health(size_t health);
 
-    void set_battery();
+    void set_battery(size_t battery);
 
-    void set_engine();
+    void set_engine(size_t engine);
 
 private:
     properties_t _properties;

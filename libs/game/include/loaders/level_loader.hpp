@@ -32,7 +32,7 @@ private:
     std::vector <std::shared_ptr<Star>> _objects_not_active;
 
     Sprite *_level_texture{};
-    size_t bg_id;
+    size_t _bg_id;
 
     void create_objects();
 

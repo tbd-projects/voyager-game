@@ -6,7 +6,7 @@ properties_t &SpaceShip::get_properties() {
 }
 
 void SpaceShip::set_properties(properties_t &properties) {
-
+    this->_properties = properties;
 }
 
 size_t SpaceShip::get_fuel() {
@@ -25,39 +25,18 @@ size_t SpaceShip::get_engine() {
     return _properties.engine_power;
 }
 
-void SpaceShip::set_fuel() {
+void SpaceShip::set_fuel(size_t fuel) {
+    this->_properties.fuel = fuel;
 }
 
-void SpaceShip::set_health() {
+void SpaceShip::set_health(size_t health) {
+    this->_properties.health = health;
 }
 
-void SpaceShip::set_battery() {
+void SpaceShip::set_battery(size_t battery) {
+    this->_properties.battery = battery;
 }
 
-void SpaceShip::set_engine() {
-}
-
-bool SpaceShip::create_object(IGameObject &object) {
-    return false;
-}
-
-bool SpaceShip::set_sprite() {
-    return false;
-}
-
-ISprite &SpaceShip::get_sprite() {
-    return *(this->_sprite);
-}
-
-void SpaceShip::set_sprite_id(size_t id) {
-
-}
-
-
-SpaceBody::~SpaceBody() {
-}
-
-
-Star::Star() {
-
+void SpaceShip::set_engine(size_t engine) {
+    this->_properties.engine_power = engine;
 }
