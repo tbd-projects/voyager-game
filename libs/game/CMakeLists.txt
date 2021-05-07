@@ -14,7 +14,11 @@ if (NOT (TARGET loaders_lib))
     message(FATAL_ERROR "loaders_lib targets NOT found")
 endif()
 
+if (NOT (TARGET physics_lib))
+    message(FATAL_ERROR "physics_lib targets NOT found")
+endif()
 target_link_libraries(${LIBRARY_NAME} debug_lib)
+target_link_libraries(${LIBRARY_NAME} physics_lib)
 target_link_libraries(${LIBRARY_NAME} loaders_lib)
 
 add_subdirectory(test)

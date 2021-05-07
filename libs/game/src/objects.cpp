@@ -1,23 +1,11 @@
 #include "objects.hpp"
 
 
-SpaceShip::SpaceShip(const SpaceShip &ship) : GameObject(ship._sprite) {
-}
-
-
-SpaceShip &SpaceShip::operator=(const SpaceShip &ship) {
-    return *this;
-}
-
-bool SpaceShip::check_collision(const ICollisionable &collision) {
-    return false;
-}
-
-Properties &SpaceShip::get_properties() {
+properties_t &SpaceShip::get_properties() {
     return this->_properties;
 }
 
-void SpaceShip::set_properties(Properties &properties) {
+void SpaceShip::set_properties(properties_t &properties) {
 
 }
 
@@ -53,10 +41,6 @@ bool SpaceShip::create_object(IGameObject &object) {
     return false;
 }
 
-void SpaceShip::move(coords_t coords) {
-
-}
-
 bool SpaceShip::set_sprite() {
     return false;
 }
@@ -69,35 +53,11 @@ void SpaceShip::set_sprite_id(size_t id) {
 
 }
 
-void SpaceShip::set_object_collision() {
-
-}
-
 
 SpaceBody::~SpaceBody() {
 }
 
-SpaceBody::SpaceBody(const SpaceBody &obj) : GameObject(obj._sprite) {
-
-}
-
-SpaceBody &SpaceBody::operator=(const SpaceBody &obj) {
-    return *this;
-}
-
-bool SpaceBody::check_collision(const ICollisionable &collision) {
-    return false;
-}
 
 Star::Star() {
-
-}
-
-Star &Star::operator=(const Star &obj) {
-    return *this;
-}
-
-bool Star::check_collision(const ICollisionable &collision) {
-    return false;
 
 }

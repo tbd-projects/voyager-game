@@ -48,6 +48,8 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${SOURCE})
 
 add_subdirectory("${LIBRARIES_DIR}/debug")
+add_subdirectory("${LIBRARIES_DIR}/math")
+add_subdirectory("${LIBRARIES_DIR}/physics")
 add_subdirectory("${LIBRARIES_DIR}/shop")
 add_subdirectory("${LIBRARIES_DIR}/loaders")
 add_subdirectory("${LIBRARIES_DIR}/game")
