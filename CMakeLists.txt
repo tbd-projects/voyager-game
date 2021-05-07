@@ -40,8 +40,15 @@ set(GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_main.cpp )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
-add_subdirectory("${LIBRARIES_DIR}/graphics")
-add_subdirectory("${LIBRARIES_DIR}/menu")
+foreach(LIBRARY ${LIBRARIES})
+    string(REPLACE "_lib" "" LIBRARY ${LIBRARY})
+    add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
+endforeach(LIBRARY)
+
+target_link_libraries(math_lib debug_lib)
+target_link_libraries(physics_lib debug_lib math_lib)
+
+target_link_libraries(graphics_lib math_lib sfml-graphics sfml-window sfml-system)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 

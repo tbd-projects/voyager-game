@@ -23,9 +23,10 @@ void graphics::sf::SfText::set_font(std::shared_ptr<Font> font)
     auto color = sf_font.get_color();
     _sf_text.setFillColor(
             ::sf::Color(
-                    std::get<0>(color),
-                    std::get<1>(color),
-                    std::get<2>(color)
+                    color.red,
+                    color.green,
+                    color.blue,
+                    color.alpha
             )
     );
 
@@ -42,9 +43,9 @@ int graphics::sf::SfText::get_width() {
     return static_cast<int>(_sf_text.getLocalBounds().width);
 }
 
-void graphics::sf::SfText::set_pos(const std::pair<double, double> &pos) {
-    PosDrawable::set_pos(pos);
+void graphics::sf::SfText::set_pos(math::coords_t pos) {
+    PositionateObject::set_pos(pos);
 
-    std::pair<float, float> position = get_pos();
-    _sf_text.setPosition(position.first, position.second);
+    auto position = get_pos();
+    _sf_text.setPosition(position.x, position.y);
 }

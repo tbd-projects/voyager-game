@@ -7,10 +7,10 @@
 
 #include "graphics/i_drawable.h"
 #include "graphics/i_texture.h"
-#include "pos_drawable.h"
+#include "math/polygon.hpp"
 
 namespace graphics {
-    class Sprite : public PosDrawable {
+class Sprite : public IDrawable, public math::PositionateObject, public math::RotateObject {
     private:
         std::pair<int, int> _texture_pos;
         std::pair<int, int> _texture_size;

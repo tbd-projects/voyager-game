@@ -22,7 +22,10 @@ void graphics::JsonSpriteSheetLoader::_load_info() {
 
     using namespace boost::property_tree;
 
-    std::filesystem::path config_path("./libs/graphics/test/tests/sprites_info/some.json"); // @todo from config
+    auto cur_dir = std::filesystem::path(__FILE__).parent_path();
+    std::filesystem::path config_path(cur_dir / "../test/tests/sprites_info/some.json");
+    // @todo from config
+
     ptree tree;
     read_json(config_path.string(), tree);
 

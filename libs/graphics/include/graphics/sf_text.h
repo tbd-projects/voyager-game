@@ -18,7 +18,7 @@ namespace graphics::sf {
 
         int get_width() override;
 
-        void set_pos(const std::pair<double, double> &pos) override;
+        void set_pos(math::coords_t pos) override;
 
     private:
         ::sf::Text _sf_text;

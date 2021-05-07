@@ -20,11 +20,11 @@ void graphics::Font::set_size(int size) {
     _size = size;
 }
 
-std::tuple<char, char, char> graphics::Font::get_color() const{
+Color graphics::Font::get_color() const{
     return _color;
 }
 
-void graphics::Font::set_color(const std::tuple<char, char, char> &color) {
+void graphics::Font::set_color(const Color &color) {
     _color = color;
 }
 

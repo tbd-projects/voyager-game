@@ -8,9 +8,11 @@
 #include <string>
 #include <filesystem>
 #include "font.h"
-#include "pos_drawable.h"
+#include "i_drawable.h"
+#include "math/polygon.hpp"
+
 namespace graphics {
-    class Text: public PosDrawable{
+    class Text : public IDrawable, public math::PositionateObject {
     private:
         std::string _string;
         std::shared_ptr<Font> _font;

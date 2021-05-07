@@ -8,12 +8,14 @@
 #include <filesystem>
 #include <string>
 
+#include "color.h"
+
 namespace graphics {
     class Font {
     private:
         std::filesystem::path _path;
         int _size = 16;
-        std::tuple<char, char, char> _color = std::tuple<char, char, char>(0, 0, 0);
+        Color _color = Color(0, 0, 0);
     public:
         Font() = default;
         explicit Font(const std::string& path);
@@ -27,9 +29,9 @@ namespace graphics {
 
         virtual void set_size(int size);
 
-        virtual std::tuple<char, char, char> get_color() const;
+        virtual Color get_color() const;
 
-        virtual void set_color(const std::tuple<char, char, char> &color);
+        virtual void set_color(const Color &color);
 
         virtual ~Font() = default;
     };

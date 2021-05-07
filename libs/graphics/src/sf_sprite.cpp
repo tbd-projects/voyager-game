@@ -4,8 +4,6 @@
 
 #include "sf_sprite.h"
 #include "sf_canvas.h"
-#include "pos_drawable.h"
-
 
 graphics::sf::SfSprite::SfSprite(
         const std::pair<int, int> &pos, const std::pair<int, int> &size, graphics::sf::SfTexture *texture
@@ -29,8 +27,16 @@ void graphics::sf::SfSprite::draw(graphics::ICanvas *canvas) {
             crop_size.first, crop_size.second
     ));
 
-    auto pos = static_cast<std::pair<float, float>>(get_pos());
-    sprite.setPosition(::sf::Vector2f(pos.first, pos.second));
+    auto pos = get_pos();
+    sprite.setPosition(pos.x, pos.y);
+
+    auto dx = sprite.getGlobalBounds().width / 2;
+    auto dy = sprite.getGlobalBounds().height / 2;
+
+    sprite.setOrigin(dx, dy);
+
+    auto angle = get_rotation();
+    sprite.setRotation(angle);
 
     window.draw(sprite);
 }
@@ -46,6 +52,7 @@ void graphics::sf::SfHorizontalAnimatedSprite::draw(graphics::ICanvas *canvas) {
 
     pos.first += get_current_frame() * size.first;
     SfSprite sprite(pos, size, &dynamic_cast<SfTexture &>(get_texture()));
+    sprite.set_rotation(get_rotation());
     sprite.set_pos(get_pos());
     sprite.draw(canvas);
 }
