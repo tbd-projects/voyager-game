@@ -14,6 +14,17 @@
 namespace graphics {
     class Text : public IDrawable, public math::PositionateObject {
     private:
+        int _size = 16;
+        Color _color = Color(0, 0, 0);
+    public:
+        virtual int get_size() const;
+
+        virtual void set_size(int size);
+
+        virtual Color get_color() const;
+
+        virtual void set_color(const Color &color);
+    private:
         std::string _string;
         std::shared_ptr<Font> _font;
     public:

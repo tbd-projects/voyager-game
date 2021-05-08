@@ -14,8 +14,6 @@ namespace graphics {
     class Font {
     private:
         std::filesystem::path _path;
-        int _size = 16;
-        Color _color = Color(0, 0, 0);
     public:
         Font() = default;
         explicit Font(const std::string& path);
@@ -24,14 +22,6 @@ namespace graphics {
         virtual std::filesystem::path get_path() const;
 
         virtual void set_path(const std::filesystem::path &path);
-
-        virtual int get_size() const;
-
-        virtual void set_size(int size);
-
-        virtual Color get_color() const;
-
-        virtual void set_color(const Color &color);
 
         virtual ~Font() = default;
     };

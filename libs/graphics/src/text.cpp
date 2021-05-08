@@ -19,4 +19,23 @@ namespace graphics {
     void Text::set_string(const std::string &string) {
         _string = string;
     }
+
+    int Text::get_size() const{
+        return _size;
+    }
+
+    void Text::set_size(int size) {
+        if (size < 0)
+            throw;
+
+        _size = size;
+    }
+
+    Color Text::get_color() const{
+        return _color;
+    }
+
+    void Text::set_color(const Color &color) {
+        _color = color;
+    }
 }

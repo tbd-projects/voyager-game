@@ -12,7 +12,7 @@ namespace menu {
     public:
         void draw(graphics::ICanvas &canvas) override;
         ~PauseMenu() override;
-        void update(Event event) override;
+        void update(Event &event) override;
     };
 }
 

@@ -6,6 +6,7 @@
 
 void graphics::sf::SfFont::set_path(const std::filesystem::path &path) {
     Font::set_path(path);
+
     if (!_font.loadFromFile(path.string()))
         throw std::exception();
 }

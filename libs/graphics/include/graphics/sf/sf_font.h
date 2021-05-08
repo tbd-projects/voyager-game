@@ -15,7 +15,6 @@ namespace graphics::sf {
         void set_path(const std::filesystem::path &path) override;
 
         const ::sf::Font& get_sf_font() const;
-
     };
 }
 

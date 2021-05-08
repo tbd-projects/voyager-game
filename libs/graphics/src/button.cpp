@@ -59,16 +59,15 @@ void graphics::Button::set_pos(math::coords_t pos) {
 }
 
 void graphics::Button::_update_drawables() {
-    auto &font = _text->get_font();
     if (is_focused()) {
         _rect->set_fill_color(_focus_bg_color);
-        font.set_color(_focus_text_color);
+        _text->set_color(_focus_text_color);
     } else {
         _rect->set_fill_color(_bg_color);
-        font.set_color(_text_color);
+        _text->set_color(_text_color);
     }
 
-    font.set_size(static_cast<int>(get_height()) - get_padding() * 2);
+    _text->set_size(std::max(static_cast<int>(get_height()) - get_padding() * 2, 0));
 
     auto width = std::max(get_width(), _text->get_width() + get_padding() * 2.f);
     if (width != get_width())
@@ -114,5 +113,5 @@ void graphics::Button::set_string(const std::string &string) {
 }
 
 void graphics::Button::set_font(std::shared_ptr<Font> font) {
-    _text->set_font(std::move(font));
+    _text->set_font(font);
 }

@@ -92,11 +92,12 @@ TEST (GraphicsTextureStorage, TextAnimation) {
 
     auto font = loader.create_font();
     font->set_path( cur_dir / "./fonts/Roboto-Medium.ttf");
-    font->set_color(Color(0,0,255));
-    font->set_size(60);
 
     auto text = loader.create_text();
     text->set_font(font);
+
+    text->set_color(Color(0,0,255));
+    text->set_size(60);
     text->set_string("Hello world!");
 
     auto canvas = loader.create_canvas();
@@ -193,11 +194,12 @@ TEST (GraphicsTextureStorage, Text) {
 
     auto font = loader.create_font();
     font->set_path( cur_dir / "./fonts/Roboto-Medium.ttf");
-    font->set_color(Color(0,255,0));
-    font->set_size(60);
+
 
     auto text = loader.create_text();
     text->set_font(font);
+    text->set_color(Color(0,0,255));
+    text->set_size(60);
     text->set_string("O");
     text->set_pos(math::coords_t(0,0));
 

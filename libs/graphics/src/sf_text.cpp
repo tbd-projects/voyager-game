@@ -11,13 +11,13 @@ void graphics::sf::SfText::draw(graphics::ICanvas *canvas) {
     auto &sf_canvas = *dynamic_cast<SfCanvas *>(canvas);
     auto &window = sf_canvas.get_sf_window();
 
-    auto color = get_font().get_color();
+    auto color = get_color();
     _sf_text.setFillColor(::sf::Color(color.red, color.green, color.blue));
-    _sf_text.setCharacterSize(get_font().get_size());
+    _sf_text.setCharacterSize(get_size());
 
     // sfml have some problems with text drawings, because use magic number here
     auto text_width = get_width();
-    _sf_text.setOrigin(text_width / 2, get_font().get_size() * 0.724092001);
+    _sf_text.setOrigin(text_width / 2, get_size() * 0.724092001);
 
 
     auto position = get_pos();
@@ -31,17 +31,6 @@ void graphics::sf::SfText::set_font(std::shared_ptr<Font> font) {
 
     auto &sf_font = dynamic_cast<graphics::sf::SfFont &>(get_font());
     _sf_text.setFont(sf_font.get_sf_font());
-    _sf_text.setCharacterSize(sf_font.get_size());
-
-    auto color = sf_font.get_color();
-    _sf_text.setFillColor(
-            ::sf::Color(
-                    color.red,
-                    color.green,
-                    color.blue,
-                    color.alpha
-            )
-    );
 
 }
 
@@ -52,11 +41,15 @@ void graphics::sf::SfText::set_string(const std::string &string) {
 }
 
 int graphics::sf::SfText::get_width() {
+    if (get_string().empty()) return 0;
+
     auto &sf_font = dynamic_cast<graphics::sf::SfFont &>(get_font());
     _sf_text.setFont(sf_font.get_sf_font());
-    _sf_text.setCharacterSize(sf_font.get_size());
+    _sf_text.setCharacterSize(get_size());
 
-    return static_cast<int>(_sf_text.findCharacterPos(get_string().size()).x
+    return _sf_text.getLocalBounds().width;
+
+    return static_cast<int>(_sf_text.findCharacterPos(get_string().size() - 1).x
                             - _sf_text.findCharacterPos(0).x);
 }
 

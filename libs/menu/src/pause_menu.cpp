@@ -10,6 +10,6 @@ void menu::PauseMenu::draw(graphics::ICanvas &canvas) {
 
 menu::PauseMenu::~PauseMenu() = default;
 
-void menu::PauseMenu::update(Event event) {
+void menu::PauseMenu::update(Event &event) {
 
 }
