@@ -11,8 +11,7 @@
 namespace event_controller {
     class FPSEvent: public Event{
     public:
-        graphics::ICanvas &canvas;
-        FPSEvent(graphics::ICanvas &canvas): Event(EventType::fps), canvas(canvas) {}
+        FPSEvent(): Event(EventType::fps) {}
     };
 
 }

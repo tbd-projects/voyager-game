@@ -6,7 +6,7 @@
 #define VOYAGER_CONTROLLER_H
 
 #include <map>
-#include <vector>
+#include <set>
 #include "i_controller.h"
 #include "i_eventable.h"
 
@@ -14,7 +14,7 @@ namespace event_controller {
 
     class Controller : public IController{
     private:
-        std::map<EventType, std::vector<ISubscriber *>> _subscribers;
+        std::map<EventType, std::set<ISubscriber *>> _subscribers;
         game_manager::GameManager &_manager;
         IEventable &_eventable;
     public:

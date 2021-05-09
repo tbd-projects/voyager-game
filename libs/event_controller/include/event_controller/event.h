@@ -10,7 +10,8 @@ namespace event_controller {
 
     enum EventType {
         keyboard,
-        fps
+        fps,
+        close
     };
 
     class Event {
