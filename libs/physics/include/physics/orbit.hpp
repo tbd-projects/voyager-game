@@ -8,6 +8,7 @@
 
 namespace physics {
 
+
 class Orbit {
   public:
     struct orbit_properties_t {

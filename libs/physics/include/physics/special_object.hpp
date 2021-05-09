@@ -59,4 +59,5 @@ class ColideObject : public math::IPositionable {
     std::unique_ptr<math::Polygon> _polygon;
 };
 
+
 }  // namespace physics

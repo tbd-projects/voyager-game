@@ -8,6 +8,7 @@
 
 namespace physics {
 
+
 class PhysicalObject : public EnginesIndexedObject
                     , public ColideObject, public AcceleratableObject {
   public:
