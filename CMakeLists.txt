@@ -54,6 +54,9 @@ target_link_libraries(menu_lib graphics_lib)
 
 target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
 
+
+target_link_libraries(game_manager_lib event_controller_lib graphics_lib game_lib menu_lib)
+
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
 get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
