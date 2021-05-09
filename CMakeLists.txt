@@ -8,8 +8,9 @@ set(PROJECT_NAME voyager)
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCE ${SOURCE_DIR}/main.cpp)
 set(LIBRARIES_DIR ${CMAKE_SOURCE_DIR}/libs)
-
-set(LIBRARIES loaders_lib game_lib shop_lib)
+cmake_policy(SET CMP0079 NEW)
+set(LIBRARIES debug_lib math_lib physics_lib loaders_lib graphics_lib
+        shop_lib event_controller_lib game_manager_lib menu_lib game_lib)
 
 project(${PROJECT_NAME})
 
@@ -28,39 +29,41 @@ append_coverage_compiler_flags()
 # GTest #
 #########
 
-enable_testing()
-find_package(GTest REQUIRED)
+#enable_testing()
+find_package(GTest)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-add_executable(gtest ${CMAKE_SOURCE_DIR}/src/test_main.cpp)
-target_link_libraries(gtest ${GTEST_LIBRARIES} pthread)
-add_test(gtest gtest)
+#set(GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_main.cpp )
+set_property(GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_main.cpp)
 
-#########
-# Boost #
-#########
-find_package(Boost 1.71.0 REQUIRED COMPONENTS filesystem)
-include_directories(${Boost_INCLUDE_DIRS})
 ###########
 # Project #
 ###########
 
 add_executable(${PROJECT_NAME} ${SOURCE})
 
-add_subdirectory("${LIBRARIES_DIR}/debug")
-add_subdirectory("${LIBRARIES_DIR}/math")
-add_subdirectory("${LIBRARIES_DIR}/physics")
-add_subdirectory("${LIBRARIES_DIR}/shop")
-add_subdirectory("${LIBRARIES_DIR}/loaders")
-add_subdirectory("${LIBRARIES_DIR}/game")
+foreach(LIBRARY ${LIBRARIES})
+    string(REPLACE "_lib" "" LIBRARY ${LIBRARY})
+    add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
+endforeach(LIBRARY)
+
+target_link_libraries(math_lib debug_lib)
+target_link_libraries(physics_lib debug_lib math_lib)
+
+target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+
+get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
+
+add_executable(gtest ${tmp})
+target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread)
+#add_test(gtest gtest)
+
+setup_target_for_coverage_lcov (
+        NAME coverage
+        EXECUTABLE gtest
+        BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
+        EXCLUDE "/usr/*" ${tmp} "/*/*.hpp"
+)
 
 
 
-target_link_libraries(${PROJECT_NAME} ${LIBRARIES} ${Boost_LIBRARIES})
-
-#setup_target_for_coverage_lcov (
-#        NAME coverage
-#        EXECUTABLE gtest
-#        BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
-#        EXCLUDE "/usr/*"
-#)

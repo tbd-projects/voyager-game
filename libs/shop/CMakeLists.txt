@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.1x)
 
 set(PROJECT_NAME shop_lib)
 set(LIBRARY_NAME shop_lib)
