@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1X)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -ggdb3")
+set(CMAKE_CXX_FLAGS "-Wall -Wpedantic -ggdb3")
 
 set(PROJECT_NAME voyager)
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
@@ -51,6 +51,8 @@ target_link_libraries(math_lib debug_lib)
 target_link_libraries(physics_lib debug_lib math_lib)
 target_link_libraries(graphics_lib math_lib sfml-graphics sfml-window sfml-system)
 target_link_libraries(menu_lib graphics_lib)
+
+target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
