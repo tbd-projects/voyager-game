@@ -5,17 +5,22 @@ macro( connect_test project_test_name lib_name main_project_test_name )
 
     file(GLOB TESTS_SOURCE ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp)
 
-    if (NOT (GTEST_SOURCE_TEST_DIR))
+    get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
+
+    if (NOT (tmp))
         message(FATAL_ERROR "NOT found variable GTEST_SOURCE_TEST_DIR for test source")
     endif()
 
-    set(GTEST_SOURCE_TEST_DIR ${GTEST_SOURCE_TEST_DIR} ${TESTS_SOURCE})
+    set(tmp ${tmp} ${TESTS_SOURCE})
 
-    add_executable(${project_test_name} "${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp" ${TESTS_SOURCE})
+    set_property(GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR ${tmp})
+
+    add_executable(${project_test_name} ${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp ${TESTS_SOURCE})
 
     target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread)
 
-    add_test(${project_test_name} ${project_test_name})
+    #add_test(${project_test_name} ${project_test_name})
+
 
 endmacro( connect_test )
 

@@ -2,8 +2,8 @@ image: volodyalarin/tp_cpp_course_env:project
 
 variables:
   COVER_LOG: cover.log
-  PROG: main.out
-  UNIT: unit.out
+  PROG: voyager
+  UNIT: gtest
   LINTER: linter.sh
   VALGRIND_LOG: valgrind.log
   NO_LOST_PATTERN: "All heap blocks were freed -- no leaks are possible"
@@ -46,7 +46,7 @@ coverage:
   stage: test
   script:
     - cd build && cmake -DCMAKE_BUILD_TYPE=Debug ..
-    - make codeCoverage > ${COVER_LOG}
+    - make coverage > ${COVER_LOG}
     - cat ${COVER_LOG}
   artifacts:
     paths:
