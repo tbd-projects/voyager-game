@@ -15,10 +15,10 @@ namespace event_controller {
     class Controller : public IController{
     private:
         std::map<EventType, std::vector<ISubscriber *>> _subscribers;
-        GameManager &_manager;
+        game_manager::GameManager &_manager;
         IEventable &_eventable;
     public:
-        Controller(GameManager &manager, IEventable &eventable);
+        Controller(game_manager::GameManager &manager, IEventable &eventable);
 
         void run();
         void subscribe(EventType type, ISubscriber &subscriber) override;

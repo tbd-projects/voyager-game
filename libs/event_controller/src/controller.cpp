@@ -17,5 +17,5 @@ namespace event_controller {
 
     }
 
-    Controller::Controller(GameManager &manager, IEventable &eventable) : _manager(manager), _eventable(eventable) {}
+    Controller::Controller(game_manager::GameManager &manager, IEventable &eventable) : _manager(manager), _eventable(eventable) {}
 }

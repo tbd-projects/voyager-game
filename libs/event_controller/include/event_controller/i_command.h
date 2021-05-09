@@ -5,12 +5,15 @@
 #ifndef VOYAGER_I_COMMAND_H
 #define VOYAGER_I_COMMAND_H
 
-class GameManager; // @todo use external definition
+namespace game_manager {
+    class GameManager;
+}
+
 
 namespace event_controller {
-
     class ICommand {
-        virtual void execute(GameManager &manager) = 0;
+    public:
+        virtual void execute(game_manager::GameManager &manager) = 0;
 
         virtual ~ICommand() = default;
     };
