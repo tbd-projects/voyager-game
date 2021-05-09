@@ -22,7 +22,7 @@ namespace physics {
         explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&
                 , size_t weight
                 , math::Vector2d velocity, math::coords_t pos
-                , Orbit::orbit_properties_t orbit) {};
+                , Orbit::orbit_properties_t orbit);
 
         [[nodiscard]] constexpr const Orbit &get_orbit() const noexcept;
 
@@ -35,8 +35,5 @@ namespace physics {
     private:
         Orbit _orbit;
     };
-
-
-    }
 
 }  // namespace physics

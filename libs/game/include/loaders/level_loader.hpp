@@ -38,5 +38,5 @@ private:
 
     void set_texture();
 
-    IGameObject *load_space_object(pt::ptree &tree, std::string obj_name);
+    void load_space_objects(pt::ptree &tree, std::string obj_name);
 };

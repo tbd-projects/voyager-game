@@ -20,37 +20,37 @@ void JsonCreateLevel::create_level() {
     pt::ptree tree;
     pt::read_json(this->_path, tree);
 
-    this->bg_id = tree.get<size_t>("background.sprite_id");
+    this->_bg_id = tree.get<size_t>("background.sprite_id");
 //    this->_level_texture = new ISprite(background_id);
 
-    this->load_space_object(tree, "stars");
-    this->load_space_object(tree, "planets");
+    this->load_space_objects(tree, "stars");
+    this->load_space_objects(tree, "planets");
 
 
 }
 
-IGameObject *JsonCreateLevel::load_space_object(pt::ptree &tree, std::string obj_name) {
+void JsonCreateLevel::load_space_objects(pt::ptree &tree, std::string obj_name) {
     for (pt::ptree::value_type &planet : tree.get_child(obj_name)) {
 
-        physics::Orbit::orbit_properties_t orb_prop{};
+        physics::Orbit::orbit_properties_t orb_prop;
 
-        coords_t orbit_pos;
+        math::coords_t orbit_pos;
         orbit_pos.x = planet.second.get<size_t>("x_c");
         orbit_pos.y = planet.second.get<size_t>("y_c");
         orb_prop.pos = orbit_pos;
 
-        coords_t orbit_var;
+        math::coords_t orbit_var;
         orbit_var.x = planet.second.get<size_t>("a");
         orbit_var.y = planet.second.get<size_t>("b");
         orb_prop.variables = orbit_var;
 
-        coords_t velocity;
+        math::coords_t velocity;
         velocity.x = planet.second.get<size_t>("velocity.x");
         velocity.y = planet.second.get<size_t>("velocity.y");
 
         auto weight = planet.second.get<size_t>("weight");
 
-        coords_t position;
+        math::coords_t position;
         position.x = planet.second.get<size_t>("pos.x");
         position.y = planet.second.get<size_t>("pos.y");
 
@@ -81,7 +81,6 @@ IGameObject *JsonCreateLevel::load_space_object(pt::ptree &tree, std::string obj
         } else {
             throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
         }
-
 
     }
 }

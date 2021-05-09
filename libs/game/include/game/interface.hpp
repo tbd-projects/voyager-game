@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <memory>
 
 class Sprite {
 
@@ -15,9 +16,9 @@ class IGameObject {
 public:
     IGameObject();
 
-    virtual void set_sprite(Sprite *sprite) = 0;
+    virtual void set_sprite(std::unique_ptr<Sprite> sprite) = 0;
 
-    virtual Sprite *get_sprite() = 0;
+    virtual const std::unique_ptr<Sprite> &get_sprite() = 0;
 
     virtual void set_sprite_id(size_t id) = 0;
 
@@ -26,7 +27,7 @@ public:
     virtual ~IGameObject() = 0;
 
 protected:
-    Sprite *_sprite;
+    std::unique_ptr<Sprite> _sprite;
     size_t _sprite_id;
 };
 

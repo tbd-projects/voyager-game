@@ -1,22 +1,19 @@
 #include <stdexcept>
 #include "game.hpp"
 
-Map::Map(CreatorLevel *level) {
-
-}
-
-Map::Map(const Map &map) {
-}
-
-Map::Map() {
-
-}
 
 bool Map::update() {
     return false;
 }
 
 void Map::check_all_collision() {
+
+}
+
+void Map::set_sprites(MapSpriteCreator& factory) {
+    for (auto& planet : this->_space_objects) {
+        planet->set_sprite(factory.get_sprite(planet->get_sprite_id()));
+    }
 
 }
 

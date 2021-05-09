@@ -42,10 +42,10 @@ class SpaceBody : public GameObject {
 public:
     SpaceBody() = delete;
 
-    SpaceBody(size_t sprite_id, Sprite *sprite, std::unique_ptr<math::Polygon> &&pol,
+    SpaceBody(size_t sprite_id, std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
               size_t weight, math::Vector2d velocity,
               math::coords_t pos, physics::Orbit::orbit_properties_t orbit) :
-            GameObject(sprite_id, sprite, std::move(pol), weight, velocity, pos, orbit) {};
+            GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos, orbit) {};
 
     SpaceBody(const SpaceBody &obj) = delete;
 
@@ -59,9 +59,9 @@ class Star : public NotActiveObject {
 public:
     Star() = delete;
 
-    Star(size_t sprite_id, Sprite *sprite, std::unique_ptr<math::Polygon> &&pol, math::coords_t pos,
+    Star(size_t sprite_id, std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol, math::coords_t pos,
          math::Vector2d velocity, size_t weight) :
-            NotActiveObject(sprite_id, sprite, std::move(pol), pos, velocity, weight) {};
+            NotActiveObject(sprite_id, std::move(sprite), std::move(pol), pos, velocity, weight) {};
 
     Star(const Star &) = delete;
 
