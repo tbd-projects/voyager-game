@@ -1,163 +1,166 @@
-
 #include <gtest/gtest.h>
 #include "graphics.h"
 #include "graphics/sf/sf_graphics_factory.h"
 #include "graphics/json_sprite_sheet_loader.h"
 #include "graphics/sf/sf_texture.h"
-#include "graphics/sf/sf_canvas.h"
 #include "graphics/sf/sf_text.h"
 #include "graphics/sf/sf_font.h"
 #include <cmath>
 #include <memory>
 
-auto cur_dir = std::filesystem::path(__FILE__).parent_path();
 
-TEST (GraphicsTextureStorage, Get) {
-    graphics::sf::SfGraphicsFactory loader;
+#include <game_manager/sf/sf_window.h>
+#include <game_manager/config.h>
 
-    graphics::TextureStorage storage(loader);
+class MockJSONSpriteSheetLoader
+        : public graphics::JsonSpriteSheetLoader
+        {
+public:
+    explicit MockJSONSpriteSheetLoader(graphics::IGraphicsFactory &factory)
+    : JsonSpriteSheetLoader(factory) {}
+    std::filesystem::path _get_config_path() override
+    {
+        return std::filesystem::path(__FILE__).parent_path() / "sprites_info/some.json";
+    }
+};
 
-    auto texture = storage.get(cur_dir / "./sprites_info/1.png");
+class GraphicsTests : public ::testing::Test {
+protected:
+    std::filesystem::path _cur_dir = std::filesystem::path(__FILE__).parent_path();
+    graphics::sf::SfGraphicsFactory _factory;
+    ::sf::RenderWindow _sf_window;
+    std::unique_ptr<graphics::ICanvas> _canvas;
+    graphics::TextureStorage _storage;
+    MockJSONSpriteSheetLoader _sprite_loader;
+public:
+    GraphicsTests(): _sf_window(
+            ::sf::VideoMode::getDesktopMode(),
+            "MyApp",
+            sf::Style::Fullscreen
+    ), _canvas(std::make_unique<::game_manager::SfWindow>(_sf_window)),
+    _storage(_factory),
+    _sprite_loader(_factory)
+    {
+    }
+
+    std::shared_ptr<graphics::Font> get_font(){
+        auto font = _factory.create_font();
+        font->set_path( _cur_dir / "./fonts/Roboto-Medium.ttf");
+        return font;
+    }
+
+    void SetUp() override {
+        _canvas->clear();
+    }
+
+};
+
+
+TEST_F (GraphicsTests, Get) {
+    auto texture = _storage.get(_cur_dir / "./sprites_info/1.png");
 
     ASSERT_EQ(texture->get_height(), 100);
     ASSERT_EQ(texture->get_width(), 100);
 }
 
 
-TEST (GraphicsTextureStorage, GetSprite) {
-    graphics::sf::SfGraphicsFactory loader;
-
-    graphics::TextureStorage storage(loader);
-
-    graphics::JsonSpriteSheetLoader sheet_loader(loader);
-
-    auto sprite = sheet_loader.load(0, storage);
-    auto canvas = loader.create_canvas();
+TEST_F (GraphicsTests, GetSprite) {
+    auto sprite = _sprite_loader.load(0, _storage);
 
     for (int i = 0; i <= 5000; ++i) {
         double x = i / 10.;
         double y = x * (1 + sin(x / 100));
-        canvas->clear();
-        sprite->draw(canvas);
+        _canvas->clear();
+        sprite->draw(_canvas);
         sprite->set_pos(math::coords_t(x, y));
-        canvas->apply();
+        _canvas->apply();
     }
 }
 
-TEST (GraphicsTextureStorage, SpriteAnimation) {
-    graphics::sf::SfGraphicsFactory loader;
-
-    graphics::TextureStorage storage(loader);
-
-    graphics::JsonSpriteSheetLoader sheet_loader(loader);
-
-    auto sprite = dynamic_cast<graphics::AnimatedSprite *>(sheet_loader.load(1, storage).release());
-    auto canvas = loader.create_canvas();
-
+TEST_F (GraphicsTests, SpriteAnimation) {
+    auto sprite = dynamic_cast<graphics::AnimatedSprite *>(_sprite_loader.load(1, _storage).release());
     for (int i = 0; i <= 5000; ++i) {
         double x = i / 100.;
-        canvas->clear();
-        sprite->draw(canvas);
+        _canvas->clear();
+        sprite->draw(_canvas);
         if (i % 50 == 0) sprite->next_frame();
         sprite->set_pos(math::coords_t(x, 100));
-        canvas->apply();
+        _canvas->apply();
     }
 }
 
 
-TEST (GraphicsTextureStorage, SpriteAnimationRotation) {
-    graphics::sf::SfGraphicsFactory loader;
-
-    graphics::TextureStorage storage(loader);
-
-    graphics::JsonSpriteSheetLoader sheet_loader(loader);
-
-    auto sprite = dynamic_cast<graphics::AnimatedSprite *>(sheet_loader.load(1, storage).release());
-    auto canvas = loader.create_canvas();
-
+TEST_F (GraphicsTests, SpriteAnimationRotation) {
+    auto sprite = dynamic_cast<graphics::AnimatedSprite *>(_sprite_loader.load(1, _storage).release());
     sprite->set_pos(math::coords_t(100,100));
+
     for (int i = 0; i <= 5000; ++i) {
-        canvas->clear();
+        _canvas->clear();
         sprite->add_rotation(0.05);
         if (i % 50 == 0) sprite->next_frame();
 
-        sprite->draw(canvas);
-        canvas->apply();
+        sprite->draw(_canvas);
+        _canvas->apply();
     }
 }
 
 
-TEST (GraphicsTextureStorage, TextAnimation) {
-    graphics::sf::SfGraphicsFactory loader;
-
-    auto font = loader.create_font();
-    font->set_path( cur_dir / "./fonts/Roboto-Medium.ttf");
-
-    auto text = loader.create_text();
+TEST_F (GraphicsTests, TextAnimation) {
+    auto font = get_font();
+    auto text = _factory.create_text();
     text->set_font(font);
 
     text->set_color(Color(0,0,255));
     text->set_size(60);
     text->set_string("Hello world!");
 
-    auto canvas = loader.create_canvas();
-
     for (int i = 0; i <= 5000; ++i) {
         double x = i / 10.;
         double y = 100 + x * (1 + sin(x / 100));
-        canvas->clear();
+        _canvas->clear();
         text->set_pos(math::coords_t(x, y));
-        text->draw(canvas);
-        canvas->apply();
+        text->draw(_canvas);
+        _canvas->apply();
     }
 }
 
 
-TEST (GraphicsTextureStorage, RectAnimation) {
-    graphics::sf::SfGraphicsFactory loader;
-
-    auto rect = loader.create_rect();
+TEST_F (GraphicsTests, RectAnimation) {
+    auto rect = _factory.create_rect();
 
     rect->resize(120.2, 300);
     rect->set_border_color(Color(255, 0 , 0, 128));
     rect->set_border_width(2);
     rect->set_fill_color(Color(255,255,255));
 
-    auto canvas = loader.create_canvas();
 
     for (int i = 0; i <= 5000; ++i) {
         double x = i / 10.;
         double y = 100 + x * (1 + sin(x / 100));
-        canvas->clear();
+        _canvas->clear();
         rect->set_pos(math::coords_t(x, y));
-        rect->draw(canvas);
-        canvas->apply();
+        rect->draw(_canvas);
+        _canvas->apply();
     }
 }
 
 
-TEST (GraphicsTextureStorage, Button) {
-    graphics::sf::SfGraphicsFactory loader;
-    graphics::TextureStorage storage(loader);
-    graphics::JsonSpriteSheetLoader spriteSheetLoader(loader);
-    auto bg = spriteSheetLoader.load(2, storage);
+TEST_F (GraphicsTests, Button) {
+    auto bg = _sprite_loader.load(2, _storage);
 
-    auto canvas = loader.create_canvas();
+    auto center = math::coords_t(_canvas->get_width() / 2.f, _canvas->get_height() / 2.f);
 
-    auto center = math::coords_t(canvas->get_width() / 2.f, canvas->get_height() / 2.f);
-
-    auto rect = loader.create_rect();
+    auto rect = _factory.create_rect();
     rect->set_fill_color(Color(255,255,255));
     rect->set_border_color(Color(0,255,0));
     rect->set_border_width(10);
-    rect->resize(canvas->get_height(), canvas->get_width());
+    rect->resize(_canvas->get_height(), _canvas->get_width());
     rect->set_pos(center);
     bg->set_pos(center);
 
-    auto button = loader.create_button();
+    auto button = _factory.create_button();
 
-    auto font = loader.create_font();
-    font->set_path( cur_dir / "./fonts/Roboto-Medium.ttf");
+    auto font = get_font();
     button.set_font(font);
 
     std::string text("Hejjo world!");
@@ -169,10 +172,10 @@ TEST (GraphicsTextureStorage, Button) {
 
 
     for (int i = 0; i <= 5000; ++i) {
-        canvas->clear();
+        _canvas->clear();
 
-        rect->draw(canvas);
-        bg->draw(canvas);
+        rect->draw(_canvas);
+        bg->draw(_canvas);
 
         if ( i % 400 == 0)
         {
@@ -182,60 +185,51 @@ TEST (GraphicsTextureStorage, Button) {
             button.set_focus(!button.is_focused());
         }
 
-        button.draw(canvas.get());
-        canvas->apply();
+        button.draw(_canvas.get());
+        _canvas->apply();
     }
 }
 
 
 
-TEST (GraphicsTextureStorage, Text) {
-    graphics::sf::SfGraphicsFactory loader;
+TEST_F (GraphicsTests, Text) {
+    auto font = get_font();
 
-    auto font = loader.create_font();
-    font->set_path( cur_dir / "./fonts/Roboto-Medium.ttf");
-
-
-    auto text = loader.create_text();
+    auto text = _factory.create_text();
     text->set_font(font);
     text->set_color(Color(0,0,255));
     text->set_size(60);
     text->set_string("O");
     text->set_pos(math::coords_t(0,0));
 
-    auto canvas = loader.create_canvas();
-
     for (int i = 0; i <= 500; ++i) {
-        canvas->clear();
-        text->draw(canvas);
-        canvas->apply();
+        _canvas->clear();
+        text->draw(_canvas);
+        _canvas->apply();
     }
 }
 
 
-TEST (GraphicsTextureStorage, Button2) {
-    graphics::sf::SfGraphicsFactory loader;
-    auto canvas = loader.create_canvas();
+TEST_F (GraphicsTests, Button2) {
+    auto center = math::coords_t(_canvas->get_width() / 2.f, _canvas->get_height() / 2.f);
 
-    auto center = math::coords_t(canvas->get_width() / 2.f, canvas->get_height() / 2.f);
+    auto button = _factory.create_button();
 
-    auto button = loader.create_button();
-
-    auto font = loader.create_font();
-    font->set_path( cur_dir / "./fonts/Roboto-Medium.ttf");
+    auto font = get_font();
     button.set_font(font);
 
     std::string text("Hejjo world!");
     button.set_string(text);
     button.set_padding(0);
 
-    auto rext = loader.create_rect();
+    auto rext = _factory.create_rect();
     rext->resize(10,10);
     rext->set_fill_color(Color(0,255,0));
 
 
     for (int i = 0; i <= 5000; ++i) {
-        canvas->clear();
+
+        _canvas->clear();
 
         double t = i / 500. * M_2_PI;
         double k = 100 * (1.2 + sin(t * 3));
@@ -247,9 +241,9 @@ TEST (GraphicsTextureStorage, Button2) {
         button.set_pos(pos);
         rext->set_pos(pos);
 
-        button.draw(canvas.get());
-        rext->draw(canvas.get());
+        button.draw(_canvas.get());
+        rext->draw(_canvas.get());
 
-        canvas->apply();
+        _canvas->apply();
     }
 }

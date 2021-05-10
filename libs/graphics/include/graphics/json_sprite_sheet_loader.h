@@ -13,6 +13,7 @@ namespace graphics {
     class JsonSpriteSheetLoader : public ISpiteLoader {
     private:
         void _load_info();
+        virtual std::filesystem::path _get_config_path();
 
         bool _is_loaded = false;
         std::vector<SpriteInfo> _sprites;

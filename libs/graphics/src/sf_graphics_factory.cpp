@@ -9,7 +9,6 @@
 #include "sf/sf_texture.h"
 #include "sf/sf_font.h"
 #include "sf/sf_text.h"
-#include "sf/sf_canvas.h"
 #include "texture_storage.h"
 
 namespace graphics::sf {
@@ -38,14 +37,6 @@ namespace graphics::sf {
 
     std::unique_ptr<Text> SfGraphicsFactory::create_text() {
         return std::make_unique<sf::SfText>();
-    }
-
-    std::unique_ptr<ICanvas> SfGraphicsFactory::create_canvas() {
-        return std::make_unique<SfCanvas>();
-    }
-
-    std::unique_ptr<ICanvas> SfGraphicsFactory::create_canvas(int width, int height, bool is_full) {
-        return std::unique_ptr<ICanvas>(new SfCanvas(width, height,is_full));
     }
 
     std::unique_ptr<Rect> SfGraphicsFactory::create_rect() {

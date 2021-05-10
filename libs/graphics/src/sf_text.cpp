@@ -2,14 +2,12 @@
 // Created by volodya on 06.05.2021.
 //
 
+#include <game_manager/sf/sf_window.h>
 #include "sf/sf_text.h"
 #include "sf/sf_font.h"
-#include "sf/sf_canvas.h"
-
 
 void graphics::sf::SfText::draw(graphics::ICanvas *canvas) {
-    auto &sf_canvas = *dynamic_cast<SfCanvas *>(canvas);
-    auto &window = sf_canvas.get_sf_window();
+    auto& window = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();
 
     auto color = get_color();
     _sf_text.setFillColor(::sf::Color(color.red, color.green, color.blue));
