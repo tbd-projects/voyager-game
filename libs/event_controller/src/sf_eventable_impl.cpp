@@ -5,7 +5,6 @@
 #include <SFML/Window/Event.hpp>
 
 #include "event_controller/sf/sf_eventable_impl.h"
-#include "graphics/sf/sf_canvas.h"
 
 #include "event_controller/event/keyboard_event.h"
 #include "event_controller/event/fps_event.h"
