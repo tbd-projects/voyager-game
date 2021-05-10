@@ -10,7 +10,8 @@
 
 namespace event_controller {
     class SfEventableImpl {
-        virtual std::unique_ptr<Event> get_event(::sf::RenderWindow &window);
+    public:
+        static std::unique_ptr<Event> get_event(::sf::RenderWindow &window);
     };
 }
 
