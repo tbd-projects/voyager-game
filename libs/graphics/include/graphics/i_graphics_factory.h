@@ -30,11 +30,7 @@ namespace graphics {
         virtual std::shared_ptr<Font> create_font() = 0;
 
         virtual std::unique_ptr<Text> create_text() = 0;
-
-        virtual std::unique_ptr<ICanvas> create_canvas() = 0;
-
-        virtual std::unique_ptr<ICanvas> create_canvas(int width, int height, bool is_full) = 0;
-
+        
         virtual std::unique_ptr<Rect> create_rect() = 0;
 
         virtual Button create_button() = 0;

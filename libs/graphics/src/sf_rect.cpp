@@ -3,12 +3,12 @@
 //
 
 #include "sf/sf_rect.h"
-#include "sf/sf_canvas.h"
+#include "game_manager/sf/sf_window.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
 void graphics::sf::SfRect::draw(graphics::ICanvas *canvas) {
-    auto& sf_canvas = *dynamic_cast<SfCanvas *> (canvas);
+    auto& sf_canvas = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();
 
     ::sf::RectangleShape rect(::sf::Vector2f(get_width(), get_height()));
 
@@ -31,5 +31,5 @@ void graphics::sf::SfRect::draw(graphics::ICanvas *canvas) {
 
 
 
-    sf_canvas.get_sf_window().draw(rect);
+    sf_canvas.draw(rect);
 }

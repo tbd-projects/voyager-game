@@ -4,6 +4,7 @@
 
 
 #include "graphics/json_sprite_sheet_loader.h"
+#include <game_manager/config.h>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -13,7 +14,11 @@
 std::unique_ptr<graphics::Sprite> graphics::JsonSpriteSheetLoader::load(int id, TextureStorage &storage) {
     if (!_is_loaded) _load_info();
 
-    return _factory.create_sprite(_sprites[id], storage);
+    if (id < 0 || id >= _sprites.size())
+        throw;
+
+    auto sprite_info = _sprites[id];
+    return _factory.create_sprite(sprite_info, storage);
 }
 
 void graphics::JsonSpriteSheetLoader::_load_info() {
@@ -22,10 +27,7 @@ void graphics::JsonSpriteSheetLoader::_load_info() {
 
     using namespace boost::property_tree;
 
-    auto cur_dir = std::filesystem::path(__FILE__).parent_path();
-//    std::filesystem::path config_path(cur_dir / "../test/tests/sprites_info/some.json");
-    std::filesystem::path config_path(cur_dir / "../../../data/sprites.json");
-    // @todo from config
+    std::filesystem::path config_path = _get_config_path();
 
     ptree tree;
     read_json(config_path.string(), tree);
@@ -51,4 +53,8 @@ void graphics::JsonSpriteSheetLoader::_load_info() {
 
 graphics::JsonSpriteSheetLoader::JsonSpriteSheetLoader(graphics::IGraphicsFactory &factory) : _factory(factory){
 
+}
+
+std::filesystem::path graphics::JsonSpriteSheetLoader::_get_config_path() {
+    return ::game_manager::Config::get_instance()._sprites_path;
 }

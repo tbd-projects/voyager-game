@@ -3,7 +3,7 @@
 //
 
 #include "sf/sf_sprite.h"
-#include "sf/sf_canvas.h"
+#include <game_manager/sf/sf_window.h>
 
 graphics::sf::SfSprite::SfSprite(
         const std::pair<int, int> &pos, const std::pair<int, int> &size, graphics::sf::SfTexture *texture
@@ -12,7 +12,7 @@ graphics::sf::SfSprite::SfSprite(
 }
 
 void graphics::sf::SfSprite::draw(graphics::ICanvas *canvas) {
-    ::sf::RenderWindow &window = dynamic_cast<graphics::SfCanvas *>(canvas)->window;
+    auto& window = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();
 
     ::sf::Sprite sprite;
 
