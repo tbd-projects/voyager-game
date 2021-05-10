@@ -2,6 +2,8 @@
 
 #include <cstddef>
 #include <string>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 struct properties_t {
     size_t fuel;
@@ -29,9 +31,12 @@ protected:
 
 class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
 public:
+    JsonPlayerPropertiesLoader() = delete;
+
     JsonPlayerPropertiesLoader(std::string root_path);
 
     properties_t load_current_properties(const int player_id) override;
 
     void save_current_properties(const int player_id, properties_t &properties) override;
 };
+

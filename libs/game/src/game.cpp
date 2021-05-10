@@ -21,9 +21,9 @@ void Map::set_sprites(MapSpriteCreator& factory) {
 
 // Game
 
-Game::Game(IController *controller) {
-
-}
+//Game::Game(IController *controller) {
+//
+//}
 
 Game::~Game() {
 

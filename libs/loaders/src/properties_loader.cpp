@@ -1,8 +1,8 @@
 #include "properties_loader.hpp"
 #include "debug/exception.h"
 
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
+
+using namespace boost::property_tree;
 
 
 JsonPlayerPropertiesLoader::JsonPlayerPropertiesLoader(std::string root_path) {
@@ -13,30 +13,31 @@ JsonPlayerPropertiesLoader::JsonPlayerPropertiesLoader(std::string root_path) {
 }
 
 properties_t JsonPlayerPropertiesLoader::load_current_properties(const int player_id) {
-    namespace pt = boost::property_tree;
 
-    pt::ptree tree;
-    pt::read_json(this->path, tree);
+    ptree tree;
+    read_json(this->path, tree);
 
 
-    auto fill_prop = [](pt::ptree &pt) -> properties_t {
+    auto fill_prop = [](ptree &pt) -> properties_t {
         properties_t prop;
         prop.fuel = pt.get<size_t>("fuel");
         prop.health = pt.get<size_t>("health");
         prop.battery = pt.get<size_t>("battery");
         prop.engine_power = pt.get<size_t>("engine_power");
+
+        return prop;
     };
 
     properties_t prop{};
-    for (pt::ptree::value_type &player : tree.get_child("players")) {
-        if (player.second.get<size_t>("id") == player_id) {
+    for (ptree::value_type &player : tree.get_child("players")) {
+        if (player.second.get<int>("id") == player_id) {
             prop = fill_prop(player.second.get_child("properties"));
             break;
         }
     }
-    if (prop.is_empty()) {
-        throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
-    }
+//    if (prop.is_empty()) {
+//        throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
+//    }
 
     return prop;
 }
@@ -45,11 +46,11 @@ void JsonPlayerPropertiesLoader::save_current_properties(const int player_id, pr
     if (this->path.empty()) {
         throw FileError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
     }
-    namespace pt = boost::property_tree;
+//    namespace pt = boost::property_tree;
 
-    auto rewrite = [&player_id](properties_t &properties) -> pt::ptree {
-        pt::ptree tree;
-        pt::ptree prop;
+    auto rewrite = [&player_id](properties_t &properties) -> ptree {
+        ptree tree;
+        ptree prop;
         tree.put("id", player_id);
 
         prop.put("fuel", properties.fuel);
@@ -62,16 +63,16 @@ void JsonPlayerPropertiesLoader::save_current_properties(const int player_id, pr
         return tree;
     };
 
-    pt::ptree tree;
-    pt::read_json(this->path, tree);
+    ptree tree;
+    read_json(this->path, tree);
 
 
-    pt::ptree temp;
+    ptree temp;
     temp = rewrite(properties);
 
     bool flag = false;
-    for (pt::ptree::value_type &player : tree.get_child("players")) {
-        if (player.second.get<size_t>("id") == player_id) {
+    for (ptree::value_type &player : tree.get_child("players")) {
+        if (player.second.get<int>("id") == player_id) {
             player.second = temp;
             flag = true;
         }
@@ -83,5 +84,5 @@ void JsonPlayerPropertiesLoader::save_current_properties(const int player_id, pr
         tree.put_child("players", players);
     }
 
-    pt::write_json(this->path, tree);
+    write_json(this->path, tree);
 }
