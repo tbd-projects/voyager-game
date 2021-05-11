@@ -8,7 +8,7 @@
 #include "physics/orbit.hpp"
 
 namespace game {
-    JsonCreateLevel::JsonCreateLevel(std::string level_dir) {
+    JsonCreateLevel::JsonCreateLevel(const std::string &level_dir) {
         if (level_dir.empty()) {
             throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
         }
@@ -33,7 +33,7 @@ namespace game {
 
     }
 
-    void JsonCreateLevel::load_space_objects(pt::ptree &tree, std::string obj_name) {
+    void JsonCreateLevel::load_space_objects(pt::ptree &tree, const std::string &obj_name) {
         for (pt::ptree::value_type &planet : tree.get_child(obj_name)) {
 
             physics::Orbit::orbit_properties_t orb_prop;

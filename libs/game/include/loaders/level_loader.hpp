@@ -20,7 +20,7 @@ namespace game {
     public:
         JsonCreateLevel() = delete;
 
-        JsonCreateLevel(std::string level_dir);
+        JsonCreateLevel(const std::string &level_dir);
 
         JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
 
@@ -45,7 +45,7 @@ namespace game {
 
         void set_texture();
 
-        void load_space_objects(pt::ptree &tree, std::string obj_name);
+        void load_space_objects(pt::ptree &tree, const std::string &obj_name);
     };
 
     class LevelManager : public CreatorLevel {

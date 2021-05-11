@@ -38,11 +38,13 @@ namespace game {
     public:
         JsonPlayerPropertiesLoader() = delete;
 
-        JsonPlayerPropertiesLoader(std::string root_path);
+        JsonPlayerPropertiesLoader(const std::string &root_path);
 
         properties_t load_current_properties(const int player_id) override;
 
         void save_current_properties(const int player_id, properties_t &properties) override;
+    private:
+        bool has_player(const int player_id);
     };
 } // namespace game
 
