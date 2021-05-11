@@ -34,7 +34,7 @@ class RotateObject {
     virtual void add_rotation(math::decimal_t offset_angle);
 
     [[nodiscard]]
-    constexpr math::decimal_t get_rotation() const noexcept;
+    math::decimal_t get_rotation() const noexcept;
 
     virtual ~RotateObject() = default;
 
@@ -77,6 +77,12 @@ class RectanglePolygon : public Polygon {
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override;
 
+    [[nodiscard]]
+    math::decimal_t get_height() const;
+
+    [[nodiscard]]
+    math::decimal_t get_width() const;
+
     ~RectanglePolygon() override = default;
 
   private:
@@ -101,6 +107,12 @@ class TrianglePolygon : public Polygon {
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override;
 
+    [[nodiscard]]
+    math::decimal_t get_height() const;
+
+    [[nodiscard]]
+    math::decimal_t get_width() const;
+
     ~TrianglePolygon() override = default;
 
   private:
@@ -124,6 +136,9 @@ class CirclePolygon : public Polygon {
 
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override;
+
+    [[nodiscard]]
+    math::decimal_t get_radius() const;
 
     ~CirclePolygon() override = default;
 
