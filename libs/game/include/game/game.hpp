@@ -8,10 +8,14 @@
 #include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
 
+namespace graphics {
+    class ICanvas {
+
+    };
+}
 namespace game {
     class Sprite;
 
-    class ICanvas;
 
     class Map {
     public:
@@ -62,12 +66,15 @@ namespace game {
 
         void update();
 
-        bool start_game();
+        bool start_game(int level);
 
         bool stop_game();
 
     private:
-        Map _map;
-        Progress _progress;
+        game::Map _map;
+        game::Progress _progress;
+        graphics::ICanvas _canvas;
+
     };
+
 } // namespace game
