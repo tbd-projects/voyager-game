@@ -6,7 +6,7 @@
 #define VOYAGER_MAIN_MENU_COMMAND_H
 
 #include <event_controller/i_command.h>
-#include "game_manager.h"
+#include "game_manager/game_manager.h"
 
 namespace game_manager::command {
     class MainMenuCommand: public event_controller::ICommand {

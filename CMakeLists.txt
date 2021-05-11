@@ -51,7 +51,7 @@ target_link_libraries(math_lib debug_lib)
 target_link_libraries(physics_lib debug_lib math_lib)
 
 
-target_link_libraries(game_manager_lib event_controller_lib graphics_lib game_lib menu_lib)
+target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
