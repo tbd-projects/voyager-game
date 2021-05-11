@@ -3,8 +3,10 @@
 #include <iostream>
 #include <memory>
 
+class ICanvas;
 class Sprite {
-
+public:
+    void draw(ICanvas &canvas);
 };
 
 class TextureStorage {

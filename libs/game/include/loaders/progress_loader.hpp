@@ -19,7 +19,7 @@ public:
 
     virtual void save(const int player_id, progress_t &progress) = 0;
 
-    virtual ~ProgressLoader() = 0;
+    virtual ~ProgressLoader() = default;
 };
 
 class BaseProgressLoader : public ProgressLoader {
