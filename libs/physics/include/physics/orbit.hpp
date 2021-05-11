@@ -13,13 +13,12 @@ class Orbit {
     struct orbit_properties_t {
         math::coords_t variables;
         math::coords_t pos;
-        bool is_ellipse;
+        math::decimal_t angle_target;
 
         orbit_properties_t();
     };
 
-
-    Orbit() = default;
+    Orbit();
 
     explicit Orbit(orbit_properties_t orbit_properties);
 
@@ -38,6 +37,7 @@ class Orbit {
     math::decimal_t _lgitude_ascend_node;
     math::decimal_t _lgitude_of_periapsis;
     math::decimal_t _mean_lgitude;
+    math::coords_t _pos;
     bool _use_kepler;
 };
 

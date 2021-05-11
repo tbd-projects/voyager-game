@@ -5,29 +5,29 @@
 
 namespace math {
 
-class PositionatePolygon : public IPositionable {
+class PositionateObject : public IPositionable {
   public:
-    PositionatePolygon() = default;
+    PositionateObject();
 
-    explicit PositionatePolygon(math::coords_t pos);
+    explicit PositionateObject(math::coords_t pos);
 
     [[nodiscard]]
     math::coords_t get_pos() const noexcept override;
 
     void set_pos(math::coords_t pos) override;
 
-    virtual ~PositionatePolygon() = default;
+    virtual ~PositionateObject() = default;
 
   protected:
     math::coords_t _pos;
 };
 
 
-class RotatePolygon {
+class RotateObject {
   public:
-    RotatePolygon() = default;
+    RotateObject();
 
-    explicit RotatePolygon(math::decimal_t angle);
+    explicit RotateObject(math::decimal_t angle);
 
     virtual void set_rotation(math::decimal_t angle);
 
@@ -36,14 +36,14 @@ class RotatePolygon {
     [[nodiscard]]
     constexpr math::decimal_t get_rotation() const noexcept;
 
-    virtual ~RotatePolygon() = default;
+    virtual ~RotateObject() = default;
 
   protected:
     math::decimal_t _angle;
 };
 
 class Polygon : public IIntresectable, public IScalable
-                , public RotatePolygon, public PositionatePolygon {
+                , public RotateObject, public PositionateObject {
   public:
     Polygon() = default;
 
@@ -62,7 +62,7 @@ class Polygon : public IIntresectable, public IScalable
 
 class RectanglePolygon : public Polygon {
   public:
-    RectanglePolygon() = default;
+    RectanglePolygon();
 
     RectanglePolygon(math::coords_t pos, math::decimal_t height
                      , math::decimal_t width, math::decimal_t angle = 0);
@@ -86,7 +86,7 @@ class RectanglePolygon : public Polygon {
 
 class TrianglePolygon : public Polygon {
   public:
-    TrianglePolygon() = default;
+    TrianglePolygon();
 
     TrianglePolygon(math::coords_t pos, math::decimal_t height
                     , math::decimal_t width, math::decimal_t angle = 0);
@@ -110,7 +110,7 @@ class TrianglePolygon : public Polygon {
 
 class CirclePolygon : public Polygon {
   public:
-    CirclePolygon() = default;
+    CirclePolygon();
 
     CirclePolygon(math::coords_t pos, math::decimal_t radius
                   , math::decimal_t angle = 0);

@@ -9,33 +9,39 @@ namespace math {
 //  --------------------------------Position-----------------------------------
 
 
-PositionatePolygon::PositionatePolygon(math::coords_t pos)
+PositionateObject::PositionateObject()
+        : _pos(0, 0) {}
+
+PositionateObject::PositionateObject(math::coords_t pos)
         : _pos(pos) {}
 
-void PositionatePolygon::set_pos(math::coords_t pos) {
+void PositionateObject::set_pos(math::coords_t pos) {
     _pos = pos;
 }
 
-math::coords_t PositionatePolygon::get_pos() const noexcept {
+math::coords_t PositionateObject::get_pos() const noexcept {
     return _pos;
 }
 
 
-//  -------------------------------RotatePolygon-------------------------------
+//  -------------------------------RotateObject-------------------------------
 
 
-RotatePolygon::RotatePolygon(math::decimal_t angle)
+RotateObject::RotateObject()
+        : _angle(0) {}
+
+RotateObject::RotateObject(math::decimal_t angle)
         : _angle(angle) {}
 
-void RotatePolygon::set_rotation(math::decimal_t angle) {
+void RotateObject::set_rotation(math::decimal_t angle) {
     _angle = angle;
 }
 
-void RotatePolygon::add_rotation(math::decimal_t offset_angle) {
+void RotateObject::add_rotation(math::decimal_t offset_angle) {
     _angle += offset_angle;
 }
 
-constexpr math::decimal_t RotatePolygon::get_rotation() const noexcept {
+constexpr math::decimal_t RotateObject::get_rotation() const noexcept {
     return _angle;
 }
 
@@ -44,12 +50,17 @@ constexpr math::decimal_t RotatePolygon::get_rotation() const noexcept {
 
 
 Polygon::Polygon(math::coords_t pos, math::decimal_t angle)
-        : RotatePolygon(angle)
-          , PositionatePolygon(pos) {}
+        : RotateObject(angle)
+          , PositionateObject(pos) {}
 
 
 //  --------------------------RectanglePolygon-------------------------------
 
+
+RectanglePolygon::RectanglePolygon()
+        : Polygon()
+          , _height(0)
+          , _width(0) {}
 
 RectanglePolygon::RectanglePolygon(math::coords_t pos
                                    , math::decimal_t height
@@ -129,6 +140,11 @@ bool RectanglePolygon::intresect(const IIntresectable &object) const {
 //  ---------------------------TrianglePolygon-------------------------------
 
 
+TrianglePolygon::TrianglePolygon()
+        : Polygon()
+          , _height(0)
+          , _width(0) {}
+
 TrianglePolygon::TrianglePolygon(math::coords_t pos
                                  , math::decimal_t height
                                  , math::decimal_t width
@@ -198,6 +214,10 @@ bool TrianglePolygon::intresect(const IIntresectable &object) const {
 //  ---------------------------CirclePolygon---------------------------------
 
 
+CirclePolygon::CirclePolygon()
+        : Polygon()
+          , _radius(0) {}
+
 CirclePolygon::CirclePolygon(math::coords_t pos
                              , math::decimal_t radius
                              , math::decimal_t angle)
@@ -229,7 +249,7 @@ bool CirclePolygon::intresect(const IIntresectable &object) const {
 
     GeometryFunction geometry;
     for (size_t i = 0; i < LINE_IN_CIRCLE; ++i) {
-        point = geometry.rotate_point(point, i == 0? 0 : angle, _pos);
+        point = geometry.rotate_point(point, i == 0 ? 0 : angle, _pos);
 
         if (object.is_point_in_polygon(point)) {
             return true;

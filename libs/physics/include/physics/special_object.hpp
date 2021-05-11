@@ -11,7 +11,7 @@ class EnginesIndexedObject {
 
     virtual ~EnginesIndexedObject() = default;
 
-    friend class EngineStoreObject;
+    friend class StoreObject;
     friend class Engine;
 
   protected:

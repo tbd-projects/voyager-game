@@ -15,11 +15,11 @@ class EquationKepler {
     decimal_t _eccentricity;
     decimal_t _mean_anomaly;
 
-    decimal_t base_solve();
+    [[nodiscard]]
+    decimal_t base_solve() const;
 
-    decimal_t advance_solve();
-
-    decimal_t hyp_solve();
+    [[nodiscard]]
+    decimal_t hyp_solve() const;
 };
 
 }  // namespace math

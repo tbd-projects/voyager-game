@@ -1,4 +1,4 @@
-#include "astronimical_object.hpp"
+#include "astronomical_object.hpp"
 #include <memory>
 #include <iostream>
 
