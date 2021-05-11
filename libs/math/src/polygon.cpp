@@ -9,6 +9,9 @@ namespace math {
 //  --------------------------------Position-----------------------------------
 
 
+PositionateObject::PositionateObject()
+        : _pos(0, 0) {}
+
 PositionateObject::PositionateObject(math::coords_t pos)
         : _pos(pos) {}
 
@@ -21,8 +24,11 @@ math::coords_t PositionateObject::get_pos() const noexcept {
 }
 
 
-//  -------------------------------RotatePolygon-------------------------------
+//  -------------------------------RotateObject-------------------------------
 
+
+RotateObject::RotateObject()
+        : _angle(0) {}
 
 RotateObject::RotateObject(math::decimal_t angle)
         : _angle(angle) {}
@@ -35,7 +41,7 @@ void RotateObject::add_rotation(math::decimal_t offset_angle) {
     _angle += offset_angle;
 }
 
-math::decimal_t RotateObject::get_rotation() const noexcept {
+constexpr math::decimal_t RotateObject::get_rotation() const noexcept {
     return _angle;
 }
 
@@ -50,6 +56,11 @@ Polygon::Polygon(math::coords_t pos, math::decimal_t angle)
 
 //  --------------------------RectanglePolygon-------------------------------
 
+
+RectanglePolygon::RectanglePolygon()
+        : Polygon()
+          , _height(0)
+          , _width(0) {}
 
 RectanglePolygon::RectanglePolygon(math::coords_t pos
                                    , math::decimal_t height
@@ -125,25 +136,14 @@ bool RectanglePolygon::intresect(const IIntresectable &object) const {
            object.is_point_in_polygon(right_bottom);
 }
 
-    decimal_t RectanglePolygon::get_height() const {
-        return _height;
-    }
-
-    void RectanglePolygon::set_height(decimal_t height) {
-        _height = height;
-    }
-
-    decimal_t RectanglePolygon::get_width() const {
-        return _width;
-    }
-
-    void RectanglePolygon::set_width(decimal_t width) {
-        _width = width;
-    }
-
 
 //  ---------------------------TrianglePolygon-------------------------------
 
+
+TrianglePolygon::TrianglePolygon()
+        : Polygon()
+          , _height(0)
+          , _width(0) {}
 
 TrianglePolygon::TrianglePolygon(math::coords_t pos
                                  , math::decimal_t height
@@ -214,6 +214,10 @@ bool TrianglePolygon::intresect(const IIntresectable &object) const {
 //  ---------------------------CirclePolygon---------------------------------
 
 
+CirclePolygon::CirclePolygon()
+        : Polygon()
+          , _radius(0) {}
+
 CirclePolygon::CirclePolygon(math::coords_t pos
                              , math::decimal_t radius
                              , math::decimal_t angle)
@@ -245,7 +249,7 @@ bool CirclePolygon::intresect(const IIntresectable &object) const {
 
     GeometryFunction geometry;
     for (size_t i = 0; i < LINE_IN_CIRCLE; ++i) {
-        point = geometry.rotate_point(point, i == 0? 0 : angle, _pos);
+        point = geometry.rotate_point(point, i == 0 ? 0 : angle, _pos);
 
         if (object.is_point_in_polygon(point)) {
             return true;

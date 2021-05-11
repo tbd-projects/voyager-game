@@ -17,7 +17,7 @@ macro( connect_test project_test_name lib_name main_project_test_name )
 
     add_executable(${project_test_name} ${CMAKE_CURRENT_SOURCE_DIR}/test_main.cpp ${TESTS_SOURCE})
 
-    target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread)
+    target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread gmock)
 
     #add_test(${project_test_name} ${project_test_name})
 

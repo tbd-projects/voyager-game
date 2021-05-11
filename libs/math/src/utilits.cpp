@@ -1,6 +1,7 @@
 #define _USE_MATH_DEFINES
 
 #include <cmath>
+#include <functional>
 
 #include "utilits.hpp"
 #include "vector2d.hpp"
@@ -59,6 +60,10 @@ coords_t &coords_t::operator+=(decimal_t offset) {
     return *this;
 }
 
+coords_t::operator std::pair<decimal_t, decimal_t>() const {
+    return std::pair<decimal_t, decimal_t>(x, y);
+}
+
 
 //  ---------------------------GeometryFunction---------------------------------
 
@@ -66,21 +71,21 @@ coords_t &coords_t::operator+=(decimal_t offset) {
 coords_t GeometryFunction::rotate_point(coords_t point, decimal_t angle
                                         , coords_t basis) {
     point -= basis;
-    math::decimal_t rad_angle = Utilits::to_rad(angle);
-    math::decimal_t cos_angle = std::cos(rad_angle);
-    math::decimal_t sin_angle = std::sin(rad_angle);
+    decimal_t rad_angle = Utilits::to_rad(angle);
+    decimal_t cos_angle = std::cos(rad_angle);
+    decimal_t sin_angle = std::sin(rad_angle);
 
-    math::decimal_t new_x = point.x * cos_angle - point.y * sin_angle;
-    math::decimal_t new_y = point.x * sin_angle + point.y * cos_angle;
+    decimal_t new_x = point.x * cos_angle - point.y * sin_angle;
+    decimal_t new_y = point.x * sin_angle + point.y * cos_angle;
     return coords_t(new_x, new_y) + basis;
 }
 
 GeometryFunction::point_relative GeometryFunction::point_relative_line(
-                                                        Vector2d line
-                                                        , coords_t start_line
-                                                        , coords_t point) {
-    math::Vector2d vector_to_point(point - start_line);
-    math::decimal_t skew_product =
+        Vector2d line
+        , coords_t start_line
+        , coords_t point) {
+    Vector2d vector_to_point(point - start_line);
+    decimal_t skew_product =
             line.get_coords().x * vector_to_point.get_coords().y -
             vector_to_point.get_coords().x * line.get_coords().y;
 
@@ -97,22 +102,45 @@ GeometryFunction::point_relative GeometryFunction::point_relative_line(
 //  -------------------------------Utilits--------------------------------------
 
 
-bool Utilits::is_null(math::decimal_t value) {
+bool Utilits::is_null(decimal_t value) {
     return std::abs(value) < decimal_epsilon;
 }
 
-math::decimal_t Utilits::to_grad(math::decimal_t angle) {
-    return angle * (math::decimal_t) 180.0 / (math::decimal_t) M_PI;
+decimal_t Utilits::to_grad(decimal_t angle) {
+    return angle * (decimal_t) 180.0 / (decimal_t) M_PI;
 }
 
-math::decimal_t Utilits::to_rad(math::decimal_t angle) {
-    return angle * (math::decimal_t) M_PI / (math::decimal_t) 180.0;
+decimal_t Utilits::to_rad(decimal_t angle) {
+    return angle * (decimal_t) M_PI / (decimal_t) 180.0;
 }
 
-bool Utilits::is_equal(math::decimal_t value_1, math::decimal_t value_2) {
+bool Utilits::is_equal(decimal_t value_1, decimal_t value_2) {
     return is_null(value_1 - value_2);
 }
 
-math::decimal_t Utilits::decimal_epsilon = 1e-5;
+decimal_t Utilits::decimal_epsilon = 1e-5;
+
+
+//  ---------------------------AlgebraicMethods---------------------------------
+
+
+decimal_t AlgebraicMethods::solve_equastion_by_Halley(
+        const std::function<return_for_solve_equastion(decimal_t)>& func
+        , decimal_t start_x_value, size_t number_iteration) {
+
+    for (size_t i = 0; i < number_iteration; ++i) {
+        math::decimal_t last_x = start_x_value;
+        return_for_solve_equastion returns = func(start_x_value);
+        math::decimal_t first_devide =
+                returns.res_base_func / returns.res_first_deriv_func;
+        math::decimal_t second_devide =
+                returns.res_second_deriv_func / 2.f *
+                returns.res_first_deriv_func;
+
+        start_x_value =
+                last_x - first_devide / (1 - first_devide * second_devide);
+    }
+    return 0;
+}
 
 }  // namespace math

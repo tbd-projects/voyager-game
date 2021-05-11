@@ -7,7 +7,7 @@ namespace math {
 
 class PositionateObject : public IPositionable {
   public:
-    PositionateObject() = default;
+    PositionateObject();
 
     explicit PositionateObject(math::coords_t pos);
 
@@ -25,7 +25,7 @@ class PositionateObject : public IPositionable {
 
 class RotateObject {
   public:
-    RotateObject() = default;
+    RotateObject();
 
     explicit RotateObject(math::decimal_t angle);
 
@@ -34,12 +34,12 @@ class RotateObject {
     virtual void add_rotation(math::decimal_t offset_angle);
 
     [[nodiscard]]
-    math::decimal_t get_rotation() const noexcept;
+    constexpr math::decimal_t get_rotation() const noexcept;
 
     virtual ~RotateObject() = default;
 
   protected:
-    math::decimal_t _angle = 0;
+    math::decimal_t _angle;
 };
 
 class Polygon : public IIntresectable, public IScalable
@@ -62,7 +62,7 @@ class Polygon : public IIntresectable, public IScalable
 
 class RectanglePolygon : public Polygon {
   public:
-    RectanglePolygon() = default;
+    RectanglePolygon();
 
     RectanglePolygon(math::coords_t pos, math::decimal_t height
                      , math::decimal_t width, math::decimal_t angle = 0);
@@ -79,22 +79,14 @@ class RectanglePolygon : public Polygon {
 
     ~RectanglePolygon() override = default;
 
-    decimal_t get_height() const;
-
-    void set_height(decimal_t height);
-
-    decimal_t get_width() const;
-
-    void set_width(decimal_t width);
-
-private:
+  private:
     math::decimal_t _height;
     math::decimal_t _width;
 };
 
 class TrianglePolygon : public Polygon {
   public:
-    TrianglePolygon() = default;
+    TrianglePolygon();
 
     TrianglePolygon(math::coords_t pos, math::decimal_t height
                     , math::decimal_t width, math::decimal_t angle = 0);
@@ -118,7 +110,7 @@ class TrianglePolygon : public Polygon {
 
 class CirclePolygon : public Polygon {
   public:
-    CirclePolygon() = default;
+    CirclePolygon();
 
     CirclePolygon(math::coords_t pos, math::decimal_t radius
                   , math::decimal_t angle = 0);

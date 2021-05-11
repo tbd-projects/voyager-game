@@ -15,24 +15,31 @@ namespace physics {
 class PhysicalObject;
 class EnginesIndexedObject;
 
-class EngineStoreObject: public IConnectToEngine {
+class StoreObject: public IConnectToEngine {
   public:
-    EngineStoreObject() = default;
+    StoreObject() = default;
 
     void add_object(std::weak_ptr<PhysicalObject> object) override;
 
     void delete_object(std::weak_ptr<PhysicalObject> object) override;
 
-  protected:
-    std::vector<std::weak_ptr<PhysicalObject>> _objects;
+    [[nodiscard]]
+    bool contain_object(const PhysicalObject &object) const;
 
-    std::set<size_t> _deleted_objects;
+    [[nodiscard]]
+    bool is_objects_with_equal_id(const PhysicalObject& object_1
+                                 , const PhysicalObject& object_2) const;
 
     [[nodiscard]]
     std::vector<std::weak_ptr<PhysicalObject>> get_active_object() const;
+
+  private:
+    std::vector<std::weak_ptr<PhysicalObject>> _objects;
+
+    std::set<size_t> _deleted_objects;
 };
 
-class Engine : public EngineStoreObject, public Mechanic {
+class Engine : public IConnectToEngine {
   public:
     Engine();
 
@@ -46,24 +53,16 @@ class Engine : public EngineStoreObject, public Mechanic {
                                 (const PhysicalObject& object) const;
 
     [[nodiscard]]
-    math::decimal_t solve_kepler(math::decimal_t eccentricity
-                                 , math::decimal_t mean_anomaly) const;
-
-    [[nodiscard]]
     bool check_collision(const PhysicalObject& object) const;
+
+    void add_object(std::weak_ptr<PhysicalObject> object) override;
+
+    void delete_object(std::weak_ptr<PhysicalObject> object) override;
 
   private:
     const size_t _tick_of_calc;
-    OrbitalMechanic _orbital_mechanic;
-
-    math::decimal_t _base_solve_kepler(math::decimal_t eccentricity
-                                       , math::decimal_t mean_anomaly) const;
-
-    math::decimal_t _advance_solve_kepler(math::decimal_t eccentricity
-                                          , math::decimal_t mean_anomaly) const;
-
-    math::decimal_t _hyp_solve_kepler(math::decimal_t eccentricity
-                                      , math::decimal_t mean_anomaly) const;
+    Mechanic _mechanic;
+    StoreObject _objects;
 };
 
 }  // namespace physics

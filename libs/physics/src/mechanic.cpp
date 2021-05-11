@@ -1,5 +1,6 @@
 #include "mechanic.hpp"
 #include "physical_object.hpp"
+#include "engine.hpp"
 
 namespace physics {
 
@@ -35,7 +36,7 @@ math::Vector2d NewtonForce::get_force(PhysicalObject &object
 
 
 math::decimal_t OrbitalMechanic::get_effective_radius_orbit
-        (const Mechanic &base_mechanic, const PhysicalObject &object) const {
+        (const Force& force, const PhysicalObject &object) const {
     return 0;
 }
 
@@ -45,6 +46,26 @@ math::decimal_t OrbitalMechanic::get_effective_radius_orbit
 
 Mechanic::Mechanic(const Force &force)
         : _force(force) {}
+
+math::decimal_t Mechanic::get_effective_circle_orbit(
+        const PhysicalObject &object) const {
+    return _orbit_mechanic.get_effective_radius_orbit(_force, object);
+}
+
+math::Vector2d Mechanic::calc_force_by_object(PhysicalObject &object
+                                          , const StoreObject &objects) const {
+    std::vector<std::reference_wrapper<PhysicalObject>> other_object;
+
+    auto tmp = objects.get_active_object();
+
+    for (const auto& obj : tmp) {
+        if (objects.is_objects_with_equal_id(*obj.lock(), object)) {
+            other_object.push_back(*obj.lock());
+        }
+    }
+
+    return _force.get_force(object, other_object);
+}
 
 
 }  // namespace physics
