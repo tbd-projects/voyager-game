@@ -56,4 +56,16 @@ std::unique_ptr<math::Polygon> &ColideObject::get_polygon() {
     return _polygon;
 }
 
+math::decimal_t ColideObject::get_rotation() const noexcept {
+    return _polygon->get_rotation();
+}
+
+void ColideObject::add_rotation(math::decimal_t offset_angle) {
+    _polygon->add_rotation(offset_angle);
+}
+
+void ColideObject::set_rotation(math::decimal_t angle) {
+    _polygon->set_rotation(angle);
+}
+
 }  // namespace physics

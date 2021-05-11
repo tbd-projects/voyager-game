@@ -39,7 +39,7 @@ class AcceleratableObject {
     math::decimal_t _target_trust;
 };
 
-class ColideObject : public math::IPositionable {
+class ColideObject : public math::IPositionable, public math::IRotatable {
   public:
     ColideObject() = delete;
 
@@ -52,6 +52,13 @@ class ColideObject : public math::IPositionable {
     math::coords_t get_pos() const noexcept final;
 
     void set_pos(math::coords_t pos) final;
+
+    [[nodiscard]]
+    math::decimal_t get_rotation() const noexcept override;
+
+    void add_rotation(math::decimal_t offset_angle) override;
+
+    void set_rotation(math::decimal_t angle) override;
 
     std::unique_ptr<math::Polygon>& get_polygon();
 
