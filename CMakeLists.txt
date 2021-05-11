@@ -60,7 +60,7 @@ target_link_libraries(graphics_lib_tests graphics_lib game_manager_lib)
 target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
 
 
-target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
+target_link_libraries(game_manager_lib event_controller_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
