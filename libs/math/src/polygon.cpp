@@ -41,7 +41,7 @@ void RotateObject::add_rotation(math::decimal_t offset_angle) {
     _angle += offset_angle;
 }
 
-constexpr math::decimal_t RotateObject::get_rotation() const noexcept {
+math::decimal_t RotateObject::get_rotation() const noexcept {
     return _angle;
 }
 
@@ -136,6 +136,14 @@ bool RectanglePolygon::intresect(const IIntresectable &object) const {
            object.is_point_in_polygon(right_bottom);
 }
 
+math::decimal_t RectanglePolygon::get_height() const noexcept {
+    return _height;
+}
+
+math::decimal_t RectanglePolygon::get_width() const noexcept {
+    return _width;
+}
+
 
 //  ---------------------------TrianglePolygon-------------------------------
 
@@ -210,6 +218,14 @@ bool TrianglePolygon::intresect(const IIntresectable &object) const {
            object.is_point_in_polygon(right);
 }
 
+math::decimal_t TrianglePolygon::get_height() const noexcept{
+    return _height;
+}
+
+math::decimal_t TrianglePolygon::get_width() const noexcept {
+    return _width;
+}
+
 
 //  ---------------------------CirclePolygon---------------------------------
 
@@ -256,6 +272,10 @@ bool CirclePolygon::intresect(const IIntresectable &object) const {
         }
     }
     return false;
+}
+
+math::decimal_t CirclePolygon::get_radius() const noexcept {
+    return _radius;
 }
 
 }  // namespace math
