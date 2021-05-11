@@ -1,3 +1,4 @@
+#pragma once
 //
 // Created by flashie on 04.05.2021.
 //
@@ -52,14 +53,23 @@ public:
 class LoadError: public BaseExceptions {
 public:
     LoadError(std::string filename, std::string classname, std::string methodname, std::string arg) :
-    BaseExceptions(filename, classname, methodname, arg) {};
+            BaseExceptions(filename, classname, methodname, arg) {};
 
     virtual const char *what() const noexcept override {
         std::string message = "\nERROR: Error load data from file. " + _error_info;
         return message.c_str();
     }
 };
+class LogicError: public BaseExceptions {
+public:
+    LogicError(std::string filename, std::string classname, std::string methodname, std::string arg) :
+            BaseExceptions(filename, classname, methodname, arg) {};
 
+    virtual const char *what() const noexcept override {
+        std::string message = "\nERROR: Logic error. " + _error_info;
+        return message.c_str();
+    }
+};
 
 
 #endif //VOYAGER_EXCEPTIONS_HPP

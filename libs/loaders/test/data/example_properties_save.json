@@ -1,0 +1,13 @@
+{
+    "players": [
+        {
+            "id": "0",
+            "properties": {
+                "fuel": "0",
+                "health": "0",
+                "battery": "0",
+                "engine_power": "0"
+            }
+        }
+    ]
+}

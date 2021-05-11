@@ -12,7 +12,7 @@ class Sprite;
 
 class Map {
 public:
-    explicit Map(CreatorLevel &, std::string path, size_t level_num);
+    explicit Map(size_t player_id);
 
     Map() = delete;
 
@@ -20,22 +20,26 @@ public:
 
     Map &operator=(const Map &) = delete;
 
+    void load_level(size_t level_num);
+
+
     bool update();
 
 private:
     std::vector<std::shared_ptr<SpaceBody>> _space_objects;
     std::vector<std::shared_ptr<Star>> _stars;
     SpaceShip _ship;
-
     std::unique_ptr<Sprite> _bg;
+    size_t _bg_id;
 
     void check_all_collision();
 
     void set_sprites(MapSpriteCreator& factory);
 
-    void create_ship(size_t player_id);
+s
+//    void create_ship(size_t player_id);
 
-    void create_level();
+//    void create_level();
 };
 
 

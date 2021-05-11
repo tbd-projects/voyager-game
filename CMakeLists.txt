@@ -67,7 +67,7 @@ target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
 
 add_executable(gtest ${tmp})
-target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread)
+target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread gmock)
 #add_test(gtest gtest)
 
 setup_target_for_coverage_lcov (
