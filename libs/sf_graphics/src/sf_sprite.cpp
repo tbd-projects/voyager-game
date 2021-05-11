@@ -2,8 +2,8 @@
 // Created by volodya on 15.04.2021.
 //
 
-#include "sf/sf_sprite.h"
-#include <game_manager/sf/sf_window.h>
+#include "sf_sprite.h"
+#include "sf_window.h"
 
 graphics::sf::SfSprite::SfSprite(
         const std::pair<int, int> &pos, const std::pair<int, int> &size, graphics::sf::SfTexture *texture

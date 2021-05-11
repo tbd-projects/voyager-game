@@ -2,9 +2,9 @@
 // Created by volodya on 06.05.2021.
 //
 
-#include <game_manager/sf/sf_window.h>
-#include "sf/sf_text.h"
-#include "sf/sf_font.h"
+#include "sf_window.h"
+#include "sf_text.h"
+#include "sf_font.h"
 
 void graphics::sf::SfText::draw(graphics::ICanvas *canvas) {
     auto& window = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();

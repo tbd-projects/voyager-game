@@ -2,8 +2,8 @@
 // Created by volodya on 07.05.2021.
 //
 
-#include "sf/sf_rect.h"
-#include "game_manager/sf/sf_window.h"
+#include "sf_rect.h"
+#include "sf_window.h"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 

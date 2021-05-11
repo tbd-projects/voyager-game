@@ -2,7 +2,7 @@
 // Created by volodya on 06.05.2021.
 //
 
-#include "sf/sf_font.h"
+#include "sf_graphics/sf_font.h"
 
 void graphics::sf::SfFont::set_path(const std::filesystem::path &path) {
     Font::set_path(path);

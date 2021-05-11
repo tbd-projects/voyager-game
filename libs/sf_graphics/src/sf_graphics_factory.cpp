@@ -1,15 +1,15 @@
 //
 // Created by volodya on 06.05.2021.
 //
-
-#include "sf/sf_graphics_factory.h"
 #include <SFML/Graphics/Texture.hpp>
-#include <sf/sf_rect.h>
-#include "sf/sf_sprite.h"
-#include "sf/sf_texture.h"
-#include "sf/sf_font.h"
-#include "sf/sf_text.h"
-#include "texture_storage.h"
+
+#include "sf_graphics/sf_graphics_factory.h"
+#include "sf_graphics/sf_rect.h"
+#include "sf_graphics/sf_sprite.h"
+#include "sf_graphics/sf_texture.h"
+#include "sf_graphics/sf_font.h"
+#include "sf_graphics/sf_text.h"
+#include "graphics/texture_storage.h"
 
 namespace graphics::sf {
 
