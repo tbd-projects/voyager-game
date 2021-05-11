@@ -78,10 +78,10 @@ class RectanglePolygon : public Polygon {
     bool intresect(const IIntresectable &object) const override;
 
     [[nodiscard]]
-    math::decimal_t get_height() const;
+    math::decimal_t get_height() const noexcept;
 
     [[nodiscard]]
-    math::decimal_t get_width() const;
+    math::decimal_t get_width() const noexcept;
 
     ~RectanglePolygon() override = default;
 
@@ -108,10 +108,10 @@ class TrianglePolygon : public Polygon {
     bool intresect(const IIntresectable &object) const override;
 
     [[nodiscard]]
-    math::decimal_t get_height() const;
+    math::decimal_t get_height() const noexcept;
 
     [[nodiscard]]
-    math::decimal_t get_width() const;
+    math::decimal_t get_width() const noexcept;
 
     ~TrianglePolygon() override = default;
 
@@ -138,7 +138,7 @@ class CirclePolygon : public Polygon {
     bool intresect(const IIntresectable &object) const override;
 
     [[nodiscard]]
-    math::decimal_t get_radius() const;
+    math::decimal_t get_radius() const noexcept;
 
     ~CirclePolygon() override = default;
 
