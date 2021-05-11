@@ -12,20 +12,22 @@ namespace graphics {
         };
     };
 }
-class MapSpriteCreator {
-public:
-    MapSpriteCreator() = delete;
+namespace game {
+    class MapSpriteCreator {
+    public:
+        MapSpriteCreator() = delete;
 
-    MapSpriteCreator(const MapSpriteCreator &) = delete;
+        MapSpriteCreator(const MapSpriteCreator &) = delete;
 
-    MapSpriteCreator &operator=(const MapSpriteCreator &) = delete;
+        MapSpriteCreator &operator=(const MapSpriteCreator &) = delete;
 
-    MapSpriteCreator(graphics::sf::SfGraphicsFactory &factory) {
-        this->_texture_storage = factory;
+        MapSpriteCreator(graphics::sf::SfGraphicsFactory &factory) {
+            this->_texture_storage = factory;
+        };
+
+        std::unique_ptr<Sprite> get_sprite(size_t id);
+
+    private:
+        graphics::sf::SfGraphicsFactory _texture_storage;
     };
-
-    std::unique_ptr<Sprite> get_sprite(size_t id);
-
-private:
-    graphics::sf::SfGraphicsFactory _texture_storage;
-};
+} // namespace game
