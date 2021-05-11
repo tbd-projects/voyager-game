@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "i_command.h"
+#include "event.h"
 
 namespace event_controller {
 
