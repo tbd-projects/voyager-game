@@ -1,8 +1,9 @@
 #include "properties_loader.hpp"
-#include "debug/exception.h"
+#include "debug/exception.hpp"
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <game/exceptions.hpp>
 
 
 JsonPlayerPropertiesLoader::JsonPlayerPropertiesLoader(std::string root_path) {

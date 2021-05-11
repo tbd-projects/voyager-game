@@ -1,9 +1,10 @@
 #include "loaders/progress_loader.hpp"
-#include "debug/exception.h"
+#include "debug/exception.hpp"
 #include <fstream>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <exceptions.hpp>
 
 BaseProgressLoader::BaseProgressLoader(const std::string &root_path) {
     if (root_path.empty()) {

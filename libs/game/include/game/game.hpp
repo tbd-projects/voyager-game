@@ -60,6 +60,6 @@ public:
     bool stop_game();
 
 private:
-    Map _map;
-    Progress _progress;
+//    Map _map;
+//    Progress _progress;
 };

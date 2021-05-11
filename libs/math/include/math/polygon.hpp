@@ -5,45 +5,45 @@
 
 namespace math {
 
-class PositionatePolygon : public IPositionable {
+class PositionateObject : public IPositionable {
   public:
-    PositionatePolygon() = default;
+    PositionateObject() = default;
 
-    explicit PositionatePolygon(math::coords_t pos);
+    explicit PositionateObject(math::coords_t pos);
 
     [[nodiscard]]
     math::coords_t get_pos() const noexcept override;
 
     void set_pos(math::coords_t pos) override;
 
-    virtual ~PositionatePolygon() = default;
+    virtual ~PositionateObject() = default;
 
   protected:
     math::coords_t _pos;
 };
 
 
-class RotatePolygon {
+class RotateObject {
   public:
-    RotatePolygon() = default;
+    RotateObject() = default;
 
-    explicit RotatePolygon(math::decimal_t angle);
+    explicit RotateObject(math::decimal_t angle);
 
     virtual void set_rotation(math::decimal_t angle);
 
     virtual void add_rotation(math::decimal_t offset_angle);
 
     [[nodiscard]]
-    constexpr math::decimal_t get_rotation() const noexcept;
+    math::decimal_t get_rotation() const noexcept;
 
-    virtual ~RotatePolygon() = default;
+    virtual ~RotateObject() = default;
 
   protected:
-    math::decimal_t _angle;
+    math::decimal_t _angle = 0;
 };
 
 class Polygon : public IIntresectable, public IScalable
-                , public RotatePolygon, public PositionatePolygon {
+                , public RotateObject, public PositionateObject {
   public:
     Polygon() = default;
 
@@ -79,7 +79,15 @@ class RectanglePolygon : public Polygon {
 
     ~RectanglePolygon() override = default;
 
-  private:
+    decimal_t get_height() const;
+
+    void set_height(decimal_t height);
+
+    decimal_t get_width() const;
+
+    void set_width(decimal_t width);
+
+private:
     math::decimal_t _height;
     math::decimal_t _width;
 };

@@ -9,14 +9,14 @@ namespace math {
 //  --------------------------------Position-----------------------------------
 
 
-PositionatePolygon::PositionatePolygon(math::coords_t pos)
+PositionateObject::PositionateObject(math::coords_t pos)
         : _pos(pos) {}
 
-void PositionatePolygon::set_pos(math::coords_t pos) {
+void PositionateObject::set_pos(math::coords_t pos) {
     _pos = pos;
 }
 
-math::coords_t PositionatePolygon::get_pos() const noexcept {
+math::coords_t PositionateObject::get_pos() const noexcept {
     return _pos;
 }
 
@@ -24,18 +24,18 @@ math::coords_t PositionatePolygon::get_pos() const noexcept {
 //  -------------------------------RotatePolygon-------------------------------
 
 
-RotatePolygon::RotatePolygon(math::decimal_t angle)
+RotateObject::RotateObject(math::decimal_t angle)
         : _angle(angle) {}
 
-void RotatePolygon::set_rotation(math::decimal_t angle) {
+void RotateObject::set_rotation(math::decimal_t angle) {
     _angle = angle;
 }
 
-void RotatePolygon::add_rotation(math::decimal_t offset_angle) {
+void RotateObject::add_rotation(math::decimal_t offset_angle) {
     _angle += offset_angle;
 }
 
-constexpr math::decimal_t RotatePolygon::get_rotation() const noexcept {
+math::decimal_t RotateObject::get_rotation() const noexcept {
     return _angle;
 }
 
@@ -44,8 +44,8 @@ constexpr math::decimal_t RotatePolygon::get_rotation() const noexcept {
 
 
 Polygon::Polygon(math::coords_t pos, math::decimal_t angle)
-        : RotatePolygon(angle)
-          , PositionatePolygon(pos) {}
+        : RotateObject(angle)
+          , PositionateObject(pos) {}
 
 
 //  --------------------------RectanglePolygon-------------------------------
@@ -124,6 +124,22 @@ bool RectanglePolygon::intresect(const IIntresectable &object) const {
            object.is_point_in_polygon(right_top) ||
            object.is_point_in_polygon(right_bottom);
 }
+
+    decimal_t RectanglePolygon::get_height() const {
+        return _height;
+    }
+
+    void RectanglePolygon::set_height(decimal_t height) {
+        _height = height;
+    }
+
+    decimal_t RectanglePolygon::get_width() const {
+        return _width;
+    }
+
+    void RectanglePolygon::set_width(decimal_t width) {
+        _width = width;
+    }
 
 
 //  ---------------------------TrianglePolygon-------------------------------

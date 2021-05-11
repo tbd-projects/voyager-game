@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
-#include "objects.hpp"
+#include <game/objects.hpp>
 
 namespace pt = boost::property_tree;
 
