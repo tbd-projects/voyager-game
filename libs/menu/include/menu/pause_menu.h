@@ -10,9 +10,8 @@
 namespace menu {
     class PauseMenu: public IMenu {
     public:
-        void draw(graphics::ICanvas &canvas) override;
         ~PauseMenu() override;
-        void update(Event &event) override;
+        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
     };
 }
 

@@ -5,54 +5,36 @@
 #ifndef VOYAGER_MAIN_MENU_H
 #define VOYAGER_MAIN_MENU_H
 
+#include "graphics/i_spite_loader.h"
 #include "graphics/i_graphics_factory.h"
 #include "graphics/texture_storage.h"
 #include "menu/vertical_centered_menu.h"
 
-/** @todo import external definition **/
-class ProgressLoader;
-
-struct progress_t {
-    int x;
-};
-
-class Progress {
-public:
-    Progress() = delete;
-
-    Progress(ProgressLoader *loader) {};
-
-//    Progress(const progress_t &progress) {};
-//    Progress& operator=(const Progress& progress) {};
-    ~Progress() = default;
-//    progress_t &get_progress();
-//    progress_t &set_progress(progress_t &progress);
-private:
-    progress_t _progress;
-};
 
 namespace menu {
     class MainMenu : public VerticalCenteredMenu {
     public:
-        MainMenu(graphics::IGraphicsFactory &factory);
+        MainMenu(graphics::ICanvas &canvas, event_controller::IController &controller, graphics::IGraphicsFactory &factory,
+                                         graphics::ISpiteLoader &loader);
 
-        void update(Event &event) override;
+        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
 
         ~MainMenu() override;
 
     private:
         graphics::IGraphicsFactory &_factory;
+        graphics::ISpiteLoader &_loader;
 
         std::unique_ptr<graphics::Sprite> _bg;
 
         graphics::TextureStorage _storage;
 
-        Progress _progress;
+//        Progress _progress;
 
         static menu::CommandButton
         _create_button(graphics::IGraphicsFactory &factory, std::shared_ptr<graphics::Font> &font,
-                       std::unique_ptr<ICommand> &&command, const std::string &title);
+                       std::unique_ptr<event_controller::ICommand> &&command, const std::string &title);
     };
 }
 

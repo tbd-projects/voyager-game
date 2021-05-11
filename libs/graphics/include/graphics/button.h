@@ -22,7 +22,7 @@ namespace graphics {
 
         void set_rotation(math::decimal_t angle) override;
 
-        void resize(math::decimal_t height, math::decimal_t width) override;
+        void resize(math::decimal_t height, math::decimal_t width);
 
         void scale(math::decimal_t scale) override;
 
