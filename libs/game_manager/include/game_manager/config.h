@@ -9,9 +9,9 @@
 #include <filesystem>
 #include <graphics/i_graphics_factory.h>
 #include <graphics/i_spite_loader.h>
-#include <loaders/properties_loader.hpp>
-#include <loaders/progress_loader.hpp>
-#include <loaders/level_loader.hpp>
+//#include <loaders/properties_loader.hpp>
+//#include <loaders/progress_loader.hpp>
+//#include <loaders/level_loader.hpp>
 
 namespace game_manager {
     class Config {
@@ -25,9 +25,9 @@ namespace game_manager {
 
         std::shared_ptr<graphics::IGraphicsFactory> graphics_factory;
         std::shared_ptr<graphics::ISpiteLoader> sprite_loader;
-        std::shared_ptr<PlayerPropertiesLoader> properties_loader;
-        std::shared_ptr<BaseProgressLoader> progress_loader;
-        std::shared_ptr<CreatorLevel> levels_loader;
+//        std::shared_ptr<PlayerPropertiesLoader> properties_loader;
+//        std::shared_ptr<BaseProgressLoader> progress_loader;
+//        std::shared_ptr<CreatorLevel> levels_loader;
 
     protected:
         Config();

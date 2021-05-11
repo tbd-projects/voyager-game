@@ -5,9 +5,10 @@
 #ifndef VOYAGER_GAME_MANAGER_H
 #define VOYAGER_GAME_MANAGER_H
 
-#include <menu/i_menu.h>
+//#include <menu/i_menu.h>
 #include <event_controller/i_controller.h>
 #include <event_controller/i_eventable.h>
+#include <graphics/i_drawable.h>
 //#include <game/game.hpp>
 
 namespace game_manager {
@@ -15,7 +16,7 @@ namespace game_manager {
     private:
         std::unique_ptr<event_controller::IController> _controller;
 //        Game _game;
-        std::unique_ptr<::menu::IMenu> _menu;
+//        std::unique_ptr<::menu::IMenu> _menu;
         ::graphics::ICanvas& _canvas;
     public:
         GameManager(::graphics::ICanvas &canvas, event_controller::IEventable &eventable);

@@ -17,8 +17,8 @@ namespace game_manager {
         auto root_dir = std::filesystem::path(__FILE__).parent_path() / "../../../";
         graphics_factory = std::make_shared<graphics::sf::SfGraphicsFactory>();
         sprite_loader = std::make_shared<graphics::JsonSpriteSheetLoader>(*graphics_factory);
-        properties_loader = std::make_shared<JsonPlayerPropertiesLoader>(properties_path);
-        progress_loader = std::make_shared<BaseProgressLoader>(stats_path);
-        levels_loader = std::make_shared<JsonCreateLevel>(levels_path);
+//        properties_loader = std::make_shared<JsonPlayerPropertiesLoader>(properties_path);
+//        progress_loader = std::make_shared<BaseProgressLoader>(stats_path);
+//        levels_loader = std::make_shared<JsonCreateLevel>(levels_path);
     }
 }
