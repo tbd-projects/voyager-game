@@ -20,6 +20,9 @@ public:
 
     Map &operator=(const Map &) = delete;
 
+    void load_level(size_t level_num);
+
+
     bool update();
 
 private:
@@ -33,8 +36,7 @@ private:
 
     void set_sprites(MapSpriteCreator& factory);
 
-    void load_level_data(size_t level_num);
-
+s
 //    void create_ship(size_t player_id);
 
 //    void create_level();

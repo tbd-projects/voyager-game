@@ -36,7 +36,7 @@ Map::Map(size_t player_id) {
 //    this->_ship(properties.sprite_id, nullptr, std::move(pol), sprite.get_height(), sprite.get_width());
 }
 
-void Map::load_level_data(size_t level_num) {
+void Map::load_level(size_t level_num) {
 //    ::game_manager::Config::get_instance().level_manager.set_current_level(level_num);
 //    ::game_manager::Config::get_instance().level_manager.load_current_level(level_num);
 //    this->_space_objects = ::game_manager::Config::get_instance().level_manager->_current_level.get_planets();
