@@ -7,7 +7,7 @@
 class GameObject : public IGameObject, public physics::AstronomicalObject {
 public:
 
-    explicit GameObject(size_t sprite_id,std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
+    explicit GameObject(size_t sprite_id, std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
                         size_t weight, math::Vector2d velocity,
                         math::coords_t pos, physics::Orbit::orbit_properties_t orbit) :
             physics::AstronomicalObject(std::move(pol), weight,
@@ -15,6 +15,13 @@ public:
         this->_sprite_id = sprite_id;
         this->_sprite = std::move(sprite);
     };
+
+    explicit GameObject(size_t sprite_id, std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
+                        size_t weight, math::Vector2d velocity,
+                        math::coords_t pos) : physics::AstronomicalObject(std::move(pol), weight, velocity, pos) {
+        this->_sprite_id = sprite_id;
+        this->_sprite = std::move(sprite);
+    }
 
     const std::unique_ptr<Sprite> &get_sprite() override;
 
@@ -50,7 +57,7 @@ public:
 
     size_t get_sprite_id() override;
 
-    explicit NotActiveObject(size_t sprite_id,std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
+    explicit NotActiveObject(size_t sprite_id, std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
                              math::coords_t pos, math::Vector2d velocity, size_t weight) :
             physics::PhysicalObject(std::move(pol), pos, velocity, weight) {
         this->_sprite = std::move(sprite);

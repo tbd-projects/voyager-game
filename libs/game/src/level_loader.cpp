@@ -1,23 +1,25 @@
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
 #include "debug/exception.h"
-#include "exceptions.hpp"
 #include "loaders/level_loader.hpp"
 #include "math.hpp"
 #include <memory>
 #include "objects.hpp"
 #include "physics/orbit.hpp"
 
-JsonCreateLevel::JsonCreateLevel(std::string path) {
-    if (path.empty()) {
+JsonCreateLevel::JsonCreateLevel(std::string level_dir) {
+    if (level_dir.empty()) {
         throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
     }
-    this->_path = path;
+    this->_path = level_dir;
 }
 
-void JsonCreateLevel::create_level() {
-
+void JsonCreateLevel::create_level(size_t level_num) {
+    if (!level_num) {
+        throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
+    }
     pt::ptree tree;
+    std::string level_path = this->_path + std::to_string(level_num) + ".json";
     pt::read_json(this->_path, tree);
 
     this->_bg_id = tree.get<size_t>("background.sprite_id");
@@ -87,4 +89,23 @@ void JsonCreateLevel::load_space_objects(pt::ptree &tree, std::string obj_name) 
 
 void JsonCreateLevel::create_objects() {
 
+}
+
+std::vector<std::shared_ptr<SpaceBody>> &&JsonCreateLevel::get_planets() {
+    return std::move(this->_objects_active);
+}
+
+std::vector<std::shared_ptr<Star>> &&JsonCreateLevel::get_stars() {
+    return std::move(this->_objects_not_active);
+}
+
+void LevelManager::set_current_level(size_t level_num) {
+    this->_level_num = level_num;
+}
+
+void LevelManager::load_current_level() {
+    if (!this->_level_num) {
+        throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
+    }
+    this->_current_level->create_level(this->_level_num);
 }

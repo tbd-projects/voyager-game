@@ -20,18 +20,20 @@ properties_t JsonPlayerPropertiesLoader::load_current_properties(const int playe
 
     auto fill_prop = [](ptree &pt) -> properties_t {
         properties_t prop;
-        prop.fuel = pt.get<size_t>("fuel");
-        prop.health = pt.get<size_t>("health");
-        prop.battery = pt.get<size_t>("battery");
-        prop.engine_power = pt.get<size_t>("engine_power");
+        prop.fuel = pt.get<unsigned int>("fuel");
+        prop.health = pt.get<unsigned int>("health");
+        prop.battery = pt.get<unsigned int>("battery");
+        prop.engine_power = pt.get<unsigned int>("engine_power");
 
         return prop;
     };
+
 
     properties_t prop{};
     for (ptree::value_type &player : tree.get_child("players")) {
         if (player.second.get<int>("id") == player_id) {
             prop = fill_prop(player.second.get_child("properties"));
+            prop.sprite_id = player.second.get<size_t>("sprite_id");
             break;
         }
     }
@@ -52,6 +54,7 @@ void JsonPlayerPropertiesLoader::save_current_properties(const int player_id, pr
         ptree tree;
         ptree prop;
         tree.put("id", player_id);
+        tree.put("sprite_id", properties.sprite_id);
 
         prop.put("fuel", properties.fuel);
         prop.put("health", properties.health);

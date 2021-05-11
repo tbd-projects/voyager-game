@@ -1,7 +1,7 @@
 #include "objects.hpp"
 
 
-properties_t &SpaceShip::get_properties() {
+const properties_t &SpaceShip::get_properties() {
     return this->_properties;
 }
 

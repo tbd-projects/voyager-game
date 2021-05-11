@@ -4,9 +4,20 @@
 #include "physics/astronomical_object.hpp"
 #include "loaders/properties_loader.hpp"
 
+const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 20));
+const size_t init_weight = 1;
+const math::coords_t init_pos = math::coords_t(0, 0);
+
 class SpaceShip : public GameObject {
 public:
-    SpaceShip() = delete;
+    SpaceShip();
+
+    SpaceShip(size_t sprite_id, std::unique_ptr<Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
+              properties_t &properties, size_t weight=init_weight,
+              math::Vector2d velocity=init_velocity,math::coords_t pos=init_pos) :
+            GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos) {
+        this->_properties = properties;
+    };
 
     ~SpaceShip() = default;
 
@@ -14,7 +25,7 @@ public:
 
     SpaceShip &operator=(const SpaceShip &ship) = delete;
 
-    properties_t &get_properties();
+    const properties_t &get_properties();
 
     void set_properties(properties_t &properties);
 

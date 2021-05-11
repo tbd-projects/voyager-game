@@ -7,7 +7,8 @@
         "health": "100",
         "battery": "90",
         "engine_power": "50"
-      }
+      },
+      "sprite_id": 1
     },
     {
       "id": "2",
@@ -16,7 +17,8 @@
         "health": "100",
         "battery": "90",
         "engine_power": "50"
-      }
+      },
+      "sprite_id": 2
     }
   ]
 }

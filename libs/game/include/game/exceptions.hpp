@@ -61,4 +61,5 @@ public:
 };
 
 
+
 #endif //VOYAGER_EXCEPTIONS_HPP

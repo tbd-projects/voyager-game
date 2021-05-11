@@ -60,6 +60,16 @@ public:
         return message.c_str();
     }
 };
+class LogicError: public BaseExceptions {
+public:
+    LogicError(std::string filename, std::string classname, std::string methodname, std::string arg) :
+            BaseExceptions(filename, classname, methodname, arg) {};
+
+    virtual const char *what() const noexcept override {
+        std::string message = "\nERROR: Logic error. " + _error_info;
+        return message.c_str();
+    }
+};
 
 
 #endif //VOYAGER_EXCEPTIONS_HPP
