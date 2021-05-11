@@ -6,6 +6,8 @@
 #include <boost/property_tree/json_parser.hpp>
 
 namespace game {
+    namespace pt = boost::property_tree;
+
     BaseProgressLoader::BaseProgressLoader(const std::string &root_path) {
         if (root_path.empty()) {
             throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
@@ -14,7 +16,10 @@ namespace game {
     }
 
     progress_t BaseProgressLoader::load(const int player_id) {
-        namespace pt = boost::property_tree;
+
+        if (!this->has_progress(player_id)) {
+            throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
+        }
 
         pt::ptree tree;
         pt::read_json(this->path, tree);
@@ -30,6 +35,7 @@ namespace game {
             }
             return progress;
         };
+
         progress_t stats{};
         for (pt::ptree::value_type &player : tree.get_child("players")) {
             if (player.second.get<int>("id") == player_id) {
@@ -37,19 +43,15 @@ namespace game {
                 break;
             }
         }
-        if (stats.is_empty()) {
-            throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
-        }
-
         return stats;
     }
 
     void BaseProgressLoader::save(const int player_id, progress_t &progress) {
-        namespace pt = boost::property_tree;
-        auto rewrite = [&progress]() -> pt::ptree {
+        auto rewrite = [&]() -> pt::ptree {
             pt::ptree tree;
-            tree.put("time", progress.time);
-            tree.put("coins", progress.coins);
+            tree.put("id", player_id);
+            tree.put("stats.time", progress.time);
+            tree.put("stats.coins", progress.coins);
 
             pt::ptree levels;
             for (auto &i : progress.level_stat) {
@@ -58,7 +60,7 @@ namespace game {
                 temp.put("stars", i.second);
                 levels.push_back(std::make_pair("", temp));
             }
-            tree.put_child("levels", levels);
+            tree.put_child("stats.levels", levels);
             return tree;
         };
 
@@ -67,27 +69,40 @@ namespace game {
 
         pt::ptree temp;
         temp = rewrite();
-        // обновляем пользователя с id = player_id
-        pt::ptree cur;
-        cur.put("id", player_id);
-        cur.add_child("stats", temp);
+//        tree.add_child("stats", temp);
 
-        pt::ptree players;
-        bool flag = false;
-        for (pt::ptree::value_type &player : tree.get_child("players")) {
+        pt::ptree &players = tree.get_child("players");
+
+        // обновляем пользователя с id = player_id
+        if (!this->has_progress(player_id)) {
+            players.push_back(std::make_pair("", temp));
+        } else {
+            for (pt::ptree::value_type &player : players) {
+                if (player.second.get<int>("id") == player_id) {
+                    player.second= temp;
+                }
+            }
+            tree.put_child("players", players);
+
+            pt::write_json(this->path, tree);
+
+        }
+    }
+
+    bool BaseProgressLoader::has_progress(const int player_id) {
+        pt::ptree tree;
+        pt::read_json(this->path, tree);
+
+        bool has_player = false;
+
+        for (auto &player: tree.get_child("players")) {
             if (player.second.get<int>("id") == player_id) {
-                players.push_back(std::make_pair("", cur));
-                flag = true;
-            } else {
-                players.push_back(player);
+                has_player = true;
+                break;
             }
         }
-        if (!flag) {
-            players.push_back(std::make_pair("", temp));
-        }
-        tree.put_child("players", players);
 
-        pt::write_json(this->path, tree);
+        return has_player;
 
     }
 } // namespace game

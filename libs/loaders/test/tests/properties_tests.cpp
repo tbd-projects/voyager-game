@@ -3,22 +3,14 @@
 //
 #include <filesystem>
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include "loaders/properties_loader.hpp"
 #include "debug/exception.h"
-#include <iostream>
 
 using namespace boost::property_tree;
 
 auto root_dir = std::filesystem::path(__FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
 std::string prop_path = (root_dir / "data/player/example_properties.json");
 std::string path_save = root_dir / "libs/loaders/test/data/example_properties_save.json";
-
-class MockPropertyTree : public ptree {
-public:
-    MOCK_METHOD3(read_json, void (const std::string &filename, ptree &pt, const std::locale &loc));
-    MOCK_METHOD3(write_json, void (const std::string &filename, ptree &pt, const std::locale &loc));
-};
 
 class JsonPlayerPropertiesLoaderTest : public testing::Test {
 protected:
