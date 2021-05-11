@@ -13,7 +13,7 @@ JsonCreateLevel::JsonCreateLevel(std::string level_dir) {
     }
     this->_path = level_dir;
 }
-
+/* path: data/levels/ levels: 1.json 2.json 3.json.......*/
 void JsonCreateLevel::create_level(size_t level_num) {
     if (!level_num) {
         throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
