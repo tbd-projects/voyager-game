@@ -9,7 +9,7 @@
 #include "sprite_creator.hpp"
 
 class Sprite;
-
+class ICanvas;
 class Map {
 public:
     explicit Map(size_t player_id);
@@ -23,7 +23,7 @@ public:
     void load_level(size_t level_num);
 
 
-    bool update();
+    bool update(ICanvas &canvas);
 
 private:
     std::vector<std::shared_ptr<SpaceBody>> _space_objects;
@@ -53,7 +53,7 @@ class IController {
 
 class Game : public ISubscriber {
 public:
-    explicit Game(IController *controller);
+    explicit Game(IController &controller);
 
     ~Game();
 

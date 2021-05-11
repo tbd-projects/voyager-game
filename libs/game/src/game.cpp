@@ -42,7 +42,16 @@ void Map::load_level(size_t level_num) {
 //    this->_space_objects = ::game_manager::Config::get_instance().level_manager->_current_level.get_planets();
 //    this->_stars = ::game_manager::Config::get_instance().level_manager->_current_level.get_stars();
 //    this->_bg_id = ::game_manager::Config::get_instance().level_manager->_current_level.get_bg_id();
+}
 
+bool Map::update(ICanvas &canvas) {
+    for (auto & obj : this->_space_objects) {
+        obj->get_sprite()->draw(canvas);
+    }
+    for (auto & obj : this->_stars) {
+        obj->get_sprite()->draw(canvas);
+    }
+    this->_ship.get_sprite()->draw(canvas);
 }
 
 
