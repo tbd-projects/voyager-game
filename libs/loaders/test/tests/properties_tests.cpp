@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "loaders/properties_loader.hpp"
+#include "debug/exception.h"
 #include <iostream>
 
 using namespace boost::property_tree;
@@ -21,7 +22,7 @@ public:
 
 class JsonPlayerPropertiesLoaderTest : public testing::Test {
 protected:
-    JsonPlayerPropertiesLoader loader{prop_path};
+    game::JsonPlayerPropertiesLoader loader{prop_path};
 
     void SetUp() {
 
@@ -31,13 +32,11 @@ protected:
 
 };
 
-//class JsonPlayerPropertiesSaverTest : public testing::Test, public JsonPlayerPropertiesLoader {
-//protected:
-//    boost::property_tree::ptree tree;
-//    JsonPlayerPropertiesLoader loader{path_save};
-//    boost::property_tree::ptree = MockPropertyTree;
-//
-//};
+class JsonPlayerPropertiesSaverTest : public testing::Test {
+protected:
+    game::JsonPlayerPropertiesLoader loader{path_save};
+
+};
 
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
     size_t player_id = 1;
@@ -50,28 +49,29 @@ TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
 }
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerNotExist) {
     size_t player_id = -1;
-    game::properties_t result = this->loader.load_current_properties(player_id);
-    ASSERT_TRUE(result.is_empty());
+    EXPECT_THROW(this->loader.load_current_properties(player_id), LogicError);
 }
+TEST_F(JsonPlayerPropertiesSaverTest, hasPropertiesPlayer) {
+    int player_id = 0;
+    EXPECT_TRUE(this->loader.has_player(player_id));
+}
+TEST_F(JsonPlayerPropertiesSaverTest, noPropertiesPlayer) {
+    int player_id = 1;
+    EXPECT_FALSE(this->loader.has_player(player_id));
+}
+TEST_F(JsonPlayerPropertiesSaverTest, saveTestPlayerNotExist) {
+    int player_id = 0;
 
-//TEST_F(JsonPlayerPropertiesSaverTest, saveTestPlayerNotExist) {
-//    int player_id = -1;
-//
-//    boost::property_tree::ptree test_tree;
-//
-//    properties_t prop{0,0,0,0};
-//
-//    this->loader.save_current_properties(player_id, prop);
-//
-//    MockPropertyTree ptree;
-//
-//    EXPECT_CALL(ptree, write_json(path_save, ptree, std::locale()).
-//            Times(1).
-//            WillOnce([&]()->void {
-//        boost::property_tree::write_json(prop_path, this->tree);
-//    }));
-//
-//
-//}
+    game::properties_t prop{10,20,20,30};
+
+    this->loader.save_current_properties(player_id, prop);
+
+    game::properties_t prop_load;
+
+    prop_load = this->loader.load_current_properties(player_id);
+
+    ASSERT_EQ(prop, prop_load);
+
+}
 
 
