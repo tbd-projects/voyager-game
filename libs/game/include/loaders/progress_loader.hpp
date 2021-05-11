@@ -3,42 +3,45 @@
 #include <string>
 #include <vector>
 
-struct progress_t {
-    size_t coins;
-    size_t time;
-    std::vector<std::pair<int, int>> level_stat;
+namespace game {
 
-    bool is_empty() {
-        return !coins && !time && level_stat.empty();
-    }
-};
+    struct progress_t {
+        size_t coins;
+        size_t time;
+        std::vector<std::pair<int, int>> level_stat;
 
-class ProgressLoader {
-public:
-    virtual progress_t load(const int player_id) = 0;
+        bool is_empty() {
+            return !coins && !time && level_stat.empty();
+        }
+    };
 
-    virtual void save(const int player_id, progress_t &progress) = 0;
+    class ProgressLoader {
+    public:
+        virtual progress_t load(const int player_id) = 0;
 
-    virtual ~ProgressLoader() = default;
-};
+        virtual void save(const int player_id, progress_t &progress) = 0;
 
-class BaseProgressLoader : public ProgressLoader {
-public:
-    BaseProgressLoader() = delete;
+        virtual ~ProgressLoader() = default;
+    };
 
-    ~BaseProgressLoader() override = default;
+    class BaseProgressLoader : public ProgressLoader {
+    public:
+        BaseProgressLoader() = delete;
 
-    BaseProgressLoader(const BaseProgressLoader &) = delete;
+        ~BaseProgressLoader() override = default;
 
-    BaseProgressLoader &operator=(const BaseProgressLoader &) = delete;
+        BaseProgressLoader(const BaseProgressLoader &) = delete;
 
-    explicit BaseProgressLoader(const std::string &root_path);
+        BaseProgressLoader &operator=(const BaseProgressLoader &) = delete;
 
-    progress_t load(const int player_id) override;
+        explicit BaseProgressLoader(const std::string &root_path);
 
-    void save(const int player_id, progress_t &progress) override;
+        progress_t load(const int player_id) override;
 
-private:
-    std::string path;
+        void save(const int player_id, progress_t &progress) override;
 
-};
+    private:
+        std::string path;
+
+    };
+} // namespace game

@@ -41,7 +41,7 @@ protected:
 
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
     size_t player_id = 1;
-    properties_t result = this->loader.load_current_properties(player_id);
+    game::properties_t result = this->loader.load_current_properties(player_id);
     ASSERT_FALSE(result.is_empty());
     ASSERT_EQ(result.fuel, 100);
     ASSERT_EQ(result.health, 100);
@@ -50,7 +50,7 @@ TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
 }
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerNotExist) {
     size_t player_id = -1;
-    properties_t result = this->loader.load_current_properties(player_id);
+    game::properties_t result = this->loader.load_current_properties(player_id);
     ASSERT_TRUE(result.is_empty());
 }
 
