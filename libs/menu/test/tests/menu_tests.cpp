@@ -1,32 +1,88 @@
 #include <gtest/gtest.h>
-#include <menu/vertical_centered_menu.h>
+#include "menu/vertical_centered_menu.h"
+#include "menu/command_button.h"
+#include "menu/main_menu.h"
 
 #include <memory>
-#include <menu/main_menu.h>
-#include "graphics/sf/sf_graphics_factory.h"
-#include "menu/command_button.h"
+#include <graphics/sf/sf_graphics_factory.h>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <game_manager/sf/sf_window.h>
+#include <game_manager/commands.h>
+#include <event_controller/event/fps_event.h>
+#include <graphics/json_sprite_sheet_loader.h>
+#include <event_controller/controller.h>
+#include <event_controller/event/keyboard_event.h>
 
-auto cur_dir = std::filesystem::path(__FILE__).parent_path();
+class MockController: public event_controller::IController {
+public:
+    void subscribe(event_controller::EventType type, event_controller::ISubscriber &subscriber) override {
 
-TEST(some, some)
+    }
+
+    void unsubscribe(event_controller::EventType type, event_controller::ISubscriber &subscriber) override {
+
+    }
+};
+
+
+class MockJSONSpriteSheetLoader
+        : public graphics::JsonSpriteSheetLoader
 {
-    graphics::sf::SfGraphicsFactory factory;
+public:
+    explicit MockJSONSpriteSheetLoader(graphics::IGraphicsFactory &factory)
+            : JsonSpriteSheetLoader(factory) {}
+    std::filesystem::path _get_config_path() override
+    {
+        return std::filesystem::path(__FILE__).parent_path() / "../../../../data/sprites.json";
+    }
+};
 
-    auto canvas = factory.create_canvas(800, 600, false);
+class MenuTests : public ::testing::Test {
+protected:
+    std::filesystem::path _cur_dir = std::filesystem::path(__FILE__).parent_path();
+    graphics::sf::SfGraphicsFactory _factory;
+    ::sf::RenderWindow _sf_window;
+    std::unique_ptr<graphics::ICanvas> _canvas;
+    graphics::TextureStorage _storage;
+    MockJSONSpriteSheetLoader _sprite_loader;
+    MockController _controller;
+public:
+    MenuTests(): _sf_window(
+            ::sf::VideoMode::getDesktopMode(),
+            "MyApp",
+            sf::Style::Fullscreen
+    ), _canvas(std::make_unique<::game_manager::SfWindow>(_sf_window)),
+                     _storage(_factory),
+                     _sprite_loader(_factory)
+    {
+    }
 
-    auto font = factory.create_font();
-    font->set_path(cur_dir / "../../../graphics/test/tests/fonts/Roboto-Medium.ttf");
+    std::shared_ptr<graphics::Font> get_font(){
+        auto font = _factory.create_font();
+        font->set_path( _cur_dir / "../../../graphics/test/tests/fonts/Roboto-Medium.ttf");
+        return font;
+    }
 
-    menu::VerticalCenteredMenu mmenu;
+    void SetUp() override {
+        _canvas->clear();
+    }
 
+};
+
+
+
+TEST_F(MenuTests, some)
+{
+    menu::VerticalCenteredMenu mmenu(*_canvas, _controller);
+    auto font = get_font();
 
     for (int i = 0; i < 20; ++i) {
-        auto btn1 = factory.create_button();
+        auto btn1 = _factory.create_button();
         btn1.set_font(font);
         btn1.set_string(std::string("Button ") + std::to_string(i));
         btn1.set_padding(10);
         btn1.resize(50, 500);
-        auto command1 = std::make_unique<ICommand>();
+        auto command1 = std::make_unique<game_manager::command::NothingCommand>();
         auto cbtn1 = menu::CommandButton(std::move(btn1), std::move(command1));
 
         mmenu.buttons().push_back(std::move(cbtn1));
@@ -38,42 +94,54 @@ TEST(some, some)
 
 
     for (int i = 0; i < 5000; ++i) {
-        canvas->clear();
+        _canvas->clear();
 
         if( i % 200 == 0)
         {
             mmenu.set_active_id(i / 200 % mmenu.buttons().size());
         }
-        FPSEvent event(*canvas);
+        event_controller::FPSEvent event;
         mmenu.update(event);
 
 
-        canvas->apply();
+        _canvas->apply();
     }
 
 
 }
 
 
-TEST(some, some2)
+TEST_F(MenuTests, some2)
 {
-    graphics::sf::SfGraphicsFactory factory;
-
-    auto canvas = factory.create_canvas(800, 600, false);
-
-    menu::MainMenu mmenu(factory);
+    menu::MainMenu main_menu(*_canvas, _controller, _factory, _sprite_loader);
 
     for (int i = 0; i < 5000; ++i) {
-        canvas->clear();
+        _canvas->clear();
 
         if( i % 200 == 0)
         {
-            mmenu.set_active_id(i / 200 % mmenu.buttons().size());
+            switch ((i / 200) % 3) {
+                case 0: {
+                    event_controller::KeyboardEvent event(event_controller::Key::Down);
+                    main_menu.update(event);
+                    break;
+                }
+                case 1: {
+                    event_controller::KeyboardEvent event(event_controller::Key::Left);
+                    main_menu.update(event);
+                    break;
+                }
+                case 2: {
+                    event_controller::KeyboardEvent event(event_controller::Key::Up);
+                    main_menu.update(event);
+                    break;
+                }
+            }
         }
-        FPSEvent event(*canvas);
-        mmenu.update(event);
+        event_controller::FPSEvent event;
+        main_menu.update(event);
 
-        canvas->apply();
+        _canvas->apply();
     }
 
 

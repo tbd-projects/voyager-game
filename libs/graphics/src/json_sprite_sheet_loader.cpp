@@ -56,5 +56,5 @@ graphics::JsonSpriteSheetLoader::JsonSpriteSheetLoader(graphics::IGraphicsFactor
 }
 
 std::filesystem::path graphics::JsonSpriteSheetLoader::_get_config_path() {
-    return ::game_manager::Config::get_instance()._sprites_path;
+    return ::game_manager::Config::get_instance().sprites_path;
 }

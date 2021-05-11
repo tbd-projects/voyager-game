@@ -5,56 +5,58 @@
 #include <graphics/json_sprite_sheet_loader.h>
 #include "menu/command_button.h"
 #include "menu/main_menu.h"
-
-void menu::MainMenu::draw(graphics::ICanvas &canvas) {
-
-}
+#include "game_manager/commands/nothing_command.h"
+#include "event_controller/event/fps_event.h"
 
 menu::MainMenu::~MainMenu() = default;
 
-void menu::MainMenu::update(Event &event) {
-    if(event.type == event.fps)
+std::shared_ptr<event_controller::ICommand> menu::MainMenu::update(event_controller::Event &event) {
+    if(event.type == event_controller::EventType::fps)
     {
-        _bg->draw(&dynamic_cast<FPSEvent &>(event).canvas);
+        _bg->draw(&get_canvas());
     }
 
     VerticalCenteredMenu::update(event);
+
+    return std::make_shared<game_manager::command::NothingCommand>();
 }
 
-menu::MainMenu::MainMenu(graphics::IGraphicsFactory &factory)
-        : _factory(factory), _storage(factory), _progress(nullptr) {
+
+menu::MainMenu::MainMenu(graphics::ICanvas &canvas, event_controller::IController &controller, graphics::IGraphicsFactory &factory,
+                         graphics::ISpiteLoader &loader) : VerticalCenteredMenu(canvas, controller),
+                                                           _factory(factory),  _loader(loader), _storage(factory) {
     set_gap(10);
     set_buttons_height(50);
     set_buttons_width(200);
 
     auto font = factory.create_font();
 
-    graphics::JsonSpriteSheetLoader loader(factory);
-    _bg = loader.load(0, _storage);
+    _bg = _loader.load(0, _storage);
 
-    int dx = _bg->get_texture_size().first / 2;
-    int dy = _bg->get_texture_size().second / 2;
+    int dx = get_canvas().get_width() / 2;
+    int dy = get_canvas().get_height() / 2;
 
     _bg->set_pos(math::coords_t(dx, dy));
 
     auto cur_dir = std::filesystem::path(__FILE__).parent_path();
     font->set_path(cur_dir / "../../graphics/test/tests/fonts/Roboto-Medium.ttf");
 
-    auto start_command = std::make_unique<ICommand>();
+    auto start_command = std::make_unique<game_manager::command::NothingCommand>();
 
     buttons().push_back(
             _create_button(factory, font, std::move(start_command), "Start game")
     );
-
+    auto other_command = std::make_unique<game_manager::command::NothingCommand>();
     buttons().push_back(
-            _create_button(factory, font, std::move(start_command), "Game info")
+            _create_button(factory, font, std::move(other_command), "Game info")
     );
 
+    set_active_id(0);
 }
 
 menu::CommandButton
 menu::MainMenu::_create_button(graphics::IGraphicsFactory &factory, std::shared_ptr<graphics::Font> &font,
-                               std::unique_ptr<ICommand> &&command, const std::string &title) {
+                               std::unique_ptr<event_controller::ICommand> &&command, const std::string &title) {
     auto button = factory.create_button();
     button.set_font(font);
     button.set_string(title);

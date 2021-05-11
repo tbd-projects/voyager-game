@@ -2,14 +2,11 @@
 // Created by volodya on 15.04.2021.
 //
 
+#include "game_manager/commands.h"
 #include "menu/pause_menu.h"
-
-void menu::PauseMenu::draw(graphics::ICanvas &canvas) {
-
-}
 
 menu::PauseMenu::~PauseMenu() = default;
 
-void menu::PauseMenu::update(Event &event) {
-
+std::shared_ptr<event_controller::ICommand> menu::PauseMenu::update(event_controller::Event &event) {
+    return std::make_shared<game_manager::command::NothingCommand>();
 }

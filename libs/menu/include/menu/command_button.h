@@ -6,22 +6,18 @@
 #define VOYAGER_COMMAND_BUTTON_H
 
 #include <graphics/button.h>
-
-class ICommand {
-public:
-    virtual ~ICommand() = default;
-}; // @todo use external defination
+#include <event_controller/i_command.h>
 
 namespace menu {
     class CommandButton : public ::graphics::Button {
     private:
-        std::unique_ptr<ICommand> _command;
+        std::unique_ptr<event_controller::ICommand> _command;
     public:
-        CommandButton(Button &&button, std::unique_ptr<ICommand> &&_command);
+        CommandButton(Button &&button, std::unique_ptr<event_controller::ICommand> &&_command);
 
-        [[nodiscard]] const std::unique_ptr<ICommand> &get_command() const;
+        [[nodiscard]] const std::unique_ptr<event_controller::ICommand> &get_command() const;
 
-        void set_command(std::unique_ptr<ICommand> &&command);
+        void set_command(std::unique_ptr<event_controller::ICommand> &&command);
     };
 }
 
