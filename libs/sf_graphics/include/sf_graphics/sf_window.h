@@ -10,8 +10,8 @@
 #include <graphics/i_drawable.h>
 #include <event_controller/i_eventable.h>
 
-#include <graphics/sf/sf_canvas_impl.h>
-#include <event_controller/sf/sf_eventable_impl.h>
+#include <sf_graphics/sf_canvas_impl.h>
+#include <sf_graphics/sf_eventable_impl.h>
 
 namespace game_manager {
     class SfWindow: public graphics::ICanvas, public event_controller::IEventable {

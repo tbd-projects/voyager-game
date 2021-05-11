@@ -9,7 +9,7 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCE ${SOURCE_DIR}/main.cpp)
 set(LIBRARIES_DIR ${CMAKE_SOURCE_DIR}/libs)
 cmake_policy(SET CMP0079 NEW)
-set(LIBRARIES debug_lib math_lib physics_lib loaders_lib graphics_lib
+set(LIBRARIES debug_lib math_lib physics_lib loaders_lib graphics_lib sf_graphics_lib
         shop_lib event_controller_lib game_manager_lib menu_lib game_lib)
 
 project(${PROJECT_NAME})
@@ -35,6 +35,11 @@ include_directories(${GTEST_INCLUDE_DIRS})
 
 #set(GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_main.cpp )
 set_property(GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR ${CMAKE_SOURCE_DIR}/src/test_main.cpp)
+#####################
+# Fix for old gtest #
+#####################
+
+add_definitions(-DINSTANTIATE_TEST_SUITE_P=INSTANTIATE_TEST_CASE_P)
 
 ###########
 # Project #
@@ -54,8 +59,9 @@ target_link_libraries(menu_lib graphics_lib event_controller_lib game_manager_li
 
 target_link_libraries(game_lib loaders_lib)
 
-target_link_libraries(graphics_lib math_lib game_manager_lib sfml-graphics sfml-window sfml-system)
-target_link_libraries(graphics_lib_tests graphics_lib game_manager_lib)
+target_link_libraries(graphics_lib math_lib game_manager_lib)
+target_link_libraries(sf_graphics_lib graphics_lib sfml-graphics sfml-window sfml-system)
+target_link_libraries(graphics_lib_tests graphics_lib sf_graphics_lib)
 
 target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
 

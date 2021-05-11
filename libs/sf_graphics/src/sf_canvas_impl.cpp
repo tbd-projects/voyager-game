@@ -2,7 +2,7 @@
 // Created by volodya on 10.05.2021.
 //
 
-#include "graphics/sf/sf_canvas_impl.h"
+#include "sf_graphics/sf_canvas_impl.h"
 
 namespace graphics::sf {
     int SfCanvasImpl::get_width(::sf::RenderWindow &window) {

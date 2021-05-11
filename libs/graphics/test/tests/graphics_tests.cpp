@@ -1,16 +1,14 @@
 #include <gtest/gtest.h>
 #include "graphics.h"
-#include "graphics/sf/sf_graphics_factory.h"
+
 #include "graphics/json_sprite_sheet_loader.h"
-#include "graphics/sf/sf_texture.h"
-#include "graphics/sf/sf_text.h"
-#include "graphics/sf/sf_font.h"
+
+#include <sf_graphics/sf_graphics_factory.h>
+#include <sf_graphics/sf_window.h>
+
 #include <cmath>
 #include <memory>
 
-
-#include <game_manager/sf/sf_window.h>
-#include <game_manager/config.h>
 
 class MockJSONSpriteSheetLoader
         : public graphics::JsonSpriteSheetLoader
