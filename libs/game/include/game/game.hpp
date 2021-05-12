@@ -78,7 +78,7 @@ namespace game {
     private:
         game::Map _map;
         game::Progress _progress;
-        graphics::ICanvas _canvas;
+        graphics::ICanvas &_canvas;
 
     };
 
