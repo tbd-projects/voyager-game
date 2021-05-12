@@ -14,6 +14,7 @@ namespace event_controller {
 
     class Controller : public IController{
     private:
+        bool _is_runned = false;
         std::map<EventType, std::set<ISubscriber *>> _subscribers;
         game_manager::GameManager &_manager;
         IEventable &_eventable;
@@ -21,6 +22,7 @@ namespace event_controller {
         Controller(game_manager::GameManager &manager, IEventable &eventable);
 
         void run();
+        void stop();
         void subscribe(EventType type, ISubscriber &subscriber) override;
         void unsubscribe(EventType type, ISubscriber &subscriber) override;
     };
