@@ -27,6 +27,8 @@ class Controller : public IController {
     void subscribe(EventType type, ISubscriber &subscriber) override {}
 
     void unsubscribe(EventType type, ISubscriber &subscriber) override {}
+
+    void stop() {};
 };
 
 }  // namespace event_controller

@@ -11,23 +11,23 @@ namespace game_manager {
 GameManager::GameManager(graphics::ICanvas &canvas
                          , event_controller::IEventable &eventable)
         : _controller(*this, eventable)
-        , _game(_controller, canvas)
+        , _game(nullptr)
         , _canvas(canvas)
         , _menu(nullptr)
         , _on_pause(false)
         , _in_game(false) {
-    _game.stop_game(_controller);
 }
 
-void GameManager::start_game() {
-    if (!_in_game) {
+void GameManager::start_game(size_t id_level) {
+    if (_in_game) {
         throw debug::ARG_UNEXPECTED_CALL_ERROR("run game, when it's runned");
     }
 
     _in_game = true;
 
     _menu = nullptr;
-    _game.continue_game(_controller);
+    _game = std::make_unique<game::Game>(_controller, _canvas);
+    _game->start_game(id_level);
 }
 
 void GameManager::pause_game() {
@@ -38,13 +38,12 @@ void GameManager::pause_game() {
 
     if (!_on_pause) {
         _menu = std::make_unique<menu::PauseMenu>();
-        _game.stop_game(_controller);
+        _game->stop_game(_controller);
     }
 }
 
 void GameManager::end_game() {
-    _game = game::Game(_controller, _canvas);
-    _game.stop_game(_controller);
+    _game = nullptr;
     open_main_menu();
 }
 
@@ -64,7 +63,7 @@ void GameManager::run() {
 }
 
 void GameManager::exit() {
-
+    _controller.stop();
 }
 
 void GameManager::end_pause() {
@@ -73,7 +72,7 @@ void GameManager::end_pause() {
                                                " or when not exisist game");
     }
 
-    _game.continue_game(_controller);
+    _game->continue_game(_controller);
     _menu = nullptr;
 }
 
