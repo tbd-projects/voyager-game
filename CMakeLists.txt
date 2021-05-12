@@ -54,6 +54,8 @@ endforeach(LIBRARY)
 
 target_link_libraries(math_lib debug_lib)
 target_link_libraries(physics_lib debug_lib math_lib)
+target_link_libraries(game_manager_lib debug_lib menu_lib game_lib)
+target_link_libraries(loaders_lib game_manager_lib math_lib)
 
 target_link_libraries(menu_lib graphics_lib event_controller_lib game_manager_lib)
 
@@ -61,12 +63,10 @@ target_link_libraries(game_lib loaders_lib)
 
 target_link_libraries(graphics_lib math_lib game_manager_lib)
 target_link_libraries(sf_graphics_lib graphics_lib sfml-graphics sfml-window sfml-system)
-target_link_libraries(graphics_lib_tests graphics_lib sf_graphics_lib)
+target_link_libraries(graphics_lib_tests sf_graphics_lib)
+target_link_libraries(menu_lib_tests sf_graphics_lib)
 
 target_link_libraries(event_controller_lib graphics_lib game_manager_lib)
-
-
-target_link_libraries(game_manager_lib event_controller_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
