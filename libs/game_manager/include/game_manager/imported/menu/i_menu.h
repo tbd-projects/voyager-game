@@ -6,8 +6,8 @@
 #define VOYAGER_I_MENU_H
 
 
-#include <event_controller/i_subscriber.h>
-#include <event_controller/i_controller.h>
+#include <imported/event_controller/i_subscriber.h>
+#include <imported/event_controller/i_controller.h>
 
 namespace menu {
 

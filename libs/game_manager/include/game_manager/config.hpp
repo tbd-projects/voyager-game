@@ -4,11 +4,11 @@
 #include <filesystem>
 
 #include <game_manager/interface.hpp>
-#include <graphics/i_graphics_factory.h>
-#include <graphics/i_spite_loader.h>
-#include <loaders/properties_loader.hpp>
-#include <game/loaders/progress_loader.hpp>
-#include <game/loaders/level_loader.hpp>
+#include <game_manager/imported/graphics/i_graphics_factory.h>
+#include <game_manager/imported/graphics/i_spite_loader.h>
+#include <game_manager/imported/game/loaders/properties_loader.hpp>
+#include <game_manager/imported/game/loaders/progress_loader.hpp>
+#include <game_manager/imported/game/loaders/level_loader.hpp>
 
 namespace game_manager {
 

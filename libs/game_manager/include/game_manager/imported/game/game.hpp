@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "loaders/level_loader.hpp"
-#include "event_controller/i_controller.h"
+#include "imported/event_controller/i_controller.h"
 
 class Game {
 public:

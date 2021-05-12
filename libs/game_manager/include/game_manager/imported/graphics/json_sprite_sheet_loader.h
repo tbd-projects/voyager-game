@@ -5,7 +5,7 @@
 #ifndef VOYAGER_JSON_SPRITE_SHEET_LOADER_H
 #define VOYAGER_JSON_SPRITE_SHEET_LOADER_H
 
-#include "graphics/i_spite_loader.h"
+#include "imported/graphics/i_spite_loader.h"
 #include "i_graphics_factory.h"
 
 namespace graphics {

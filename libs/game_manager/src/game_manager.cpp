@@ -1,7 +1,7 @@
 #include <debug/exception.hpp>
 #include <memory>
-#include <menu/pause_menu.h>
-#include <menu/main_menu.h>
+#include <imported/menu/pause_menu.h>
+#include <imported/menu/main_menu.h>
 
 #include "game_manager.hpp"
 #include "config.hpp"

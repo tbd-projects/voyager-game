@@ -3,7 +3,7 @@
 //
 
 #include <graphics/i_spite_loader.h>
-#include "menu/main_menu.h"
+#include "game_manager/imported/menu/main_menu.h"
 #include <game_manager/commands.hpp>
 
 namespace menu {

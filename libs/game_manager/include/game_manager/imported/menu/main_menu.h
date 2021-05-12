@@ -5,9 +5,9 @@
 #ifndef VOYAGER_MAIN_MENU_H
 #define VOYAGER_MAIN_MENU_H
 
-#include "graphics/i_spite_loader.h"
-#include "graphics/i_graphics_factory.h"
-#include "menu/vertical_centered_menu.h"
+#include "imported/graphics/i_spite_loader.h"
+#include "imported/graphics/i_graphics_factory.h"
+#include "imported/menu/vertical_centered_menu.h"
 
 
 namespace menu {

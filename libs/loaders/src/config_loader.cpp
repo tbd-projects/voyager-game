@@ -7,7 +7,7 @@
 
 namespace game_manager::imported {
 
-void imported::JsonLoader::load(const std::filesystem::path& root
+void imported::ConfigJsonLoader::load(const std::filesystem::path& root
                                 , Config &config) const {
     if (root.empty()) {
         throw debug::ARG_ARGUMENT_ERROR("empty file for load in path :"
@@ -29,12 +29,15 @@ void imported::JsonLoader::load(const std::filesystem::path& root
 
     config.fps = current_config.second.get<size_t>("fps");
     config.player_id = current_config.second.get<size_t>("player_id");
-    config.levels_path = current_config.second.get<std::string>("levels_path");
+    config.levels_path = root.parent_path()
+            / current_config.second.get<std::string>("levels_path");
     config.sprites_path =
-            current_config.second.get<std::string>("sprites_path");
+            root.parent_path()
+            / current_config.second.get<std::string>("sprites_path");
     config.stats_path = current_config.second.get<std::string>("stats_path");
     config.properties_path =
-            current_config.second.get<std::string>("properties_path");
+            root.parent_path()
+            / current_config.second.get<std::string>("properties_path");
 }
 
 }  // namespace game_manager::imported

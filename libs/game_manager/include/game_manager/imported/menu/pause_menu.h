@@ -5,8 +5,8 @@
 #ifndef VOYAGER_PAUSE_MENU_H
 #define VOYAGER_PAUSE_MENU_H
 
-#include "menu/i_menu.h"
-#include <event_controller/event.h>
+#include "imported/menu/i_menu.h"
+#include <imported/event_controller/event.h>
 
 namespace menu {
 class PauseMenu : public IMenu {

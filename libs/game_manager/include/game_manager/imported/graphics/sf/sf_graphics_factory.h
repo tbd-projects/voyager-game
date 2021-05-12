@@ -5,7 +5,7 @@
 #ifndef VOYAGER_SF_GRAPHICS_FACTORY_H
 #define VOYAGER_SF_GRAPHICS_FACTORY_H
 
-#include "graphics/i_graphics_factory.h"
+#include "imported/graphics/i_graphics_factory.h"
 
 namespace graphics::sf {
 

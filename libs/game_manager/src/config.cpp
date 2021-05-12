@@ -2,8 +2,8 @@
 
 #include <utility>
 
-#include <graphics/sf/sf_graphics_factory.h>
-#include <graphics/json_sprite_sheet_loader.h>
+#include <imported/graphics/sf/sf_graphics_factory.h>
+#include <imported/graphics/json_sprite_sheet_loader.h>
 
 namespace game_manager {
 

@@ -1,5 +1,5 @@
 #include <game_manager/commands.hpp>
-#include "menu/pause_menu.h"
+#include "game_manager/imported/menu/pause_menu.h"
 
 namespace menu {
 

@@ -2,7 +2,7 @@
 // Created by volodya on 08.05.2021.
 //
 
-#include "menu/vertical_centered_menu.h"
+#include "game_manager/imported/menu/vertical_centered_menu.h"
 
 namespace menu {
 

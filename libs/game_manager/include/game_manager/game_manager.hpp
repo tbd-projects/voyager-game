@@ -1,10 +1,10 @@
 #pragma once
 
-#include <menu/i_menu.h>
-#include <event_controller/controller.h>
-#include <event_controller/i_eventable.h>
-#include <graphics/i_drawable.h>
-#include <game/game.hpp>
+#include <imported/menu/i_menu.h>
+#include <imported/event_controller/controller.h>
+#include <imported/event_controller/i_eventable.h>
+#include <imported/graphics/i_drawable.h>
+#include <imported/game/game.hpp>
 
 namespace game_manager {
 
