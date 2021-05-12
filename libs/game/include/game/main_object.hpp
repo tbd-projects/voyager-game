@@ -36,6 +36,7 @@ namespace game {
 
         void set_sprite(std::unique_ptr<graphics::Sprite> sprite);
 
+        void rotate_sprite(math::decimal_t angle);
 
         void set_sprite_id(size_t id) override;
 

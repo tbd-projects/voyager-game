@@ -50,34 +50,54 @@ namespace game {
         for (auto &obj : this->_stars) {
             obj->get_sprite()->draw(canvas);
         }
+        this->_ship->rotate_sprite(this->_ship->get_rotation());
         this->_ship->get_sprite()->draw(canvas);
-        
+
         return true;
     }
 
+    void Map::set_ship_trust(math::decimal_t trust) {
+        this->_ship->add_trust(trust);
+    }
 
 
 // Game
 
-Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) : _map(0), _canvas(canvas) {
-
-}
+    Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) : _map(config::get_instance().player_id), _canvas(canvas),
+                                                                                       _controller(controller) {
+    }
 
     Game::~Game() {
 
     }
-
+    // unpause
     bool Game::start_game(int level) {
-        return false;
-    }
+        this->_map.load_level(level);
+        this->update(event_controller::FPSEvent);
 
+        return true;
+    }
+    // pause
     bool Game::stop_game() {
         return false;
     }
 
     std::shared_ptr<event_controller::ICommand> Game::update(event_controller::Event &event) {
-//        return std::make_shared<game_manager::command::NothingCommand>();
-            return nullptr;
+        if (event.type == event_controller:FPSEvent) {
+            this->_map.update();
+        } else if (event.type == event_controller:KeyboardPressed) {
+            if (event.type.button == UP) {
+                this->_map.set_ship_trust(0);
+            } else if (event.type.button == DOWN) {
+                this->_map.set_ship_trust(180);
+            } else if (event.type.button == RIGHT) {
+                this->_map.set_ship_trust(90);
+            } else if (event.type.button == LEFT) {
+                this->_map.set_ship_trust(-90);
+            }
+        }
+        return std::make_shared<game_manager::command::NothingCommand>();
+//        return nullptr;
     }
 } // namespace game
 

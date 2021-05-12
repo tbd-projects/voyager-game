@@ -40,6 +40,7 @@ namespace game {
 
         void load_level(size_t level_num);
 
+        void set_ship_trust(math::decimal_t target);
 
         bool update(graphics::ICanvas &canvas);
 
@@ -71,12 +72,15 @@ namespace game {
 
         bool start_game(int level);
 
+        bool continue_game();
+
         bool stop_game();
 
     private:
         game::Map _map;
         game::Progress _progress;
         graphics::ICanvas &_canvas;
+        event_controller::IController &_controller;
 
     };
 

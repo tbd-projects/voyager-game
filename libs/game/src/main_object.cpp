@@ -13,6 +13,11 @@ namespace game {
         this->_sprite_id = id;
     }
 
+    void GameObject::rotate_sprite(math::decimal_t angle) {
+//        this->_sprite->set_rotation(angle);
+    }
+
+
     size_t GameObject::get_sprite_id() {
         return this->_sprite_id;
     }
