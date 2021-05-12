@@ -23,20 +23,20 @@ class AcceleratableObject {
     AcceleratableObject();
 
     [[nodiscard]]
-    bool have_some_trust() const noexcept;
+    bool have_some_impulse() const noexcept;
 
     [[nodiscard]]
-    math::decimal_t target_trust() const noexcept;
+    math::decimal_t target_impulse() const noexcept;
 
-    void add_trust(math::decimal_t target);
+    void add_impulse(math::decimal_t target);
 
-    void complete_add_trust();
+    void complete_add_impulse();
 
     virtual ~AcceleratableObject() = default;
 
   private:
-    bool _need_trust;
-    math::decimal_t _target_trust;
+    bool _need_impulse;
+    math::decimal_t _target_impulse;
 };
 
 class ColideObject : public math::IPositionable, public math::IRotatable {

@@ -1,4 +1,5 @@
 #include "physical_object.hpp"
+#include "mechanic.hpp"
 
 namespace physics {
 
@@ -8,7 +9,7 @@ namespace physics {
 
 PhysicalObject::PhysicalObject(std::unique_ptr<math::Polygon> &&polygon)
         : ColideObject(std::move(polygon))
-          , _weight(0)
+          , _weight(1)
           , _velocity(math::Vector2d(0, 0)) {}
 
 PhysicalObject::PhysicalObject(std::unique_ptr<math::Polygon> &&polygon
@@ -22,6 +23,10 @@ PhysicalObject::PhysicalObject(std::unique_ptr<math::Polygon> &&polygon
 
 size_t PhysicalObject::get_weight() const noexcept {
     return _weight;
+}
+
+math::decimal_t PhysicalObject::get_cast_weight() const noexcept {
+    return math::decimal_t(_weight) * one_ton;
 }
 
 constexpr const math::Vector2d &PhysicalObject::get_velocity() const noexcept {

@@ -15,25 +15,25 @@ EnginesIndexedObject::EnginesIndexedObject()
 
 
 AcceleratableObject::AcceleratableObject()
-        : _need_trust(false)
-          , _target_trust(0) {}
+        : _need_impulse(false)
+          , _target_impulse(0) {}
 
-bool AcceleratableObject::have_some_trust() const noexcept {
-    return _need_trust;
+bool AcceleratableObject::have_some_impulse() const noexcept {
+    return _need_impulse;
 }
 
-math::decimal_t AcceleratableObject::target_trust() const noexcept {
-    return _target_trust;
+math::decimal_t AcceleratableObject::target_impulse() const noexcept {
+    return _target_impulse;
 }
 
-void AcceleratableObject::add_trust(math::decimal_t target) {
-    _need_trust = true;
-    _target_trust = target;
+void AcceleratableObject::add_impulse(math::decimal_t target) {
+    _need_impulse = true;
+    _target_impulse = target;
 }
 
-void AcceleratableObject::complete_add_trust() {
-    _need_trust = false;
-    _target_trust = 0;
+void AcceleratableObject::complete_add_impulse() {
+    _need_impulse = false;
+    _target_impulse = 0;
 }
 
 ColideObject::ColideObject(std::unique_ptr<math::Polygon> &&polygon)
