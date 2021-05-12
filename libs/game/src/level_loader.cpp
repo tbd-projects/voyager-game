@@ -9,6 +9,7 @@
 #include "physics/orbit.hpp"
 
 namespace game {
+    
     JsonCreateLevel::JsonCreateLevel(const std::string &level_dir) {
         if (level_dir.empty()) {
             throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
@@ -23,7 +24,7 @@ namespace game {
         }
         pt::ptree tree;
         std::string level_path = this->_path + std::to_string(level_num) + ".json";
-        pt::read_json(this->_path, tree);
+        pt::read_json(level_path, tree);
 
         this->_bg_id = tree.get<size_t>("background.sprite_id");
 //    this->_level_texture = new ISprite(background_id);
@@ -40,8 +41,8 @@ namespace game {
             physics::Orbit::orbit_properties_t orb_prop;
 
             math::coords_t orbit_pos;
-            orbit_pos.x = planet.second.get<size_t>("x_c");
-            orbit_pos.y = planet.second.get<size_t>("y_c");
+            orbit_pos.x = planet.second.get<float>("orbit_properties.x_c");
+            orbit_pos.y = planet.second.get<float>("orbit_properties.y_c");
             orb_prop.pos = orbit_pos;
 
             math::coords_t orbit_var;

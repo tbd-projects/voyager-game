@@ -5,9 +5,9 @@
 #include "game/objects.hpp"
 #include "exception.hpp"
 
-namespace pt = boost::property_tree;
 
 namespace game {
+    namespace pt = boost::property_tree;
 
     class CreatorLevel {
     public:
