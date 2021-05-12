@@ -5,9 +5,10 @@
 
 namespace pt = boost::property_tree;
 
+namespace game {
 
 class CreatorLevel {
-public:
+  public:
     virtual void create_level(size_t level_num) = 0;
 
     virtual ~CreatorLevel() = default;
@@ -21,3 +22,5 @@ class JsonCreateLevel : public CreatorLevel {
 
     void create_level(size_t level_num) override {}
 };
+
+}

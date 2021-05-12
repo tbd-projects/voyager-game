@@ -39,11 +39,12 @@ void Config::load(const std::filesystem::path &root
             = std::make_shared<graphics::sf::SfGraphicsFactory>();
     config.sprite_loader = std::make_shared<graphics::JsonSpriteSheetLoader>(
             *config.graphics_factory);
-    config.properties_loader = std::make_shared<JsonPlayerPropertiesLoader>(
+    config.properties_loader
+            = std::make_shared<game::JsonPlayerPropertiesLoader>(
             config.properties_path);
-    config.progress_loader = std::make_shared<BaseProgressLoader>(
+    config.progress_loader = std::make_shared<game::BaseProgressLoader>(
             config.stats_path);
-    config.levels_loader = std::make_shared<JsonCreateLevel>(
+    config.levels_loader = std::make_shared<game::JsonCreateLevel>(
             config.levels_path);
 }
 

@@ -5,10 +5,10 @@
 
 namespace game_manager::command {
 
-class LevelsMenuCommand : public ICommand {
+class RunPause : public ICommand {
     void execute(GameManager &manager) override {
-        manager.open_levels_menu();
+        manager.pause_game();
     }
 };
 
-}
+}  // namespace game_manager::command

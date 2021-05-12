@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+namespace game {
+
 struct progress_t {
     size_t coins;
     size_t time;
@@ -14,7 +16,7 @@ struct progress_t {
 };
 
 class ProgressLoader {
-public:
+  public:
     virtual progress_t load(const int player_id) = 0;
 
     virtual void save(const int player_id, progress_t &progress) = 0;
@@ -26,10 +28,12 @@ class BaseProgressLoader : public ProgressLoader {
   public:
     explicit BaseProgressLoader(const std::string &root_path) {}
 
-    progress_t load(const int player_id) override {return {};}
+    progress_t load(const int player_id) override { return {}; }
 
     void save(const int player_id, progress_t &progress) override {}
 
   private:
     std::string path;
 };
+
+}

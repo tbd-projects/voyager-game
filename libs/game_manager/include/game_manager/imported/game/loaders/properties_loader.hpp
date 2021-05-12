@@ -5,6 +5,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
+namespace game {
+
 struct properties_t {
     unsigned int fuel;
     unsigned int health;
@@ -41,3 +43,5 @@ class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
     void save_current_properties(const int player_id
                                  , properties_t &properties) override {}
 };
+
+}

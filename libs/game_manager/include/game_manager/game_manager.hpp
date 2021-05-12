@@ -17,18 +17,21 @@ class GameManager {
 
     void start_game();
 
+    void end_pause();
+
     void pause_game();
 
     void end_game();
 
+    void exit();
+
     void open_main_menu();
 
-    void open_levels_menu();
 
   private:
     event_controller::Controller _controller;
 
-    Game _game;
+    game::Game _game;
     graphics::ICanvas &_canvas;
     std::unique_ptr<menu::IMenu> _menu;
 
