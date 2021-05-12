@@ -28,7 +28,7 @@ class GameManager {
   private:
     event_controller::Controller _controller;
 
-    Game _game;
+    game::Game _game;
     graphics::ICanvas &_canvas;
     std::unique_ptr<menu::IMenu> _menu;
 

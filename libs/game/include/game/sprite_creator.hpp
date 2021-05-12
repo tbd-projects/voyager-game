@@ -2,16 +2,9 @@
 
 #include <memory>
 #include "interface.hpp"
-//#include "graphics/sf/sf_texture.h"
+#include <graphics/i_graphics_factory.h>
+#include <graphics/texture_storage.h>
 
-namespace graphics {
-    class sf {
-    public:
-        class SfGraphicsFactory {
-
-        };
-    };
-}
 namespace game {
     class MapSpriteCreator {
     public:
@@ -21,13 +14,13 @@ namespace game {
 
         MapSpriteCreator &operator=(const MapSpriteCreator &) = delete;
 
-        MapSpriteCreator(graphics::sf::SfGraphicsFactory &factory) {
-            this->_texture_storage = factory;
+        explicit MapSpriteCreator(graphics::IGraphicsFactory &factory): _texture_storage(factory) {
+
         };
 
-        std::unique_ptr<Sprite> get_sprite(size_t id);
+        std::unique_ptr<graphics::Sprite> get_sprite(size_t id);
 
     private:
-        graphics::sf::SfGraphicsFactory _texture_storage;
+        graphics::TextureStorage _texture_storage;
     };
 } // namespace game

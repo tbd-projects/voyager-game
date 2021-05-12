@@ -4,7 +4,7 @@
 
 
 #include "graphics/json_sprite_sheet_loader.h"
-#include <game_manager/config.h>
+#include <game_manager/config.hpp>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>

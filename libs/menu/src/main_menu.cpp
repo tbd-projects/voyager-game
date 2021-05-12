@@ -5,7 +5,7 @@
 #include <graphics/json_sprite_sheet_loader.h>
 #include "menu/command_button.h"
 #include "menu/main_menu.h"
-#include "game_manager/commands/nothing_command.h"
+#include "game_manager/commands/nothing_command.hpp"
 #include "event_controller/event/fps_event.h"
 
 menu::MainMenu::~MainMenu() = default;
@@ -49,6 +49,11 @@ menu::MainMenu::MainMenu(graphics::ICanvas &canvas, event_controller::IControlle
     auto other_command = std::make_unique<game_manager::command::NothingCommand>();
     buttons().push_back(
             _create_button(factory, font, std::move(other_command), "Game info")
+    );
+
+    auto exit_command = std::make_unique<game_manager::command::NothingCommand>();
+    buttons().push_back(
+            _create_button(factory, font, std::move(exit_command), "Exit")
     );
 
     set_active_id(0);

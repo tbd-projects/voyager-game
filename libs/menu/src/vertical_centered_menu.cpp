@@ -2,7 +2,7 @@
 // Created by volodya on 08.05.2021.
 //
 
-#include <game_manager/commands.h>
+#include <game_manager/commands.hpp>
 #include "menu/vertical_centered_menu.h"
 #include <event_controller/event/fps_event.h>
 #include <event_controller/event/keyboard_event.h>
@@ -17,10 +17,10 @@ std::shared_ptr<event_controller::ICommand> menu::VerticalCenteredMenu::update(e
         auto key = dynamic_cast<event_controller::KeyboardEvent &>(event).key;
         int size = buttons().size();
         switch (key) {
-            case event_controller::Key::Up:
+            case event_controller::Key::Down:
                 set_active_id(std::min(_active_id + 1, size - 1));
                 break;
-            case event_controller::Key::Down:
+            case event_controller::Key::Up:
                 set_active_id(std::max(_active_id - 1, 0));
                 break;
             default:
@@ -104,7 +104,12 @@ void menu::VerticalCenteredMenu::set_buttons_width(int width) {
 
 menu::VerticalCenteredMenu::VerticalCenteredMenu(graphics::ICanvas &canvas,
                                                  event_controller::IController &controller)
-        : _canvas(canvas), _controller(controller) {}
+        : _canvas(canvas), _controller(controller) {
+
+    _controller.subscribe(event_controller::EventType::fps, *this);
+    _controller.subscribe(event_controller::EventType::keyboard, *this);
+
+}
 
 graphics::ICanvas &menu::VerticalCenteredMenu::get_canvas() const {
     return _canvas;
@@ -112,4 +117,9 @@ graphics::ICanvas &menu::VerticalCenteredMenu::get_canvas() const {
 
 event_controller::IController &menu::VerticalCenteredMenu::get_controller() {
     return _controller;
+}
+
+menu::VerticalCenteredMenu::~VerticalCenteredMenu() {
+    _controller.unsubscribe(event_controller::EventType::fps, *this);
+    _controller.unsubscribe(event_controller::EventType::keyboard, *this);
 }

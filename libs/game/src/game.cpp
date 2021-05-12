@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <game_manager/commands/nothing_command.hpp>
 #include "game.hpp"
 
 namespace game {
@@ -42,14 +43,14 @@ namespace game {
 //    this->_bg_id = ::game_manager::Config::get_instance().level_manager->_current_level.get_bg_id();
     }
 
-    bool Map::update(ICanvas &canvas) {
+    bool Map::update(graphics::ICanvas &canvas) {
         for (auto &obj : this->_space_objects) {
             obj->get_sprite()->draw(canvas);
         }
         for (auto &obj : this->_stars) {
             obj->get_sprite()->draw(canvas);
         }
-        this->_ship.get_sprite()->draw(canvas);
+        this->_ship->get_sprite()->draw(canvas);
         
         return true;
     }
@@ -58,24 +59,24 @@ namespace game {
 
 // Game
 
-//Game::Game(IController *controller) {
-//
-//}
+Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) : _map(0), _canvas(canvas) {
+
+}
 
     Game::~Game() {
 
     }
 
-    void Game::update() {
-
-    }
-
-    bool Game::start_game() {
+    bool Game::start_game(int level) {
         return false;
     }
 
     bool Game::stop_game() {
         return false;
+    }
+
+    std::shared_ptr<event_controller::ICommand> Game::update(event_controller::Event &event) {
+        return std::make_shared<game_manager::command::NothingCommand>();
     }
 } // namespace game
 

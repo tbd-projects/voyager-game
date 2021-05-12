@@ -8,6 +8,7 @@
 
 #include "event_controller/event/keyboard_event.h"
 #include "event_controller/event/fps_event.h"
+#include "event_controller/event/close_event.h"
 
 namespace event_controller {
 
@@ -21,10 +22,14 @@ namespace event_controller {
                     auto key = static_cast<Key>(sf_event.key.code);
                     return std::make_unique<KeyboardEvent>(key);
                 }
+                case ::sf::Event::Closed:
+                    return std::make_unique<CloseEvent>();
                 default:
                     continue;
             }
         }
+
+        window.display();
         return std::make_unique<FPSEvent>();
     }
 }

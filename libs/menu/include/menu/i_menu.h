@@ -8,6 +8,7 @@
 
 #include <graphics/i_drawable.h>
 #include <event_controller/i_subscriber.h>
+#include <event_controller/i_controller.h>
 
 namespace menu {
     class IMenu: public event_controller::ISubscriber {

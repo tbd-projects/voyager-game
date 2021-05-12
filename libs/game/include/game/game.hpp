@@ -7,16 +7,11 @@
 #include "progress.hpp"
 #include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
+#include <graphics/i_drawable.h>
+#include <event_controller/i_controller.h>
+#include <event_controller/i_subscriber.h>
 
-namespace graphics {
-    class ICanvas {
-
-    };
-}
 namespace game {
-    class Sprite;
-
-
     class Map {
     public:
         explicit Map(size_t player_id);
@@ -30,14 +25,14 @@ namespace game {
         void load_level(size_t level_num);
 
 
-        bool update(ICanvas &canvas);
+        bool update(graphics::ICanvas &canvas);
 
     private:
         std::vector<std::shared_ptr<SpaceBody>> _space_objects;
         std::vector<std::shared_ptr<Star>> _stars;
-        SpaceShip _ship;
-        std::unique_ptr<Sprite> _bg;
-        size_t _bg_id;
+        std::unique_ptr<SpaceShip> _ship;
+        std::unique_ptr<graphics::Sprite> _bg;
+        size_t _bg_id = 0;
 
         void check_all_collision();
 
@@ -49,22 +44,13 @@ namespace game {
 //    void create_level();
     };
 
-
-    class ISubscriber {
-
-    };
-
-    class IController {
-
-    };
-
-    class Game : public ISubscriber {
+    class Game : public event_controller::ISubscriber {
     public:
-        explicit Game(IController &controller);
+        explicit Game(event_controller::IController &controller, graphics::ICanvas &canvas);
 
         ~Game();
 
-        void update();
+        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
         bool start_game(int level);
 
@@ -73,7 +59,7 @@ namespace game {
     private:
         game::Map _map;
         game::Progress _progress;
-        graphics::ICanvas _canvas;
+        graphics::ICanvas &_canvas;
 
     };
 

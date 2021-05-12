@@ -1,11 +1,14 @@
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
-#include "debug/exception.h"
+#include "debug/exception.hpp"
+#include "game/exceptions.hpp"
 #include "loaders/level_loader.hpp"
 #include "math.hpp"
 #include <memory>
 #include "objects.hpp"
 #include "physics/orbit.hpp"
+
+#define LogicError BaseExceptions
 
 namespace game {
     JsonCreateLevel::JsonCreateLevel(const std::string &level_dir) {

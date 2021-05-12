@@ -1,5 +1,6 @@
 #pragma once
 #include <filesystem>
+#include <event_controller/i_command.h>
 
 namespace game_manager {
 class Config;
@@ -14,11 +15,11 @@ class GameManager;
 
 namespace command {
 
-class ICommand {
+class ICommand: public event_controller::ICommand{
   public:
-    virtual void execute(game_manager::GameManager &manager) = 0;
+    void execute(game_manager::GameManager &manager) override = 0;
 
-    virtual ~ICommand() = default;
+    ~ICommand() override = default;
 };
 
 }

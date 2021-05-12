@@ -10,7 +10,7 @@
 
 namespace event_controller {
 
-    enum Key {
+    typedef enum class Key {
         Unknown = -1, A = 0, B, C,
         D, E, F, G,
         H, I, J, K,
@@ -38,7 +38,7 @@ namespace event_controller {
         F11, F12, F13, F14,
         F15, Pause, KeyCount, Dash = Hyphen,
         BackSpace = Backspace, BackSlash = Backslash, SemiColon = Semicolon, Return = Enter
-    };
+    } Key;
 
     class KeyboardEvent: public Event{
     public:

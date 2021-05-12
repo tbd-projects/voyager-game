@@ -10,8 +10,8 @@
 #include "event_controller/i_eventable.h"
 #include "event_controller/i_subscriber.h"
 #include "event_controller/controller.h"
-#include <game_manager/game_manager.h>
-#include <game_manager/commands/nothing_command.h>
+#include <game_manager/game_manager.hpp>
+#include <game_manager/commands/nothing_command.hpp>
 #include <event_controller/event/close_event.h>
 
 

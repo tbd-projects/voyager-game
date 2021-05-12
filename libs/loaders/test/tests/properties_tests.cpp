@@ -4,7 +4,8 @@
 #include <filesystem>
 #include "gtest/gtest.h"
 #include "loaders/properties_loader.hpp"
-#include "debug/exception.h"
+#include "debug/exception.hpp"
+#include "game/exceptions.hpp"
 
 using namespace boost::property_tree;
 

@@ -1,11 +1,11 @@
 #include "main_object.hpp"
 
 namespace game {
-    const std::unique_ptr<Sprite> &GameObject::get_sprite() {
+    const std::unique_ptr<graphics::Sprite> &GameObject::get_sprite() {
         return this->_sprite;
     }
 
-    void GameObject::set_sprite(std::unique_ptr<Sprite> sprite) {
+    void GameObject::set_sprite(std::unique_ptr<graphics::Sprite> sprite) {
         this->_sprite = std::move(sprite);
     }
 
@@ -17,11 +17,11 @@ namespace game {
         return this->_sprite_id;
     }
 
-    const std::unique_ptr<Sprite> &NotActiveObject::get_sprite() {
+    const std::unique_ptr<graphics::Sprite> &NotActiveObject::get_sprite() {
         return this->_sprite;
     }
 
-    void NotActiveObject::set_sprite(std::unique_ptr<Sprite> sprite) {
+    void NotActiveObject::set_sprite(std::unique_ptr<graphics::Sprite> sprite) {
         this->_sprite = std::move(sprite);
     }
 

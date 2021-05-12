@@ -11,7 +11,7 @@ namespace game_manager {
 GameManager::GameManager(graphics::ICanvas &canvas
                          , event_controller::IEventable &eventable)
         : _controller(*this, eventable)
-        , _game(&_controller)
+        , _game(_controller, canvas)
         , _canvas(canvas)
         , _menu(nullptr)
         , _on_pause(false)
@@ -27,7 +27,8 @@ void GameManager::pause_game() {
     }
 
     if (!_on_pause) {
-        _menu = std::make_unique<menu::PauseMenu>();
+//        _menu = std::make_unique<menu::PauseMenu>();
+        _menu = nullptr;
     }
 }
 

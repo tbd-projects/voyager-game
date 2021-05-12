@@ -48,6 +48,8 @@ namespace menu {
 
         int get_gap() const;
 
+        virtual ~VerticalCenteredMenu();
+
         void set_gap(int gap);
     };
 }
