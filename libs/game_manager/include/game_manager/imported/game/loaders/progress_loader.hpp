@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+namespace game {
+
 struct progress_t {
     size_t coins;
     size_t time;
@@ -33,3 +35,5 @@ class BaseProgressLoader : public ProgressLoader {
   private:
     std::string path;
 };
+
+}  // namespace game

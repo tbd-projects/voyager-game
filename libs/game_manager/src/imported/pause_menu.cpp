@@ -14,4 +14,7 @@ event_controller::IController &PauseMenu::get_controller() {
     return *_controller;
 }
 
+PauseMenu::PauseMenu(graphics::ICanvas &canvas
+                     , event_controller::IController &controller) {}
+
 }  // namespace menu

@@ -2,12 +2,13 @@
 
 #include <game_manager/interface.hpp>
 #include <game_manager/game_manager.hpp>
+#include <game_manager/states.hpp>
 
 namespace game_manager::command {
 
-class LevelsMenuCommand : public ICommand {
+class Exit : public ICommand {
     void execute(GameManager &manager) override {
-        manager.open_levels_menu();
+        manager.end_run();
     }
 };
 

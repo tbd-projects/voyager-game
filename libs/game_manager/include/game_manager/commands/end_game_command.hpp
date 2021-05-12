@@ -6,7 +6,7 @@
 
 namespace game_manager::command {
 
-class RunMainMenu : public ICommand {
+class EndGame : public ICommand {
     void execute(GameManager &manager) override {
         auto creator = [](graphics::ICanvas &canvas
                           , event_controller::IController &controller)

@@ -6,8 +6,8 @@
 #define VOYAGER_VERTICAL_CENTERED_MENU_H
 
 
-#include <imported/event_controller/i_controller.h>
-#include "imported/graphics/i_drawable.h"
+#include <game_manager/imported/event_controller/i_controller.h>
+#include "game_manager/imported/graphics/i_drawable.h"
 #include "i_menu.h"
 
 #include <vector>
