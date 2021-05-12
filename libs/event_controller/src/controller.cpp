@@ -14,7 +14,9 @@ namespace event_controller {
     }
 
    void Controller::run() {
-        while (true) {
+        _is_runned = true;
+
+        while (_is_runned) {
             std::unique_ptr<Event> event = _eventable.get_event();
 
             for (auto subscriber: _subscribers[event->type])
@@ -22,11 +24,13 @@ namespace event_controller {
                 auto command = subscriber->update(*event);
                 command->execute(_manager);
             }
-
-            if (event->type == EventType::close) return;
         };
     }
 
     Controller::Controller(game_manager::GameManager &manager, IEventable &eventable)
     : _manager(manager), _eventable(eventable) {}
+
+    void Controller::stop() {
+        _is_runned = false;
+    }
 }
