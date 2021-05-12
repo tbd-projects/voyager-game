@@ -2,9 +2,6 @@
 //
 // Created by flashie on 04.05.2021.
 //
-#ifndef VOYAGER_EXCEPTIONS_HPP
-#define VOYAGER_EXCEPTIONS_HPP
-
 #include <exception>
 #include <string>
 #include <cstring>
@@ -70,6 +67,3 @@ public:
         return message.c_str();
     }
 };
-
-
-#endif //VOYAGER_EXCEPTIONS_HPP
