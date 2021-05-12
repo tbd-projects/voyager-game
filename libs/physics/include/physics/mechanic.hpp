@@ -4,7 +4,7 @@
 #include <physics/interface.hpp>
 #include <physics/physical_object.hpp>
 
-#define G 6.67
+const double G = 6.67;
 #define BASE_TRUST 25
 
 namespace physics {

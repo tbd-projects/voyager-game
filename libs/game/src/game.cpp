@@ -1,4 +1,5 @@
 #include <stdexcept>
+//#include <game_manager/commands/nothing_command.hpp>
 #include "game.hpp"
 
 namespace game {
@@ -31,7 +32,7 @@ namespace game {
 //    auto sprite = ISprite(properties.sprite_id);
 //    std::unique_ptr<math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
 //            math::coords_t(math::decimal_t(0), math::decimal_t(0)), sprite.get_height(), sprite.get_width());
-//    this->_ship = std:make_unique<SpaceShip>(properties.sprite_id, nullptr, std::move(pol), sprite.get_height(), sprite.get_width());
+//    this->_ship(properties.sprite_id, nullptr, std::move(pol), sprite.get_height(), sprite.get_width());
     }
 
     void Map::load_level(size_t level_num) {
@@ -42,7 +43,7 @@ namespace game {
 //    this->_bg_id = ::game_manager::Config::get_instance().level_manager->_current_level.get_bg_id();
     }
 
-    bool Map::update(ICanvas &canvas) {
+    bool Map::update(graphics::ICanvas &canvas) {
         for (auto &obj : this->_space_objects) {
             obj->get_sprite()->draw(canvas);
         }
@@ -58,12 +59,25 @@ namespace game {
 
 // Game
 
+Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) : _map(0), _canvas(canvas) {
+
+}
+
+    Game::~Game() {
+
+    }
+
     bool Game::start_game(int level) {
         return false;
     }
 
     bool Game::stop_game() {
         return false;
+    }
+
+    std::shared_ptr<event_controller::ICommand> Game::update(event_controller::Event &event) {
+//        return std::make_shared<game_manager::command::NothingCommand>();
+            return nullptr;
     }
 } // namespace game
 
