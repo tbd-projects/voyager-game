@@ -8,6 +8,14 @@
 #include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
 
+namespace event_controller {
+    class IController {
+
+    };
+    class ICommand {
+
+    };
+}
 namespace graphics {
     class ICanvas {
 
@@ -29,13 +37,12 @@ namespace game {
 
         void load_level(size_t level_num);
 
-
         bool update(ICanvas &canvas);
 
     private:
         std::vector<std::shared_ptr<SpaceBody>> _space_objects;
         std::vector<std::shared_ptr<Star>> _stars;
-        SpaceShip _ship;
+        std::unique_ptr<SpaceShip> _ship;
         std::unique_ptr<Sprite> _bg;
         size_t _bg_id;
 
@@ -54,17 +61,15 @@ namespace game {
 
     };
 
-    class IController {
 
-    };
 
     class Game : public ISubscriber {
     public:
-        explicit Game(IController &controller);
+        explicit Game(event_controller::IController &controller, graphics::ICanvas &canvas);
 
         ~Game();
 
-        void update();
+        std::shared_ptr<event_controller::ICommand > update();
 
         bool start_game(int level);
 

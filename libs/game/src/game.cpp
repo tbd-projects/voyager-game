@@ -31,7 +31,7 @@ namespace game {
 //    auto sprite = ISprite(properties.sprite_id);
 //    std::unique_ptr<math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
 //            math::coords_t(math::decimal_t(0), math::decimal_t(0)), sprite.get_height(), sprite.get_width());
-//    this->_ship(properties.sprite_id, nullptr, std::move(pol), sprite.get_height(), sprite.get_width());
+//    this->_ship = std:make_unique<SpaceShip>(properties.sprite_id, nullptr, std::move(pol), sprite.get_height(), sprite.get_width());
     }
 
     void Map::load_level(size_t level_num) {
@@ -49,7 +49,7 @@ namespace game {
         for (auto &obj : this->_stars) {
             obj->get_sprite()->draw(canvas);
         }
-        this->_ship.get_sprite()->draw(canvas);
+        this->_ship->get_sprite()->draw(canvas);
         
         return true;
     }
@@ -58,19 +58,7 @@ namespace game {
 
 // Game
 
-//Game::Game(IController *controller) {
-//
-//}
-
-    Game::~Game() {
-
-    }
-
-    void Game::update() {
-
-    }
-
-    bool Game::start_game() {
+    bool Game::start_game(int level) {
         return false;
     }
 

@@ -1,5 +1,5 @@
 #include "loaders/progress_loader.hpp"
-#include "debug/exception.h"
+#include "exception.hpp"
 #include <fstream>
 
 #include <boost/property_tree/ptree.hpp>

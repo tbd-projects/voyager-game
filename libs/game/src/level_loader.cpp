@@ -1,6 +1,6 @@
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
-#include "debug/exception.h"
+#include "exception.hpp"
 #include "loaders/level_loader.hpp"
 #include "math.hpp"
 #include <memory>
