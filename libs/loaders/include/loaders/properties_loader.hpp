@@ -17,6 +17,11 @@ namespace game {
         bool is_empty() {
             return !fuel && !health && !battery && !engine_power && !sprite_id;
         }
+        friend bool operator==(const properties_t &a, const properties_t &b) {
+            return a.fuel == b.fuel && a.health == b.health && a.battery == b.battery &&
+                   a.engine_power == b.engine_power && a.sprite_id == b.sprite_id;
+        }
+
     };
 
     class PlayerPropertiesLoader {
@@ -43,8 +48,9 @@ namespace game {
         properties_t load_current_properties(const int player_id) override;
 
         void save_current_properties(const int player_id, properties_t &properties) override;
-    private:
+
         bool has_player(const int player_id);
+
     };
 } // namespace game
 

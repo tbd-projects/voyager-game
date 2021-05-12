@@ -16,7 +16,9 @@ namespace game {
 
         ptree tree;
         read_json(this->path, tree);
-
+        if (!this->has_player(player_id)) {
+            throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, std::string("player not found"));
+        }
 
         auto fill_prop = [](ptree &pt) -> properties_t {
             properties_t prop;
@@ -37,9 +39,6 @@ namespace game {
                 break;
             }
         }
-//    if (prop.is_empty()) {
-//        throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
-//    }
 
         return prop;
     }
@@ -48,8 +47,6 @@ namespace game {
         if (this->path.empty()) {
             throw FileError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
         }
-//    namespace pt = boost::property_tree;
-
         auto rewrite = [&player_id](properties_t &properties) -> ptree {
             ptree tree;
             ptree prop;
@@ -73,20 +70,33 @@ namespace game {
         ptree temp;
         temp = rewrite(properties);
 
-        bool flag = false;
-        for (ptree::value_type &player : tree.get_child("players")) {
-            if (player.second.get<int>("id") == player_id) {
-                player.second = temp;
-                flag = true;
-            }
-        }
-
-        if (!flag) {
+        if (!this->has_player(player_id)) {
             auto &players = tree.get_child("players");
             players.push_back(std::make_pair("", temp));
             tree.put_child("players", players);
+        } else {
+            for (ptree::value_type &player : tree.get_child("players")) {
+                if (player.second.get<int>("id") == player_id) {
+                    player.second = temp;
+                }
+            }
         }
-
         write_json(this->path, tree);
+    }
+
+    bool JsonPlayerPropertiesLoader::has_player(const int player_id) {
+        if (this->path.empty()) {
+            throw FileError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
+        }
+        ptree tree;
+        bool has_player = false;
+        read_json(this->path, tree);
+        for (auto &player:tree.get_child("players")) {
+            if (player.second.get<int>("id") == player_id) {
+                has_player = true;
+                break;
+            }
+        }
+        return has_player;
     }
 } // namespace game

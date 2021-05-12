@@ -13,6 +13,10 @@ namespace game {
         bool is_empty() {
             return !coins && !time && level_stat.empty();
         }
+
+        friend bool operator==(const progress_t &a, const progress_t &b) {
+            return a.coins == b.coins && a.time == b.time;
+        }
     };
 
     class ProgressLoader {
@@ -22,23 +26,27 @@ namespace game {
         virtual void save(const int player_id, progress_t &progress) = 0;
 
         virtual ~ProgressLoader() = default;
+
     };
 
     class BaseProgressLoader : public ProgressLoader {
     public:
-        BaseProgressLoader() = delete;
+        BaseProgressLoader() = default;
 
         ~BaseProgressLoader() override = default;
 
-        BaseProgressLoader(const BaseProgressLoader &) = delete;
+        BaseProgressLoader(const BaseProgressLoader &) = default;
 
-        BaseProgressLoader &operator=(const BaseProgressLoader &) = delete;
+        BaseProgressLoader &operator=(const BaseProgressLoader &) = default;
 
         explicit BaseProgressLoader(const std::string &root_path);
 
         progress_t load(const int player_id) override;
 
         void save(const int player_id, progress_t &progress) override;
+
+        bool has_progress(const int player_id);
+
 
     private:
         std::string path;
