@@ -36,7 +36,10 @@ namespace game {
         std::shared_ptr<SpaceShip> _ship;
         std::unique_ptr<graphics::Sprite> _bg;
         size_t _bg_id = 0;
+
         physics::Engine _engine;
+        std::unique_ptr<Camera> _camera;
+
         void check_all_collision();
 
         void set_sprites(MapSpriteCreator &factory);

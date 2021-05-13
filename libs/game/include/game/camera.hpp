@@ -4,12 +4,13 @@
 //
 #include <math/utilits.hpp>
 #include <memory>
+#include <utility>
 #include "objects.hpp"
 
 namespace game {
     class Camera {
     public:
-        Camera(std::shared_ptr<SpaceShip> ship, math::coords_t follow_pos) : _ship(ship), _follow_pos(follow_pos) {};
+        Camera(std::shared_ptr<SpaceShip> ship, math::coords_t follow_pos) : _ship(std::move(ship)), _follow_pos(follow_pos) {};
 
         math::coords_t get_position(math::coords_t observe_pos);
 

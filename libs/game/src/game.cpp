@@ -47,6 +47,8 @@ namespace game {
                 math::coords_t(math::decimal_t(0), math::decimal_t(0)), height, width);
 
         _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties);
+        // @todo Follow_pos - width, height of canvas
+        this->_camera = std::make_unique<Camera>(_ship, math::coords_t(200, 200));
     }
 
     void Map::load_level(size_t level_num) {
@@ -92,18 +94,18 @@ namespace game {
             obj->move(_engine);
 
             auto &sprite = obj->get_sprite();
-            sprite->set_pos(obj->get_pos());
+            sprite->set_pos(_camera->get_position(obj->get_pos()));
             sprite->draw(canvas);
         }
         for (auto &obj : this->_stars) {
             auto &sprite = obj->get_sprite();
-            sprite->set_pos(obj->get_pos());
+            sprite->set_pos(_camera->get_position(obj->get_pos()));
             sprite->draw(canvas);
         }
 
         _ship->move(_engine);
         auto &sprite = _ship->get_sprite();
-        sprite->set_pos(_ship->get_pos());
+        sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
         sprite->draw(canvas);
 
@@ -151,7 +153,7 @@ namespace game {
                 return std::make_shared<game_manager::command::Exit>();
             case event_controller::EventType::keyboard: {
                 auto key = dynamic_cast<event_controller::KeyboardEvent &>(event).key;
-                switch(key) {
+                switch (key) {
                     case event_controller::Key::Escape:
                         return std::make_shared<game_manager::command::EndGame>();
                     case event_controller::Key::W:
