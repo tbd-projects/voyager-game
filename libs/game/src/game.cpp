@@ -112,8 +112,8 @@ namespace game {
         return true;
     }
 
-    void Map::set_trust(math::decimal_t angle) {
-        this->_ship->add_trust(angle);
+    void Map::set_impulse(math::decimal_t angle) {
+        this->_ship->add_impulse(angle);
     }
 
 
@@ -157,16 +157,16 @@ namespace game {
                     case event_controller::Key::Escape:
                         return std::make_shared<game_manager::command::EndGame>();
                     case event_controller::Key::W:
-                        this->_map.set_trust(0);
+                        this->_map.set_impulse(0);
                         break;
                     case event_controller::Key::S:
-                        this->_map.set_trust(180);
+                        this->_map.set_impulse(180);
                         break;
                     case event_controller::Key::D:
-                        this->_map.set_trust(-90);
+                        this->_map.set_impulse(-90);
                         break;
                     case event_controller::Key::A:
-                        this->_map.set_trust(90);
+                        this->_map.set_impulse(90);
                         break;
                     default:
                         break;
