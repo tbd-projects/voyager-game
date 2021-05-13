@@ -13,6 +13,6 @@ void game::Camera::set_follow_position(math::coords_t follow_pos) {
 }
 
 math::coords_t game::Camera::get_position(math::coords_t observe_pos) {
-    return observe_pos - _ship->get_pos() + _follow_pos;;
+    return (observe_pos - _ship->get_pos()) * math::coords_t(1, -1) + _follow_pos;
 
 }

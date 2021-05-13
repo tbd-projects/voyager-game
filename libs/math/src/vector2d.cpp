@@ -1,5 +1,5 @@
 #include <cmath>
-
+#include "debug/exception.hpp"
 #include "vector2d.hpp"
 #include "utilits.hpp"
 
@@ -73,6 +73,13 @@ Vector2d &Vector2d::operator+=(const Vector2d &vector) {
 
 bool Vector2d::operator==(const Vector2d &vector) const {
     return _coords == vector._coords;
+}
+
+Vector2d Vector2d::operator/(decimal_t k) const {
+    if (Utilits::is_null(k)) {
+        throw debug::ARG_ARGUMENT_ERROR("detected try to div on zero");
+    }
+    return Vector2d(coords_t(_coords.x / k, _coords.y / k));
 }
 
 }  // namespace math

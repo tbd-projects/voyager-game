@@ -17,12 +17,12 @@ math::Vector2d NewtonForce::get_force(PhysicalObject &object
     for (auto other_object : other_objects) {
         math::Vector2d r = math::Vector2d(other_object.get().get_pos() - object.get_pos());
         math::decimal_t force =
-                (G * other_object.get().get_cast_weight()) / r.sqr_len();
+                (G * other_object.get().get_cast_weight()) / (r.sqr_len() * one_dist);
         ans += force * r.normalize();
     }
 
     if (object.have_some_impulse()) {
-        ans += math::Vector2d(base_impulse, object.target_impulse());
+        ans += math::Vector2d(object.target_impulse(), base_impulse);
         object.complete_add_impulse();
     }
 

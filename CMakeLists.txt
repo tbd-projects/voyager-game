@@ -53,7 +53,7 @@ foreach(LIBRARY ${LIBRARIES})
 endforeach(LIBRARY)
 
 target_link_libraries(math_lib debug_lib)
-target_link_libraries(physics_lib debug_lib math_lib)
+target_link_libraries(physics_lib debug_lib math_lib game_manager_lib)
 target_link_libraries(game_manager_lib debug_lib menu_lib game_lib sf_graphics_lib graphics_lib)
 target_link_libraries(loaders_lib game_manager_lib math_lib)
 

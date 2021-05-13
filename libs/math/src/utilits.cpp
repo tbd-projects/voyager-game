@@ -64,6 +64,10 @@ coords_t::operator std::pair<decimal_t, decimal_t>() const {
     return std::pair<decimal_t, decimal_t>(x, y);
 }
 
+coords_t coords_t::operator*(coords_t coords) const {
+    return coords_t(x * coords.x, y * coords.y);
+}
+
 
 //  ---------------------------GeometryFunction---------------------------------
 
@@ -125,7 +129,7 @@ decimal_t Utilits::decimal_epsilon = 1e-5;
 
 
 decimal_t AlgebraicMethods::solve_equastion_by_Halley(
-        const std::function<return_for_solve_equastion(decimal_t)>& func
+        const std::function<return_for_solve_equastion(decimal_t)> &func
         , decimal_t start_x_value, size_t number_iteration) {
 
     for (size_t i = 0; i < number_iteration; ++i) {

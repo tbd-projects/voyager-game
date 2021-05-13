@@ -29,6 +29,8 @@ struct coords_t {
 
     coords_t &operator+=(coords_t coords);
 
+    coords_t operator*(coords_t coords) const;
+
     coords_t operator-(decimal_t offset) const;
 
     coords_t operator+(decimal_t offset) const;

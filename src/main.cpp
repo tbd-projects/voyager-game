@@ -14,7 +14,7 @@ int main() {
             sf::Style::Fullscreen
     );
 
-    window.setFramerateLimit(15);
+    window.setFramerateLimit(60);
 
 
     game_manager::SfWindow sf_window(window);

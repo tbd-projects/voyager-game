@@ -1,6 +1,7 @@
 #include "astronomical_object.hpp"
 #include <memory>
 #include <iostream>
+#include <cmath>
 
 namespace physics {
 
@@ -36,12 +37,14 @@ void AstronomicalObject::relocate_on_orbit(math::decimal_t angle) {
 }
 
 void AstronomicalObject::move(const Engine &physical_engine) {
-    auto last_pos = get_pos();
-    auto current_pos = (_orbit.get_current_pos(*this, physical_engine));
-    set_pos(current_pos);
+    math::Vector2d last_velocity = get_velocity();
+    _orbit.get_current_pos(*this, physical_engine);
 
-    math::decimal_t angle = math::Vector2d(last_pos) ^
-                            math::Vector2d(current_pos);
+    math::decimal_t cos = last_velocity ^
+                          get_velocity();
+
+    math::decimal_t angle = math::Utilits::to_grad(
+            std::acos(std::max(std::min(cos, 1.f), -1.f)));
 
     add_rotation(angle);
 }

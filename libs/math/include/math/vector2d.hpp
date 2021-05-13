@@ -44,6 +44,8 @@ class Vector2d {
 
     Vector2d operator*(decimal_t k) const;
 
+    Vector2d operator/(decimal_t k) const;
+
     friend Vector2d operator*(decimal_t k, const Vector2d& vector);
 
   private:
