@@ -15,20 +15,25 @@ class GameManager {
 
     void run();
 
-    void start_game();
+    void start_game(size_t id_level);
+
+    void end_pause();
 
     void pause_game();
 
     void end_game();
 
+    void exit();
+
     void open_main_menu();
 
     void open_levels_menu();
 
+
   private:
     event_controller::Controller _controller;
 
-    game::Game _game;
+    std::unique_ptr<game::Game> _game;
     graphics::ICanvas &_canvas;
     std::unique_ptr<menu::IMenu> _menu;
 

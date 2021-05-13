@@ -5,9 +5,10 @@
 
 namespace game_manager::command {
 
-class DoNothing : public ICommand {
+class RunPause : public ICommand {
     void execute(GameManager &manager) override {
+        manager.pause_game();
     }
 };
 
-}
+}  // namespace game_manager::command

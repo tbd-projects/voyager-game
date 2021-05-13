@@ -15,11 +15,11 @@ namespace physics {
 
 Engine::Engine()
         : _tick_of_calc(2)
-          , _mechanic(NewtonForce()) {}
+          , _mechanic(std::make_unique<NewtonForce>()) {}
 
-Engine::Engine(const Force &force)
+Engine::Engine(std::unique_ptr<Force> &&force)
         : _tick_of_calc(2)
-          , _mechanic(force) {}
+          , _mechanic(std::move(force)) {}
 
 math::Vector2d Engine::calc_force_by_object(PhysicalObject &object) const {
     if (!_objects.contain_object(object)) {

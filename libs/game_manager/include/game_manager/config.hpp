@@ -37,8 +37,9 @@ class Config {
     std::shared_ptr<game::PlayerPropertiesLoader> properties_loader;
     std::shared_ptr<game::ProgressLoader> progress_loader;
     std::shared_ptr<game::CreatorLevel> levels_loader;
+    std::shared_ptr<game::CreatorLevel> level_manager;
 
-  protected:
+protected:
     Config();
 
   private:

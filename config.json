@@ -1,7 +1,7 @@
 {
   "config" : {
     "player_id": "1",
-    "levels_path": "data/levels/example_level.json",
+    "levels_path": "data/levels/",
     "sprites_path": "data/sprites.json",
     "stats_path": "data/player/example_stats.json",
     "properties_path": "data/player/example_properties.json",

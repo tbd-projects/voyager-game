@@ -30,6 +30,7 @@ namespace event_controller {
         }
 
         window.display();
+        window.clear();
         return std::make_unique<FPSEvent>();
     }
 }

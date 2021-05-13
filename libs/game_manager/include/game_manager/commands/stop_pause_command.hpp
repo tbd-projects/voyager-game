@@ -5,8 +5,9 @@
 
 namespace game_manager::command {
 
-class DoNothing : public ICommand {
+class EndPause : public ICommand {
     void execute(GameManager &manager) override {
+        manager.end_pause();
     }
 };
 

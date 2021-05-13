@@ -15,7 +15,7 @@ class GameManager;
 
 namespace command {
 
-class ICommand: public event_controller::ICommand{
+class ICommand: public event_controller::ICommand {
   public:
     void execute(game_manager::GameManager &manager) override = 0;
 

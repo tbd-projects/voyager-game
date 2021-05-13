@@ -18,7 +18,8 @@ Config::Config()
           , sprite_loader(nullptr)
           , properties_loader(nullptr)
           , progress_loader(nullptr)
-          , levels_loader(nullptr) {}
+          , levels_loader(nullptr)
+          , level_manager(nullptr){}
 
 const Config &game_manager::Config::get_instance() {
     return _get_instance();
@@ -39,12 +40,14 @@ void Config::load(const std::filesystem::path &root
             = std::make_shared<graphics::sf::SfGraphicsFactory>();
     config.sprite_loader = std::make_shared<graphics::JsonSpriteSheetLoader>(
             *config.graphics_factory);
-    config.properties_loader = std::make_shared<game::JsonPlayerPropertiesLoader>(
+    config.properties_loader
+            = std::make_shared<game::JsonPlayerPropertiesLoader>(
             config.properties_path);
     config.progress_loader = std::make_shared<game::BaseProgressLoader>(
             config.stats_path);
     config.levels_loader = std::make_shared<game::JsonCreateLevel>(
             config.levels_path);
+    config.level_manager = std::make_shared<game::LevelManager>();
 }
 
 }  // namespace game_manager

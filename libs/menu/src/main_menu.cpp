@@ -5,7 +5,7 @@
 #include <graphics/json_sprite_sheet_loader.h>
 #include "menu/command_button.h"
 #include "menu/main_menu.h"
-#include "game_manager/commands/nothing_command.hpp"
+#include "game_manager/commands.hpp"
 #include "event_controller/event/fps_event.h"
 
 menu::MainMenu::~MainMenu() = default;
@@ -16,9 +16,12 @@ std::shared_ptr<event_controller::ICommand> menu::MainMenu::update(event_control
         _bg->draw(&get_canvas());
     }
 
-    VerticalCenteredMenu::update(event);
+    if(event.type == event_controller::EventType::close)
+    {
+        return std::make_shared<game_manager::command::Exit>();
+    }
 
-    return std::make_shared<game_manager::command::NothingCommand>();
+    return VerticalCenteredMenu::update(event);
 }
 
 
@@ -41,17 +44,17 @@ menu::MainMenu::MainMenu(graphics::ICanvas &canvas, event_controller::IControlle
     auto cur_dir = std::filesystem::path(__FILE__).parent_path();
     font->set_path(cur_dir / "../../graphics/test/tests/fonts/Roboto-Medium.ttf");
 
-    auto start_command = std::make_unique<game_manager::command::NothingCommand>();
+    auto start_command = std::make_unique<game_manager::command::StartGameCommand>(1); //@todo set level
 
     buttons().push_back(
             _create_button(factory, font, std::move(start_command), "Start game")
     );
-    auto other_command = std::make_unique<game_manager::command::NothingCommand>();
+    auto other_command = std::make_unique<game_manager::command::DoNothing>();
     buttons().push_back(
             _create_button(factory, font, std::move(other_command), "Game info")
     );
 
-    auto exit_command = std::make_unique<game_manager::command::NothingCommand>();
+    auto exit_command = std::make_unique<game_manager::command::Exit>();
     buttons().push_back(
             _create_button(factory, font, std::move(exit_command), "Exit")
     );

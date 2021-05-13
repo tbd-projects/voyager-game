@@ -55,7 +55,7 @@ public:
                 EXPECT_EQ(1, 0); // @todo find correct version
                 break;
         }
-        return std::make_shared<game_manager::command::NothingCommand>();
+        return std::make_shared<game_manager::command::DoNothing>();
     };
 };
 

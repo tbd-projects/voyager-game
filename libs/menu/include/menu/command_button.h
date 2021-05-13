@@ -11,11 +11,11 @@
 namespace menu {
     class CommandButton : public ::graphics::Button {
     private:
-        std::unique_ptr<event_controller::ICommand> _command;
+        std::shared_ptr<event_controller::ICommand> _command;
     public:
         CommandButton(Button &&button, std::unique_ptr<event_controller::ICommand> &&_command);
 
-        [[nodiscard]] const std::unique_ptr<event_controller::ICommand> &get_command() const;
+        [[nodiscard]] const std::shared_ptr<event_controller::ICommand> &get_command() const;
 
         void set_command(std::unique_ptr<event_controller::ICommand> &&command);
     };

@@ -5,8 +5,9 @@
 
 namespace game_manager::command {
 
-class DoNothing : public ICommand {
+class Exit : public ICommand {
     void execute(GameManager &manager) override {
+        manager.exit();
     }
 };
 

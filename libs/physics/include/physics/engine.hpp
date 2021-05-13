@@ -43,7 +43,7 @@ class Engine : public IConnectToEngine {
   public:
     Engine();
 
-    explicit Engine(const Force& force);
+    explicit Engine(std::unique_ptr<Force>&& force);
 
     [[nodiscard]]
     math::Vector2d calc_force_by_object(PhysicalObject &object) const;

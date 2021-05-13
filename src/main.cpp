@@ -11,9 +11,13 @@ int main() {
     "MyApp",
             sf::Style::Fullscreen
     );
+
+    window.setFramerateLimit(15);
+
+
     game_manager::SfWindow sf_window(window);
 
-    game_manager::imported::JsonLoader loader;
+    game_manager::imported::ConfigJsonLoader loader;
 
     game_manager::Config::load(std::filesystem::path(__FILE__).parent_path() / "../config.json", loader);
 

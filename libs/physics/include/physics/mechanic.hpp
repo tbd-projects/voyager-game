@@ -38,7 +38,7 @@ class Mechanic {
   public:
     Mechanic() = delete;
 
-    explicit Mechanic(const Force &force);
+    explicit Mechanic(std::unique_ptr<Force> &&force);
 
     [[nodiscard]]
     math::decimal_t get_effective_circle_orbit
@@ -49,7 +49,7 @@ class Mechanic {
                                         , const StoreObject &objects) const;
 
   protected:
-    const Force &_force;
+    std::unique_ptr<Force> _force;
     OrbitalMechanic _orbit_mechanic;
 };
 

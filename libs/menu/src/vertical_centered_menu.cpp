@@ -23,12 +23,14 @@ std::shared_ptr<event_controller::ICommand> menu::VerticalCenteredMenu::update(e
             case event_controller::Key::Up:
                 set_active_id(std::max(_active_id - 1, 0));
                 break;
+            case event_controller::Key::Enter:
+                return get_active_button().get_command();
             default:
                 break;
         }
 
     }
-    return std::make_shared<game_manager::command::NothingCommand>();
+    return std::make_shared<game_manager::command::DoNothing>();
 }
 
 const menu::CommandButton& menu::VerticalCenteredMenu::get_active_button() const {
@@ -106,6 +108,7 @@ menu::VerticalCenteredMenu::VerticalCenteredMenu(graphics::ICanvas &canvas,
                                                  event_controller::IController &controller)
         : _canvas(canvas), _controller(controller) {
 
+    _controller.subscribe(event_controller::EventType::close, *this);
     _controller.subscribe(event_controller::EventType::fps, *this);
     _controller.subscribe(event_controller::EventType::keyboard, *this);
 
@@ -122,4 +125,5 @@ event_controller::IController &menu::VerticalCenteredMenu::get_controller() {
 menu::VerticalCenteredMenu::~VerticalCenteredMenu() {
     _controller.unsubscribe(event_controller::EventType::fps, *this);
     _controller.unsubscribe(event_controller::EventType::keyboard, *this);
+    _controller.unsubscribe(event_controller::EventType::close, *this);
 }

@@ -28,12 +28,13 @@ namespace game {
         bool update(graphics::ICanvas &canvas);
 
     private:
+        std::unique_ptr<graphics::TextureStorage> _storage;
         std::vector<std::shared_ptr<SpaceBody>> _space_objects;
         std::vector<std::shared_ptr<Star>> _stars;
-        std::unique_ptr<SpaceShip> _ship;
+        std::shared_ptr<SpaceShip> _ship;
         std::unique_ptr<graphics::Sprite> _bg;
         size_t _bg_id = 0;
-
+        physics::Engine _engine;
         void check_all_collision();
 
         void set_sprites(MapSpriteCreator &factory);
@@ -60,6 +61,7 @@ namespace game {
         game::Map _map;
         game::Progress _progress;
         graphics::ICanvas &_canvas;
+        event_controller::IController &_controller;
 
     };
 

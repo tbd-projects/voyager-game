@@ -24,7 +24,7 @@ size_t PhysicalObject::get_weight() const noexcept {
     return _weight;
 }
 
-constexpr const math::Vector2d &PhysicalObject::get_velocity() const noexcept {
+const math::Vector2d &PhysicalObject::get_velocity() const noexcept {
     return _velocity;
 }
 

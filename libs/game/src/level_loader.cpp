@@ -7,6 +7,7 @@
 #include <memory>
 #include "objects.hpp"
 #include "physics/orbit.hpp"
+#include "game_manager/config.hpp"
 
 #define LogicError BaseExceptions
 
@@ -25,7 +26,7 @@ namespace game {
         }
         pt::ptree tree;
         std::string level_path = this->_path + std::to_string(level_num) + ".json";
-        pt::read_json(this->_path, tree);
+        pt::read_json(level_path, tree);
 
         this->_bg_id = tree.get<size_t>("background.sprite_id");
 //    this->_level_texture = new ISprite(background_id);
@@ -42,24 +43,24 @@ namespace game {
             physics::Orbit::orbit_properties_t orb_prop;
 
             math::coords_t orbit_pos;
-            orbit_pos.x = planet.second.get<size_t>("x_c");
-            orbit_pos.y = planet.second.get<size_t>("y_c");
+            orbit_pos.x = planet.second.get<float>("orbit_properties.x_c");
+            orbit_pos.y = planet.second.get<float>("orbit_properties.y_c");
             orb_prop.pos = orbit_pos;
 
             math::coords_t orbit_var;
-            orbit_var.x = planet.second.get<size_t>("a");
-            orbit_var.y = planet.second.get<size_t>("b");
+            orbit_var.x = planet.second.get<float>("orbit_properties.a");
+            orbit_var.y = planet.second.get<float>("orbit_properties.b");
             orb_prop.variables = orbit_var;
 
             math::coords_t velocity;
-            velocity.x = planet.second.get<size_t>("velocity.x");
-            velocity.y = planet.second.get<size_t>("velocity.y");
+            velocity.x = planet.second.get<float>("velocity.x");
+            velocity.y = planet.second.get<float>("velocity.y");
 
             auto weight = planet.second.get<size_t>("weight");
 
             math::coords_t position;
-            position.x = planet.second.get<size_t>("pos.x");
-            position.y = planet.second.get<size_t>("pos.y");
+            position.x = planet.second.get<float>("pos.x");
+            position.y = planet.second.get<float>("pos.y");
 
             auto height = planet.second.get<size_t>("polygon.height");
             auto width = planet.second.get<size_t>("polygon.width");
@@ -114,5 +115,14 @@ namespace game {
             throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
         }
         this->_current_level->create_level(this->_level_num);
+    }
+
+    void LevelManager::create_level(size_t level_num) {
+
+    }
+
+    LevelManager::LevelManager(): _current_level(nullptr), _level_num(0) {
+        auto root = game_manager::Config::get_instance().levels_path;
+        _current_level = std::make_unique<JsonCreateLevel>(root);
     }
 } // namespace game

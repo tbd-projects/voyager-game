@@ -4,9 +4,9 @@
 
 namespace game_manager::imported {
 
-class JsonLoader : public game_manager::ILoaderConfig {
+class ConfigJsonLoader : public game_manager::ILoaderConfig {
   public:
-    JsonLoader() = default;
+    ConfigJsonLoader() = default;
 
     void load(const std::filesystem::path& root, Config& config) const override;
 };

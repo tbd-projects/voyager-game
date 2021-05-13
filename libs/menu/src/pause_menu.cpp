@@ -8,5 +8,5 @@
 menu::PauseMenu::~PauseMenu() = default;
 
 std::shared_ptr<event_controller::ICommand> menu::PauseMenu::update(event_controller::Event &event) {
-    return std::make_shared<game_manager::command::NothingCommand>();
+    return std::make_shared<game_manager::command::DoNothing>();
 }
