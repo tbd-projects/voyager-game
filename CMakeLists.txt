@@ -9,8 +9,8 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCE ${SOURCE_DIR}/main.cpp)
 set(LIBRARIES_DIR ${CMAKE_SOURCE_DIR}/libs)
 cmake_policy(SET CMP0079 NEW)
-set(LIBRARIES debug_lib math_lib physics_lib loaders_lib graphics_lib
-        shop_lib event_controller_lib game_manager_lib menu_lib game_lib sf_graphics_lib)
+set(LIBRARIES debug_lib math_lib physics_lib loaders_lib
+        shop_lib event_controller_lib game_manager_lib menu_lib game_lib sf_graphics_lib graphics_lib)
 
 project(${PROJECT_NAME})
 
