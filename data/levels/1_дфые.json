@@ -1,0 +1,105 @@
+{
+  "stars": [
+    {
+      "orbit_properties": {
+        "x_c": 0.0,
+        "y_c": 30.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      },
+      "pos": {
+        "x": 512,
+        "y": 500
+      },
+      "weight": 130,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 2
+    },
+    {
+      "orbit_properties": {
+        "x_c": 0.0,
+        "y_c": 20.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      },
+      "pos": {
+        "x": 200,
+        "y": 20
+      },
+      "weight": 60,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 2
+    }
+  ],
+  "planets": [
+    {
+      "orbit_properties": {
+        "x_c": 10.0,
+        "y_c": 0.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0.1,
+        "y": -0.01
+      },
+      "pos": {
+        "x": 100,
+        "y": 660
+      },
+      "weight": 1000,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 2
+    },
+    {
+      "orbit_properties": {
+        "x_c": 10.0,
+        "y_c": 20.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0,
+        "y": -0.1
+      },
+      "pos": {
+        "x": 790,
+        "y": 230
+      },
+      "weight": 200,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 2
+    }
+  ],
+  "background": {
+    "sprite_id": 0
+  }
+}

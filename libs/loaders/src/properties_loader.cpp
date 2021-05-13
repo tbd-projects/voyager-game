@@ -1,6 +1,6 @@
 #include "properties_loader.hpp"
-#include "exception.hpp"
-
+#include "debug/exception.hpp"
+#include "game/exceptions.hpp"
 
 using namespace boost::property_tree;
 

@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <math/utilits.hpp>
@@ -44,6 +43,8 @@ class Vector2d {
     decimal_t operator*(const Vector2d& vector) const;
 
     Vector2d operator*(decimal_t k) const;
+
+    Vector2d operator/(decimal_t k) const;
 
     friend Vector2d operator*(decimal_t k, const Vector2d& vector);
 

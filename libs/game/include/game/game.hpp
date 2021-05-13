@@ -7,24 +7,12 @@
 #include "progress.hpp"
 #include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
+#include "camera.hpp"
+#include <graphics/i_drawable.h>
+#include <event_controller/i_controller.h>
+#include <event_controller/i_subscriber.h>
 
-namespace event_controller {
-    class IController {
-
-    };
-    class ICommand {
-
-    };
-}
-namespace graphics {
-    class ICanvas {
-
-    };
-}
 namespace game {
-    class Sprite;
-
-
     class Map {
     public:
         explicit Map(size_t player_id);
@@ -37,14 +25,20 @@ namespace game {
 
         void load_level(size_t level_num);
 
-        bool update(ICanvas &canvas);
+        void set_impulse(math::decimal_t angle);
+
+        bool update(graphics::ICanvas &canvas);
 
     private:
+        std::unique_ptr<graphics::TextureStorage> _storage;
         std::vector<std::shared_ptr<SpaceBody>> _space_objects;
         std::vector<std::shared_ptr<Star>> _stars;
-        std::unique_ptr<SpaceShip> _ship;
-        std::unique_ptr<Sprite> _bg;
-        size_t _bg_id;
+        std::shared_ptr<SpaceShip> _ship;
+        std::unique_ptr<graphics::Sprite> _bg;
+        size_t _bg_id = 0;
+
+        physics::Engine _engine;
+        std::unique_ptr<Camera> _camera;
 
         void check_all_collision();
 
@@ -56,20 +50,13 @@ namespace game {
 //    void create_level();
     };
 
-
-    class ISubscriber {
-
-    };
-
-
-
-    class Game : public ISubscriber {
+    class Game : public event_controller::ISubscriber {
     public:
         explicit Game(event_controller::IController &controller, graphics::ICanvas &canvas);
 
         ~Game();
 
-        std::shared_ptr<event_controller::ICommand > update();
+        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
         bool start_game(int level);
 
@@ -78,7 +65,8 @@ namespace game {
     private:
         game::Map _map;
         game::Progress _progress;
-        graphics::ICanvas _canvas;
+        graphics::ICanvas &_canvas;
+        event_controller::IController &_controller;
 
     };
 

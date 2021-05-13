@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <physics/interface.hpp>
@@ -6,58 +5,66 @@
 
 namespace physics {
 
-    class EnginesIndexedObject {
-    public:
-        EnginesIndexedObject();
+class EnginesIndexedObject {
+  public:
+    EnginesIndexedObject();
 
-        virtual ~EnginesIndexedObject() = default;
+    virtual ~EnginesIndexedObject() = default;
 
-        friend class EngineStoreObject;
-        friend class Engine;
+    friend class StoreObject;
+    friend class Engine;
 
-    protected:
-        ssize_t _index;
-    };
+  protected:
+    ssize_t _index;
+};
 
-    class AcceleratableObject {
-    public:
-        AcceleratableObject();
+class AcceleratableObject {
+  public:
+    AcceleratableObject();
 
-        [[nodiscard]]
-        bool have_some_trust() const noexcept;
+    [[nodiscard]]
+    bool have_some_impulse() const noexcept;
 
-        [[nodiscard]]
-        math::decimal_t target_trust() const noexcept;
+    [[nodiscard]]
+    math::decimal_t target_impulse() const noexcept;
 
-        void add_trust(math::decimal_t target);
+    void add_impulse(math::decimal_t target);
 
-        void complete_add_trust();
+    void complete_add_impulse();
 
-        virtual ~AcceleratableObject() = default;
+    virtual ~AcceleratableObject() = default;
 
-    private:
-        bool _need_trust;
-        math::decimal_t _target_trust;
-    };
+  private:
+    bool _need_impulse;
+    math::decimal_t _target_impulse;
+};
 
-    class ColideObject : public math::IPositionable {
-    public:
-        ColideObject() = delete;
+class ColideObject : public math::IPositionable, public math::IRotatable {
+  public:
+    ColideObject() = delete;
 
-        explicit ColideObject(std::unique_ptr<math::Polygon> &&polygon);
+    explicit ColideObject(std::unique_ptr<math::Polygon> &&polygon);
 
-        [[nodiscard]]
-        bool is_colide(const ColideObject &object) const;
+    [[nodiscard]]
+    bool is_colide(const ColideObject &object) const;
 
-        [[nodiscard]]
-        math::coords_t get_pos() const noexcept final;
+    [[nodiscard]]
+    math::coords_t get_pos() const noexcept final;
 
-        void set_pos(math::coords_t pos) final;
+    void set_pos(math::coords_t pos) final;
 
-        std::unique_ptr<math::Polygon>& get_polygon();
+    [[nodiscard]]
+    math::decimal_t get_rotation() const noexcept override;
 
-    protected:
-        std::unique_ptr<math::Polygon> _polygon;
-    };
+    void add_rotation(math::decimal_t offset_angle) override;
+
+    void set_rotation(math::decimal_t angle) override;
+
+    std::unique_ptr<math::Polygon>& get_polygon();
+
+  protected:
+    std::unique_ptr<math::Polygon> _polygon;
+};
+
 
 }  // namespace physics

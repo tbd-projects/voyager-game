@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <math/interface.hpp>
@@ -6,45 +5,45 @@
 
 namespace math {
 
-class PositionatePolygon : public IPositionable {
+class PositionateObject : public IPositionable {
   public:
-    PositionatePolygon() = default;
+    PositionateObject();
 
-    explicit PositionatePolygon(math::coords_t pos);
+    explicit PositionateObject(math::coords_t pos);
 
     [[nodiscard]]
     math::coords_t get_pos() const noexcept override;
 
     void set_pos(math::coords_t pos) override;
 
-    virtual ~PositionatePolygon() = default;
+    virtual ~PositionateObject() = default;
 
   protected:
     math::coords_t _pos;
 };
 
 
-class RotatePolygon {
+class RotateObject: public IRotatable{
   public:
-    RotatePolygon() = default;
+    RotateObject();
 
-    explicit RotatePolygon(math::decimal_t angle);
+    explicit RotateObject(math::decimal_t angle);
 
-    virtual void set_rotation(math::decimal_t angle);
+    void set_rotation(math::decimal_t angle) override;
 
-    virtual void add_rotation(math::decimal_t offset_angle);
+    void add_rotation(math::decimal_t offset_angle) override;
 
     [[nodiscard]]
-    constexpr math::decimal_t get_rotation() const noexcept;
+    math::decimal_t get_rotation() const noexcept override;
 
-    virtual ~RotatePolygon() = default;
+    ~RotateObject() override = default;
 
   protected:
     math::decimal_t _angle;
 };
 
 class Polygon : public IIntresectable, public IScalable
-                , public RotatePolygon, public PositionatePolygon {
+                , public RotateObject, public PositionateObject {
   public:
     Polygon() = default;
 
@@ -63,7 +62,7 @@ class Polygon : public IIntresectable, public IScalable
 
 class RectanglePolygon : public Polygon {
   public:
-    RectanglePolygon() = default;
+    RectanglePolygon();
 
     RectanglePolygon(math::coords_t pos, math::decimal_t height
                      , math::decimal_t width, math::decimal_t angle = 0);
@@ -78,6 +77,12 @@ class RectanglePolygon : public Polygon {
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override;
 
+    [[nodiscard]]
+    math::decimal_t get_height() const noexcept;
+
+    [[nodiscard]]
+    math::decimal_t get_width() const noexcept;
+
     ~RectanglePolygon() override = default;
 
   private:
@@ -87,7 +92,7 @@ class RectanglePolygon : public Polygon {
 
 class TrianglePolygon : public Polygon {
   public:
-    TrianglePolygon() = default;
+    TrianglePolygon();
 
     TrianglePolygon(math::coords_t pos, math::decimal_t height
                     , math::decimal_t width, math::decimal_t angle = 0);
@@ -102,6 +107,12 @@ class TrianglePolygon : public Polygon {
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override;
 
+    [[nodiscard]]
+    math::decimal_t get_height() const noexcept;
+
+    [[nodiscard]]
+    math::decimal_t get_width() const noexcept;
+
     ~TrianglePolygon() override = default;
 
   private:
@@ -111,7 +122,7 @@ class TrianglePolygon : public Polygon {
 
 class CirclePolygon : public Polygon {
   public:
-    CirclePolygon() = default;
+    CirclePolygon();
 
     CirclePolygon(math::coords_t pos, math::decimal_t radius
                   , math::decimal_t angle = 0);
@@ -125,6 +136,9 @@ class CirclePolygon : public Polygon {
 
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override;
+
+    [[nodiscard]]
+    math::decimal_t get_radius() const noexcept;
 
     ~CirclePolygon() override = default;
 

@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <memory>
@@ -9,31 +8,31 @@
 
 namespace physics {
 
-    class AstronomicalObject : public IMovable, public PhysicalObject {
-    public:
-        AstronomicalObject() = delete;
+class AstronomicalObject : public IMovable, public PhysicalObject {
+  public:
+    AstronomicalObject() = delete;
 
-        explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon);
+    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon);
 
-        explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
-                , size_t weight
-                , math::Vector2d velocity, math::coords_t pos);
+    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
+                                , size_t weight
+                                , math::Vector2d velocity, math::coords_t pos);
 
-        explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&
-                , size_t weight
-                , math::Vector2d velocity, math::coords_t pos
-                , Orbit::orbit_properties_t orbit);
+    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&
+                                , size_t weight
+                                , math::Vector2d velocity, math::coords_t pos
+                                , Orbit::orbit_properties_t orbit);
 
-        [[nodiscard]] constexpr const Orbit &get_orbit() const noexcept;
+    [[nodiscard]] constexpr const Orbit &get_orbit() const noexcept;
 
-        void relocate_on_orbit(math::decimal_t angle);
+    void relocate_on_orbit(math::decimal_t angle);
 
-        ~AstronomicalObject() override = default;
+    ~AstronomicalObject() override = default;
 
-        void move(const Engine &physical_engine) override;
+    void move(const Engine &physical_engine) override;
 
-    private:
-        Orbit _orbit;
-    };
+  private:
+    Orbit _orbit;
+};
 
 }  // namespace physics

@@ -1,75 +1,93 @@
 #pragma once
-//
-// Created by flashie on 04.05.2021.
-//
-#ifndef VOYAGER_EXCEPTIONS_HPP
-#define VOYAGER_EXCEPTIONS_HPP
 
-#include <exception>
+#include <stdexcept>
 #include <string>
-#include <cstring>
-#include <chrono>
 
-class BaseExceptions : public std::exception {
-public:
-    BaseExceptions(std::string filename, std::string classname, std::string methodname, std::string arg = "") {
-        _error_info = "\nFile: " + filename + \
-                     "\nClass: " + classname + \
-                     "\nMethod: " + methodname;
-        if (!arg.empty()) {
-            _error_info += "\n Argument: " + arg;
-        }
-    }
 
-    virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Something is wrong with your game." + _error_info;
-        return message.c_str();
-    }
+namespace debug {
 
-protected:
-    std::string _error_info;
+class Exception : public std::exception {
+  public:
+    Exception();
+
+    explicit Exception(std::string &&error);
+
+    [[nodiscard]]
+    const char *what() const noexcept override;
+
+  protected:
+    std::string _name_error;
 };
 
-class InvalidArg : public BaseExceptions {
-public:
-    InvalidArg(std::string filename, std::string classname, std::string methodname) :
-            BaseExceptions(filename, classname, methodname) {};
+class BaseExceptions : public Exception {
+  public:
+    BaseExceptions();
 
-    virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Invalid argument. " + _error_info;
-        return message.c_str();
-    }
-};
-class FileError : public BaseExceptions {
-public:
-    FileError(std::string filename, std::string classname, std::string methodname, std::string arg) :
-            BaseExceptions(filename, classname, methodname, arg) {};
+    explicit BaseExceptions(std::string &&error);
 
-    virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Invalid argument. " + _error_info;
-        return message.c_str();
-    }
-};
-class LoadError: public BaseExceptions {
-public:
-    LoadError(std::string filename, std::string classname, std::string methodname, std::string arg) :
-            BaseExceptions(filename, classname, methodname, arg) {};
-
-    virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Error load data from file. " + _error_info;
-        return message.c_str();
-    }
-};
-class LogicError: public BaseExceptions {
-public:
-    LogicError(std::string filename, std::string classname, std::string methodname, std::string arg) :
-            BaseExceptions(filename, classname, methodname, arg) {};
-
-    virtual const char *what() const noexcept override {
-        std::string message = "\nERROR: Logic error. " + _error_info;
-        return message.c_str();
-    }
+    BaseExceptions(const std::string &filename, const std::string &classname
+                   , const std::string &method_name
+                   , const std::string &arg = "");
 };
 
+class PhysicalException : public BaseExceptions {
+  public:
+    PhysicalException();
 
-#endif //VOYAGER_EXCEPTIONS_HPP
+    explicit PhysicalException(std::string &&error);
+};
+
+class MathException : public BaseExceptions {
+  public:
+    MathException();
+
+    explicit MathException(std::string &&error);
+};
+
+#define ARG_LOAD_ERROR(args) LoadException(__FILE__, typeid(*this).name() \
+                                                    , __FUNCTION__, args)
+#define LOAD_ERROR() LoadException(__FILE__, typeid(*this).name(), __FUNCTION__)
+
+class LoadException : public BaseExceptions {
+  public:
+    LoadException();
+
+    LoadException(const std::string &filename, const std::string &classname
+                  , const std::string &method_name
+                  , const std::string &arg = "");
+};
+
+#define ARG_ARGUMENT_ERROR(args) ArgumentException(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__, args)
+#define ARGUMENT_ERROR() ArgumentException(__FILE__, typeid(*this).name() \
+                                                        , __FUNCTION__)
+
+class ArgumentException : public BaseExceptions {
+  public:
+    ArgumentException();
+
+    ArgumentException(const std::string &filename, const std::string &classname
+                      , const std::string &method_name
+                      , const std::string &arg = "");
+};
+
+
+#define ARG_UNEXPECTED_CALL_ERROR(args) ArgumentException(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__, args)
+#define UNEXPECTED_CALL_ERROR() ArgumentException(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__)
+
+class UnexpectedCallException : public BaseExceptions {
+  public:
+    UnexpectedCallException();
+
+    UnexpectedCallException(const std::string &filename
+                            , const std::string &classname
+                            , const std::string &method_name
+                            , const std::string &arg = "");
+};
+
+}  // namespace debug

@@ -1,46 +1,56 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <physics/interface.hpp>
 #include <physics/physical_object.hpp>
 
-#define G 6.67
-#define BASE_TRUST 25
-
 namespace physics {
 
-    class NewtonForce : public Force {
-    public:
-        NewtonForce();
+const math::decimal_t G = 6.674e-3f;
+const math::decimal_t base_impulse = 0.8e-3f;
+const math::decimal_t one_ton = 1e-4f;
+const math::decimal_t one_dist = 1e-2f;
 
-        [[nodiscard]]
-        math::Vector2d get_force(PhysicalObject &object
-                , const std::vector<std::reference_wrapper<PhysicalObject>>
-                                 &other_objects) const override;
+class StoreObject;
 
-    private:
-        const math::decimal_t _G;
-        const math::decimal_t _base_trust;
-    };
+class NewtonForce : public Force {
+  public:
+    NewtonForce();
 
-    class Mechanic {
-    public:
-        Mechanic() = delete;
+    [[nodiscard]]
+    math::Vector2d get_force(PhysicalObject &object
+                            , const std::vector<
+                                    std::reference_wrapper<PhysicalObject>
+                                    > &other_objects) const override;
 
-        explicit Mechanic(const Force& force);
+};
 
-        virtual ~Mechanic() = default;
+class OrbitalMechanic {
+  public:
+    OrbitalMechanic() = default;
 
-    protected:
-        const Force& _force;
-    };
+    [[nodiscard]]
+    math::decimal_t get_effective_radius_orbit(const Force &force
+                                       , const PhysicalObject &object) const;
+};
 
-    class OrbitalMechanic {
-    public:
-        OrbitalMechanic() = default;
+class Mechanic {
+  public:
+    Mechanic() = delete;
 
-        math::decimal_t get_effective_radius_orbit(const Mechanic& base_mechanic
-                , const PhysicalObject& object) const;
-    };
+    explicit Mechanic(std::unique_ptr<Force> &&force);
+
+    [[nodiscard]]
+    math::decimal_t get_effective_circle_orbit
+            (const PhysicalObject &object) const;
+
+    [[nodiscard]]
+    math::Vector2d calc_force_by_object(PhysicalObject &object
+                                        , const StoreObject &objects) const;
+
+  protected:
+    std::unique_ptr<Force> _force;
+    OrbitalMechanic _orbit_mechanic;
+};
+
 
 }  // namespace physics

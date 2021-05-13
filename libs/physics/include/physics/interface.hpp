@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <unistd.h>
@@ -9,37 +8,37 @@
 
 namespace physics {
 
-    class Engine;
+class Engine;
 
-    class IMovable {
-    public:
-        virtual void move(const Engine &physical_engine) = 0;
+class IMovable {
+  public:
+    virtual void move(const Engine &physical_engine) = 0;
 
-        virtual ~IMovable() = default;
-    };
+    virtual ~IMovable() = default;
+};
 
-    class PhysicalObject;
+class PhysicalObject;
 
-    class IConnectToEngine {
-    public:
-        virtual void add_object(std::weak_ptr<PhysicalObject> object) = 0;
+class IConnectToEngine {
+  public:
+    virtual void add_object(std::weak_ptr<PhysicalObject> object) = 0;
 
-        virtual void delete_object(std::weak_ptr<PhysicalObject> object) = 0;
+    virtual void delete_object(std::weak_ptr<PhysicalObject> object) = 0;
 
-        virtual ~IConnectToEngine() = default;
-    };
+    virtual ~IConnectToEngine() = default;
+};
 
-    class PhysicalObject;
+class PhysicalObject;
 
-    class Force {
-    public:
-        [[nodiscard]]
-        virtual math::Vector2d get_force(PhysicalObject &object
-                , const std::vector<std::reference_wrapper<PhysicalObject>>
-                                         &other_objects) const = 0;
+class Force {
+  public:
+    [[nodiscard]]
+    virtual math::Vector2d get_force(PhysicalObject &object
+              , const std::vector<std::reference_wrapper<PhysicalObject>>
+              &other_objects) const = 0;
 
-        virtual ~Force() = default;
-    };
+    virtual ~Force() = default;
+};
 
 }  // namespace physics
 

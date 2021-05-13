@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <memory>
@@ -9,32 +8,35 @@
 
 namespace physics {
 
-    class PhysicalObject : public EnginesIndexedObject
-            , public ColideObject, public AcceleratableObject {
-    public:
-        PhysicalObject() = delete;
+class PhysicalObject : public EnginesIndexedObject
+                    , public ColideObject, public AcceleratableObject {
+  public:
+    PhysicalObject() = delete;
 
-        explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon);
+    explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon);
 
-        explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon
-                , math::coords_t pos, math::Vector2d velocity
-                , size_t weight);
+    explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon
+                            , math::coords_t pos, math::Vector2d velocity
+                            , size_t weight);
 
-        [[nodiscard]]
-        size_t get_weight() const noexcept;
+    [[nodiscard]]
+    size_t get_weight() const noexcept;
 
-        [[nodiscard]]
-        constexpr const math::Vector2d &get_velocity() const noexcept;
+    [[nodiscard]]
+    math::decimal_t get_cast_weight() const noexcept;
 
-        void set_velocity(math::Vector2d velocity);
+    [[nodiscard]]
+    const math::Vector2d &get_velocity() const noexcept;
 
-        void set_weight(size_t weight);
+    void set_velocity(math::Vector2d velocity);
 
-        virtual ~PhysicalObject() = default;
+    void set_weight(size_t weight);
 
-    private:
-        size_t _weight;
-        math::Vector2d _velocity;
-    };
+    virtual ~PhysicalObject() = default;
+
+  private:
+    size_t _weight;
+    math::Vector2d _velocity;
+};
 
 }  // namespace physics

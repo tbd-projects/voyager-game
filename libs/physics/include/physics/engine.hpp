@@ -1,4 +1,3 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
 #include <vector>
@@ -13,58 +12,65 @@ namespace physics {
 
 #define COLLIDE_DISTANCE 100
 
-    class PhysicalObject;
-    class EnginesIndexedObject;
+class PhysicalObject;
 
-    class EngineStoreObject: public IConnectToEngine {
-    public:
-        EngineStoreObject() = default;
+class EnginesIndexedObject;
 
-        void add_object(std::weak_ptr<PhysicalObject> object) override;
+class StoreObject : public IConnectToEngine {
+  public:
+    StoreObject() = default;
 
-        void delete_object(std::weak_ptr<PhysicalObject> object) override;
+    void add_object(std::weak_ptr<PhysicalObject> object) override;
 
-    protected:
-        std::vector<std::weak_ptr<PhysicalObject>> _objects;
+    void delete_object(std::weak_ptr<PhysicalObject> object) override;
 
-        std::set<size_t> _deleted_objects;
+    [[nodiscard]]
+    bool contain_object(const PhysicalObject &object) const;
 
-        [[nodiscard]]
-        std::vector<std::weak_ptr<PhysicalObject>> get_active_object() const;
-    };
+    [[nodiscard]]
+    bool is_objects_with_equal_id(const PhysicalObject &object_1
+                                  , const PhysicalObject &object_2) const;
 
-    class Engine : public EngineStoreObject, public Mechanic {
-    public:
-        Engine();
+    [[nodiscard]]
+    std::vector<std::weak_ptr<PhysicalObject>> get_active_object() const;
 
-        explicit Engine(const Force& force);
+  private:
+    std::vector<std::weak_ptr<PhysicalObject>> _objects;
 
-        [[nodiscard]]
-        math::Vector2d calc_force_by_object(PhysicalObject &object) const;
+    std::set<size_t> _deleted_objects;
+};
 
-        [[nodiscard]]
-        math::decimal_t get_effective_circle_orbit
-                (const PhysicalObject& object) const;
+class Engine : public IConnectToEngine {
+  public:
+    Engine();
 
-        [[nodiscard]]
-        math::decimal_t solve_kepler(math::decimal_t eccentricity
-                , math::decimal_t mean_anomaly) const;
+    explicit Engine(std::unique_ptr<Force>&&force);
 
-        [[nodiscard]]
-        bool check_collision(const PhysicalObject& object) const;
+    [[nodiscard]]
+    math::Vector2d calc_force_by_object(PhysicalObject &object) const;
 
-    private:
-        const size_t _tick_of_calc;
-        OrbitalMechanic _orbital_mechanic;
+    [[nodiscard]]
+    math::decimal_t get_effective_circle_orbit
+            (const PhysicalObject &object) const;
 
-        math::decimal_t _base_solve_kepler(math::decimal_t eccentricity
-                , math::decimal_t mean_anomaly) const;
+    [[nodiscard]]
+    bool check_collision(const PhysicalObject &object) const;
 
-        math::decimal_t _advance_solve_kepler(math::decimal_t eccentricity
-                , math::decimal_t mean_anomaly) const;
+    void add_object(std::weak_ptr<PhysicalObject> object) override;
 
-        math::decimal_t _hyp_solve_kepler(math::decimal_t eccentricity
-                , math::decimal_t mean_anomaly) const;
-    };
+    void delete_object(std::weak_ptr<PhysicalObject> object) override;
+
+    [[nodiscard]]
+    math::Vector2d get_velocity_in_tick(math::Vector2d velocity) const;
+
+    [[nodiscard]]
+    size_t get_cals_in_tick() const;
+
+  private:
+    const size_t _cals_in_tick;
+    const math::decimal_t _part_of_second_in_tick;
+    Mechanic _mechanic;
+    StoreObject _objects;
+};
 
 }  // namespace physics

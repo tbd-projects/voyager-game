@@ -1,6 +1,7 @@
-//This file is interface written by Artem Vetoshkin
 #pragma once
 
+#include <functional>
+#include <utility>
 
 namespace math {
 
@@ -18,21 +19,25 @@ struct coords_t {
 
     bool operator==(coords_t coords_t) const;
 
+    operator std::pair<decimal_t, decimal_t>() const;
+
     coords_t operator-(coords_t coords) const;
 
     coords_t operator+(coords_t coords) const;
 
-    coords_t& operator-=(coords_t coords);
+    coords_t &operator-=(coords_t coords);
 
-    coords_t& operator+=(coords_t coords);
+    coords_t &operator+=(coords_t coords);
+
+    coords_t operator*(coords_t coords) const;
 
     coords_t operator-(decimal_t offset) const;
 
     coords_t operator+(decimal_t offset) const;
 
-    coords_t& operator-=(decimal_t offset);
+    coords_t &operator-=(decimal_t offset);
 
-    coords_t& operator+=(decimal_t offset);
+    coords_t &operator+=(decimal_t offset);
 };
 
 class Utilits {
@@ -48,6 +53,19 @@ class Utilits {
     static math::decimal_t decimal_epsilon;
 };
 
+class AlgebraicMethods {
+  public:
+    struct return_for_solve_equastion {
+        decimal_t res_base_func;
+        decimal_t res_first_deriv_func;
+        decimal_t res_second_deriv_func;
+    };
+
+    decimal_t solve_equastion_by_Halley(
+            const std::function<return_for_solve_equastion(decimal_t x)>& func
+            , decimal_t start_x_value, size_t number_iteration);
+};
+
 class GeometryFunction {
   public:
     enum class point_relative {
@@ -59,7 +77,7 @@ class GeometryFunction {
     coords_t rotate_point(coords_t point, decimal_t angle, coords_t basis);
 
     point_relative point_relative_line(Vector2d line, coords_t start_line
-                                        , coords_t point);
+                                       , coords_t point);
 };
 
 }  // namespace math

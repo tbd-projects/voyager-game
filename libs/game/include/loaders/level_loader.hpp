@@ -2,12 +2,12 @@
 
 #include <vector>
 #include <boost/property_tree/ptree.hpp>
-#include "objects.hpp"
+#include "game/objects.hpp"
 #include "game/exceptions.hpp"
 
-namespace pt = boost::property_tree;
 
 namespace game {
+    namespace pt = boost::property_tree;
 
     class CreatorLevel {
     public:
@@ -18,13 +18,13 @@ namespace game {
 
     class JsonCreateLevel : public CreatorLevel {
     public:
-        JsonCreateLevel() = delete;
+        JsonCreateLevel() = default;
 
         JsonCreateLevel(const std::string &level_dir);
 
-        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
+//        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
 
-        JsonCreateLevel(const JsonCreateLevel &) = delete;
+//        JsonCreateLevel(const JsonCreateLevel &) = delete;
 
         void create_level(size_t level_num) override;
 
@@ -50,14 +50,16 @@ namespace game {
 
     class LevelManager : public CreatorLevel {
     public:
-        LevelManager() : _level_num(0), _current_level(nullptr) {};
+        LevelManager();
 
         void set_current_level(size_t level_num);
 
         void load_current_level();
 
+        void create_level(size_t level_num) override;
+
+        std::unique_ptr<CreatorLevel> _current_level;
     private:
         size_t _level_num;
-        std::unique_ptr<CreatorLevel> _current_level;
     };
 } // namespace game
