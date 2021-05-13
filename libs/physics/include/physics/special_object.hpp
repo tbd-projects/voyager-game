@@ -66,4 +66,5 @@ class ColideObject : public math::IPositionable, public math::IRotatable {
     std::unique_ptr<math::Polygon> _polygon;
 };
 
+
 }  // namespace physics

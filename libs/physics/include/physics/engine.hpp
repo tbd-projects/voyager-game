@@ -44,7 +44,7 @@ class Engine : public IConnectToEngine {
   public:
     Engine();
 
-    explicit Engine(std::unique_ptr<Force> &&force);
+    explicit Engine(std::unique_ptr<Force>&&force);
 
     [[nodiscard]]
     math::Vector2d calc_force_by_object(PhysicalObject &object) const;
@@ -60,8 +60,15 @@ class Engine : public IConnectToEngine {
 
     void delete_object(std::weak_ptr<PhysicalObject> object) override;
 
+    [[nodiscard]]
+    math::Vector2d get_velocity_in_tick(math::Vector2d velocity) const;
+
+    [[nodiscard]]
+    size_t get_cals_in_tick() const;
+
   private:
-    const size_t _tick_of_calc;
+    const size_t _cals_in_tick;
+    const math::decimal_t _part_of_second_in_tick;
     Mechanic _mechanic;
     StoreObject _objects;
 };

@@ -29,7 +29,7 @@ math::decimal_t PhysicalObject::get_cast_weight() const noexcept {
     return math::decimal_t(_weight) * one_ton;
 }
 
-constexpr const math::Vector2d &PhysicalObject::get_velocity() const noexcept {
+const math::Vector2d &PhysicalObject::get_velocity() const noexcept {
     return _velocity;
 }
 

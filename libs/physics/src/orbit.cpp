@@ -40,8 +40,13 @@ Orbit::Orbit()
 
 math::coords_t Orbit::get_current_pos(PhysicalObject &object
                                       , const Engine &physical_engine) {
-    auto acceleration = physical_engine.calc_force_by_object(object);
-    return object.get_pos() + acceleration.get_coords();
+    math::coords_t new_coords;
+    for (size_t i = 0; i < physical_engine.get_cals_in_tick(); ++i) {
+        auto acceleration = physical_engine.calc_force_by_object(object);
+        object.set_velocity(object.get_velocity() + acceleration);
+        object.set_pos(object.get_pos() + object.get_velocity().get_coords());
+    }
+    return object.get_pos();
 }
 
 Orbit::orbit_properties_t Orbit::get_orbit_properties() const {

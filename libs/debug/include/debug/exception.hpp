@@ -3,28 +3,91 @@
 #include <stdexcept>
 #include <string>
 
+
 namespace debug {
 
 class Exception : public std::exception {
   public:
     Exception();
 
-    explicit Exception(std::string&& error);
+    explicit Exception(std::string &&error);
 
-  private:
+    [[nodiscard]]
+    const char *what() const noexcept override;
+
+  protected:
     std::string _name_error;
 };
 
-class PhysicalException: public debug::Exception {
+class BaseExceptions : public Exception {
   public:
-    PhysicalException();
-    explicit PhysicalException(std::string&& error);
+    BaseExceptions();
+
+    explicit BaseExceptions(std::string &&error);
+
+    BaseExceptions(const std::string &filename, const std::string &classname
+                   , const std::string &method_name
+                   , const std::string &arg = "");
 };
 
-class MathException: public debug::Exception {
+class PhysicalException : public BaseExceptions {
+  public:
+    PhysicalException();
+
+    explicit PhysicalException(std::string &&error);
+};
+
+class MathException : public BaseExceptions {
   public:
     MathException();
-    explicit MathException(std::string&& error);
+
+    explicit MathException(std::string &&error);
+};
+
+#define ARG_LOAD_ERROR(args) LoadException(__FILE__, typeid(*this).name() \
+                                                    , __FUNCTION__, args)
+#define LOAD_ERROR() LoadException(__FILE__, typeid(*this).name(), __FUNCTION__)
+
+class LoadException : public BaseExceptions {
+  public:
+    LoadException();
+
+    LoadException(const std::string &filename, const std::string &classname
+                  , const std::string &method_name
+                  , const std::string &arg = "");
+};
+
+#define ARG_ARGUMENT_ERROR(args) ArgumentException(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__, args)
+#define ARGUMENT_ERROR() ArgumentException(__FILE__, typeid(*this).name() \
+                                                        , __FUNCTION__)
+
+class ArgumentException : public BaseExceptions {
+  public:
+    ArgumentException();
+
+    ArgumentException(const std::string &filename, const std::string &classname
+                      , const std::string &method_name
+                      , const std::string &arg = "");
+};
+
+
+#define ARG_UNEXPECTED_CALL_ERROR(args) ArgumentException(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__, args)
+#define UNEXPECTED_CALL_ERROR() ArgumentException(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__)
+
+class UnexpectedCallException : public BaseExceptions {
+  public:
+    UnexpectedCallException();
+
+    UnexpectedCallException(const std::string &filename
+                            , const std::string &classname
+                            , const std::string &method_name
+                            , const std::string &arg = "");
 };
 
 }  // namespace debug

@@ -4,21 +4,36 @@
 
 #include "special_object.hpp"
 #include "physical_object.hpp"
-
+//#include "game_manager/config.hpp"
 #include "engine.hpp"
 
+namespace game_manager {
+
+class Config {
+  public:
+    static Config get_instance() {return Config();}
+
+    size_t fps = 60;
+};
+
+}
+
 namespace physics {
+
+#define MILISECOND_IN_SECOND 100.f
 
 
 //  ---------------------------------Engine------------------------------------
 
 
 Engine::Engine()
-        : _tick_of_calc(2)
-          , _mechanic(std::make_unique<NewtonForce>()) {}
+        : Engine(std::make_unique<NewtonForce>()) {}
 
 Engine::Engine(std::unique_ptr<Force> &&force)
-        : _tick_of_calc(2)
+        : _cals_in_tick(20)
+        , _part_of_second_in_tick(
+            (math::decimal_t) game_manager::Config::get_instance().fps
+            / MILISECOND_IN_SECOND)
           , _mechanic(std::move(force)) {}
 
 math::Vector2d Engine::calc_force_by_object(PhysicalObject &object) const {
@@ -26,7 +41,8 @@ math::Vector2d Engine::calc_force_by_object(PhysicalObject &object) const {
         throw debug::PhysicalException("Working with an unregistered object");
     }
 
-    return _mechanic.calc_force_by_object(object, _objects);
+    return _mechanic.calc_force_by_object(object, _objects)
+           * _part_of_second_in_tick;
 }
 
 math::decimal_t Engine::get_effective_circle_orbit
@@ -59,6 +75,18 @@ void Engine::add_object(std::weak_ptr<PhysicalObject> object) {
 void Engine::delete_object(std::weak_ptr<PhysicalObject> object) {
     _objects.delete_object(std::move(object));
 }
+
+math::Vector2d Engine::get_velocity_in_tick(math::Vector2d velocity) const {
+    return math::Vector2d((velocity * _part_of_second_in_tick) / one_dist);
+}
+
+size_t Engine::get_cals_in_tick() const {
+    return _cals_in_tick;
+}
+
+
+//  -----------------------------StoreObject------------------------------------
+
 
 void StoreObject::add_object(std::weak_ptr<PhysicalObject> object) {
     if (object.lock()->_index != -1) {
@@ -101,11 +129,11 @@ void StoreObject::delete_object(std::weak_ptr<PhysicalObject> object) {
 bool StoreObject::contain_object(const PhysicalObject &object) const {
     ssize_t index = object._index;
     return index != -1 && _deleted_objects.find(index) == _deleted_objects.end()
-           && (size_t)index < _objects.size();
+           && (size_t) index < _objects.size();
 }
 
 bool StoreObject::is_objects_with_equal_id(const PhysicalObject &object_1
-                                      , const PhysicalObject &object_2) const {
+                                           , const PhysicalObject &object_2) const {
     return object_1._index == object_2._index;
 }
 

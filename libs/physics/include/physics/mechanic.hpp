@@ -6,8 +6,9 @@
 namespace physics {
 
 const math::decimal_t G = 6.674e-3f;
-const math::decimal_t base_impulse = 25;
+const math::decimal_t base_impulse = 0.8e-3f;
 const math::decimal_t one_ton = 1e-4f;
+const math::decimal_t one_dist = 1e-2f;
 
 class StoreObject;
 

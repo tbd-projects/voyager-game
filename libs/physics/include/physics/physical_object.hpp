@@ -26,7 +26,7 @@ class PhysicalObject : public EnginesIndexedObject
     math::decimal_t get_cast_weight() const noexcept;
 
     [[nodiscard]]
-    constexpr const math::Vector2d &get_velocity() const noexcept;
+    const math::Vector2d &get_velocity() const noexcept;
 
     void set_velocity(math::Vector2d velocity);
 
