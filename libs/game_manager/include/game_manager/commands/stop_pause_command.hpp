@@ -7,6 +7,7 @@
 namespace game_manager::command {
 
 class EndPause : public ICommand {
+  public:
     void execute(GameManager &manager) override {
         manager.apply_state();
     }

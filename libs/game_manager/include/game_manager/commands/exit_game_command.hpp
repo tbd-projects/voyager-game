@@ -7,6 +7,7 @@
 namespace game_manager::command {
 
 class Exit : public ICommand {
+  public:
     void execute(GameManager &manager) override {
         manager.end_run();
     }

@@ -14,9 +14,11 @@ class Game {
     explicit Game(event_controller::IController &controller
                   , graphics::ICanvas &canvas) {}
 
-    void stop_game(event_controller::IController &controller) const {}
+    void stop_game() const {}
 
-    void continue_game(event_controller::IController &controller) const {}
+    void continue_game() const {}
+
+    void start_game(size_t id_level) {}
 };
 
 }  // namespace game

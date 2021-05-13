@@ -24,7 +24,7 @@ class Controller : public IController {
 
     void run() {}
 
-    void end_run() {}
+    void stop() {}
 
     void subscribe(EventType type, ISubscriber &subscriber) override {}
 

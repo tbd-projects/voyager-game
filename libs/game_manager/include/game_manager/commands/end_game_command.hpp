@@ -7,6 +7,7 @@
 namespace game_manager::command {
 
 class EndGame : public ICommand {
+  public:
     void execute(GameManager &manager) override {
         auto creator = [](graphics::ICanvas &canvas
                           , event_controller::IController &controller)
@@ -14,7 +15,6 @@ class EndGame : public ICommand {
             return std::make_unique<game_manager::states::InMainMenu>(
                     canvas, controller);
         };
-
         manager.add_state(creator);
     }
 };

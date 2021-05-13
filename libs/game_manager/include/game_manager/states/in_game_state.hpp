@@ -11,12 +11,15 @@ class InGame : public IState {
   public:
     InGame() = delete;
 
+    InGame(const InGame&) = delete;
+    InGame& operator=(const InGame&) = delete;
+
     InGame(graphics::ICanvas& canvas
-           ,  event_controller::IController &controller);
+           ,  event_controller::IController &controller, size_t id_level);
 
-    void stop(event_controller::IController &controller) const override;
+    void stop(event_controller::IController &controller) override;
 
-    void contine(event_controller::IController &controller) const override;
+    void contine(event_controller::IController &controller) override;
 
   private:
     game::Game _game;

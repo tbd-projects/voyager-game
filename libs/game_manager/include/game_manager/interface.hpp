@@ -1,6 +1,7 @@
 #pragma once
 #include <filesystem>
 
+
 namespace event_controller {
 
 class IController;
@@ -11,9 +12,9 @@ namespace game_manager {
 
 class IState {
   public:
-    virtual void stop(event_controller::IController &controller) const = 0;
+    virtual void stop(event_controller::IController &controller) = 0;
 
-    virtual void contine(event_controller::IController &controller) const = 0;
+    virtual void contine(event_controller::IController &controller) = 0;
 
     virtual ~IState() = default;
 };

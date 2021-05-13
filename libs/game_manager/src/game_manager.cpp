@@ -3,8 +3,8 @@
 #include <utility>
 
 #include <debug/exception.hpp>
-#include <imported/menu/pause_menu.h>
-#include <imported/menu/main_menu.h>
+#include <game_manager/imported/menu/pause_menu.h>
+#include <game_manager/imported/menu/main_menu.h>
 
 #include "game_manager.hpp"
 #include "config.hpp"
@@ -44,7 +44,7 @@ void GameManager::add_state(const func_create_state& creator_state) {
 }
 
 void GameManager::end_run() {
-    _controller.end_run();
+    _controller.stop();
 }
 
 }  // namespace game_manager

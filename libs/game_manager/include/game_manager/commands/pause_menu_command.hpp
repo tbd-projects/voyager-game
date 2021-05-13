@@ -7,6 +7,7 @@
 namespace game_manager::command {
 
 class RunPause : public ICommand {
+ public:
     void execute(GameManager &manager) override {
         auto creator = [](graphics::ICanvas &canvas
                           , event_controller::IController &controller)
