@@ -3,10 +3,11 @@
 #include <physics/interface.hpp>
 #include <physics/physical_object.hpp>
 
-const double G = 6.67;
-#define BASE_TRUST 25
-
 namespace physics {
+
+const math::decimal_t G = 6.674e-3f;
+const math::decimal_t base_impulse = 25;
+const math::decimal_t one_ton = 1e-4f;
 
 class StoreObject;
 
@@ -20,9 +21,6 @@ class NewtonForce : public Force {
                                     std::reference_wrapper<PhysicalObject>
                                     > &other_objects) const override;
 
-  private:
-    const math::decimal_t _G;
-    const math::decimal_t _base_trust;
 };
 
 class OrbitalMechanic {

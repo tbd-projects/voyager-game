@@ -8,7 +8,6 @@
 
 namespace physics {
 
-
 class PhysicalObject : public EnginesIndexedObject
                     , public ColideObject, public AcceleratableObject {
   public:
@@ -22,6 +21,9 @@ class PhysicalObject : public EnginesIndexedObject
 
     [[nodiscard]]
     size_t get_weight() const noexcept;
+
+    [[nodiscard]]
+    math::decimal_t get_cast_weight() const noexcept;
 
     [[nodiscard]]
     const math::Vector2d &get_velocity() const noexcept;
