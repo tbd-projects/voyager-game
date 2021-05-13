@@ -1,12 +1,17 @@
 #pragma once
 
-#include <menu/i_menu.h>
+#include <functional>
+
 #include <event_controller/controller.h>
 #include <event_controller/i_eventable.h>
 #include <graphics/i_drawable.h>
-#include <game/game.hpp>
+#include <game_manager/interface.hpp>
 
 namespace game_manager {
+
+using func_create_state = std::function<
+        std::unique_ptr<IState> (graphics::ICanvas &
+                                   , event_controller::IController &)>;
 
 class GameManager {
   public:
@@ -15,30 +20,22 @@ class GameManager {
 
     void run();
 
-    void start_game(size_t id_level);
+    void stash_state();
 
-    void end_pause();
+    void stash_state(const func_create_state& state);
 
-    void pause_game();
+    void apply_state();
 
-    void end_game();
+    void add_state(const func_create_state& state);
 
-    void exit();
-
-    void open_main_menu();
-
-    void open_levels_menu();
-
+    void end_run();
 
   private:
     event_controller::Controller _controller;
-
-    std::unique_ptr<game::Game> _game;
     graphics::ICanvas &_canvas;
-    std::unique_ptr<menu::IMenu> _menu;
 
-    bool _on_pause;
-    bool _in_game;
+    std::unique_ptr<IState> _current_state;
+    std::unique_ptr<IState> _stash_state;
 };
 
 }  // namespace game_manager

@@ -8,6 +8,7 @@ class ConfigJsonLoader : public game_manager::ILoaderConfig {
   public:
     ConfigJsonLoader() = default;
 
+  private:
     void load(const std::filesystem::path& root, Config& config) const override;
 };
 

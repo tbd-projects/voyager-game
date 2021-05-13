@@ -25,6 +25,30 @@
         "angle": 0
       },
       "sprite_id": 2
+    },
+    {
+      "orbit_properties": {
+        "x_c": 10.0,
+        "y_c": 0.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0.1,
+        "y": -0.01
+      },
+      "pos": {
+        "x": 3000,
+        "y": 600
+      },
+      "weight": 800000,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 2
     }
   ],
   "background": {
