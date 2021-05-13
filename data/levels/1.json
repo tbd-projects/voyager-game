@@ -22,7 +22,7 @@
         "width": 0,
         "angle": 0
       },
-      "sprite_id": 1
+      "sprite_id": 2
     },
     {
       "orbit_properties": {
@@ -46,7 +46,7 @@
         "width": 0,
         "angle": 0
       },
-      "sprite_id": 1
+      "sprite_id": 2
     }
   ],
   "planets": [
@@ -72,7 +72,7 @@
         "width": 0,
         "angle": 0
       },
-      "sprite_id": 1
+      "sprite_id": 2
     },
     {
       "orbit_properties": {
@@ -96,7 +96,7 @@
         "width": 0,
         "angle": 0
       },
-      "sprite_id": 1
+      "sprite_id": 2
     }
   ],
   "background": {

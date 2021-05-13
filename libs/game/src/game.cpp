@@ -71,6 +71,10 @@ namespace game {
 
         _bg = factory.load(_bg_id, *_storage);
 
+        auto sizes = _bg->get_texture_size();
+
+        _bg->set_pos(math::coords_t(sizes.first / 2, sizes.second / 2));
+
         for (auto &obj : _space_objects){
             _engine.add_object(obj);
         }
