@@ -35,8 +35,12 @@ class TestEventable : public event_controller::IEventable {
 };
 
 class TestSubscriber : public event_controller::ISubscriber {
+private:
+    event_controller::Controller &_controller;
 public:
     int i = 0;
+
+    explicit TestSubscriber(event_controller::Controller &controller) : _controller(controller) {}
 
     std::shared_ptr<event_controller::ICommand> update(event_controller::Event &e) override {
         i++;
@@ -50,6 +54,10 @@ public:
                         dynamic_cast<event_controller::KeyboardEvent &>(e).key,
                         event_controller::Key::Down
                 );
+                break;
+            case 3:
+                EXPECT_EQ(e.type, event_controller::EventType::close);
+                _controller.stop();
                 break;
             default:
                 EXPECT_EQ(1, 0); // @todo find correct version
@@ -87,16 +95,18 @@ TEST(event_controller_tests, controller_constructor) {
     auto gm = game_manager::GameManager(canvas, eventable);
     auto controller = event_controller::Controller(gm, eventable);
 
-    TestSubscriber subscriber;
+    TestSubscriber subscriber(controller);
 
     controller.subscribe(event_controller::EventType::fps, subscriber);
     controller.subscribe(event_controller::EventType::keyboard, subscriber);
+    controller.subscribe(event_controller::EventType::close, subscriber);
 
     controller.run();
 
     controller.unsubscribe(event_controller::EventType::fps, subscriber);
     controller.unsubscribe(event_controller::EventType::keyboard, subscriber);
+    controller.unsubscribe(event_controller::EventType::close, subscriber);
 
 
-    ASSERT_EQ(subscriber.i, 2);
+    ASSERT_EQ(subscriber.i, 3);
 }
