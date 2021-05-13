@@ -2,9 +2,8 @@
 
 #include <memory>
 #include "interface.hpp"
-//#include <graphics/i_graphics_factory.h>
-//#include <graphics/texture_storage.h>
-
+#include <graphics/i_graphics_factory.h>
+#include <graphics/texture_storage.h>
 namespace game {
 
     class MapSpriteCreator {
