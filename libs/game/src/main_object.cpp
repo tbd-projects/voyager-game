@@ -14,7 +14,7 @@ namespace game {
     }
 
     void GameObject::rotate_sprite(math::decimal_t angle) {
-//        this->_sprite->set_rotation(angle);
+        this->_sprite->set_rotation(angle);
     }
 
 

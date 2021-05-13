@@ -22,10 +22,6 @@ namespace game {
 
         JsonCreateLevel(const std::string &level_dir);
 
-//        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
-
-//        JsonCreateLevel(const JsonCreateLevel &) = delete;
-
         void create_level(size_t level_num) override;
 
         std::vector<std::shared_ptr<SpaceBody>> &&get_planets();

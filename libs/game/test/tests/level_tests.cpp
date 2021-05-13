@@ -3,11 +3,8 @@
 //
 #include <filesystem>
 #include "gtest/gtest.h"
-#include "game/objects.hpp"
 #include "loaders/level_loader.hpp"
 #include "game/exceptions.hpp"
-#include "math/polygon.hpp"
-#include "physics/orbit.hpp"
 
 
 using namespace boost::property_tree;

@@ -2,22 +2,10 @@
 
 #include <iostream>
 #include <memory>
-//#include <graphics/sprite.h>
+#include <graphics/sprite.h>
 
 
 namespace game {
-   namespace graphics {
-        class ICanvas;
-        class Sprite{
-        public:
-            void draw(ICanvas&);
-        };
-        class IGraphicsFactory{};
-        class TextureStorage{
-        public:
-            explicit TextureStorage(IGraphicsFactory&){}
-        };
-    }
 
     class IGameObject {
     public:
