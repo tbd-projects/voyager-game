@@ -82,7 +82,7 @@ TEST_F(MenuTests, some)
         btn1.set_string(std::string("Button ") + std::to_string(i));
         btn1.set_padding(10);
         btn1.resize(50, 500);
-        auto command1 = std::make_unique<game_manager::command::NothingCommand>();
+        auto command1 = std::make_unique<game_manager::command::DoNothing>();
         auto cbtn1 = menu::CommandButton(std::move(btn1), std::move(command1));
 
         mmenu.buttons().push_back(std::move(cbtn1));

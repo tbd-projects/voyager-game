@@ -10,5 +10,29 @@
     },
     "filename": "./background.jpg",
     "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 200,
+      "y": 216
+    },
+    "filename": "./sprites/ship.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 120,
+      "y": 120
+    },
+    "filename": "./sprites/planet.png",
+    "frames": 0
   }
 ]

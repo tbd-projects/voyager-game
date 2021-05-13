@@ -27,7 +27,7 @@ namespace menu {
         VerticalCenteredMenu(graphics::ICanvas &canvas,
                              event_controller::IController &controller);
 
-        graphics::ICanvas &get_canvas() const;
+        [[nodiscard]] graphics::ICanvas &get_canvas() const;
 
         std::vector<menu::CommandButton> & buttons();
 
