@@ -9,7 +9,8 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCE ${SOURCE_DIR}/main.cpp)
 set(LIBRARIES_DIR ${CMAKE_SOURCE_DIR}/libs)
 cmake_policy(SET CMP0079 NEW)
-set(LIBRARIES debug_lib math_lib physics_lib)
+set(LIBRARIES debug_lib math_lib physics_lib loaders_lib graphics_lib
+        shop_lib event_controller_lib game_manager_lib menu_lib game_lib)
 
 project(${PROJECT_NAME})
 
@@ -48,13 +49,20 @@ endforeach(LIBRARY)
 
 target_link_libraries(math_lib debug_lib)
 target_link_libraries(physics_lib debug_lib math_lib)
+target_link_libraries(game_manager_lib debug_lib menu_lib game_lib)
+target_link_libraries(loaders_lib game_manager_lib math_lib)
+
+target_link_libraries(event_controller_lib game_manager_lib)
+target_link_libraries(game_manager_lib event_controller_lib loaders_lib)
+
+target_link_libraries(menu_lib event_controller_lib game_manager_lib graphics_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
 get_property(tmp GLOBAL PROPERTY GTEST_SOURCE_TEST_DIR)
 
 add_executable(gtest ${tmp})
-target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread gmock)
+target_link_libraries(gtest ${LIBRARIES} ${GTEST_LIBRARIES} pthread)
 #add_test(gtest gtest)
 
 setup_target_for_coverage_lcov (
