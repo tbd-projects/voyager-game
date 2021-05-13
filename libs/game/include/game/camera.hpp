@@ -1,0 +1,23 @@
+#pragma once
+//
+// Created by flashie on 13.05.2021.
+//
+#include <math/utilits.hpp>
+#include <memory>
+#include "objects.hpp"
+
+namespace game {
+    class Camera {
+    public:
+        math::coords_t get_position();
+
+        math::coords_t get_follow_position();
+
+        void set_follow_position(math::coords_t follow_pos);
+
+    private:
+        std::shared_ptr<SpaceShip> _ship;
+        math::coords_t _follow_pos;
+    };
+}
+

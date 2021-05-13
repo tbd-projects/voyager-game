@@ -7,6 +7,7 @@
 #include "progress.hpp"
 #include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
+#include "camera.hpp"
 #include <graphics/i_drawable.h>
 #include <event_controller/i_controller.h>
 #include <event_controller/i_subscriber.h>
