@@ -9,7 +9,9 @@
 namespace game {
     class Camera {
     public:
-        math::coords_t get_position();
+        Camera(std::shared_ptr<SpaceShip> ship, math::coords_t follow_pos) : _ship(ship), _follow_pos(follow_pos) {};
+
+        math::coords_t get_position(math::coords_t observe_pos);
 
         math::coords_t get_follow_position();
 

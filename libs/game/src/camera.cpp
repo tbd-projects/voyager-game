@@ -11,3 +11,7 @@ math::coords_t game::Camera::get_follow_position() {
 void game::Camera::set_follow_position(math::coords_t follow_pos) {
     this->_follow_pos = follow_pos;
 }
+
+math::coords_t game::Camera::get_position(math::coords_t observe_pos) {
+    math::coords_t new_pos{};
+}
