@@ -17,8 +17,8 @@ namespace game {
 
         MapSpriteCreator &operator=(const MapSpriteCreator &) = delete;
 
-        explicit MapSpriteCreator(graphics::IGraphicsFactory &factory) : _texture_storage(factory) {
-
+        explicit MapSpriteCreator(graphics::IGraphicsFactory &factory) {
+//            this->_texture_storage(factory);
         };
 
         std::unique_ptr<graphics::Sprite> get_sprite(size_t id);
