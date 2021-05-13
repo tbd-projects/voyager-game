@@ -30,11 +30,11 @@ namespace game {
 
     Map::Map(size_t player_id) {
 
-        auto& config = game_manager::Config::get_instance();
+        auto &config = game_manager::Config::get_instance();
 
         _storage = std::make_unique<graphics::TextureStorage>(*config.graphics_factory);
 
-        auto& level_manager = dynamic_cast<LevelManager &>(*::game_manager::Config::get_instance().level_manager);
+        auto &level_manager = dynamic_cast<LevelManager &>(*::game_manager::Config::get_instance().level_manager);
 
         properties_t properties = config.properties_loader->load_current_properties(player_id);
 
@@ -50,12 +50,12 @@ namespace game {
     }
 
     void Map::load_level(size_t level_num) {
-        auto& config = ::game_manager::Config::get_instance();
-        auto& level_manager = dynamic_cast<LevelManager &>(*config.level_manager);
+        auto &config = ::game_manager::Config::get_instance();
+        auto &level_manager = dynamic_cast<LevelManager &>(*config.level_manager);
 
         level_manager.set_current_level(level_num);
         level_manager.load_current_level();
-        auto& current_level = dynamic_cast<JsonCreateLevel &>(*level_manager._current_level);
+        auto &current_level = dynamic_cast<JsonCreateLevel &>(*level_manager._current_level);
         _space_objects = current_level.get_planets();
         _stars = current_level.get_stars();
         _bg_id = current_level.get_bg_id();
@@ -75,10 +75,10 @@ namespace game {
 
         _bg->set_pos(math::coords_t(sizes.first / 2, sizes.second / 2));
 
-        for (auto &obj : _space_objects){
+        for (auto &obj : _space_objects) {
             _engine.add_object(obj);
         }
-        for (auto &obj : _stars){
+        for (auto &obj : _stars) {
             _engine.add_object(obj);
         }
 
@@ -110,19 +110,22 @@ namespace game {
         return true;
     }
 
+    void Map::set_trust(math::decimal_t angle) {
+        this->_ship->add_trust(angle);
+    }
+
 
 
 // Game
 
-Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) :
-        _map(game_manager::Config::get_instance().player_id),
-        _canvas(canvas),
-        _controller(controller)
-    {
+    Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) :
+            _map(game_manager::Config::get_instance().player_id),
+            _canvas(canvas),
+            _controller(controller) {
         _controller.subscribe(event_controller::EventType::fps, *this);
         _controller.subscribe(event_controller::EventType::keyboard, *this);
         _controller.subscribe(event_controller::EventType::close, *this);
-}
+    }
 
     Game::~Game() {
         _controller.unsubscribe(event_controller::EventType::fps, *this);
@@ -146,11 +149,26 @@ Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas)
                 break;
             case event_controller::EventType::close:
                 return std::make_shared<game_manager::command::Exit>();
-            case event_controller::EventType::keyboard:{
+            case event_controller::EventType::keyboard: {
                 auto key = dynamic_cast<event_controller::KeyboardEvent &>(event).key;
-                if (key == event_controller::Key::Escape)
-                    return std::make_shared<game_manager::command::EndGame>();
-                break;
+                switch(key) {
+                    case event_controller::Key::Escape:
+                        return std::make_shared<game_manager::command::EndGame>();
+                    case event_controller::Key::W:
+                        this->_map.set_trust(0);
+                        break;
+                    case event_controller::Key::S:
+                        this->_map.set_trust(180);
+                        break;
+                    case event_controller::Key::D:
+                        this->_map.set_trust(-90);
+                        break;
+                    case event_controller::Key::A:
+                        this->_map.set_trust(90);
+                        break;
+                    default:
+                        break;
+                }
             }
             default:
                 break;
