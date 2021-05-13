@@ -18,13 +18,13 @@ namespace game {
 
     class JsonCreateLevel : public CreatorLevel {
     public:
-        JsonCreateLevel() = delete;
+        JsonCreateLevel() = default;
 
         JsonCreateLevel(const std::string &level_dir);
 
-        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
+//        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
 
-        JsonCreateLevel(const JsonCreateLevel &) = delete;
+//        JsonCreateLevel(const JsonCreateLevel &) = delete;
 
         void create_level(size_t level_num) override;
 

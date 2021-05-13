@@ -1,0 +1,38 @@
+{
+  "players": [
+    {
+      "id": "1",
+      "stats": {
+        "time": "90",
+        "coins": "100",
+        "levels": [
+          {
+            "num": "1",
+            "stars": "1"
+          },
+          {
+            "num": "2",
+            "stars": "2"
+          }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "stats": {
+        "time": "80",
+        "coins": "50",
+        "levels": [
+          {
+            "num": "1",
+            "stars": "1"
+          },
+          {
+            "num": "2",
+            "stars": "2"
+          }
+        ]
+      }
+    }
+  ]
+}

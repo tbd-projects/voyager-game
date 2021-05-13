@@ -48,7 +48,7 @@ namespace game {
 
         _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties);
         // @todo Follow_pos - width, height of canvas
-        this->_camera = std::make_unique<Camera>(_ship, math::coords_t(200, 200));
+        this->_camera = std::make_unique<Camera>(_ship, math::coords_t(500, 500));
     }
 
     void Map::load_level(size_t level_num) {
@@ -88,6 +88,7 @@ namespace game {
     }
 
     bool Map::update(graphics::ICanvas &canvas) {
+        _bg->set_pos(_camera->get_position(math::coords_t(canvas.get_width() / 2, canvas.get_height() / 2)));
         _bg->draw(canvas);
 
         for (auto &obj : this->_space_objects) {
