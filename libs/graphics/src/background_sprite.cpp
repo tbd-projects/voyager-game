@@ -22,12 +22,15 @@ namespace graphics {
         auto pos = get_pos();
         math::coords_t new_pos(0,0);
 
-        new_pos.x = (int(pos.x) % w + w) % w;
-        new_pos.y = (int(pos.y) % h + h) % h;
+        auto ww = _sprite->get_texture_size().first;
+        auto hh = _sprite->get_texture_size().second;
 
-        for (int x = new_pos.x; x < w; x+=_sprite->get_texture_size().first)
+        new_pos.x = (int(pos.x) % ww + ww) % ww - ww;
+        new_pos.y = (int(pos.y) % hh + hh) % hh - hh;
+
+        for (int x = new_pos.x; x < w + ww; x+=ww)
         {
-            for (int y = new_pos.y; y < h; y +=_sprite->get_texture_size().second)
+            for (int y = new_pos.y; y < h + hh; y +=hh)
             {
                 _sprite->set_pos(math::coords_t(x, y));
                 _sprite->draw(canvas);
