@@ -23,4 +23,4 @@ class JsonCreateLevel : public CreatorLevel {
     void create_level(size_t level_num) override {}
 };
 
-}
+}  // namespace game

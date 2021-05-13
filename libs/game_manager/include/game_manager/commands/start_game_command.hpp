@@ -9,7 +9,7 @@ class StartGameCommand : public ICommand {
   public:
     StartGameCommand() = delete;
 
-    StartGameCommand(size_t id_index)
+    explicit StartGameCommand(size_t id_index)
         : _id_index(id_index) {}
 
     void execute(GameManager &manager) override {
@@ -20,4 +20,4 @@ class StartGameCommand : public ICommand {
     size_t _id_index;
 };
 
-}
+}  // namespace game_manager::command

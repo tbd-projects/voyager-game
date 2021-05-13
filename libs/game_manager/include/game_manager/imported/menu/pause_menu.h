@@ -7,16 +7,19 @@
 
 #include "imported/menu/i_menu.h"
 #include <imported/event_controller/event.h>
+#include <game_manager/commands.hpp>
 
 namespace menu {
 class PauseMenu : public IMenu {
   public:
-    ~PauseMenu() override;
-
     std::shared_ptr<game_manager::command::ICommand>
-    update(event_controller::Event &event) override;
+    update(event_controller::Event &event) override {
+        return std::make_shared<game_manager::command::DoNothing>();
+    }
 
-    event_controller::IController &get_controller() override;
+    event_controller::IController &get_controller() override {
+        return *_controller;
+    }
 
   private:
     std::shared_ptr<event_controller::IController> _controller;

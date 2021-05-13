@@ -21,9 +21,13 @@ class VerticalCenteredMenu : public IMenu {
 
   public:
     VerticalCenteredMenu(graphics::ICanvas &canvas
-                         , event_controller::IController &controller);
+                         , event_controller::IController &controller)
+            : _canvas(canvas)
+              , _controller(controller) {}
 
-    event_controller::IController &get_controller() override;
+    event_controller::IController &get_controller() override {
+        return _controller;
+    }
 };
 }  // namespace menu
 

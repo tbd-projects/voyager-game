@@ -48,12 +48,11 @@ foreach(LIBRARY ${LIBRARIES})
 endforeach(LIBRARY)
 
 target_link_libraries(math_lib debug_lib)
-target_link_libraries(physics_lib debug_lib math_lib)
-target_link_libraries(game_manager_lib debug_lib menu_lib game_lib)
+target_link_libraries(physics_lib debug_lib math_lib game_manager_lib)
+target_link_libraries(game_manager_lib debug_lib menu_lib game_lib event_controller_lib loaders_lib)
 target_link_libraries(loaders_lib game_manager_lib math_lib)
 
 target_link_libraries(event_controller_lib game_manager_lib)
-target_link_libraries(game_manager_lib event_controller_lib loaders_lib)
 
 target_link_libraries(menu_lib event_controller_lib game_manager_lib graphics_lib)
 

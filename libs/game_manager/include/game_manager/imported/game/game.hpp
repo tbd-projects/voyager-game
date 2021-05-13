@@ -20,4 +20,4 @@ class Game {
     void start_game(size_t id_level) {}
 };
 
-}
+}  // namespace game

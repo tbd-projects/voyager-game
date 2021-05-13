@@ -36,4 +36,4 @@ class BaseProgressLoader : public ProgressLoader {
     std::string path;
 };
 
-}
+}  // namespace game

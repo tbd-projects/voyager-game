@@ -218,7 +218,7 @@ bool TrianglePolygon::intresect(const IIntresectable &object) const {
            object.is_point_in_polygon(right);
 }
 
-math::decimal_t TrianglePolygon::get_height() const noexcept{
+math::decimal_t TrianglePolygon::get_height() const noexcept {
     return _height;
 }
 

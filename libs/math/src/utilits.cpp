@@ -131,10 +131,10 @@ decimal_t Utilits::decimal_epsilon = 1e-5;
 decimal_t AlgebraicMethods::solve_equastion_by_Halley(
         const std::function<return_for_solve_equastion(decimal_t)> &func
         , decimal_t start_x_value, size_t number_iteration) {
-
     for (size_t i = 0; i < number_iteration; ++i) {
         math::decimal_t last_x = start_x_value;
         return_for_solve_equastion returns = func(start_x_value);
+
         math::decimal_t first_devide =
                 returns.res_base_func / returns.res_first_deriv_func;
         math::decimal_t second_devide =

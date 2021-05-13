@@ -15,9 +15,10 @@ math::Vector2d NewtonForce::get_force(PhysicalObject &object
                     &other_objects) const {
     math::Vector2d ans{};
     for (auto other_object : other_objects) {
-        math::Vector2d r = math::Vector2d(other_object.get().get_pos() - object.get_pos());
+        math::Vector2d r = math::Vector2d(other_object.get().get_pos()
+                                            - object.get_pos());
         math::decimal_t force =
-                (G * other_object.get().get_cast_weight()) / (r.sqr_len() * one_dist);
+        (G * other_object.get().get_cast_weight()) / (r.sqr_len() * one_dist);
         ans += force * r.normalize();
     }
 
@@ -39,7 +40,7 @@ math::decimal_t OrbitalMechanic::get_effective_radius_orbit
             = PhysicalObject(std::make_unique<math::CirclePolygon>());
 
 
-    //math::decimal_t force_to_one_ton = force(PhysicalObject(&tmp))
+    //  math::decimal_t force_to_one_ton = force(PhysicalObject(&tmp))
     return 0;
 }
 
@@ -56,7 +57,7 @@ math::decimal_t Mechanic::get_effective_circle_orbit(
 }
 
 math::Vector2d Mechanic::calc_force_by_object(PhysicalObject &object
-                                              , const StoreObject &objects) const {
+                                      , const StoreObject &objects) const {
     std::vector<std::reference_wrapper<PhysicalObject>> other_object;
 
     auto tmp = objects.get_active_object();
