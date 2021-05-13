@@ -5,6 +5,7 @@
 #ifndef VOYAGER_MAIN_MENU_H
 #define VOYAGER_MAIN_MENU_H
 
+#include <game_manager/config.hpp>
 #include "graphics/i_spite_loader.h"
 #include "graphics/i_graphics_factory.h"
 #include "graphics/texture_storage.h"
@@ -17,6 +18,12 @@ namespace menu {
         MainMenu(graphics::ICanvas &canvas, event_controller::IController &controller, graphics::IGraphicsFactory &factory,
                                          graphics::ISpiteLoader &loader);
 
+        MainMenu(graphics::ICanvas &canvas, event_controller::IController &controller):
+            MainMenu(canvas,
+                     controller,
+                     *game_manager::Config::get_instance().graphics_factory,
+                     *game_manager::Config::get_instance().sprite_loader
+                     ) {};
         std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
 

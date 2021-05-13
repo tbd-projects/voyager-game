@@ -7,7 +7,7 @@
 #include <sf_graphics/sf_graphics_factory.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <sf_graphics/sf_window.h>
-#include <game_manager/commands.h>
+#include <game_manager/commands.hpp>
 #include <event_controller/event/fps_event.h>
 #include <graphics/json_sprite_sheet_loader.h>
 #include <event_controller/controller.h>

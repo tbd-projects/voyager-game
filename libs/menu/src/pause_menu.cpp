@@ -2,7 +2,7 @@
 // Created by volodya on 15.04.2021.
 //
 
-#include "game_manager/commands.h"
+#include "game_manager/commands.hpp"
 #include "menu/pause_menu.h"
 
 menu::PauseMenu::~PauseMenu() = default;
