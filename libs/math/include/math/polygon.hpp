@@ -23,20 +23,20 @@ class PositionateObject : public IPositionable {
 };
 
 
-class RotateObject {
+class RotateObject: public IRotatable{
   public:
     RotateObject();
 
     explicit RotateObject(math::decimal_t angle);
 
-    virtual void set_rotation(math::decimal_t angle);
+    void set_rotation(math::decimal_t angle) override;
 
-    virtual void add_rotation(math::decimal_t offset_angle);
+    void add_rotation(math::decimal_t offset_angle) override;
 
     [[nodiscard]]
-    math::decimal_t get_rotation() const noexcept;
+    math::decimal_t get_rotation() const noexcept override;
 
-    virtual ~RotateObject() = default;
+    ~RotateObject() override = default;
 
   protected:
     math::decimal_t _angle;

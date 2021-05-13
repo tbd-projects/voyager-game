@@ -45,6 +45,7 @@ void graphics::JsonSpriteSheetLoader::_load_info() {
         info.filename = tpath.string();
 
         info.frames = item.second.get<int>("frames");
+        info.is_bg = item.second.get<bool>("is_bg", false);
 
         _sprites.push_back(info);
     }

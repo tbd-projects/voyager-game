@@ -5,7 +5,7 @@
 #ifndef VOYAGER_FPS_EVENT_H
 #define VOYAGER_FPS_EVENT_H
 
-#include "event.h"
+#include "event_controller/event.h"
 #include "graphics/i_drawable.h"
 
 namespace event_controller {

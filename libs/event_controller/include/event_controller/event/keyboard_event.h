@@ -5,7 +5,7 @@
 #ifndef VOYAGER_KEYBOARD_EVENT_H
 #define VOYAGER_KEYBOARD_EVENT_H
 
-#include "event.h"
+#include "event_controller/event.h"
 
 
 namespace event_controller {

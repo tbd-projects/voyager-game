@@ -10,6 +10,7 @@ namespace graphics {
         std::pair<int, int> size;
         int frames;
         std::string filename;
+        bool is_bg = false;
     };
 }
 #endif //VOYAGER_SPRITE_INFO_H

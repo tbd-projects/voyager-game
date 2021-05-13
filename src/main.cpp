@@ -2,6 +2,8 @@
 #include <sf_graphics/sf_window.h>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <loaders/config_loader.hpp>
+#include <iostream>
+
 
 int main() {
 
