@@ -4,7 +4,7 @@
 
 
 #include "graphics/json_sprite_sheet_loader.h"
-#include <game_manager/config.h>
+#include <game_manager/config.hpp>
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -45,6 +45,7 @@ void graphics::JsonSpriteSheetLoader::_load_info() {
         info.filename = tpath.string();
 
         info.frames = item.second.get<int>("frames");
+        info.is_bg = item.second.get<bool>("is_bg", false);
 
         _sprites.push_back(info);
     }

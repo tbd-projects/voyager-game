@@ -2,6 +2,7 @@
 // Created by volodya on 06.05.2021.
 //
 #include <SFML/Graphics/Texture.hpp>
+#include <graphics/background_sprite.h>
 
 #include "sf_graphics/sf_graphics_factory.h"
 #include "sf_graphics/sf_rect.h"
@@ -26,7 +27,11 @@ namespace graphics::sf {
     std::unique_ptr<Sprite> SfGraphicsFactory::create_sprite(const SpriteInfo &info, TextureStorage &storage) {
         auto texture = dynamic_cast<SfTexture *> (storage.get(info.filename));
         if (info.frames == 0) {
-            return std::unique_ptr<Sprite>(new sf::SfSprite(info.pos, info.size, texture));
+            auto sprite = std::unique_ptr<Sprite>(new sf::SfSprite(info.pos, info.size, texture));
+            if (info.is_bg){
+                return std::make_unique<BackgroundSprite>(std::move(sprite));
+            }
+            return sprite;
         }
         return std::unique_ptr<Sprite>(new sf::SfHorizontalAnimatedSprite(info.frames, info.pos, info.size, texture));
     }

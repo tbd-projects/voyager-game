@@ -10,8 +10,8 @@
 #include "event_controller/i_eventable.h"
 #include "event_controller/i_subscriber.h"
 #include "event_controller/controller.h"
-#include <game_manager/game_manager.h>
-#include <game_manager/commands/nothing_command.h>
+#include <game_manager/game_manager.hpp>
+#include <game_manager/commands/nothing_command.hpp>
 #include <event_controller/event/close_event.h>
 
 
@@ -55,7 +55,7 @@ public:
                 EXPECT_EQ(1, 0); // @todo find correct version
                 break;
         }
-        return std::make_shared<game_manager::command::NothingCommand>();
+        return std::make_shared<game_manager::command::DoNothing>();
     };
 };
 

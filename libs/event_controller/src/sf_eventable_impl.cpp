@@ -28,7 +28,7 @@ namespace event_controller {
                     continue;
             }
         }
-        // @todo fix this stuff
+
         window.display();
         window.clear();
         return std::make_unique<FPSEvent>();

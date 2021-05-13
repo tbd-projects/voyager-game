@@ -19,8 +19,11 @@ namespace event_controller {
         while (_is_runned) {
             std::unique_ptr<Event> event = _eventable.get_event();
 
-            for (auto subscriber: _subscribers[event->type])
+            auto current_subscribers = _subscribers[event->type];
+            for (auto subscriber: current_subscribers)
             {
+                if (!subscriber)
+                    continue;
                 auto command = subscriber->update(*event);
                 command->execute(_manager);
             }

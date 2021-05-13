@@ -17,6 +17,8 @@ namespace graphics {
         int _size = 16;
         Color _color = Color(0, 0, 0);
     public:
+        Text() = default;
+
         virtual int get_size() const;
 
         virtual void set_size(int size);
