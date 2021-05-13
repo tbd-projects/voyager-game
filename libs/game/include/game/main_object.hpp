@@ -28,13 +28,11 @@ namespace game {
             this->_sprite = std::move(sprite);
         }
 
+        const std::unique_ptr<graphics::Sprite> &get_sprite();
 //        const std::unique_ptr<graphics::Sprite> &get_sprite() override;
 
-        const std::unique_ptr<graphics::Sprite> &get_sprite();
-
-//        void set_sprite(std::unique_ptr<graphics::Sprite> sprite) override;
-
         void set_sprite(std::unique_ptr<graphics::Sprite> sprite);
+//        void set_sprite(std::unique_ptr<graphics::Sprite> sprite) override;
 
         void rotate_sprite(math::decimal_t angle);
 

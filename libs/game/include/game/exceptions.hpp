@@ -9,6 +9,9 @@
 #include <cstring>
 #include <chrono>
 
+class BaseExceptions;
+typedef BaseExceptions LogicError;
+
 class BaseExceptions : public std::exception {
 public:
     BaseExceptions(std::string filename, std::string classname, std::string methodname, std::string arg = "") {

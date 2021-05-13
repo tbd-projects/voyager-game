@@ -7,26 +7,11 @@
 #include "progress.hpp"
 #include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
-//#include <graphics/i_drawable.h>
-//#include <event_controller/i_controller.h>
-//#include <event_controller/i_subscriber.h>
+#include "camera.hpp"
+#include <graphics/i_drawable.h>
+#include <event_controller/i_controller.h>
+#include <event_controller/i_subscriber.h>
 
-//namespace graphics {
-//    class ICanvas;
-//    class Sprite {
-//        void draw();
-//    };
-//}
-namespace event_controller {
-    class ISubscriber;
-    class IController;
-    class ISubscriber {
-
-    };
-    class ICommand;
-    class Event;
-
-}
 namespace game {
     class Map {
     public:
@@ -40,16 +25,20 @@ namespace game {
 
         void load_level(size_t level_num);
 
-        void set_ship_trust(math::decimal_t target);
+        void set_impulse(math::decimal_t angle);
 
         bool update(graphics::ICanvas &canvas);
 
     private:
+        std::unique_ptr<graphics::TextureStorage> _storage;
         std::vector<std::shared_ptr<SpaceBody>> _space_objects;
         std::vector<std::shared_ptr<Star>> _stars;
-        std::unique_ptr<SpaceShip> _ship;
+        std::shared_ptr<SpaceShip> _ship;
         std::unique_ptr<graphics::Sprite> _bg;
         size_t _bg_id = 0;
+
+        physics::Engine _engine;
+        std::unique_ptr<Camera> _camera;
 
         void check_all_collision();
 
@@ -67,12 +56,9 @@ namespace game {
 
         ~Game();
 
-//        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
-        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event);
+        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
         bool start_game(int level);
-
-        bool continue_game();
 
         bool stop_game();
 

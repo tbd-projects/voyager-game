@@ -5,9 +5,8 @@
 //#include <graphics/sprite.h>
 
 
-
 namespace game {
-    namespace graphics {
+   namespace graphics {
         class ICanvas;
         class Sprite{
         public:
@@ -19,6 +18,7 @@ namespace game {
             explicit TextureStorage(IGraphicsFactory&){}
         };
     }
+
     class IGameObject {
     public:
         IGameObject() = default;
