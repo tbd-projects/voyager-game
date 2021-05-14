@@ -19,7 +19,7 @@ class InGame : public IState {
 
     void stop(event_controller::IController &controller) override;
 
-    void contine(event_controller::IController &controller) override;
+    void resume(event_controller::IController &controller) override;
 
   private:
     game::Game _game;

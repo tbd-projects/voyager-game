@@ -13,7 +13,7 @@ InMainMenu::InMainMenu(graphics::ICanvas &canvas
 void InMainMenu::stop(event_controller::IController &controller)  {
 }
 
-void InMainMenu::contine(event_controller::IController &controller)  {
+void InMainMenu::resume(event_controller::IController &controller)  {
 }
 
 
@@ -27,8 +27,7 @@ InPauseMenu::InPauseMenu(graphics::ICanvas &canvas
 void InPauseMenu::stop(event_controller::IController &controller)  {
 }
 
-void InPauseMenu::contine(
-        event_controller::IController &controller)  {
+void InPauseMenu::resume(event_controller::IController &controller)  {
 }
 
 
@@ -46,8 +45,8 @@ void InGame::stop(event_controller::IController &controller)  {
     _game.stop_game();
 }
 
-void InGame::contine(event_controller::IController &controller)  {
-    //_game.(controller);
+void InGame::resume(event_controller::IController &controller)  {
+    // _game.(controller);
 }
 
 }  // namespace game_manager::states
