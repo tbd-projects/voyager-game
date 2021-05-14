@@ -44,4 +44,4 @@ class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
                                  , properties_t &properties) override {}
 };
 
-}
+}  // namespace game

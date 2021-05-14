@@ -11,9 +11,7 @@ namespace menu {
 MainMenu::~MainMenu() = default;
 
 MainMenu::MainMenu(graphics::ICanvas &canvas
-                   , event_controller::IController &controller
-                   , graphics::IGraphicsFactory &factory
-                   , graphics::ISpiteLoader &loader)
+                   , event_controller::IController &controller)
         : VerticalCenteredMenu(canvas, controller) {
 }
 
