@@ -29,7 +29,7 @@ public:
 
 class Timer : public ITimer {
 public:
-    Timer() = default;
+    Timer() : _pause_sum(0), _duration(0), _is_running(false), _is_pause(false) {};
 
     void start() override;
 
