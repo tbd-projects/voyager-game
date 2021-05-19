@@ -25,6 +25,11 @@ public:
     virtual std::chrono::milliseconds get_ms() = 0;
 
     virtual std::chrono::seconds get_s() = 0;
+
+    virtual bool is_pause() = 0;
+
+    virtual bool is_run() = 0;
+
 };
 
 class Timer : public ITimer {
@@ -44,6 +49,10 @@ public:
     std::chrono::milliseconds get_ms() override;
 
     std::chrono::seconds get_s() override;
+
+    bool is_pause() override;
+
+    bool is_run() override;
 
 
 private:

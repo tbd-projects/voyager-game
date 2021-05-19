@@ -50,3 +50,11 @@ std::chrono::seconds Timer::get_s() {
     return std::chrono::duration_cast<std::chrono::seconds>(this->get_ms());
 }
 
+bool Timer::is_pause() {
+    return this->_is_pause;
+}
+
+bool Timer::is_run() {
+    return this->_is_running;
+}
+
