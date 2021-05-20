@@ -11,6 +11,7 @@
 #include <graphics/i_drawable.h>
 #include <event_controller/i_controller.h>
 #include <event_controller/i_subscriber.h>
+#include <event_controller/event/keyboard_event.h>
 
 namespace game {
     class Map {
@@ -29,6 +30,9 @@ namespace game {
 
         bool update(graphics::ICanvas &canvas);
 
+        std::shared_ptr<event_controller::ICommand> process_keyboard(event_controller::KeyboardEvent &ev);
+
+
     private:
         std::unique_ptr<graphics::TextureStorage> _storage;
         std::vector<std::shared_ptr<SpaceBody>> _space_objects;
@@ -43,6 +47,7 @@ namespace game {
         void check_all_collision();
 
         void set_sprites(MapSpriteCreator &factory);
+
 
 
 //    void create_ship(size_t player_id);

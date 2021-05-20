@@ -1,7 +1,6 @@
 #include <stdexcept>
 #include <game_manager/commands.hpp>
 #include <game_manager/config.hpp>
-#include <event_controller/event/keyboard_event.h>
 #include "game.hpp"
 
 namespace game {
@@ -57,6 +56,7 @@ namespace game {
 
         level_manager.set_current_level(level_num);
         level_manager.load_current_level();
+
         auto &current_level = dynamic_cast<JsonCreateLevel &>(*level_manager._current_level);
         _space_objects = current_level.get_planets();
         _stars = current_level.get_stars();
@@ -92,7 +92,7 @@ namespace game {
         _bg->draw(canvas);
 
         for (auto &obj : this->_space_objects) {
-           // obj->move(_engine);
+            // obj->move(_engine);
 
             auto &sprite = obj->get_sprite();
             sprite->set_pos(_camera->get_position(obj->get_pos()));
@@ -116,6 +116,31 @@ namespace game {
     void Map::set_impulse(math::decimal_t angle) {
         this->_ship->add_impulse(angle);
     }
+
+    std::shared_ptr<event_controller::ICommand> Map::process_keyboard(event_controller::KeyboardEvent &ev) {
+
+        switch (ev.key) {
+            case event_controller::Key::Escape:
+                return std::make_shared<game_manager::command::EndGame>();
+            case event_controller::Key::W:
+                set_impulse(0);
+                break;
+            case event_controller::Key::S:
+                set_impulse(180);
+                break;
+            case event_controller::Key::D:
+                set_impulse(-90);
+                break;
+            case event_controller::Key::A:
+                set_impulse(90);
+                break;
+            default:
+                break;
+        }
+        return std::make_shared<game_manager::command::DoNothing>();
+    }
+
+
 
 
 
@@ -153,25 +178,8 @@ namespace game {
             case event_controller::EventType::close:
                 return std::make_shared<game_manager::command::Exit>();
             case event_controller::EventType::keyboard: {
-                auto key = dynamic_cast<event_controller::KeyboardEvent &>(event).key;
-                switch (key) {
-                    case event_controller::Key::Escape:
-                        return std::make_shared<game_manager::command::EndGame>();
-                    case event_controller::Key::W:
-                        this->_map.set_impulse(0);
-                        break;
-                    case event_controller::Key::S:
-                        this->_map.set_impulse(180);
-                        break;
-                    case event_controller::Key::D:
-                        this->_map.set_impulse(-90);
-                        break;
-                    case event_controller::Key::A:
-                        this->_map.set_impulse(90);
-                        break;
-                    default:
-                        break;
-                }
+                auto key = dynamic_cast<event_controller::KeyboardEvent &>(event);
+                return this->_map.process_keyboard(key);
             }
             default:
                 break;
