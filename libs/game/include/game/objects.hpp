@@ -45,6 +45,10 @@ namespace game {
 
         void set_engine(size_t engine);
 
+        bool update_fuel();
+
+        bool update_battery();
+
     private:
         properties_t _properties;
     };

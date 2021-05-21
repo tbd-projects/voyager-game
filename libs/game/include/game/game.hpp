@@ -12,6 +12,7 @@
 #include <event_controller/i_controller.h>
 #include <event_controller/i_subscriber.h>
 #include <event_controller/event/keyboard_event.h>
+#include "timer.hpp"
 
 namespace game {
     class Map {
@@ -30,6 +31,9 @@ namespace game {
 
         bool update(graphics::ICanvas &canvas);
 
+        bool update_ship(ship_character type);
+
+
         std::shared_ptr<event_controller::ICommand> process_keyboard(event_controller::KeyboardEvent &ev);
 
 
@@ -39,6 +43,7 @@ namespace game {
         std::vector<std::shared_ptr<Star>> _stars;
         std::shared_ptr<SpaceShip> _ship;
         std::unique_ptr<graphics::Sprite> _bg;
+        std::unique_ptr<Timer> _timer;
         size_t _bg_id = 0;
 
         physics::Engine _engine;
@@ -72,6 +77,8 @@ namespace game {
         game::Progress _progress;
         graphics::ICanvas &_canvas;
         event_controller::IController &_controller;
+        size_t fps_counter;
+
 
     };
 

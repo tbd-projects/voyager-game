@@ -7,6 +7,15 @@
 #include "math.hpp"
 
 namespace game {
+    enum ship_character {
+        BATTERY,
+        ENGINE_PWR,
+        FUEL,
+        HEALTH,
+        SPRITE_ID,
+        ALL
+    };
+
     struct properties_t {
         unsigned int fuel;
         unsigned int health;

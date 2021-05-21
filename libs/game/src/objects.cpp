@@ -40,5 +40,14 @@ namespace game {
     void SpaceShip::set_engine(size_t engine) {
         this->_properties.engine_power = engine;
     }
+    // @todo add fuel calculation formulas
+    bool SpaceShip::update_fuel() {
+        _properties.fuel *= 0.999;
+        return this->_properties.fuel;
+    }
+
+    bool SpaceShip::update_battery() {
+        return this->_properties.battery--;
+    }
 } // namespace game
 

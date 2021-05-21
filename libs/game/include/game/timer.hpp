@@ -6,12 +6,12 @@
 #include <ctime>
 #include <chrono>
 
-namespace Game {
+namespace game {
     class ITimer {
     public:
         ITimer() = default;
 
-        virtual ~ITimer() = 0;
+        virtual ~ITimer() = default ;
 
         virtual void start() = 0;
 
@@ -36,6 +36,8 @@ namespace Game {
     class Timer : public ITimer {
     public:
         Timer() : _pause_sum(0), _duration(0), _is_running(false), _is_pause(false) {};
+
+        ~Timer() override = default;
 
         void start() override;
 

@@ -48,6 +48,8 @@ namespace game {
         _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties);
         // @todo Follow_pos - width, height of canvas
         this->_camera = std::make_unique<Camera>(_ship, math::coords_t(500, 500));
+
+        this->_timer = std::make_unique<Timer>();
     }
 
     void Map::load_level(size_t level_num) {
@@ -85,6 +87,8 @@ namespace game {
         }
 
         _engine.add_object(_ship);
+
+        this->_timer->start();
     }
 
     bool Map::update(graphics::ICanvas &canvas) {
@@ -140,16 +144,32 @@ namespace game {
         return std::make_shared<game_manager::command::DoNothing>();
     }
 
+    bool Map::update_ship(ship_character type) {
+        bool is_live = true;
+        switch (type) {
+            case FUEL:
+                is_live *= this->_ship->update_fuel();
+                break;
+            case BATTERY:
+                is_live *= this->_ship->update_battery();
+                break;
 
+            default:
+                break;
+        }
+        std::cout<<"BATTERY " << this->_ship->get_battery() <<std::endl;
+        std::cout<<"FUEL " << this->_ship->get_fuel() <<std::endl;
 
-
+        return is_live;
+    }
 
 // Game
 
     Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) :
             _map(game_manager::Config::get_instance().player_id),
             _canvas(canvas),
-            _controller(controller) {
+            _controller(controller),
+            fps_counter(0) {
         _controller.subscribe(event_controller::EventType::fps, *this);
         _controller.subscribe(event_controller::EventType::keyboard, *this);
         _controller.subscribe(event_controller::EventType::close, *this);
@@ -171,14 +191,28 @@ namespace game {
     }
 
     std::shared_ptr<event_controller::ICommand> Game::update(event_controller::Event &event) {
+
+        auto &config = ::game_manager::Config::get_instance();
+        if (fps_counter % config.fps == 0) {
+            fps_counter = 0;
+        }
+        ++fps_counter;
+
+        bool is_live = false;
+
         switch (event.type) {
             case event_controller::EventType::fps:
                 _map.update(_canvas);
+                if (this->fps_counter % config.fps == 0) {
+                    is_live = this->_map.update_ship(BATTERY);
+                }
                 break;
+
             case event_controller::EventType::close:
                 return std::make_shared<game_manager::command::Exit>();
             case event_controller::EventType::keyboard: {
                 auto key = dynamic_cast<event_controller::KeyboardEvent &>(event);
+                is_live = this->_map.update_ship(FUEL);
                 return this->_map.process_keyboard(key);
             }
             default:
