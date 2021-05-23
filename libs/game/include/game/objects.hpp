@@ -49,6 +49,10 @@ namespace game {
 
         bool update_battery();
 
+        bool is_live();
+
+        bool is_die();
+
     private:
         properties_t _properties;
     };

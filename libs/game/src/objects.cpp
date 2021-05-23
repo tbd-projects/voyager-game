@@ -42,12 +42,20 @@ namespace game {
     }
     // @todo add fuel calculation formulas
     bool SpaceShip::update_fuel() {
-        _properties.fuel *= 0.999;
+        _properties.fuel /= 1;
         return this->_properties.fuel;
     }
 
     bool SpaceShip::update_battery() {
         return this->_properties.battery--;
+    }
+
+    bool SpaceShip::is_live() {
+        return this->get_fuel() && this->get_battery() && this->get_health();
+    }
+
+    bool SpaceShip::is_die() {
+        return !this->is_live();
     }
 } // namespace game
 

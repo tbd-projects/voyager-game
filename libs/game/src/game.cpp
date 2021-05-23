@@ -108,6 +108,9 @@ namespace game {
             sprite->draw(canvas);
         }
 
+        if (_ship->is_die() || _engine.check_collision(*_ship)) {
+            return false;
+        }
         _ship->move(_engine);
         auto &sprite = _ship->get_sprite();
         sprite->set_pos(_camera->get_position(_ship->get_pos()));
@@ -157,8 +160,8 @@ namespace game {
             default:
                 break;
         }
-        std::cout<<"BATTERY " << this->_ship->get_battery() <<std::endl;
-        std::cout<<"FUEL " << this->_ship->get_fuel() <<std::endl;
+        std::cout << "BATTERY " << this->_ship->get_battery() << std::endl;
+        std::cout << "FUEL " << this->_ship->get_fuel() << std::endl;
 
         return is_live;
     }
@@ -202,9 +205,15 @@ namespace game {
 
         switch (event.type) {
             case event_controller::EventType::fps:
-                _map.update(_canvas);
-                if (this->fps_counter % config.fps == 0) {
-                    is_live = this->_map.update_ship(BATTERY);
+                is_live = _map.update(_canvas);
+                if (is_live) {
+                    if (this->fps_counter % config.fps == 0) {
+                        is_live = this->_map.update_ship(BATTERY);
+                    }
+                }
+                if (!is_live) {
+                    this->stop_game();
+                    return std::make_shared<game_manager::command::EndGame>();
                 }
                 break;
 
@@ -213,6 +222,9 @@ namespace game {
             case event_controller::EventType::keyboard: {
                 auto key = dynamic_cast<event_controller::KeyboardEvent &>(event);
                 is_live = this->_map.update_ship(FUEL);
+                if (!is_live) {
+                    return std::make_shared<game_manager::command::EndGame>();
+                }
                 return this->_map.process_keyboard(key);
             }
             default:
