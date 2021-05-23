@@ -1,36 +1,50 @@
-//
-// Created by volodya on 09.05.2021.
-//
+#include <memory>
+#include <functional>
+#include <utility>
 
-#include "game_manager/game_manager.h"
+#include <debug/exception.hpp>
+#include <menu/pause_menu.h>
+#include <menu/main_menu.h>
+
+#include "game_manager.hpp"
+#include "config.hpp"
 
 namespace game_manager {
 
+GameManager::GameManager(graphics::ICanvas &canvas
+                         , event_controller::IEventable &eventable)
+        : _controller(*this, eventable)
+        , _canvas(canvas) {}
 
-    GameManager::GameManager(::graphics::ICanvas &canvas, ::event_controller::IEventable &eventable)
-    : /*_game(_controller.get()),*/ _canvas(canvas)
-    {
-
-    }
-
-    void GameManager::start_game() {
-
-    }
-
-    void GameManager::pause_game() {
-
-    }
-
-    void GameManager::end_game() {
-
-    }
-
-    void GameManager::open_main_menu() {
-
-    }
-
-    void GameManager::open_levels_menu() {
-
-    }
-
+void GameManager::run() {
+    _controller.run();
 }
+
+void GameManager::stash_state(const func_create_state& creator_state) {
+    stash_state();
+    add_state(creator_state);
+}
+
+void GameManager::stash_state() {
+    _stash_state = std::move(_current_state);
+    _current_state = nullptr;
+}
+
+void GameManager::apply_state() {
+    if (_stash_state == nullptr) {
+        throw debug::ARG_UNEXPECTED_CALL_ERROR("try unstash empty stash state");
+    }
+
+    _current_state = std::move(_stash_state);
+    _stash_state = nullptr;
+}
+
+void GameManager::add_state(const func_create_state& creator_state) {
+    _current_state = creator_state(_canvas, _controller);
+}
+
+void GameManager::end_run() {
+    _controller.stop();
+}
+
+}  // namespace game_manager
