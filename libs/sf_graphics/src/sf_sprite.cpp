@@ -36,7 +36,7 @@ void graphics::sf::SfSprite::draw(graphics::ICanvas *canvas) {
     sprite.setOrigin(dx, dy);
 
     auto angle = get_rotation();
-    sprite.setRotation(angle);
+    sprite.setRotation(-angle);
 
     window.draw(sprite);
 }

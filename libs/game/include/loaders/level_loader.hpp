@@ -12,7 +12,7 @@ namespace game {
     class CreatorLevel {
     public:
         virtual void create_level(size_t level_num) = 0;
-
+        virtual size_t get_levels_count() = 0;
         virtual ~CreatorLevel() = default;
     };
 
@@ -22,6 +22,7 @@ namespace game {
 
         JsonCreateLevel(const std::string &level_dir);
 
+        size_t get_levels_count() override;
 //        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
 
 //        JsonCreateLevel(const JsonCreateLevel &) = delete;
@@ -55,6 +56,8 @@ namespace game {
         void set_current_level(size_t level_num);
 
         void load_current_level();
+
+        size_t get_levels_count() override;
 
         void create_level(size_t level_num) override;
 

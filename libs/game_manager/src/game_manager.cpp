@@ -2,6 +2,7 @@
 #include <memory>
 #include <menu/pause_menu.h>
 #include <menu/main_menu.h>
+#include <menu/levels_menu.h>
 
 #include "game_manager.hpp"
 #include "config.hpp"
@@ -52,11 +53,7 @@ void GameManager::open_main_menu() {
     if (_in_game) {
         _in_game = false;
     }
-
-    const auto& config = Config::get_instance();
-    _menu = std::make_unique<menu::MainMenu>(_canvas, _controller
-                                             , *config.graphics_factory
-                                             , *config.sprite_loader);
+    _menu = std::make_unique<menu::MainMenu>(_canvas, _controller);
 }
 
 void GameManager::run() {
@@ -78,7 +75,7 @@ void GameManager::end_pause() {
 }
 
     void GameManager::open_levels_menu() {
-
+        _menu = std::make_unique<menu::LevelsMenu>(_canvas, _controller);
     }
 
 }  // namespace game_manager

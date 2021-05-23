@@ -27,7 +27,7 @@ namespace menu {
         VerticalCenteredMenu(graphics::ICanvas &canvas,
                              event_controller::IController &controller);
 
-        [[nodiscard]] graphics::ICanvas &get_canvas() const;
+        [[nodiscard]] graphics::ICanvas &get_canvas() const override;
 
         std::vector<menu::CommandButton> & buttons();
 
@@ -36,7 +36,7 @@ namespace menu {
         [[nodiscard]] const CommandButton& get_active_button() const;
         void set_active_id(int i);
 
-        event_controller::IController &get_controller() override;
+        event_controller::IController &get_controller() const override;
 
         int get_buttons_height() const;
 

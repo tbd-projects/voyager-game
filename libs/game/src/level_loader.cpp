@@ -106,6 +106,17 @@ namespace game {
         return std::move(this->_objects_not_active);
     }
 
+    size_t JsonCreateLevel::get_levels_count() {
+        auto path = std::filesystem::path(this->_path);
+        using std::filesystem::directory_iterator;
+        using fp = bool (*)(const std::filesystem::path&);
+        return std::count_if(
+                directory_iterator(path),
+                directory_iterator{},
+                (fp)std::filesystem::is_regular_file
+                );
+    }
+
     void LevelManager::set_current_level(size_t level_num) {
         this->_level_num = level_num;
     }
@@ -124,5 +135,9 @@ namespace game {
     LevelManager::LevelManager(): _current_level(nullptr), _level_num(0) {
         auto root = game_manager::Config::get_instance().levels_path;
         _current_level = std::make_unique<JsonCreateLevel>(root);
+    }
+
+    size_t LevelManager::get_levels_count() {
+        return 0;
     }
 } // namespace game

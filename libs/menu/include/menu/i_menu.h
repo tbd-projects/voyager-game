@@ -13,7 +13,8 @@
 namespace menu {
     class IMenu: public event_controller::ISubscriber {
     public:
-        virtual event_controller::IController &get_controller() = 0;
+        [[nodiscard]] virtual event_controller::IController &get_controller() const = 0;
+        [[nodiscard]] virtual graphics::ICanvas &get_canvas() const = 0;
         virtual ~IMenu() = default;
     };
 }

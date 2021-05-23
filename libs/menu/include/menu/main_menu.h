@@ -10,10 +10,12 @@
 #include "graphics/i_graphics_factory.h"
 #include "graphics/texture_storage.h"
 #include "menu/vertical_centered_menu.h"
+#include "menu/background_menu_decorator.h"
+#include "i_create_menu_button.h"
 
 
 namespace menu {
-    class MainMenu : public VerticalCenteredMenu {
+    class MainMenu : public BackgroundMenuDecorator<VerticalCenteredMenu> {
     public:
         MainMenu(graphics::ICanvas &canvas, event_controller::IController &controller, graphics::IGraphicsFactory &factory,
                                          graphics::ISpiteLoader &loader);
@@ -24,8 +26,6 @@ namespace menu {
                      *game_manager::Config::get_instance().graphics_factory,
                      *game_manager::Config::get_instance().sprite_loader
                      ) {};
-        std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
-
 
         ~MainMenu() override;
 
@@ -33,16 +33,10 @@ namespace menu {
         graphics::IGraphicsFactory &_factory;
         graphics::ISpiteLoader &_loader;
 
-        std::unique_ptr<graphics::Sprite> _bg;
-
-        graphics::TextureStorage _storage;
-
+        std::unique_ptr<ICreateMenuButton> _button_creator;
 //        Progress _progress;
 
-        static menu::CommandButton
-        _create_button(graphics::IGraphicsFactory &factory, std::shared_ptr<graphics::Font> &font,
-                       std::unique_ptr<event_controller::ICommand> &&command, const std::string &title);
-    };
+       };
 }
 
 #endif //VOYAGER_MAIN_MENU_H

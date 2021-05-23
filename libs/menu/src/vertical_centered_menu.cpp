@@ -118,7 +118,7 @@ graphics::ICanvas &menu::VerticalCenteredMenu::get_canvas() const {
     return _canvas;
 }
 
-event_controller::IController &menu::VerticalCenteredMenu::get_controller() {
+event_controller::IController &menu::VerticalCenteredMenu::get_controller() const {
     return _controller;
 }
 

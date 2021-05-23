@@ -27,7 +27,7 @@ void graphics::sf::SfRect::draw(graphics::ICanvas *canvas) {
 
     rect.setOrigin(get_width() / 2, get_height() / 2);
 
-    rect.setRotation(get_rotation());
+    rect.setRotation(-get_rotation());
 
 
 

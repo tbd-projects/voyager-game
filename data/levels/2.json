@@ -1,0 +1,33 @@
+{
+  "stars": [
+  ],
+  "planets": [
+    {
+      "orbit_properties": {
+        "x_c": 10.0,
+        "y_c": 0.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0.1,
+        "y": -0.01
+      },
+      "pos": {
+        "x": 500,
+        "y": 500
+      },
+      "weight": 100000,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 2
+    }
+  ],
+  "background": {
+    "sprite_id": 0
+  }
+}
