@@ -10,21 +10,69 @@
         "b": 20
       },
       "velocity": {
-        "x": 0.1,
-        "y": -0.01
+        "x": -0.002,
+        "y": 0.001
       },
       "pos": {
         "x": 500,
         "y": 500
       },
-      "weight": 100000,
+      "weight": 50000,
       "polygon": {
         "type": "rectangle",
         "height": 0,
         "width": 0,
         "angle": 0
       },
-      "sprite_id": 2
+      "sprite_id": 4
+    },
+    {
+      "orbit_properties": {
+        "x_c": 10.0,
+        "y_c": 0.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0.03,
+        "y": -0.02
+      },
+      "pos": {
+        "x": 1400,
+        "y": 600
+      },
+      "weight": 60000,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 5
+    },
+    {
+      "orbit_properties": {
+        "x_c": 10.0,
+        "y_c": 0.0,
+        "a": 10,
+        "b": 20
+      },
+      "velocity": {
+        "x": 0.04,
+        "y": 0.02
+      },
+      "pos": {
+        "x": 2900,
+        "y": 200
+      },
+      "weight": 60000,
+      "polygon": {
+        "type": "rectangle",
+        "height": 0,
+        "width": 0,
+        "angle": 0
+      },
+      "sprite_id": 6
     }
   ],
   "background": {

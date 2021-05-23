@@ -41,9 +41,8 @@ void game::Timer::unpause() {
 }
 
 std::chrono::milliseconds game::Timer::get_ms() {
-    this->unpause();
-    this->stop();
-    return this->_duration - this->_pause_sum;
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - this->_start) - this->_pause_sum;
 }
 
 std::chrono::seconds game::Timer::get_s() {

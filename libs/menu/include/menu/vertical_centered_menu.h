@@ -36,19 +36,19 @@ namespace menu {
         [[nodiscard]] const CommandButton& get_active_button() const;
         void set_active_id(int i);
 
-        event_controller::IController &get_controller() const override;
+        [[nodiscard]] event_controller::IController &get_controller() const override;
 
-        int get_buttons_height() const;
+        [[nodiscard]] int get_buttons_height() const;
 
         void set_buttons_height(int height);
 
-        int get_buttons_width() const;
+        [[nodiscard]] int get_buttons_width() const;
 
         void set_buttons_width(int width);
 
-        int get_gap() const;
+        [[nodiscard]] int get_gap() const;
 
-        virtual ~VerticalCenteredMenu();
+        ~VerticalCenteredMenu() override;
 
         void set_gap(int gap);
     };

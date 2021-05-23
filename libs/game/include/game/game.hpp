@@ -12,6 +12,7 @@
 #include <event_controller/i_controller.h>
 #include <event_controller/i_subscriber.h>
 #include <event_controller/event/keyboard_event.h>
+#include <menu/game_screen.h>
 #include "timer.hpp"
 
 namespace game {
@@ -45,6 +46,8 @@ namespace game {
         std::unique_ptr<graphics::Sprite> _bg;
         std::unique_ptr<Timer> _timer;
         size_t _bg_id = 0;
+
+        std::unique_ptr<menu::GameScreen> _game_screen;
 
         physics::Engine _engine;
         std::unique_ptr<Camera> _camera;

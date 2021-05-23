@@ -50,6 +50,8 @@ namespace game {
         this->_camera = std::make_unique<Camera>(_ship, math::coords_t(500, 500));
 
         this->_timer = std::make_unique<Timer>();
+
+        _game_screen = std::make_unique<menu::GameScreen>(*config.graphics_factory, *config.sprite_loader, *_storage);
     }
 
     void Map::load_level(size_t level_num) {
@@ -117,6 +119,8 @@ namespace game {
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
         sprite->draw(canvas);
 
+        _game_screen->draw(&canvas);
+
         return true;
     }
 
@@ -159,8 +163,8 @@ namespace game {
             default:
                 break;
         }
-        std::cout << "BATTERY " << this->_ship->get_battery() << std::endl;
-        std::cout << "FUEL " << this->_ship->get_fuel() << std::endl;
+
+        _game_screen->update(_timer->get_s().count(), _ship->get_battery(), _ship->get_fuel());
 
         return is_live;
     }
