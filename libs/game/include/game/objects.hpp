@@ -8,7 +8,7 @@ namespace game {
 
     const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0.08f));
     const size_t init_weight = 1;
-    const math::coords_t init_pos = math::coords_t(100, 100);
+    const math::coords_t init_pos = math::coords_t(-100, 100);
 
     class SpaceShip : public GameObject {
     public:

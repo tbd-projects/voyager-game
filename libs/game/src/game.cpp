@@ -111,7 +111,7 @@ namespace game {
         if (_ship->is_die() || _engine.check_collision(*_ship)) {
             return false;
         }
-        _ship->move(_engine);
+            _ship->move(_engine);
         auto &sprite = _ship->get_sprite();
         sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
@@ -120,26 +120,25 @@ namespace game {
         return true;
     }
 
-    void Map::set_impulse(math::decimal_t angle) {
+    void Map::set_rotate(math::decimal_t angle) {
         this->_ship->add_impulse(angle);
     }
 
     std::shared_ptr<event_controller::ICommand> Map::process_keyboard(event_controller::KeyboardEvent &ev) {
-
+        float angle = 1;
         switch (ev.key) {
             case event_controller::Key::Escape:
                 return std::make_shared<game_manager::command::EndGame>();
-            case event_controller::Key::W:
-                set_impulse(0);
-                break;
-            case event_controller::Key::S:
-                set_impulse(180);
+            case event_controller::Key::A:
+                this->_ship->add_rotation(angle);
+//                set_rotate(0);
                 break;
             case event_controller::Key::D:
-                set_impulse(-90);
+                this->_ship->add_rotation(-angle);
+//                set_rotate(180);
                 break;
-            case event_controller::Key::A:
-                set_impulse(90);
+            case event_controller::Key::W:
+                set_rotate(this->_ship->get_rotation());
                 break;
             default:
                 break;

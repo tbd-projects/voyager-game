@@ -27,7 +27,7 @@ namespace game {
 
         void load_level(size_t level_num);
 
-        void set_impulse(math::decimal_t angle);
+        void set_rotate(math::decimal_t angle);
 
         bool update(graphics::ICanvas &canvas);
 

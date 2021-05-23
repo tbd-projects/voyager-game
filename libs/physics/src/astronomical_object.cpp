@@ -40,13 +40,13 @@ void AstronomicalObject::move(const Engine &physical_engine) {
     math::Vector2d last_velocity = get_velocity();
     _orbit.get_current_pos(*this, physical_engine);
 
-    math::decimal_t cos = last_velocity ^
+  /*  math::decimal_t cos = last_velocity ^
                           get_velocity();
 
     math::decimal_t angle = math::Utilits::to_grad(
             std::acos(std::max(std::min(cos, 1.f), -1.f)));
 
-    add_rotation(angle);
+    add_rotation(angle);*/
 }
 
 }  // namespace physics
