@@ -47,6 +47,9 @@ bool Vector2d::is_normal() const {
 }
 
 decimal_t Vector2d::operator^(const Vector2d& vector) const {
+    if (Utilits::is_null(vector.len()) || Utilits::is_null(len())) {
+        return 0;
+    }
     return (*this * vector) / (len() * vector.len());
 }
 

@@ -1,11 +1,16 @@
 #pragma once
 
+#define _USE_MATH_DEFINES
+
 #include <functional>
 #include <utility>
+#include <cmath>
 
 namespace math {
 
-typedef float decimal_t;
+typedef double decimal_t;
+
+#define d(var) decimal_t(var)
 
 class Vector2d;
 
@@ -39,6 +44,8 @@ struct coords_t {
 
     coords_t &operator+=(decimal_t offset);
 };
+
+const math::decimal_t const_2_pi = d(2) * (decimal_t)M_PI;
 
 class Utilits {
   public:

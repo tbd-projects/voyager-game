@@ -4,7 +4,7 @@
 
 #include "special_object.hpp"
 #include "physical_object.hpp"
-//#include "game_manager/config.hpp"
+// #include "game_manager/config.hpp"
 #include "engine.hpp"
 
 namespace game_manager {
@@ -84,6 +84,14 @@ size_t Engine::get_cals_in_tick() const {
     return _cals_in_tick;
 }
 
+math::decimal_t Engine::get_part_of_seconds_in_tick() const {
+    return _part_of_second_in_tick;
+}
+
+math::decimal_t Engine::get_mass_fuel_by_one_impulse() const {
+    return base_impulse / one_ton;
+}
+
 
 //  -----------------------------StoreObject------------------------------------
 
@@ -133,7 +141,7 @@ bool StoreObject::contain_object(const PhysicalObject &object) const {
 }
 
 bool StoreObject::is_objects_with_equal_id(const PhysicalObject &object_1
-                                           , const PhysicalObject &object_2) const {
+                                       , const PhysicalObject &object_2) const {
     return object_1._index == object_2._index;
 }
 

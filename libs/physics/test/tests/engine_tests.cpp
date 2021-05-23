@@ -31,7 +31,7 @@ class EngineFixture : public testing::Test {
         _engine.add_object(_objects[2]);
     }
 
-    ~EngineFixture() {
+    ~EngineFixture() override {
         _engine.delete_object(_objects[0]);
 
         _engine.delete_object(_objects[1]);

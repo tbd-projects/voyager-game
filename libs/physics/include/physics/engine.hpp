@@ -40,6 +40,7 @@ class StoreObject : public IConnectToEngine {
     std::set<size_t> _deleted_objects;
 };
 
+
 class Engine : public IConnectToEngine {
   public:
     Engine();
@@ -47,24 +48,32 @@ class Engine : public IConnectToEngine {
     explicit Engine(std::unique_ptr<Force>&&force);
 
     [[nodiscard]]
+    math::decimal_t get_mass_fuel_by_one_impulse() const;
+
+    [[nodiscard]] virtual
     math::Vector2d calc_force_by_object(PhysicalObject &object) const;
 
-    [[nodiscard]]
+    [[nodiscard]] virtual
     math::decimal_t get_effective_circle_orbit
             (const PhysicalObject &object) const;
 
-    [[nodiscard]]
+    [[nodiscard]] virtual
     bool check_collision(const PhysicalObject &object) const;
 
     void add_object(std::weak_ptr<PhysicalObject> object) override;
 
     void delete_object(std::weak_ptr<PhysicalObject> object) override;
 
-    [[nodiscard]]
+    [[nodiscard]] virtual
     math::Vector2d get_velocity_in_tick(math::Vector2d velocity) const;
 
-    [[nodiscard]]
+    [[nodiscard]] virtual
     size_t get_cals_in_tick() const;
+
+    [[nodiscard]] virtual
+    math::decimal_t get_part_of_seconds_in_tick() const;
+
+    ~Engine() override = default;
 
   private:
     const size_t _cals_in_tick;

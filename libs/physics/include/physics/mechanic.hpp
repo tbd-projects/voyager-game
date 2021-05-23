@@ -21,7 +21,6 @@ class NewtonForce : public Force {
                             , const std::vector<
                                     std::reference_wrapper<PhysicalObject>
                                     > &other_objects) const override;
-
 };
 
 class OrbitalMechanic {
