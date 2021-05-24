@@ -6,6 +6,7 @@
 namespace game_manager::command {
 
 class DoNothing : public ICommand {
+  public:
     void execute(GameManager &manager) override {
     }
 };

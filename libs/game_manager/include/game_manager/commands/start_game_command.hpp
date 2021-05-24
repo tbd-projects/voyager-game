@@ -2,22 +2,31 @@
 
 #include <game_manager/interface.hpp>
 #include <game_manager/game_manager.hpp>
+#include <game_manager/states/in_game_state.hpp>
 
 namespace game_manager::command {
 
-class StartGameCommand : public ICommand {
-public:
-    StartGameCommand() = delete;
+class RunGame : public ICommand {
+  public:
+    RunGame() = delete;
 
-    explicit StartGameCommand(size_t id_level)
+    explicit RunGame(size_t id_level)
         : _id_level(id_level) {}
 
     void execute(GameManager &manager) override {
-        manager.start_game(_id_level);
-        }
+        size_t out_id_level = _id_level;
+        auto creator = [out_id_level](graphics::ICanvas &canvas
+                          , event_controller::IController &controller)
+                -> std::unique_ptr<game_manager::IState> {
+            return std::make_unique<game_manager::states::InGame>(
+                    canvas, controller, out_id_level);
+        };
 
-private:
+        manager.add_state(creator);
+    }
+
+  private:
     size_t _id_level;
 };
 
-}
+}  // namespace game_manager::command
