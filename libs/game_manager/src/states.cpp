@@ -6,6 +6,20 @@ namespace game_manager::states {
 //  ------------------------------InMainMenu------------------------------------
 
 
+InLevelMenu::InLevelMenu(graphics::ICanvas &canvas
+        , event_controller::IController &controller)
+        : _level_menu(canvas, controller) {}
+
+void InLevelMenu::stop(event_controller::IController &controller)  {
+}
+
+void InLevelMenu::contine(event_controller::IController &controller)  {
+}
+
+
+//  ------------------------------InMainMenu------------------------------------
+
+
 InMainMenu::InMainMenu(graphics::ICanvas &canvas
                                  , event_controller::IController &controller)
         : _main_menu(canvas, controller) {}

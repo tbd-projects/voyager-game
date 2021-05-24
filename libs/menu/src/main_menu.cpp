@@ -25,7 +25,7 @@ menu::MainMenu::MainMenu(graphics::ICanvas &canvas, event_controller::IControlle
     auto cur_dir = std::filesystem::path(__FILE__).parent_path();
     font->set_path(cur_dir / "../../graphics/test/tests/fonts/Roboto-Medium.ttf");
 
-    auto start_command = std::make_unique<game_manager::command::LevelsMenuCommand>();
+    auto start_command = std::make_unique<game_manager::command::RunLevelMenu>();
 
     buttons().push_back(
             _button_creator->create(factory, font, std::move(start_command), "Start game")

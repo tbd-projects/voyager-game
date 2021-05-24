@@ -23,7 +23,7 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
     auto cur_dir = std::filesystem::path(__FILE__).parent_path();
     font->set_path(cur_dir / "../../graphics/test/tests/fonts/Roboto-Medium.ttf");
 
-    auto back_command = std::make_unique<game_manager::command::MainMenuCommand>();
+    auto back_command = std::make_unique<game_manager::command::RunMainMenu>();
 
     buttons().push_back(
             _button_creator->create(factory, font, std::move(back_command), "Back")
@@ -31,7 +31,7 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
     
     for (size_t i = 0; i < _level_creator.get_levels_count(); ++i) {
         size_t level = i + 1;
-        auto command = std::make_unique<game_manager::command::StartGameCommand>(level);
+        auto command = std::make_unique<game_manager::command::RunGame>(level);
 
         buttons().push_back(
                 _button_creator->create(factory, font, std::move(command),
