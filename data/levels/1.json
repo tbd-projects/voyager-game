@@ -73,5 +73,6 @@
   ],
   "background": {
     "sprite_id": 0
-  }
+  },
+  "density": 100
 }

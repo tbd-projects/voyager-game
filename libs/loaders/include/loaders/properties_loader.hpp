@@ -17,14 +17,14 @@ namespace game {
     };
 
     struct properties_t {
-        unsigned int fuel;
+        math::decimal_t fuel;
         unsigned int health;
         unsigned int battery;
         unsigned int engine_power;
         unsigned int sprite_id;
 
-        bool is_empty() {
-            return !fuel && !health && !battery && !engine_power && !sprite_id;
+        bool is_empty() const {
+            return math::Utilits::is_null(fuel) && !health && !battery && !engine_power && !sprite_id;
         }
         friend bool operator==(const properties_t &a, const properties_t &b) {
             return a.fuel == b.fuel && a.health == b.health && a.battery == b.battery &&
@@ -36,9 +36,9 @@ namespace game {
     class PlayerPropertiesLoader {
 
     public:
-        virtual properties_t load_current_properties(const int player_id) = 0;
+        virtual properties_t load_current_properties(int player_id) = 0;
 
-        virtual void save_current_properties(const int player_id, properties_t &properties) = 0;
+        virtual void save_current_properties(int player_id, properties_t &properties) = 0;
 
         virtual ~PlayerPropertiesLoader() = default;
 
@@ -54,11 +54,11 @@ namespace game {
 
         JsonPlayerPropertiesLoader(const std::string &root_path);
 
-        properties_t load_current_properties(const int player_id) override;
+        properties_t load_current_properties(int player_id) override;
 
-        void save_current_properties(const int player_id, properties_t &properties) override;
+        void save_current_properties(int player_id, properties_t &properties) override;
 
-        bool has_player(const int player_id);
+        bool has_player(int player_id);
 
     };
 } // namespace game

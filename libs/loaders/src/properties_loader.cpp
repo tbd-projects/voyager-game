@@ -21,8 +21,8 @@ namespace game {
         }
 
         auto fill_prop = [](ptree &pt) -> properties_t {
-            properties_t prop;
-            prop.fuel = pt.get<unsigned int>("fuel");
+            properties_t prop{};
+            prop.fuel = pt.get<math::decimal_t>("fuel");
             prop.health = pt.get<unsigned int>("health");
             prop.battery = pt.get<unsigned int>("battery");
             prop.engine_power = pt.get<unsigned int>("engine_power");

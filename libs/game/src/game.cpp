@@ -42,10 +42,11 @@ namespace game {
         auto width = sprite->get_texture_size().first;
         auto height = sprite->get_texture_size().second;
 
-        std::unique_ptr<math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
+        std::unique_ptr <math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
                 math::coords_t(math::decimal_t(0), math::decimal_t(0)), height, width);
-
-        _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties);
+        auto fuel_mass = _engine.get_mass_fuel_by_one_impulse();
+        _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties,
+                                            fuel_mass);
         // @todo Follow_pos - width, height of canvas
         this->_camera = std::make_unique<Camera>(_ship, math::coords_t(500, 500));
 
@@ -65,6 +66,9 @@ namespace game {
         _space_objects = current_level.get_planets();
         _stars = current_level.get_stars();
         _bg_id = current_level.get_bg_id();
+        auto fuel_density = current_level.get_fuel_density();
+
+        this->_ship->set_fuel_density(fuel_density);
 
         auto &factory = *config.sprite_loader;
 
@@ -113,7 +117,7 @@ namespace game {
         if (_ship->is_die() || _engine.check_collision(*_ship)) {
             return false;
         }
-            _ship->move(_engine);
+        _ship->move(_engine);
         auto &sprite = _ship->get_sprite();
         sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());

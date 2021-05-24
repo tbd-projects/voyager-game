@@ -29,6 +29,9 @@ namespace game {
         pt::read_json(level_path, tree);
 
         this->_bg_id = tree.get<size_t>("background.sprite_id");
+        this->_density = tree.get<size_t>("density");
+
+
 //    this->_level_texture = new ISprite(background_id);
 
         this->load_space_objects(tree, "stars");

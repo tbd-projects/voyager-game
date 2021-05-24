@@ -20,7 +20,7 @@ namespace game {
     public:
         JsonCreateLevel() = default;
 
-        JsonCreateLevel(const std::string &level_dir);
+        explicit JsonCreateLevel(const std::string &level_dir);
 
         size_t get_levels_count() override;
 //        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
@@ -38,7 +38,8 @@ namespace game {
 
         std::vector<std::shared_ptr<Star>> &&get_stars();
 
-        size_t get_bg_id() { return this->_bg_id; };
+        size_t get_bg_id() const { return this->_bg_id; };
+        math::decimal_t get_fuel_density() const {return this->_density;}
 
 
     private:
@@ -46,6 +47,7 @@ namespace game {
         std::vector<std::shared_ptr<SpaceBody>> _objects_active;
         std::vector<std::shared_ptr<Star>> _objects_not_active;
         size_t _bg_id;
+        math::decimal_t _density;
 
         void create_objects();
 

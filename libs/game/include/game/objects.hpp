@@ -13,9 +13,10 @@ namespace game {
     class SpaceShip : public GameObject {
     public:
         SpaceShip(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-                  properties_t &properties, size_t weight = init_weight,
+                  properties_t &properties, math::decimal_t base_discard_pf_fuel, size_t weight = init_weight,
                   math::Vector2d velocity = init_velocity, math::coords_t pos = init_pos) :
-                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos) {
+                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos),
+                _base_discarder_mass_of_fuel(base_discard_pf_fuel) {
             this->_properties = properties;
         };
 
@@ -37,6 +38,8 @@ namespace game {
 
         size_t get_engine();
 
+        math::decimal_t get_fuel_density();
+
         void set_fuel(size_t fuel);
 
         void set_health(size_t health);
@@ -44,6 +47,8 @@ namespace game {
         void set_battery(size_t battery);
 
         void set_engine(size_t engine);
+
+        void set_fuel_density(math::decimal_t fuel_density);
 
         bool update_fuel();
 
@@ -55,6 +60,8 @@ namespace game {
 
     private:
         properties_t _properties;
+        math::decimal_t _base_discarder_mass_of_fuel;
+        math::decimal_t _fuel_density;
     };
 
     class SpaceBody : public GameObject {
@@ -64,7 +71,7 @@ namespace game {
         SpaceBody(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
                   size_t weight,
                   physics::Orbit::orbit_properties_t orbit) :
-                GameObject(sprite_id, std::move(sprite), std::move(pol), weight,orbit) {};
+                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, orbit) {};
 
         SpaceBody(const SpaceBody &obj) = delete;
 
