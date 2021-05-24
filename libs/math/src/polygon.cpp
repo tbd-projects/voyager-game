@@ -176,9 +176,9 @@ void TrianglePolygon::scale(math::decimal_t scale) {
 }
 
 bool TrianglePolygon::is_point_in_polygon(math::coords_t point) const {
-    math::coords_t top = _pos + coords_t(0, _height * 2 / 3.f);
-    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / 3.f);
-    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / 3.f);
+    math::coords_t top = _pos + coords_t(0, _height * 2 / d(3));
+    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / d(3));
+    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / d(3));
 
     GeometryFunction geometry;
 
@@ -203,9 +203,9 @@ bool TrianglePolygon::is_point_in_polygon(math::coords_t point) const {
 }
 
 bool TrianglePolygon::intresect(const IIntresectable &object) const {
-    math::coords_t top = _pos + coords_t(0, _height * 2 / 3.f);
-    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / 3.f);
-    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / 3.f);
+    math::coords_t top = _pos + coords_t(0, _height * 2 / d(3));
+    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / d(3));
+    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / d(3));
 
     GeometryFunction geometry;
 
@@ -218,7 +218,7 @@ bool TrianglePolygon::intresect(const IIntresectable &object) const {
            object.is_point_in_polygon(right);
 }
 
-math::decimal_t TrianglePolygon::get_height() const noexcept{
+math::decimal_t TrianglePolygon::get_height() const noexcept {
     return _height;
 }
 
@@ -259,7 +259,7 @@ bool CirclePolygon::is_point_in_polygon(math::coords_t point) const {
 #define LINE_IN_CIRCLE 30
 
 bool CirclePolygon::intresect(const IIntresectable &object) const {
-    math::decimal_t angle = 360. / (math::decimal_t) LINE_IN_CIRCLE;
+    math::decimal_t angle = d(360) / (decimal_t) LINE_IN_CIRCLE;
 
     coords_t point = {_pos.x, _pos.y + _radius};
 

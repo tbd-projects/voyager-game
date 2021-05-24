@@ -37,60 +37,82 @@ namespace game {
 
     }
 
+    void JsonCreateLevel::load_star(pt::ptree::value_type &star) {
+        math::coords_t velocity;
+        math::coords_t pos;
+
+        velocity.x = star.second.get<math::decimal_t>("velocity.x");
+        velocity.y = star.second.get<math::decimal_t>("velocity.y");
+        pos.x = star.second.get<int>("pos.x");
+        pos.y = star.second.get<int>("pos.y");
+
+        auto weight = star.second.get<size_t>("weight");
+
+        auto angle = star.second.get<math::decimal_t>("polygon.angle");
+        auto radius = star.second.get<math::decimal_t>("polygon.radius");
+        auto polygon_type = star.second.get<std::string>("polygon.type");
+
+        std::unique_ptr<math::Polygon> polygon;
+        if (polygon_type == "circle") {
+            polygon = std::make_unique<math::CirclePolygon>(math::coords_t(0, 0), radius, angle);
+        } else {
+            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+        }
+
+        auto sprite_id = star.second.get<size_t>("sprite_id");
+
+        std::shared_ptr<Star> obj = std::make_shared<Star>(sprite_id, nullptr, std::move(polygon), pos,
+                                                           math::Vector2d(velocity), weight);
+        this->_objects_not_active.push_back(obj);
+    }
+
+    void JsonCreateLevel::load_planet(pt::ptree::value_type &planet) {
+        math::coords_t orbit_pos;
+        math::coords_t orbit_var;
+        math::decimal_t orbit_angle;
+        math::decimal_t orbit_period;
+
+        orbit_pos.x = planet.second.get<math::decimal_t>("orbit_properties.x_c");
+        orbit_pos.y = planet.second.get<math::decimal_t>("orbit_properties.y_c");
+
+        orbit_var.x = planet.second.get<math::decimal_t>("orbit_properties.a");
+        orbit_var.y = planet.second.get<math::decimal_t>("orbit_properties.b");
+
+        orbit_angle = planet.second.get<math::decimal_t>("orbit_properties.angle");
+        orbit_period = planet.second.get<math::decimal_t>("orbit_properties.period");
+
+        physics::Orbit::orbit_properties_t orb_prop(orbit_pos, orbit_var, orbit_angle, orbit_period);
+
+        auto weight = planet.second.get<size_t>("weight");
+
+        auto angle = planet.second.get<math::decimal_t>("polygon.angle");
+        auto radius = planet.second.get<math::decimal_t>("polygon.radius");
+        auto polygon_type = planet.second.get<std::string>("polygon.type");
+
+        std::unique_ptr<math::Polygon> polygon;
+        if (polygon_type == "circle") {
+            polygon = std::make_unique<math::CirclePolygon>(math::coords_t(0, 0), radius, angle);
+        } else {
+            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+        }
+
+        auto sprite_id = planet.second.get<size_t>("sprite_id");
+        std::shared_ptr<SpaceBody> obj = std::make_shared<SpaceBody>(sprite_id, nullptr, std::move(polygon),
+                                                                     weight,
+                                                                     orb_prop);
+        this->_objects_active.push_back(obj);
+
+    }
+
     void JsonCreateLevel::load_space_objects(pt::ptree &tree, const std::string &obj_name) {
-        for (pt::ptree::value_type &planet : tree.get_child(obj_name)) {
-
-            physics::Orbit::orbit_properties_t orb_prop;
-
-            math::coords_t orbit_pos;
-            orbit_pos.x = planet.second.get<float>("orbit_properties.x_c");
-            orbit_pos.y = planet.second.get<float>("orbit_properties.y_c");
-            orb_prop.pos = orbit_pos;
-
-            math::coords_t orbit_var;
-            orbit_var.x = planet.second.get<float>("orbit_properties.a");
-            orbit_var.y = planet.second.get<float>("orbit_properties.b");
-            orb_prop.variables = orbit_var;
-
-            math::coords_t velocity;
-            velocity.x = planet.second.get<float>("velocity.x");
-            velocity.y = planet.second.get<float>("velocity.y");
-
-            auto weight = planet.second.get<size_t>("weight");
-
-            math::coords_t position;
-            position.x = planet.second.get<float>("pos.x");
-            position.y = planet.second.get<float>("pos.y");
-
-            auto height = planet.second.get<size_t>("polygon.height");
-            auto width = planet.second.get<size_t>("polygon.width");
-            auto angle = planet.second.get<size_t>("polygon.angle");
-            auto polygon_type = planet.second.get<std::string>("polygon.type");
-
-            std::unique_ptr<math::Polygon> polygon;
-            if (polygon_type == "rectangle") {
-                polygon = std::make_unique<math::RectanglePolygon>(position, height, width, angle);
-            } else {
-                throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+        if (obj_name == "stars") {
+            for (pt::ptree::value_type &star : tree.get_child(obj_name)) {
+                this->load_star(star);
             }
-
-
-            auto sprite_id = planet.second.get<size_t>("sprite_id");
-            if (obj_name == "planets") {
-                std::shared_ptr<SpaceBody> obj = std::make_shared<SpaceBody>(sprite_id, nullptr, std::move(polygon),
-                                                                             weight,
-                                                                             math::Vector2d(velocity), position,
-                                                                             orb_prop);
-                this->_objects_active.push_back(obj);
-
-            } else if (obj_name == "stars") {
-                std::shared_ptr<Star> obj = std::make_shared<Star>(sprite_id, nullptr, std::move(polygon), position,
-                                                                   math::Vector2d(velocity), weight);
-                this->_objects_not_active.push_back(obj);
-            } else {
-                throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+        } else if (obj_name == "planets") {
+            for (pt::ptree::value_type &planet : tree.get_child(obj_name)) {
+                this->load_planet(planet);
             }
-
         }
     }
 
@@ -109,12 +131,12 @@ namespace game {
     size_t JsonCreateLevel::get_levels_count() {
         auto path = std::filesystem::path(this->_path);
         using std::filesystem::directory_iterator;
-        using fp = bool (*)(const std::filesystem::path&);
+        using fp = bool (*)(const std::filesystem::path &);
         return std::count_if(
                 directory_iterator(path),
                 directory_iterator{},
-                (fp)std::filesystem::is_regular_file
-                );
+                (fp) std::filesystem::is_regular_file
+        );
     }
 
     void LevelManager::set_current_level(size_t level_num) {
@@ -132,7 +154,7 @@ namespace game {
 
     }
 
-    LevelManager::LevelManager(): _current_level(nullptr), _level_num(0) {
+    LevelManager::LevelManager() : _current_level(nullptr), _level_num(0) {
         auto root = game_manager::Config::get_instance().levels_path;
         _current_level = std::make_unique<JsonCreateLevel>(root);
     }

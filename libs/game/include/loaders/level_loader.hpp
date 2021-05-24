@@ -29,6 +29,11 @@ namespace game {
 
         void create_level(size_t level_num) override;
 
+        void load_star(pt::ptree::value_type &star);
+
+        void load_planet(pt::ptree::value_type &planet);
+
+
         std::vector<std::shared_ptr<SpaceBody>> &&get_planets();
 
         std::vector<std::shared_ptr<Star>> &&get_stars();

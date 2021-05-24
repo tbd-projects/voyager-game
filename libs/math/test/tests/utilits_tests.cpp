@@ -6,7 +6,7 @@
 #include <math/vector2d.hpp>
 
 using rotate_test_tuple = std::tuple<math::coords_t, math::decimal_t
-                                    , math::coords_t, math::coords_t>;
+                    , math::coords_t, math::coords_t>;
 
 class GeometryRotateTest
         : public testing::TestWithParam<rotate_test_tuple> {
@@ -102,7 +102,7 @@ using relative_line_test_tuple = std::tuple<math::Vector2d, math::coords_t
         , math::coords_t, math::GeometryFunction::point_relative>;
 
 class GeometryRelativeLineTest
-: public testing::TestWithParam<relative_line_test_tuple> {
+        : public testing::TestWithParam<relative_line_test_tuple> {
   public:
     GeometryRelativeLineTest()
             : line(std::get<0>(GetParam()))
@@ -198,3 +198,62 @@ INSTANTIATE_TEST_SUITE_P(SelectValues, GeometryRelativeLineTest
                 math::coords_t(8, -3),
                 math::GeometryFunction::point_relative::on_line
         }));
+
+using return_alg = math::AlgebraicMethods::return_for_solve_equastion;
+using algebra_test_tuple = std::tuple<
+        std::function<return_alg(
+                math::decimal_t)>, math::decimal_t, size_t, math::decimal_t>;
+
+class AlgebraTest
+        : public testing::TestWithParam<algebra_test_tuple> {
+  public:
+    AlgebraTest()
+            : func(std::get<0>(GetParam()))
+              , start_x(std::get<1>(GetParam()))
+              , number_itter(std::get<2>(GetParam()))
+              , ans(std::get<3>(GetParam())) {}
+
+  protected:
+    const std::function<return_alg(math::decimal_t)> func;
+    const math::decimal_t start_x;
+    const size_t number_itter;
+    const math::decimal_t ans;
+    math::AlgebraicMethods algebra;
+};
+
+TEST_P(AlgebraTest, HalleyFunction) {
+    EXPECT_PRED2(math::Utilits::is_equal
+                 , algebra.solve_equastion_by_Halley(func, start_x
+                                                     , number_itter), ans);
+}
+
+INSTANTIATE_TEST_SUITE_P(SelectValues, AlgebraTest
+                         , testing::Values(
+        algebra_test_tuple{[](auto x) -> return_alg {
+            return {std::pow(x, 4) + std::pow(x, 3) + 2. * x * x - x - 3.,
+                    4. * std::pow(x, 3) + 3. * std::pow(x, 2) + 4 * x - 1,
+                    12. * std::pow(x, 2) + 6. * x + 4};
+        }, math::d(0.8), 10, math::d(1)}, algebra_test_tuple{
+                [](auto x) -> return_alg {
+                    return
+                            {std::pow(x, 4) + std::pow(x, 3)
+                             + 2. * x * x - x - 3.,
+                             4. * std::pow(x, 3)
+                             + 3. * std::pow(x, 2) + 4 * x - 1,
+                             12. * std::pow(x, 2) + 6. * x + 4};
+                }, math::d(-0.8), 5, math::d(-1)}, algebra_test_tuple{
+                [](auto x) -> return_alg {
+                    return {sqrt(2 * x + 1) - 3, 1 / sqrt(2 * x + 1),
+                            -1 / ((2 * x + 1) * sqrt(2 * x + 1))};
+                }, math::d(0.1), 30, math::d(4)}, algebra_test_tuple{
+                [](auto x) -> return_alg {
+                    return {std::log10(x - 3) + std::log10(x - 2)
+                            - 1 + std::log10(5), 1 / ((x - 3) * std::log(10))
+                                                 + 1 / ((x - 2) * std::log(10)),
+                            (1 / ((x - 3) * (x - 3)) +
+                             1 / ((x - 2) * (x - 2))) / std::log(10)};
+                }, math::d(4.5), 25, math::d(4)}, algebra_test_tuple{
+                [](auto x) -> return_alg {
+                    return {sin(x), cos(x), -sin(x)};
+                }, math::d(0.8), 3, math::d(0)})
+);

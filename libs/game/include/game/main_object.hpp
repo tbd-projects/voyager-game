@@ -8,10 +8,8 @@ namespace game {
     public:
 
         explicit GameObject(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-                            size_t weight, math::Vector2d velocity,
-                            math::coords_t pos, physics::Orbit::orbit_properties_t orbit) :
-                physics::AstronomicalObject(std::move(pol), weight,
-                                            velocity, pos, orbit) {
+                            size_t weight, physics::Orbit::orbit_properties_t orbit) :
+                physics::AstronomicalObject(std::move(pol), weight,orbit) {
             this->_sprite_id = sprite_id;
             this->_sprite = std::move(sprite);
         };

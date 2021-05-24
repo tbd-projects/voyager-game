@@ -69,7 +69,7 @@ void graphics::Button::_update_drawables() {
 
     _text->set_size(std::max(static_cast<int>(get_height()) - get_padding() * 2, 0));
 
-    auto width = std::max(get_width(), _text->get_width() + get_padding() * 2.f);
+    auto width = std::max(static_cast<float>(get_width()), _text->get_width() + get_padding() * 2.f);
     if (width != get_width())
         resize(get_height(), width);
 

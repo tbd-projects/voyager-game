@@ -8,7 +8,7 @@ namespace game {
 
     const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0.08f));
     const size_t init_weight = 1;
-    const math::coords_t init_pos = math::coords_t(-100, 100);
+    const math::coords_t init_pos = math::coords_t(-1000, 1000);
 
     class SpaceShip : public GameObject {
     public:
@@ -62,9 +62,9 @@ namespace game {
         SpaceBody() = delete;
 
         SpaceBody(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-                  size_t weight, math::Vector2d velocity,
-                  math::coords_t pos, physics::Orbit::orbit_properties_t orbit) :
-                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos, orbit) {};
+                  size_t weight,
+                  physics::Orbit::orbit_properties_t orbit) :
+                GameObject(sprite_id, std::move(sprite), std::move(pol), weight,orbit) {};
 
         SpaceBody(const SpaceBody &obj) = delete;
 
