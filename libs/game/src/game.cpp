@@ -129,7 +129,7 @@ namespace game {
     }
 
     std::shared_ptr<event_controller::ICommand> Map::process_keyboard(event_controller::KeyboardEvent &ev) {
-        float angle = 1;
+        float angle = 2;
         switch (ev.key) {
             case event_controller::Key::Escape:
                 return std::make_shared<game_manager::command::EndGame>();
@@ -142,7 +142,7 @@ namespace game {
 //                set_rotate(180);
                 break;
             case event_controller::Key::W:
-                set_rotate(this->_ship->get_rotation());
+                this->set_impulse(this->_ship);
                 break;
             default:
                 break;
@@ -167,6 +167,10 @@ namespace game {
         _game_screen->update(_timer->get_s().count(), _ship->get_battery(), _ship->get_fuel());
 
         return is_live;
+    }
+
+    void Map::set_impulse(std::shared_ptr<GameObject> obj) {
+        this->set_rotate(obj->get_rotation());
     }
 
 // Game

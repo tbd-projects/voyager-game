@@ -30,6 +30,8 @@ namespace game {
 
         void set_rotate(math::decimal_t angle);
 
+        void set_impulse(std::shared_ptr<GameObject> obj);
+
         bool update(graphics::ICanvas &canvas);
 
         bool update_ship(ship_character type);
