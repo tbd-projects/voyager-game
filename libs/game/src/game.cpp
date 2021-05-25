@@ -102,7 +102,7 @@ namespace game {
         _bg->draw(canvas);
 
         for (auto &obj : this->_space_objects) {
-            // obj->move(_engine);
+             obj->move(_engine);
 
             auto &sprite = obj->get_sprite();
             sprite->set_pos(_camera->get_position(obj->get_pos()));

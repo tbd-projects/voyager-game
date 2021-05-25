@@ -18,6 +18,7 @@ protected:
     size_t bg_id;
     size_t cnt_planets;
     size_t cnt_stars;
+    math::decimal_t density;
 
 
     void SetUp() {
@@ -26,8 +27,9 @@ protected:
         std::string path_load = root_dir / "libs/game/test/data/";
         this->loader = game::JsonCreateLevel{path_load};
         this->bg_id = 0;
-        this->cnt_planets =2;
-        this->cnt_stars = 2;
+        this->cnt_planets = 3;
+        this->cnt_stars = 1;
+        this->density = 100;
     }
 
     void TearDown() {};
@@ -50,4 +52,6 @@ TEST_F(LevelLoader, LevelLoad) {
     EXPECT_EQ(this->loader.get_planets().size(), cnt_planets);
     EXPECT_EQ(this->loader.get_stars().size(), cnt_stars);
     EXPECT_EQ(this->loader.get_bg_id(), this->bg_id);
+    EXPECT_EQ(this->loader.get_fuel_density(), this->density);
+
 }
