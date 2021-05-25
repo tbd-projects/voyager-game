@@ -46,6 +46,8 @@ class Mechanic {
     math::Vector2d calc_force_by_object(PhysicalObject &object
                                         , const StoreObject &objects) const;
 
+    const std::unique_ptr<Force>& get_force() const;
+
   protected:
     std::unique_ptr<Force> _force;
     OrbitalMechanic _orbit_mechanic;

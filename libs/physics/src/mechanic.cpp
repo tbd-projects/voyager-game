@@ -37,8 +37,8 @@ math::Vector2d NewtonForce::get_force(PhysicalObject &object
 
 math::decimal_t OrbitalMechanic::get_effective_radius_orbit
         (const Force &force, const PhysicalObject &object) const {
-    auto object_weight_one_ton
-            = PhysicalObject(std::make_unique<math::CirclePolygon>());
+
+
 
 
     //  math::decimal_t force_to_one_ton = force(PhysicalObject(&tmp))
@@ -70,6 +70,10 @@ math::Vector2d Mechanic::calc_force_by_object(PhysicalObject &object
     }
 
     return _force->get_force(object, other_object);
+}
+
+const std::unique_ptr<Force> &Mechanic::get_force() const {
+    return _force;
 }
 
 

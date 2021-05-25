@@ -2,6 +2,7 @@
 
 #include <debug/exception.hpp>
 
+#include "math/interface.hpp"
 #include "special_object.hpp"
 #include "physical_object.hpp"
 // #include "game_manager/config.hpp"
@@ -11,9 +12,12 @@ namespace game_manager {
 
 class Config {
   public:
-    static Config get_instance() {return Config();}
+    static Config get_instance() { return Config(); }
 
     size_t fps = 60;
+
+    std::function<std::unique_ptr<math::IRungeKuttaMethod>
+            (math::runge_func, math::coords_t)> creater_runge_kutta;
 };
 
 }
@@ -31,9 +35,9 @@ Engine::Engine()
 
 Engine::Engine(std::unique_ptr<Force> &&force)
         : _cals_in_tick(20)
-        , _part_of_second_in_tick(
-            (math::decimal_t) game_manager::Config::get_instance().fps
-            / MILISECOND_IN_SECOND)
+          , _part_of_second_in_tick(
+                (math::decimal_t) game_manager::Config::get_instance().fps
+                / MILISECOND_IN_SECOND)
           , _mechanic(std::move(force)) {}
 
 math::Vector2d Engine::calc_force_by_object(PhysicalObject &object) const {
@@ -76,9 +80,6 @@ void Engine::delete_object(std::weak_ptr<PhysicalObject> object) {
     _objects.delete_object(std::move(object));
 }
 
-math::Vector2d Engine::get_velocity_in_tick(math::Vector2d velocity) const {
-    return math::Vector2d((velocity * _part_of_second_in_tick) / one_dist);
-}
 
 size_t Engine::get_cals_in_tick() const {
     return _cals_in_tick;
@@ -90,6 +91,71 @@ math::decimal_t Engine::get_part_of_seconds_in_tick() const {
 
 math::decimal_t Engine::get_mass_fuel_by_one_impulse() const {
     return base_impulse / one_ton;
+}
+
+std::vector<math::coords_t> Engine::get_orbit_outline(
+        const PhysicalObject &object) const {
+    auto tmp = _objects.get_active_object();
+
+    std::vector<std::reference_wrapper<PhysicalObject>> other_object;
+    for (const auto &obj : tmp) {
+        if (!_objects.is_objects_with_equal_id(*obj.lock(), object)) {
+            other_object.emplace_back(*obj.lock());
+        }
+    }
+    size_t weight = object.get_weight();
+    math::coords_t pos = object.get_pos();
+
+    math::runge_func func_x = [weight, &pos, this, &other_object]
+            (const math::coords_t &x
+             , math::coords_t &dx
+             , math::decimal_t t) -> void {
+        PhysicalObject tmp(
+                std::unique_ptr<math::Polygon>(new math::CirclePolygon())
+                , pos, {}, weight);
+        auto acelr = _mechanic.get_force()->get_force(tmp, other_object);
+
+        dx.y = x.y + acelr.get_coords().x;
+        dx.x = x.x + dx.y;
+    };
+
+    math::runge_func func_y = [weight, &pos, this, &other_object]
+            (const math::coords_t &x
+             , math::coords_t &dx
+             , math::decimal_t t) -> void {
+        PhysicalObject tmp(
+                std::unique_ptr<math::Polygon>(new math::CirclePolygon())
+                , pos, {}, weight);
+        auto acelr = _mechanic.get_force()->get_force(tmp, other_object);
+
+        dx.y = x.y + acelr.get_coords().y;
+        dx.x = x.x + dx.y;
+    };
+
+    std::unique_ptr<math::IRungeKuttaMethod> solver_x
+            = game_manager::Config::get_instance().creater_runge_kutta
+                    (func_x, {pos.x, object.get_velocity().get_coords().x});
+
+    std::unique_ptr<math::IRungeKuttaMethod> solver_y
+            = game_manager::Config::get_instance().creater_runge_kutta
+                    (func_y, {pos.y, object.get_velocity().get_coords().y});
+
+    std::vector<math::coords_t> ans = {pos};
+
+    math::decimal_t step = 20;
+    math::decimal_t t = 0;
+    math::coords_t start_pos = pos;
+    math::decimal_t exepc_len = 0;
+    while (math::Vector2d(pos, start_pos).sqr_len() > exepc_len) {
+        pos.x = solver_x->do_step(math::dec(t), 20);
+        pos.y = solver_y->do_step(math::dec(t), 20);
+        ans.push_back(pos);
+        if (t == step * 2) {
+            exepc_len = math::Vector2d(pos, start_pos).sqr_len();
+        }
+    }
+
+    return ans;
 }
 
 
@@ -141,7 +207,7 @@ bool StoreObject::contain_object(const PhysicalObject &object) const {
 }
 
 bool StoreObject::is_objects_with_equal_id(const PhysicalObject &object_1
-                                       , const PhysicalObject &object_2) const {
+                                           , const PhysicalObject &object_2) const {
     return object_1._index == object_2._index;
 }
 

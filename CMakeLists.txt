@@ -9,7 +9,7 @@ set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCE ${SOURCE_DIR}/main.cpp)
 set(LIBRARIES_DIR ${CMAKE_SOURCE_DIR}/libs)
 cmake_policy(SET CMP0079 NEW)
-set(LIBRARIES debug_lib math_lib physics_lib)
+set(LIBRARIES debug_lib math_lib physics_lib math_external_lib)
 
 project(${PROJECT_NAME})
 
@@ -46,8 +46,10 @@ foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
 
-target_link_libraries(math_lib debug_lib)
+target_link_libraries(math_lib debug_lib math_external_lib)
 target_link_libraries(physics_lib debug_lib math_lib)
+
+target_link_libraries(math_external_lib debug_lib math_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 

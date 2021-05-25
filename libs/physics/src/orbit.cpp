@@ -24,8 +24,8 @@ Orbit::Orbit(PhysicalObject &object, Orbit::orbit_properties_t orbit_properties)
           , _small_axis(orbit_properties.variables.y)
           , _eccentricity(0)
           , _lgitude_of_periapsis(orbit_properties.angle_target
-                                  + math::Utilits::to_grad(math::d(M_PI)
-                                                           + math::d(M_PI_2)))
+                                  + math::Utilits::to_grad(math::dec(M_PI)
+                                                           + math::dec(M_PI_2)))
           , _period(orbit_properties.period)
           , _current_epoch_time(0)
           , _basis(orbit_properties.basis)
@@ -68,14 +68,14 @@ Orbit::orbit_properties_t Orbit::get_orbit_properties() const {
 }
 
 void Orbit::relocate_on_orbit(math::decimal_t angle) {
-    _current_epoch_time = (_period / math::const_2_pi)
-                          * math::Utilits::to_rad(angle);
+    _current_epoch_time = ( math::Utilits::to_rad(angle) / math::const_2_pi)
+                          * _period;
 }
 
 void Orbit::_kepler_move(PhysicalObject &object
                          , const Engine &physical_engine) {
     _current_epoch_time += physical_engine.get_part_of_seconds_in_tick();
-    _current_epoch_time -= _period < _current_epoch_time ? _period : math::d(0);
+    _current_epoch_time -= _period < _current_epoch_time ? _period : math::dec(0);
     _set_pos_on_kepler_orbit(object);
 }
 

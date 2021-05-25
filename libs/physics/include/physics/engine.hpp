@@ -45,7 +45,10 @@ class Engine : public IConnectToEngine {
   public:
     Engine();
 
-    explicit Engine(std::unique_ptr<Force>&&force);
+    explicit Engine(std::unique_ptr<Force> &&force);
+
+    std::vector<math::coords_t> get_orbit_outline(
+            const PhysicalObject &object) const;
 
     [[nodiscard]]
     math::decimal_t get_mass_fuel_by_one_impulse() const;
@@ -63,9 +66,6 @@ class Engine : public IConnectToEngine {
     void add_object(std::weak_ptr<PhysicalObject> object) override;
 
     void delete_object(std::weak_ptr<PhysicalObject> object) override;
-
-    [[nodiscard]] virtual
-    math::Vector2d get_velocity_in_tick(math::Vector2d velocity) const;
 
     [[nodiscard]] virtual
     size_t get_cals_in_tick() const;
