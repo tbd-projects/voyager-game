@@ -18,14 +18,6 @@ namespace game {
         }
         this->_bg = factory.get_sprite(_bg_id);
     }
-// not usage
-//void Map::create_ship(size_t player_id) {
-//    properties_t properties = config.properties_loader.load_current_properties(player_id);
-//    auto sprite = ISprite(properties.sprite_id);
-//    std::unique_ptr<math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
-//            math::coords_t(math::decimal_t(0), math::decimal_t(0)), sprite.get_height(), sprite.get_width());
-//    this->_ship(properties.sprite_id, nullptr, std::move(pol), properties);
-//}
 
     Map::Map(size_t player_id) {
 
@@ -42,7 +34,7 @@ namespace game {
         auto width = sprite->get_texture_size().first;
         auto height = sprite->get_texture_size().second;
 
-        std::unique_ptr <math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
+        std::unique_ptr<math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
                 math::coords_t(math::decimal_t(0), math::decimal_t(0)), height, width);
         auto fuel_mass = _engine.get_mass_fuel_by_one_impulse();
         _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties,
@@ -53,6 +45,8 @@ namespace game {
         this->_timer = std::make_unique<Timer>();
 
         _game_screen = std::make_unique<menu::GameScreen>(*config.graphics_factory, *config.sprite_loader, *_storage);
+        _game_screen->update(this->_timer->get_s().count(), this->_ship->get_fuel(), this->_ship->get_battery());
+        std::cout << _timer->get_s().count() << " " << _ship->get_fuel() << " " << _ship->get_battery() << std::endl;
     }
 
     void Map::load_level(size_t level_num) {
@@ -98,11 +92,12 @@ namespace game {
     }
 
     bool Map::update(graphics::ICanvas &canvas) {
+
         _bg->set_pos(_camera->get_position(math::coords_t(canvas.get_width() / 2, canvas.get_height() / 2)));
         _bg->draw(canvas);
 
         for (auto &obj : this->_space_objects) {
-             obj->move(_engine);
+            obj->move(_engine);
 
             auto &sprite = obj->get_sprite();
             sprite->set_pos(_camera->get_position(obj->get_pos()));
@@ -135,7 +130,6 @@ namespace game {
         sprite->draw(canvas);
 
         _game_screen->draw(&canvas);
-
         return true;
     }
 
@@ -166,6 +160,9 @@ namespace game {
     }
 
     bool Map::update_ship(ship_character type) {
+
+        _game_screen->update(_timer->get_s().count(), _ship->get_fuel(), _ship->get_battery());
+
         bool is_live = true;
         switch (type) {
             case FUEL:
@@ -178,8 +175,6 @@ namespace game {
             default:
                 break;
         }
-
-        _game_screen->update(_timer->get_s().count(), _ship->get_battery(), _ship->get_fuel());
 
         return is_live;
     }
@@ -200,6 +195,7 @@ namespace game {
             _controller(controller),
             fps_counter(0) {
         _subscribe_events();
+
     }
 
     void Game::_subscribe_events() {
@@ -237,7 +233,8 @@ namespace game {
         }
         ++fps_counter;
 
-        bool is_live = false;
+        bool is_live = _map.update(_canvas);;
+
 
         switch (event.type) {
             case event_controller::EventType::fps:
