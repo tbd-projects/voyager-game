@@ -3,6 +3,8 @@
 #include <physics/interface.hpp>
 #include <physics/physical_object.hpp>
 
+#define EFFECTIVE_DIFF_ORBIT 30
+
 namespace physics {
 
 const math::decimal_t G = 6.674e-3f;
@@ -17,10 +19,8 @@ class NewtonForce : public Force {
     NewtonForce();
 
     [[nodiscard]]
-    math::Vector2d get_force(PhysicalObject &object
-                            , const std::vector<
-                                    std::reference_wrapper<PhysicalObject>
-                                    > &other_objects) const override;
+    math::Vector2d get_force(const PhysicalObject &object
+                        , const PhysicalObject &other_objects) const override;
 };
 
 class OrbitalMechanic {
@@ -43,9 +43,10 @@ class Mechanic {
             (const PhysicalObject &object) const;
 
     [[nodiscard]]
-    math::Vector2d calc_force_by_object(PhysicalObject &object
+    math::Vector2d calc_force_by_object(const PhysicalObject &object
                                         , const StoreObject &objects) const;
 
+    [[nodiscard]]
     const std::unique_ptr<Force>& get_force() const;
 
   protected:

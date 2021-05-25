@@ -47,6 +47,7 @@ class Engine : public IConnectToEngine {
 
     explicit Engine(std::unique_ptr<Force> &&force);
 
+    [[nodiscard]]
     std::vector<math::coords_t> get_orbit_outline(
             const PhysicalObject &object) const;
 

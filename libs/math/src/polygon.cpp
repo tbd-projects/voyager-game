@@ -144,6 +144,10 @@ math::decimal_t RectanglePolygon::get_width() const noexcept {
     return _width;
 }
 
+decimal_t RectanglePolygon::get_circumscribed_circ() const {
+    return Vector2d(coords_t{_width, _height}).len() / dec(2);
+}
+
 
 //  ---------------------------TrianglePolygon-------------------------------
 
@@ -226,6 +230,10 @@ math::decimal_t TrianglePolygon::get_width() const noexcept {
     return _width;
 }
 
+decimal_t TrianglePolygon::get_circumscribed_circ() const {
+    return _height * 2 / dec(3);
+}
+
 
 //  ---------------------------CirclePolygon---------------------------------
 
@@ -275,6 +283,10 @@ bool CirclePolygon::intresect(const IIntresectable &object) const {
 }
 
 math::decimal_t CirclePolygon::get_radius() const noexcept {
+    return _radius;
+}
+
+decimal_t CirclePolygon::get_circumscribed_circ() const {
     return _radius;
 }
 

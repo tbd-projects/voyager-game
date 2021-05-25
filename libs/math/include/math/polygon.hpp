@@ -57,6 +57,9 @@ class Polygon : public IIntresectable, public IScalable
     [[nodiscard]]
     bool intresect(const IIntresectable &object) const override = 0;
 
+    [[nodiscard]]
+    virtual decimal_t get_circumscribed_circ() const = 0;
+
     ~Polygon() override = default;
 };
 
@@ -82,6 +85,9 @@ class RectanglePolygon : public Polygon {
 
     [[nodiscard]]
     math::decimal_t get_width() const noexcept;
+
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ() const override;
 
     ~RectanglePolygon() override = default;
 
@@ -113,6 +119,9 @@ class TrianglePolygon : public Polygon {
     [[nodiscard]]
     math::decimal_t get_width() const noexcept;
 
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ() const override;
+
     ~TrianglePolygon() override = default;
 
   private:
@@ -139,6 +148,9 @@ class CirclePolygon : public Polygon {
 
     [[nodiscard]]
     math::decimal_t get_radius() const noexcept;
+
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ() const override;
 
     ~CirclePolygon() override = default;
 

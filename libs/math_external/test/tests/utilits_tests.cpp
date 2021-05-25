@@ -2,100 +2,45 @@
 
 #include <tuple>
 
-#include <math/utilits.hpp>
-#include <math/vector2d.hpp>
+#include <math_imported/utilits.hpp>
 
-/*
-using rotate_test_tuple = std::tuple<math::coords_t, math::decimal_t
-                    , math::coords_t, math::coords_t>;
 
-class GeometryRotateTest
-        : public testing::TestWithParam<rotate_test_tuple> {
+using runge_kutta_test_tuple = std::tuple<math::runge_func,
+        math::coords_t, math::decimal_t, math::decimal_t, math::decimal_t>;
+
+class RungeKuttaTest
+        : public testing::TestWithParam<runge_kutta_test_tuple> {
   public:
-    GeometryRotateTest()
-            : point(std::get<0>(GetParam()))
-              , basis(std::get<2>(GetParam()))
-              , angle(std::get<1>(GetParam()))
-              , answer(std::get<3>(GetParam())) {}
+    RungeKuttaTest()
+            : method(std::get<0>(GetParam()), std::get<1>(GetParam()))
+              , t(std::get<2>(GetParam()))
+              , dt(std::get<3>(GetParam()))
+              , answer(std::get<4>(GetParam())) {}
 
   protected:
-    const math::coords_t point;
-    const math::coords_t basis;
-    const math::decimal_t angle;
-    const math::coords_t answer;
-    math::GeometryFunction geometry;
+    math::external::RungeKuttaBoostMethod method;
+    const math::decimal_t t;
+    const math::decimal_t dt;
+    const math::decimal_t answer;
 };
 
-TEST_P(GeometryRotateTest, FunctionRotate) {
-    math::coords_t ans = geometry.rotate_point(point, angle, basis);
-    EXPECT_PRED2(math::Utilits::is_equal, ans.x, answer.x);
-    EXPECT_PRED2(math::Utilits::is_equal, ans.y, answer.y);
+TEST_P(RungeKuttaTest, BaseStep) {
+    EXPECT_PRED2(math::Utilits::is_equal, method.do_step(t, dt), answer);
 }
 
-INSTANTIATE_TEST_SUITE_P(SelectValues, GeometryRotateTest
+INSTANTIATE_TEST_SUITE_P(SelectValues, RungeKuttaTest
                          , testing::Values(
-        rotate_test_tuple{
-                math::coords_t(10, 0.f), 360., math::coords_t(0, 0),
-                math::coords_t(10, 0.f)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -360., math::coords_t(0, 0),
-                math::coords_t(10, 0.f)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 180., math::coords_t(0, 0),
-                math::coords_t(-10, 0.f)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -180., math::coords_t(0, 0),
-                math::coords_t(-10, 0.f)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 90., math::coords_t(0, 0),
-                math::coords_t(0.f, 10)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -90., math::coords_t(0, 0),
-                math::coords_t(0.f, -10)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 65., math::coords_t(0, 0),
-                math::coords_t(4.22618, 9.06308)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -65., math::coords_t(0, 0),
-                math::coords_t(4.22618, -9.06308)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 360., math::coords_t(12, 30),
-                math::coords_t(10, 0.f)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -360., math::coords_t(12, 30),
-                math::coords_t(10, 0.f)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 180., math::coords_t(12, 30),
-                math::coords_t(14, 60)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -180., math::coords_t(12, 30),
-                math::coords_t(14, 60)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 90., math::coords_t(12, 30),
-                math::coords_t(42, 28)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -90., math::coords_t(12, 30),
-                math::coords_t(-18, 32)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), 65., math::coords_t(12, 30),
-                math::coords_t(38.34399, 15.50883)
-        }
-        , rotate_test_tuple{
-                math::coords_t(10, 0), -65., math::coords_t(12, 30),
-                math::coords_t(-16.03447, 19.13406)
-        }));
-*/
+        runge_kutta_test_tuple{[](const math::coords_t &x
+                                  , math::coords_t &dx
+                                  , math::decimal_t t) -> void {
+            dx.x = x.y;
+            dx.y = 4 * x.x;
+        }, math::coords_t(1, 2), 0., 0., 1},
+        runge_kutta_test_tuple{[](const math::coords_t &x
+                                  , math::coords_t &dx
+                                  , math::decimal_t t) -> void {
+            dx.x = x.y;
+            dx.y = 4 * x.x;
+        }, math::coords_t(1, 2), 0., 0., 1}
+));
+

@@ -3,12 +3,17 @@
 #include <math/interface.hpp>
 #include <boost/numeric/odeint.hpp>
 
+#include <boost/numeric/odeint/stepper/dense_output_runge_kutta.hpp>
+
+
 namespace math::external {
 
-typedef std::vector< math::decimal_t > state_type;
+typedef std::vector<double> state_type;
 
 class RungeKuttaBoostMethod : public IRungeKuttaMethod {
   public:
+    using stepper_type = boost::numeric::odeint::runge_kutta4_classic<state_type>;
+
     RungeKuttaBoostMethod(runge_func func, math::coords_t start_x);
 
     math::decimal_t do_step(math::decimal_t t, math::decimal_t dt) override;
@@ -18,7 +23,7 @@ class RungeKuttaBoostMethod : public IRungeKuttaMethod {
                           , visit_runge_func visitor) override;
 
   private:
-    boost::numeric::odeint::runge_kutta4_classic<state_type> _stepper;
+    stepper_type _stepper;
 };
 
 }  // namespace math
