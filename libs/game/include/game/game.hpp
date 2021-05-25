@@ -39,6 +39,7 @@ namespace game {
 
         std::shared_ptr<event_controller::ICommand> process_keyboard(event_controller::KeyboardEvent &ev);
 
+        Timer &get_timer();
 
     private:
         std::unique_ptr<graphics::TextureStorage> _storage;
@@ -76,6 +77,7 @@ namespace game {
         bool start_game(int level);
 
         bool stop_game();
+        bool unpause();
 
     private:
         game::Map _map;
@@ -85,6 +87,9 @@ namespace game {
         size_t fps_counter;
 
 
+        void _subscribe_events();
+
+        void _unsibscribe_events();
     };
 
 } // namespace game

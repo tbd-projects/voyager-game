@@ -27,6 +27,7 @@ void GameManager::stash_state(const func_create_state& creator_state) {
 
 void GameManager::stash_state() {
     _stash_state = std::move(_current_state);
+    _stash_state->stop(_controller);
     _current_state = nullptr;
 }
 
@@ -37,6 +38,7 @@ void GameManager::apply_state() {
 
     _current_state = std::move(_stash_state);
     _stash_state = nullptr;
+    _current_state->contine(_controller);
 }
 
 void GameManager::add_state(const func_create_state& creator_state) {
@@ -45,6 +47,12 @@ void GameManager::add_state(const func_create_state& creator_state) {
 
 void GameManager::end_run() {
     _controller.stop();
+}
+
+void GameManager::free_stash() {
+    if (_stash_state != nullptr) {
+        _stash_state = nullptr;
+    }
 }
 
 }  // namespace game_manager

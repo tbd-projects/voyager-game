@@ -16,6 +16,7 @@ class RunMainMenu : public ICommand {
                     canvas, controller);
         };
 
+        manager.free_stash();
         manager.add_state(creator);
     }
 };

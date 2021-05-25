@@ -5,7 +5,7 @@
 #include <graphics/i_drawable.h>
 #include <game_manager/interface.hpp>
 
-/*
+
 namespace game_manager::states {
 
 class InPauseMenu : public IState {
@@ -27,4 +27,3 @@ class InPauseMenu : public IState {
 };
 
 }  // namespace game_manager::states
-*/

@@ -5,7 +5,7 @@
 #include <game_manager/states/in_pause_menu_state.hpp>
 
 namespace game_manager::command {
-/*
+
 class RunPause : public ICommand {
  public:
     void execute(GameManager &manager) override {
@@ -20,5 +20,5 @@ class RunPause : public ICommand {
         manager.add_state(creator);
     }
 };
-*/
+
 }  // namespace game_manager::command

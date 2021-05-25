@@ -33,7 +33,6 @@ void InMainMenu::contine(event_controller::IController &controller)  {
 
 //  ------------------------------InPauseMenu-----------------------------------
 
-/*
 InPauseMenu::InPauseMenu(graphics::ICanvas &canvas
                                    , event_controller::IController &controller)
         : _pause_menu(canvas, controller) {}
@@ -44,7 +43,7 @@ void InPauseMenu::stop(event_controller::IController &controller)  {
 void InPauseMenu::contine(
         event_controller::IController &controller)  {
 }
-*/
+
 
 //  --------------------------------InGame--------------------------------------
 
@@ -61,7 +60,7 @@ void InGame::stop(event_controller::IController &controller)  {
 }
 
 void InGame::contine(event_controller::IController &controller)  {
-    //_game.(controller);
+    _game.unpause();
 }
 
 }  // namespace game_manager::states

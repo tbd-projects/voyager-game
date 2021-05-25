@@ -106,6 +106,12 @@ namespace game {
 
             auto &sprite = obj->get_sprite();
             sprite->set_pos(_camera->get_position(obj->get_pos()));
+
+
+//            auto &shape = obj->get_shape();
+//            shape.set_pos(_camera->get_position(obj->get_orbit().get_orbit_properties().basis));
+//            shape.draw(canvas);
+
             sprite->draw(canvas);
         }
         for (auto &obj : this->_stars) {
@@ -121,6 +127,11 @@ namespace game {
         auto &sprite = _ship->get_sprite();
         sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
+
+//        auto &shape = _ship->get_shape();
+//        shape.set_pos(_camera->get_position(_ship->get_orbit().get_orbit_properties().basis));
+//        shape.draw(canvas);
+
         sprite->draw(canvas);
 
         _game_screen->draw(&canvas);
@@ -136,7 +147,7 @@ namespace game {
         float angle = 2;
         switch (ev.key) {
             case event_controller::Key::Escape:
-                return std::make_shared<game_manager::command::EndGame>();
+                return std::make_shared<game_manager::command::RunPause>();
             case event_controller::Key::A:
                 this->_ship->add_rotation(angle);
 //                set_rotate(0);
@@ -177,6 +188,10 @@ namespace game {
         this->set_rotate(obj->get_rotation());
     }
 
+    Timer &Map::get_timer() {
+        return *_timer;
+    }
+
 // Game
 
     Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) :
@@ -184,15 +199,23 @@ namespace game {
             _canvas(canvas),
             _controller(controller),
             fps_counter(0) {
-        _controller.subscribe(event_controller::EventType::fps, *this);
-        _controller.subscribe(event_controller::EventType::keyboard, *this);
-        _controller.subscribe(event_controller::EventType::close, *this);
+        _subscribe_events();
     }
 
-    Game::~Game() {
+    void Game::_subscribe_events() {
+        _controller.subscribe(event_controller::fps, *this);
+        _controller.subscribe(event_controller::keyboard, *this);
+        _controller.subscribe(event_controller::close, *this);
+    }
+
+    void Game::_unsibscribe_events() {
         _controller.unsubscribe(event_controller::EventType::fps, *this);
         _controller.unsubscribe(event_controller::EventType::keyboard, *this);
         _controller.unsubscribe(event_controller::EventType::close, *this);
+    }
+
+    Game::~Game() {
+        _unsibscribe_events();
     }
 
     bool Game::start_game(int level) {
@@ -201,6 +224,8 @@ namespace game {
     }
 
     bool Game::stop_game() {
+        _map.get_timer().pause();
+        _unsibscribe_events();
         return false;
     }
 
@@ -243,6 +268,12 @@ namespace game {
         }
 
         return std::make_shared<game_manager::command::DoNothing>();
+    }
+
+    bool Game::unpause() {
+        _map.get_timer().unpause();
+        _subscribe_events();
+        return true;
     }
 } // namespace game
 

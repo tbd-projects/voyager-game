@@ -11,6 +11,7 @@ namespace event_controller {
 
     void Controller::unsubscribe(EventType type, ISubscriber &subscriber) {
         _subscribers[type].erase(&subscriber);
+        _need_update = true;
     }
 
    void Controller::run() {
@@ -19,19 +20,24 @@ namespace event_controller {
         while (_is_runned) {
             std::unique_ptr<Event> event = _eventable.get_event();
 
-            auto current_subscribers = _subscribers[event->type];
-            for (auto subscriber: current_subscribers)
+            for (auto subscriber: _subscribers[event->type])
             {
-                if (!subscriber)
-                    continue;
                 auto command = subscriber->update(*event);
                 command->execute(_manager);
+
+                if(_need_update) {
+                    _need_update = false;
+                    break;
+                }
             }
         };
     }
 
+
+
+
     Controller::Controller(game_manager::GameManager &manager, IEventable &eventable)
-    : _manager(manager), _eventable(eventable) {}
+    : _manager(manager), _eventable(eventable), _need_update(false) {}
 
     void Controller::stop() {
         _is_runned = false;

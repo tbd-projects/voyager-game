@@ -18,6 +18,8 @@ namespace event_controller {
         std::map<EventType, std::set<ISubscriber *>> _subscribers;
         game_manager::GameManager &_manager;
         IEventable &_eventable;
+        bool _need_update;
+
     public:
         Controller(game_manager::GameManager &manager, IEventable &eventable);
 
