@@ -84,7 +84,7 @@ namespace game {
         } else {
             for (pt::ptree::value_type &player : players) {
                 if (player.second.get<int>("id") == player_id) {
-                    player.second= temp;
+                    player.second = temp;
                 }
             }
             tree.put_child("players", players);
@@ -110,5 +110,7 @@ namespace game {
         return has_player;
 
     }
+
+
 } // namespace game
 

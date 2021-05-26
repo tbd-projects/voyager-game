@@ -7,13 +7,19 @@ namespace game {
     struct level_stat {
         unsigned int num;
         unsigned int time_as_seconds;
-        bool is_win;
         unsigned char stars;
+        bool is_win;
 
         bool operator==(const level_stat &b) const {
             return num == b.num && time_as_seconds == b.time_as_seconds &&
                    is_win == b.is_win && stars == b.stars;
         }
+        level_stat() = default;
+        level_stat(unsigned int num, unsigned int time, unsigned char stars, bool is_win) :
+                num(num),
+                time_as_seconds(time),
+                stars(stars),
+                is_win(is_win) {}
     };
 
     struct progress_t {

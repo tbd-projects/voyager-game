@@ -38,10 +38,9 @@ protected:
         std::string path_save = root_dir / "libs/game/test/data/example_progress_save.json";
         this->loader = game::BaseProgressLoader{path_save};
 
-        this->progress.time = 999;
         this->progress.coins = 999;
         for (size_t i = 0; i < 5; ++i) {
-            this->progress.level_stat.push_back(std::make_pair(i, i * i));
+            this->progress.levels.emplace_back(game::level_stat(i, i, i, true));
         }
     }
 
@@ -68,9 +67,8 @@ TEST_F(BaseProgressLoaderTest, statsFound) {
     game::progress_t progress;
     progress = this->loader.load(player_id);
     ASSERT_FALSE(progress.is_empty());
-    ASSERT_EQ(progress.time, 90);
     ASSERT_EQ(progress.coins, 100);
-    ASSERT_EQ(progress.level_stat.size(), 2);
+    ASSERT_EQ(progress.levels.size(), 2);
 }
 
 TEST_F(BaseProgressSaverTest, statsFound) {
