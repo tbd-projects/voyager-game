@@ -9,10 +9,10 @@
         "x": 500,
         "y": 500
       },
-      "weight": 100000,
+      "weight": 1000000,
       "polygon": {
         "type": "circle",
-        "radius": 10,
+        "radius": 800,
         "angle": 0
       },
       "sprite_id": 5
@@ -21,10 +21,10 @@
   "planets": [
     {
       "orbit_properties": {
-        "x_c": 100.0,
-        "y_c": 0.0,
-        "a": 300,
-        "b": 300,
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 3500,
+        "b": 1800,
         "angle": -90.0,
         "period": 500.0
       },
@@ -32,7 +32,7 @@
       "polygon": {
         "type": "circle",
         "angle": 0,
-        "radius": 10
+        "radius": 500
       },
       "sprite_id": 4
     }

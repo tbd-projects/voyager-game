@@ -35,7 +35,7 @@ math::decimal_t OrbitalMechanic::get_effective_radius_orbit
     math::decimal_t force_to_one_ton = force.get_force(tmp, object).sqr_len();
 
     return object_dimensions + EFFECTIVE_DIFF_ORBIT *
-                               (1 + std::log10(force_to_one_ton));
+                               (1 + std::abs(std::log10(force_to_one_ton)) / 10);
 }
 
 
@@ -76,7 +76,7 @@ math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object
                                      , object.get_pos()).sqr_len();
             if (upper_bounder * upper_bounder >= distance
                 && lower_bounder * lower_bounder <= distance) {
-                ans += normal_velocity * math::dec(0.1);
+                ans += normal_velocity * math::dec(0.0006);
             }
         }
     }

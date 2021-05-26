@@ -6,9 +6,9 @@
 
 namespace game {
 
-    const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0.08f));
+    const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0.32));
     const size_t init_weight = 1;
-    const math::coords_t init_pos = math::coords_t(-600, 300);
+    const math::coords_t init_pos = math::coords_t(2700, 500);
 
     class SpaceShip : public GameObject {
     public:

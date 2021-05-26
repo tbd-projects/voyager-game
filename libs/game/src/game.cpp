@@ -3,6 +3,7 @@
 #include <game_manager/config.hpp>
 #include "game.hpp"
 #include "interface.hpp"
+#include <physics/orbit.hpp>
 
 namespace game {
 
@@ -65,11 +66,13 @@ namespace game {
 
         for (auto &planet : this->_space_objects) {
             planet->set_sprite(factory.load(planet->get_sprite_id(), *_storage));
-            math::decimal_t size = planet->get_weight() / 4.;
+            math::decimal_t size = planet->get_polygon()->get_circumscribed_circ();
             planet->get_sprite()->set_size({size, size});
         }
         for (auto &star : this->_stars) {
             star->set_sprite(factory.load(star->get_sprite_id(), *_storage));
+            math::decimal_t size = star->get_polygon()->get_circumscribed_circ();
+            star->get_sprite()->set_size({size, size});
         }
 
         _bg = factory.load(_bg_id, *_storage);
@@ -102,30 +105,41 @@ namespace game {
 
         auto shape = game_manager::Config::get_instance().graphics_factory->create_orbit();
 
-
         for (auto &obj : this->_space_objects) {
-            obj->move(_engine);
-
-            _camera->apply_object(*obj);
-
-//            auto fnc = [](math::coords_t basis, math::coords_t varibles) -> math::coords_t {
+            //            auto fnc = [](math::coords_t basis, math::coords_t varibles) -> math::coords_t {
 //                if (varibles.x < varibles.y) {
 //                    std::swap(varibles.x, varibles.y);
 //                }
 //
 //                return basis - math::coords_t(- std::sqrt(varibles.x * varibles.x - varibles.y * varibles.y), 0);
 //            };
-
-            shape->set_orbit(obj->get_orbit().get_orbit_properties());
             auto orbit = obj->get_orbit().get_orbit_properties();
+            shape->set_orbit(orbit);
+
 
             shape->set_pos(_camera->get_coords(orbit.basis));
             shape->scale(_camera->get_size());
             shape->draw(canvas);
 
-            obj->get_sprite()->draw(canvas);
+            math::decimal_t radius = _engine.get_effective_circle_orbit(*obj);
+            orbit = physics::Orbit::orbit_properties_t{
+                    math::coords_t(radius, radius), obj->get_pos(), {}, {}};
+            shape->set_orbit(orbit);
 
+            shape->set_pos(_camera->get_coords(orbit.basis));
+            shape->scale(_camera->get_size());
+            shape->draw(canvas);
         }
+
+
+        for (auto &obj : this->_space_objects) {
+            obj->move(_engine);
+
+            _camera->apply_object(*obj);
+
+            obj->get_sprite()->draw(canvas);
+        }
+
         for (auto &obj : this->_stars) {
             _camera->apply_object(*obj);
             obj->get_sprite()->draw(canvas);
