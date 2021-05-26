@@ -15,6 +15,7 @@
 #include "text.h"
 #include "rect.h"
 #include "button.h"
+#include "orbit_shape.h"
 
 
 namespace graphics {
@@ -30,8 +31,10 @@ namespace graphics {
         virtual std::shared_ptr<Font> create_font() = 0;
 
         virtual std::unique_ptr<Text> create_text() = 0;
-        
+
         virtual std::unique_ptr<Rect> create_rect() = 0;
+
+        virtual std::unique_ptr<OrbitShape> create_orbit() = 0;
 
         virtual Button create_button() = 0;
 

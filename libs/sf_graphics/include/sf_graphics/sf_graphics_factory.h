@@ -19,6 +19,8 @@ namespace graphics::sf {
 
         std::unique_ptr<Rect> create_rect() override;
 
+        std::unique_ptr<OrbitShape> create_orbit() override;
+
         Button create_button() override;
     };
 }

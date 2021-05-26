@@ -3,6 +3,7 @@
 //
 #include <SFML/Graphics/Texture.hpp>
 #include <graphics/background_sprite.h>
+#include <sf_orbit_shape.h>
 
 #include "sf_graphics/sf_graphics_factory.h"
 #include "sf_graphics/sf_rect.h"
@@ -50,5 +51,9 @@ namespace graphics::sf {
 
     Button SfGraphicsFactory::create_button() {
         return Button(create_rect().release(), create_text().release());
+    }
+
+    std::unique_ptr<OrbitShape> SfGraphicsFactory::create_orbit() {
+        return std::make_unique<SfOrbitShape>();
     }
 }

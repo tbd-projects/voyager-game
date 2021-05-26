@@ -22,7 +22,7 @@ void graphics::Camera::set_size(const math::decimal_t &size) {
 
 void graphics::Camera::apply(Sprite &sprite, const math::coords_t &pos) const {
 
-    sprite.set_pos((pos - _pos) * math::coords_t(_size, -_size) + _center);
+    sprite.set_pos(get_coords(pos));
     sprite.scale(_size);
 }
 
@@ -32,4 +32,8 @@ const math::coords_t &graphics::Camera::get_center() const {
 
 void graphics::Camera::set_center(const math::coords_t &center) {
     _center = center;
+}
+
+math::coords_t graphics::Camera::get_coords(const math::coords_t &pos) const {
+    return (pos - _pos) * math::coords_t(_size, -_size) + _center;
 }

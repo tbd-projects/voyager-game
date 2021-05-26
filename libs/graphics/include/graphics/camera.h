@@ -22,7 +22,7 @@ namespace graphics {
 
         void set_pos(const math::coords_t &pos);
 
-        const math::coords_t &get_center() const;
+        [[nodiscard]] const math::coords_t &get_center() const;
 
         void set_center(const math::coords_t &center);
 
@@ -31,6 +31,8 @@ namespace graphics {
         void set_size(const math::decimal_t &size);
 
         void apply(Sprite &sprite, const math::coords_t &pos) const;
+
+        math::coords_t get_coords(const math::coords_t &pos) const;
     };
 }
 

@@ -245,3 +245,30 @@ TEST_F (GraphicsTests, Button2) {
         _canvas->apply();
     }
 }
+
+
+TEST_F (GraphicsTests, Shape) {
+    auto center = math::coords_t(_canvas->get_width() / 2.f, _canvas->get_height() / 2.f);
+
+    auto shape = _factory.create_orbit();
+
+    physics::Orbit::orbit_properties_t props;
+    props.basis = center;
+    props.variables = math::coords_t(100, 200);
+
+    shape->set_orbit(props);
+    shape->set_pos(math::coords_t(200, 200));
+
+    for (int i = 0; i <= 5000; ++i) {
+        _canvas->clear();
+        props.angle_target += 0.01;
+        props.variables.x += 0.25;
+        props.variables.y -= 0.25;
+
+        shape->set_orbit(props);
+
+        shape->draw(_canvas);
+
+        _canvas->apply();
+    }
+}
