@@ -15,6 +15,7 @@ class Sprite : public IDrawable, public math::PositionateObject, public math::Ro
         math::decimal_t _scale = 1;
         std::pair<int, int> _texture_pos;
         std::pair<int, int> _texture_size;
+        math::coords_t _size;
         ITexture *_texture;
     public:
         Sprite(std::pair<int, int> pos, std::pair<int, int> size, ITexture *texture);
@@ -30,6 +31,10 @@ class Sprite : public IDrawable, public math::PositionateObject, public math::Ro
         void scale(math::decimal_t scale) override;
 
         [[nodiscard]] math::decimal_t get_scale() const;
+
+    const math::coords_t &get_size() const;
+
+    void set_size(const math::coords_t &size);
 };
 
     class AnimatedSprite : public Sprite {

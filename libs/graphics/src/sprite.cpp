@@ -22,7 +22,8 @@ namespace graphics {
 
     Sprite::Sprite(std::pair<int, int> pos, std::pair<int, int> size, ITexture *texture) :
             _texture_pos(std::move(pos)), _texture_size(std::move(size)), _texture(texture) {
-
+        _size.x = _texture_size.first;
+        _size.y = _texture_size.second;
     }
 
     void Sprite::scale(math::decimal_t scale) {
@@ -31,6 +32,14 @@ namespace graphics {
 
     math::decimal_t Sprite::get_scale() const {
         return _scale;
+    }
+
+    const math::coords_t &Sprite::get_size() const {
+        return _size;
+    }
+
+    void Sprite::set_size(const math::coords_t &size) {
+        _size = size;
     }
 
 

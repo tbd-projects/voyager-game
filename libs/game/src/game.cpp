@@ -65,6 +65,8 @@ namespace game {
 
         for (auto &planet : this->_space_objects) {
             planet->set_sprite(factory.load(planet->get_sprite_id(), *_storage));
+            math::decimal_t size = planet->get_weight() / 4.;
+            planet->get_sprite()->set_size({size, size});
         }
         for (auto &star : this->_stars) {
             star->set_sprite(factory.load(star->get_sprite_id(), *_storage));
