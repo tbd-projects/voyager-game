@@ -1,6 +1,8 @@
+#pragma once
+
 #include <game_manager/interface.hpp>
 
-namespace game_manager::imported {
+namespace game_manager::external {
 
 class InitLoadersForConfig : public IInitImportImplForConfig {
   public:

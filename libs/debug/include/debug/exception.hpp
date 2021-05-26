@@ -44,6 +44,7 @@ class MathException : public BaseExceptions {
     explicit MathException(std::string &&error);
 };
 
+
 #define ARG_LOAD_ERROR(args) LoadException(__FILE__, typeid(*this).name() \
                                                     , __FUNCTION__, args)
 #define LOAD_ERROR() LoadException(__FILE__, typeid(*this).name(), __FUNCTION__)
@@ -56,6 +57,7 @@ class LoadException : public BaseExceptions {
                   , const std::string &method_name
                   , const std::string &arg = "");
 };
+
 
 #define ARG_ARGUMENT_ERROR(args) ArgumentException(__FILE__ \
                                         , typeid(*this).name() \
@@ -88,6 +90,36 @@ class UnexpectedCallException : public BaseExceptions {
                             , const std::string &classname
                             , const std::string &method_name
                             , const std::string &arg = "");
+};
+
+typedef BaseExceptions LogicError;
+
+
+#define INVALID_ARG_ERROR() InvalidArg(__FILE__ \
+                                    , typeid(*this).name() \
+                                    , __FUNCTION__)
+
+class InvalidArg : public BaseExceptions {
+  public:
+    InvalidArg(const std::string& filename, const std::string& classname
+               , const std::string& methodname);
+
+    [[nodiscard]]
+    const char *what() const noexcept override;
+};
+
+
+#define ARG_FILE_ERROR_ERROR(args) FileError(__FILE__ \
+                                        , typeid(*this).name() \
+                                        , __FUNCTION__, args)
+
+class FileError : public BaseExceptions {
+  public:
+    FileError(const std::string& filename, const std::string& classname
+              , const std::string& methodname, const std::string& arg);
+
+    [[nodiscard]]
+    const char *what() const noexcept override;
 };
 
 }  // namespace debug

@@ -1,14 +1,6 @@
 {
   "stars": [
-  ],
-  "planets": [
     {
-      "orbit_properties": {
-        "x_c": 10.0,
-        "y_c": 0.0,
-        "a": 10,
-        "b": 20
-      },
       "velocity": {
         "x": 0.1,
         "y": -0.01
@@ -19,15 +11,34 @@
       },
       "weight": 100000,
       "polygon": {
-        "type": "rectangle",
-        "height": 0,
-        "width": 0,
+        "type": "circle",
+        "radius": 10,
         "angle": 0
       },
-      "sprite_id": 9
+      "sprite_id": 5
+    }
+  ],
+  "planets": [
+    {
+      "orbit_properties": {
+        "x_c": 100.0,
+        "y_c": 0.0,
+        "a": 300,
+        "b": 300,
+        "angle": -90.0,
+        "period": 500.0
+      },
+      "weight": 50000,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 10
+      },
+      "sprite_id": 4
     }
   ],
   "background": {
     "sprite_id": 0
-  }
+  },
+  "density": 100
 }

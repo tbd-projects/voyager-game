@@ -4,14 +4,14 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-#include <exceptions.hpp>
+#include <debug/exception.hpp>
 
-namespace game {
+namespace game::external {
     namespace pt = boost::property_tree;
 
     BaseProgressLoader::BaseProgressLoader(const std::string &root_path) {
         if (root_path.empty()) {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
         this->path = root_path;
     }
@@ -19,7 +19,7 @@ namespace game {
     progress_t BaseProgressLoader::load(size_t player_id) {
 
         if (!this->has_progress(player_id)) {
-            throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
+            throw debug::ARG_LOAD_ERROR(this->path);
         }
 
         pt::ptree tree;
@@ -41,7 +41,7 @@ namespace game {
 
         progress_t stats{};
         for (pt::ptree::value_type &player : tree.get_child("players")) {
-            if (player.second.get<int>("id") == player_id) {
+            if (player.second.get<size_t>("id") == player_id) {
                 stats = parce_stats(player.second);
                 break;
             }
@@ -83,7 +83,7 @@ namespace game {
             players.push_back(std::make_pair("", temp));
         } else {
             for (pt::ptree::value_type &player : players) {
-                if (player.second.get<int>("id") == player_id) {
+                if (player.second.get<size_t>("id") == player_id) {
                     player.second = temp;
                 }
             }
@@ -101,7 +101,7 @@ namespace game {
         bool has_player = false;
 
         for (auto &player: tree.get_child("players")) {
-            if (player.second.get<int>("id") == player_id) {
+            if (player.second.get<size_t>("id") == player_id) {
                 has_player = true;
                 break;
             }

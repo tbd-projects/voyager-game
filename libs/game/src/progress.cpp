@@ -3,6 +3,7 @@
 //
 #include <game_manager/config.hpp>
 #include "progress.hpp"
+#include "debug/exception.hpp"
 
 namespace game {
     Progress::Progress(ProgressLoader *loader) {
@@ -34,7 +35,7 @@ namespace game {
 
     const level_stat &Progress::get_level_stat(unsigned int level_num) {
         if (level_num > game_manager::Config::get_instance().levels_loader->get_levels_count()) {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
         ssize_t num_of_struct = -1;
         for (ssize_t i = 0; i < _progress.levels.size(); ++i) {
@@ -44,7 +45,7 @@ namespace game {
             }
         }
         if (num_of_struct == -1) {
-            throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::LogicError(__FILE__, typeid(*this).name(), __FUNCTION__);
         } else {
             return _progress.levels[num_of_struct];
         }
@@ -53,7 +54,7 @@ namespace game {
 
     void Progress::update_level(unsigned int level_num, level_stat progress) {
         if (level_num > game_manager::Config::get_instance().levels_loader->get_levels_count()) {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
         ssize_t num_of_struct = -1;
         for (ssize_t i = 0; i < _progress.levels.size(); ++i) {
@@ -63,7 +64,7 @@ namespace game {
             }
         }
         if (num_of_struct == -1) {
-            throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::LogicError(__FILE__, typeid(*this).name(), __FUNCTION__);
         } else {
             _progress.levels[num_of_struct] = progress;
         }

@@ -5,16 +5,18 @@
 #include "loaders/level_loader.hpp"
 #include "math.hpp"
 #include <memory>
-#include "objects.hpp"
+#include "game/objects.hpp"
 #include "physics/orbit.hpp"
 #include "game_manager/config.hpp"
+#include "debug/exception.hpp"
 
 #define LogicError BaseExceptions
 
-namespace game {
+namespace game::external {
+
     JsonCreateLevel::JsonCreateLevel(const std::string &level_dir) {
         if (level_dir.empty()) {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
         this->_path = level_dir;
     }
@@ -22,7 +24,8 @@ namespace game {
 /* path: data/levels/ levels: 1.json 2.json 3.json.......*/
     void JsonCreateLevel::create_level(size_t level_num) {
         if (!level_num) {
-            throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
+            throw LogicError(__FILE__, typeid(*this).name()
+                             , __FUNCTION__, "level num is incorrect");
         }
         pt::ptree tree;
         std::string level_path = this->_path + std::to_string(level_num) + ".json";
@@ -59,7 +62,7 @@ namespace game {
         if (polygon_type == "circle") {
             polygon = std::make_unique<math::CirclePolygon>(math::coords_t(0, 0), radius, angle);
         } else {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
 
         auto sprite_id = star.second.get<size_t>("sprite_id");
@@ -84,7 +87,7 @@ namespace game {
         orbit_angle = planet.second.get<math::decimal_t>("orbit_properties.angle");
         orbit_period = planet.second.get<math::decimal_t>("orbit_properties.period");
 
-        physics::Orbit::orbit_properties_t orb_prop(orbit_pos, orbit_var, orbit_angle, orbit_period);
+        physics::Orbit::orbit_properties_t orb_prop(orbit_var, orbit_pos, orbit_angle, orbit_period);
 
         auto weight = planet.second.get<size_t>("weight");
 
@@ -96,7 +99,7 @@ namespace game {
         if (polygon_type == "circle") {
             polygon = std::make_unique<math::CirclePolygon>(math::coords_t(0, 0), radius, angle);
         } else {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
 
         auto sprite_id = planet.second.get<size_t>("sprite_id");
@@ -107,7 +110,8 @@ namespace game {
 
     }
 
-    void JsonCreateLevel::load_space_objects(pt::ptree &tree, const std::string &obj_name) {
+    void JsonCreateLevel::load_space_objects(pt::ptree &tree
+                                             , const std::string &obj_name) {
         if (obj_name == "stars") {
             for (pt::ptree::value_type &star : tree.get_child(obj_name)) {
                 this->load_star(star);
@@ -142,32 +146,4 @@ namespace game {
         );
     }
 
-    void LevelManager::set_current_level(size_t level_num) {
-        this->_level_num = level_num;
-    }
-
-    void LevelManager::load_current_level() {
-        if (!this->_level_num) {
-            throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
-        }
-        this->_current_level->create_level(this->_level_num);
-    }
-
-    void LevelManager::create_level(size_t level_num) {
-
-    }
-
-    LevelManager::LevelManager() : _current_level(nullptr), _level_num(0) {
-        auto root = game_manager::Config::get_instance().levels_path;
-        _current_level = std::make_unique<JsonCreateLevel>(root);
-    }
-
-    size_t LevelManager::get_levels_count() {
-        return 0;
-    }
-
-    size_t CreatorLevel::get_current_level() const {
-        // func can't usage without implementation in child classes!
-        throw LogicError(__FUNCTION__, typeid(*this).name(), __FILE__);
-    }
 } // namespace game

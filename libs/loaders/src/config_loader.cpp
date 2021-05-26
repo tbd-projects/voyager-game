@@ -5,9 +5,9 @@
 
 #include "config_loader.hpp"
 
-namespace game_manager::imported {
+namespace game_manager::external {
 
-void imported::ConfigJsonLoader::load(const std::filesystem::path& root
+void ConfigJsonLoader::load(const std::filesystem::path& root
                                 , Config &config) const {
     if (root.empty()) {
         throw debug::ARG_ARGUMENT_ERROR("empty file for load in path :"

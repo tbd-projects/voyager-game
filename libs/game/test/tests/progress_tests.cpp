@@ -5,7 +5,6 @@
 #include <boost/property_tree/exceptions.hpp>
 #include "gtest/gtest.h"
 #include "debug/exception.hpp"
-#include "game/exceptions.hpp"
 #include "loaders/progress_loader.hpp"
 
 using namespace boost::property_tree;
@@ -13,14 +12,14 @@ using namespace boost::property_tree;
 
 class BaseProgressLoaderTest : public testing::Test {
 protected:
-    game::BaseProgressLoader loader{};
+    game::external::BaseProgressLoader loader{};
 
 
     void SetUp() {
         auto root_dir = std::filesystem::path(
                 __FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
         std::string path_load = root_dir / "libs/game/test/data/example_progress_load.json";
-        this->loader = game::BaseProgressLoader{path_load};
+        this->loader = game::external::BaseProgressLoader{path_load};
 
     }
 
@@ -29,14 +28,14 @@ protected:
 
 class BaseProgressSaverTest : public testing::Test {
 protected:
-    game::BaseProgressLoader loader{};
+    game::external::BaseProgressLoader loader{};
     game::progress_t progress;
 
     void SetUp() {
         auto root_dir = std::filesystem::path(
                 __FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
         std::string path_save = root_dir / "libs/game/test/data/example_progress_save.json";
-        this->loader = game::BaseProgressLoader{path_save};
+        this->loader = game::external::BaseProgressLoader{path_save};
 
         this->progress.coins = 999;
         for (size_t i = 0; i < 5; ++i) {
@@ -59,7 +58,7 @@ TEST_F(BaseProgressLoaderTest, noStats) {
 
 TEST_F(BaseProgressLoaderTest, statsNotFound) {
     int player_id = -1;
-    EXPECT_THROW(this->loader.load(player_id), LoadError);
+    EXPECT_THROW(this->loader.load(player_id), debug::LoadError);
 }
 
 TEST_F(BaseProgressLoaderTest, statsFound) {

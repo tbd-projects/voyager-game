@@ -5,7 +5,6 @@
 
 #include "objects.hpp"
 #include "progress.hpp"
-#include "loaders/level_loader.hpp"
 #include "sprite_creator.hpp"
 #include "camera.hpp"
 #include <graphics/i_drawable.h>
@@ -89,6 +88,7 @@ namespace game {
 //        progress_t _progress;
         size_t fps_counter;
 
+        size_t _id_level;
 
         void _subscribe_events();
 

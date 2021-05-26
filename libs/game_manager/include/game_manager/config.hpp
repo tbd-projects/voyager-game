@@ -33,7 +33,6 @@ class Config {
     std::filesystem::path stats_path;
     std::filesystem::path properties_path;
 
-    std::shared_ptr<game::CreatorLevel> level_manager;
     std::shared_ptr<graphics::IGraphicsFactory> graphics_factory;
     std::shared_ptr<graphics::ISpiteLoader> sprite_loader;
     std::shared_ptr<game::PlayerPropertiesLoader> properties_loader;

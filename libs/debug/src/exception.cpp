@@ -101,4 +101,29 @@ UnexpectedCallException::UnexpectedCallException(const std::string &filename
         : BaseExceptions(filename, classname, method_name, arg) {}
 
 
+//  -----------------------------InvalidArg-------------------------------------
+
+
+InvalidArg::InvalidArg(const std::string& filename, const std::string& classname
+                       , const std::string& methodname) :
+        BaseExceptions(filename, classname, methodname) {}
+
+const char *InvalidArg::what() const noexcept {
+    std::string message = "\nERROR: Invalid argument. " + _name_error;
+    return message.c_str();
+}
+
+
+//  ------------------------------FileError-------------------------------------
+
+
+FileError::FileError(const std::string& filename, const std::string& classname
+                     , const std::string& methodname, const std::string& arg) :
+        BaseExceptions(filename, classname, methodname, arg) {}
+
+const char *FileError::what() const noexcept {
+    std::string message = "\nERROR: Invalid argument. " + _name_error;
+    return message.c_str();
+}
+
 }  // namespace debug

@@ -2,6 +2,20 @@
 
 namespace game_manager::states {
 
+//  ------------------------------GameOver--------------------------------------
+
+
+GameOver::GameOver(graphics::ICanvas &canvas
+                         , event_controller::IController &controller
+                   , bool status, const game::level_stat& stat)
+        : _game_over_menu(canvas, controller) {}
+
+void GameOver::stop(event_controller::IController &controller)  {
+}
+
+void GameOver::contine(event_controller::IController &controller)  {
+}
+
 
 //  ------------------------------InMainMenu------------------------------------
 
@@ -50,9 +64,9 @@ void InPauseMenu::contine(
 
 InGame::InGame(graphics::ICanvas &canvas
                , event_controller::IController &controller
-               , size_t id_level)
+               , size_t _id_level)
         : _game(controller, canvas) {
-    _game.start_game(id_level);
+    _game.start_game(_id_level);
 }
 
 void InGame::stop(event_controller::IController &controller)  {

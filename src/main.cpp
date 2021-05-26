@@ -21,8 +21,8 @@ int main() {
 
     game_manager::SfWindow sf_window(window);
 
-    game_manager::imported::ConfigJsonLoader loader;
-    game_manager::imported::InitLoadersForConfig initer;
+    game_manager::external::ConfigJsonLoader loader;
+    game_manager::external::InitLoadersForConfig initer;
 
     game_manager::Config::load(std::filesystem::path(__FILE__).parent_path() / "../config.json", loader, initer);
 

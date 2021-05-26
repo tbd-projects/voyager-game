@@ -4,7 +4,7 @@
 
 using namespace boost::property_tree;
 
-namespace game {
+namespace game::external {
     JsonPlayerPropertiesLoader::JsonPlayerPropertiesLoader(const std::string &root_path) {
         if (root_path.empty()) {
             throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);

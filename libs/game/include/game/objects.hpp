@@ -2,7 +2,7 @@
 
 #include "main_object.hpp"
 #include "physics/astronomical_object.hpp"
-#include "loaders/properties_loader.hpp"
+#include "game/interface.hpp"
 
 namespace game {
 

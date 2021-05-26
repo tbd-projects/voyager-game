@@ -5,7 +5,7 @@
 #pragma once
 
 #include <iostream>
-#include "loaders/progress_loader.hpp"
+
 namespace game {
 
     class Progress {

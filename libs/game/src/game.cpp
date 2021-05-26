@@ -2,6 +2,7 @@
 #include <game_manager/commands.hpp>
 #include <game_manager/config.hpp>
 #include "game.hpp"
+#include "interface.hpp"
 
 namespace game {
 
@@ -24,8 +25,6 @@ namespace game {
         auto &config = game_manager::Config::get_instance();
 
         _storage = std::make_unique<graphics::TextureStorage>(*config.graphics_factory);
-
-        auto &level_manager = dynamic_cast<LevelManager &>(*::game_manager::Config::get_instance().level_manager);
 
         properties_t properties = config.properties_loader->load_current_properties(player_id);
 
@@ -51,12 +50,9 @@ namespace game {
 
     void Map::load_level(size_t level_num) {
         auto &config = ::game_manager::Config::get_instance();
-        auto &level_manager = dynamic_cast<LevelManager &>(*config.level_manager);
 
-        level_manager.set_current_level(level_num);
-        level_manager.load_current_level();
-
-        auto &current_level = dynamic_cast<JsonCreateLevel &>(*level_manager._current_level);
+        auto &current_level = (*config.levels_loader);
+        current_level.create_level(level_num);
         _space_objects = current_level.get_planets();
         _stars = current_level.get_stars();
         _bg_id = current_level.get_bg_id();
@@ -118,7 +114,7 @@ namespace game {
         if (_ship->is_die() || _engine.check_collision(*_ship)) {
             return false;
         }
-        _ship->move(_engine);
+       // _ship->move(_engine);
         auto &sprite = _ship->get_sprite();
         sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
@@ -195,9 +191,9 @@ namespace game {
             _controller(controller),
             _progress(game_manager::Config::get_instance().progress_loader->load(
                     game_manager::Config::get_instance().player_id)),
-            fps_counter(0) {
+            fps_counter(0),
+            _id_level(0) {
         _subscribe_events();
-
     }
 
     void Game::_subscribe_events() {
@@ -218,17 +214,18 @@ namespace game {
 
     bool Game::start_game(int level) {
         _map.load_level(level);
+        _id_level = level;
         return true;
     }
 
     void Game::stop_game() {
-//        _map.get_timer().pause();
+        _map.get_timer().pause();
         _unsibscribe_events();
     }
     void Game::update_stats(bool is_live) {
         level_stat result{};
         result.time_as_seconds = _map.get_timer().get_s().count();
-        result.num = game_manager::Config::get_instance().level_manager->get_current_level();
+        result.num = _id_level;
         result.is_win = is_live;
         result.stars = 0;
         this->_progress.update_level(result.num, result);
@@ -259,7 +256,8 @@ namespace game {
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
-                    return std::make_shared<game_manager::command::EndGame>();
+                    game::level_stat stat{};
+                    return std::make_shared<game_manager::command::EndGame>(true, stat);
                 }
                 break;
 
@@ -272,7 +270,8 @@ namespace game {
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
-                    return std::make_shared<game_manager::command::EndGame>();
+                    game::level_stat stat{};
+                    return std::make_shared<game_manager::command::EndGame>(true, stat);
                 }
                 return this->_map.process_keyboard(key);
             }

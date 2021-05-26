@@ -1,9 +1,7 @@
 #pragma once
 
-#include <string>
-#include <vector>
-
 namespace game {
+
     struct level_stat {
         unsigned int num;
         unsigned int time_as_seconds;
@@ -46,37 +44,30 @@ namespace game {
         }
     };
 
-    class ProgressLoader {
-    public:
-        virtual progress_t load(size_t player_id) = 0;
+    enum ship_character {
+        BATTERY,
+        ENGINE_PWR,
+        FUEL,
+        HEALTH,
+        SPRITE_ID,
+        ALL
+    };
 
-        virtual void save(size_t player_id, progress_t &progress) = 0;
+    struct properties_t {
+        math::decimal_t fuel;
+        unsigned int health;
+        unsigned int battery;
+        unsigned int engine_power;
+        unsigned int sprite_id;
 
-        virtual ~ProgressLoader() = default;
+        bool is_empty() const {
+            return math::Utilits::is_null(fuel) && !health && !battery && !engine_power && !sprite_id;
+        }
+        friend bool operator==(const properties_t &a, const properties_t &b) {
+            return a.fuel == b.fuel && a.health == b.health && a.battery == b.battery &&
+                   a.engine_power == b.engine_power && a.sprite_id == b.sprite_id;
+        }
 
     };
 
-    class BaseProgressLoader : public ProgressLoader {
-    public:
-        BaseProgressLoader() = default;
-
-        ~BaseProgressLoader() override = default;
-
-        BaseProgressLoader(const BaseProgressLoader &) = default;
-
-        BaseProgressLoader &operator=(const BaseProgressLoader &) = default;
-
-        explicit BaseProgressLoader(const std::string &root_path);
-
-        progress_t load(size_t player_id) override;
-
-        void save(size_t player_id, progress_t &progress) override;
-
-        bool has_progress(size_t player_id);
-
-
-    private:
-        std::string path;
-
-    };
-} // namespace game
+}
