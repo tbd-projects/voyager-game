@@ -114,7 +114,7 @@ namespace game {
         if (_ship->is_die() || _engine.check_collision(*_ship)) {
             return false;
         }
-       // _ship->move(_engine);
+        _ship->move(_engine);
         auto &sprite = _ship->get_sprite();
         sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
@@ -256,8 +256,7 @@ namespace game {
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
-                    game::level_stat stat{};
-                    return std::make_shared<game_manager::command::EndGame>(true, stat);
+                    return std::make_shared<game_manager::command::EndGame>(is_live, this->_progress.get_level_stat(_id_level));
                 }
                 break;
 
@@ -270,8 +269,7 @@ namespace game {
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
-                    game::level_stat stat{};
-                    return std::make_shared<game_manager::command::EndGame>(true, stat);
+                    return std::make_shared<game_manager::command::EndGame>(is_live, this->_progress.get_level_stat(_id_level));
                 }
                 return this->_map.process_keyboard(key);
             }
