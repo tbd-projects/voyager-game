@@ -27,12 +27,14 @@ namespace game {
 
         auto parce_stats = [](pt::ptree &tree) {
             progress_t progress;
-            progress.time = tree.get<size_t>("stats.time");
             progress.coins = tree.get<size_t>("stats.coins");
             for (pt::ptree::value_type &level: tree.get_child("stats.levels")) {
-                int num = level.second.get<int>("num");
-                int stars = level.second.get<int>("stars");
-                progress.level_stat.emplace_back(num, stars);
+                level_stat cur_level{};
+                cur_level.num = level.second.get<unsigned int>("num");
+                cur_level.stars = level.second.get<unsigned char>("stars");
+                cur_level.time_as_seconds = level.second.get<unsigned int>("time");
+                cur_level.is_win = level.second.get<bool>("is_win");
+                progress.levels.push_back(cur_level);
             }
             return progress;
         };
@@ -51,14 +53,16 @@ namespace game {
         auto rewrite = [&]() -> pt::ptree {
             pt::ptree tree;
             tree.put("id", player_id);
-            tree.put("stats.time", progress.time);
+//            tree.put("stats.time", progress.time);
             tree.put("stats.coins", progress.coins);
 
             pt::ptree levels;
-            for (auto &i : progress.level_stat) {
+            for (auto &i : progress.levels) {
                 pt::ptree temp;
-                temp.put("num", i.first);
-                temp.put("stars", i.second);
+                temp.put("num", i.num);
+                temp.put("stars", i.stars);
+                temp.put("time", i.time_as_seconds);
+                temp.put("is_win", i.is_win);
                 levels.push_back(std::make_pair("", temp));
             }
             tree.put_child("stats.levels", levels);

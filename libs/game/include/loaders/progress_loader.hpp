@@ -4,18 +4,37 @@
 #include <vector>
 
 namespace game {
+    struct level_stat {
+        unsigned int num;
+        unsigned int time_as_seconds;
+        bool is_win;
+        unsigned char stars;
+
+        bool operator==(const level_stat &b) const {
+            return num == b.num && time_as_seconds == b.time_as_seconds &&
+                   is_win == b.is_win && stars == b.stars;
+        }
+    };
 
     struct progress_t {
         size_t coins;
-        size_t time;
-        std::vector<std::pair<int, int>> level_stat;
+        std::vector<level_stat> levels;
 
         bool is_empty() {
-            return !coins && !time && level_stat.empty();
+            return !coins && levels.empty();
         }
 
         friend bool operator==(const progress_t &a, const progress_t &b) {
-            return a.coins == b.coins && a.time == b.time;
+            bool is_eq = a.coins == b.coins;
+            if (is_eq) {
+                is_eq = a.levels.size() == b.levels.size();
+                if (is_eq) {
+                    for (size_t i = 0; (i < a.levels.size()) && is_eq; ++i) {
+                        is_eq = a.levels[i] == b.levels[i];
+                    }
+                }
+            }
+            return is_eq;
         }
     };
 
