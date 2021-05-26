@@ -21,8 +21,8 @@ menu::GameScreen::GameScreen(graphics::IGraphicsFactory &factory, graphics::ISpi
                              int screen_width) : _screen_width(screen_width), _factory(factory), _loader(loader),
                                                                   _storage(storage) {
 
-    _battery_icon = _loader.load(2, _storage);
-    _fuel_icon = _loader.load(3, _storage);
+    _battery_icon = _loader.load(3, _storage);
+    _fuel_icon = _loader.load(2, _storage);
 
     int h = _battery_icon->get_texture_size().second * 0.7;
 
