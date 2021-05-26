@@ -16,7 +16,7 @@ namespace game {
         this->path = root_path;
     }
 
-    progress_t BaseProgressLoader::load(const int player_id) {
+    progress_t BaseProgressLoader::load(size_t player_id) {
 
         if (!this->has_progress(player_id)) {
             throw LoadError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
@@ -49,7 +49,7 @@ namespace game {
         return stats;
     }
 
-    void BaseProgressLoader::save(const int player_id, progress_t &progress) {
+    void BaseProgressLoader::save(size_t player_id, progress_t &progress) {
         auto rewrite = [&]() -> pt::ptree {
             pt::ptree tree;
             tree.put("id", player_id);
@@ -94,7 +94,7 @@ namespace game {
         }
     }
 
-    bool BaseProgressLoader::has_progress(const int player_id) {
+    bool BaseProgressLoader::has_progress(size_t player_id) {
         pt::ptree tree;
         pt::read_json(this->path, tree);
 

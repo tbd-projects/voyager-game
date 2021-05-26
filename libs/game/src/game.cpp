@@ -193,6 +193,8 @@ namespace game {
             _map(game_manager::Config::get_instance().player_id),
             _canvas(canvas),
             _controller(controller),
+            _progress(game_manager::Config::get_instance().progress_loader->load(
+                    game_manager::Config::get_instance().player_id)),
             fps_counter(0) {
         _subscribe_events();
 
@@ -219,10 +221,19 @@ namespace game {
         return true;
     }
 
-    bool Game::stop_game() {
-        _map.get_timer().pause();
+    void Game::stop_game() {
+//        _map.get_timer().pause();
         _unsibscribe_events();
-        return false;
+    }
+    void Game::update_stats(bool is_live) {
+        level_stat result{};
+        result.time_as_seconds = _map.get_timer().get_s().count();
+        result.num = game_manager::Config::get_instance().level_manager->get_current_level();
+        result.is_win = is_live;
+        result.stars = 0;
+        this->_progress.update_level(result.num, result);
+        game_manager::Config::get_instance().progress_loader->save(game_manager::Config::get_instance().player_id,
+                                                                   this->_progress.get_progress());
     }
 
     std::shared_ptr<event_controller::ICommand> Game::update(event_controller::Event &event) {
@@ -245,6 +256,8 @@ namespace game {
                     }
                 }
                 if (!is_live) {
+                    _map.get_timer().stop();
+                    this->update_stats(is_live);
                     this->stop_game();
                     return std::make_shared<game_manager::command::EndGame>();
                 }
@@ -256,6 +269,9 @@ namespace game {
                 auto key = dynamic_cast<event_controller::KeyboardEvent &>(event);
                 is_live = this->_map.update_ship(FUEL);
                 if (!is_live) {
+                    _map.get_timer().stop();
+                    this->update_stats(is_live);
+                    this->stop_game();
                     return std::make_shared<game_manager::command::EndGame>();
                 }
                 return this->_map.process_keyboard(key);
@@ -272,5 +288,7 @@ namespace game {
         _subscribe_events();
         return true;
     }
+
+
 } // namespace game
 

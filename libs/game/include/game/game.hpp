@@ -74,16 +74,19 @@ namespace game {
 
         std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
+        void update_stats(bool is_live);
+
         bool start_game(int level);
 
-        bool stop_game();
+        void stop_game();
         bool unpause();
 
     private:
         game::Map _map;
-        game::Progress _progress;
         graphics::ICanvas &_canvas;
         event_controller::IController &_controller;
+        game::Progress _progress;
+//        progress_t _progress;
         size_t fps_counter;
 
 

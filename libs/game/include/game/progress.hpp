@@ -22,6 +22,10 @@ namespace game {
 
         progress_t &get_progress();
 
+        const level_stat &get_level_stat(unsigned int level_num);
+
+        void update_level(unsigned int level_num, level_stat progress);
+
         progress_t &set_progress(progress_t &progress);
 
     private:

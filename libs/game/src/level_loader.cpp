@@ -165,4 +165,8 @@ namespace game {
     size_t LevelManager::get_levels_count() {
         return 0;
     }
+
+    size_t CreatorLevel::get_current_level() const {
+
+    }
 } // namespace game

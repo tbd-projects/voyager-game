@@ -13,6 +13,7 @@ namespace game {
     public:
         virtual void create_level(size_t level_num) = 0;
         virtual size_t get_levels_count() = 0;
+        virtual size_t get_current_level() const;
         virtual ~CreatorLevel() = default;
     };
 
@@ -61,6 +62,8 @@ namespace game {
         LevelManager();
 
         void set_current_level(size_t level_num);
+
+        [[nodiscard]] size_t get_current_level() const override {return this->_level_num;}
 
         void load_current_level();
 

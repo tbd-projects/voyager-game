@@ -14,7 +14,9 @@ namespace game {
             return num == b.num && time_as_seconds == b.time_as_seconds &&
                    is_win == b.is_win && stars == b.stars;
         }
+
         level_stat() = default;
+
         level_stat(unsigned int num, unsigned int time, unsigned char stars, bool is_win) :
                 num(num),
                 time_as_seconds(time),
@@ -46,9 +48,9 @@ namespace game {
 
     class ProgressLoader {
     public:
-        virtual progress_t load(const int player_id) = 0;
+        virtual progress_t load(size_t player_id) = 0;
 
-        virtual void save(const int player_id, progress_t &progress) = 0;
+        virtual void save(size_t player_id, progress_t &progress) = 0;
 
         virtual ~ProgressLoader() = default;
 
@@ -66,11 +68,11 @@ namespace game {
 
         explicit BaseProgressLoader(const std::string &root_path);
 
-        progress_t load(const int player_id) override;
+        progress_t load(size_t player_id) override;
 
-        void save(const int player_id, progress_t &progress) override;
+        void save(size_t player_id, progress_t &progress) override;
 
-        bool has_progress(const int player_id);
+        bool has_progress(size_t player_id);
 
 
     private:
