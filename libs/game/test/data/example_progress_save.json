@@ -3,28 +3,37 @@
         {
             "id": "1",
             "stats": {
-                "time": "999",
                 "coins": "999",
                 "levels": [
                     {
                         "num": "0",
-                        "stars": "0"
+                        "stars": "0",
+                        "time": "0",
+                        "is_win": "true"
                     },
                     {
                         "num": "1",
-                        "stars": "1"
+                        "stars": "1",
+                        "time": "1",
+                        "is_win": "true"
                     },
                     {
                         "num": "2",
-                        "stars": "4"
+                        "stars": "2",
+                        "time": "2",
+                        "is_win": "true"
                     },
                     {
                         "num": "3",
-                        "stars": "9"
+                        "stars": "3",
+                        "time": "3",
+                        "is_win": "true"
                     },
                     {
                         "num": "4",
-                        "stars": "16"
+                        "stars": "4",
+                        "time": "4",
+                        "is_win": "true"
                     }
                 ]
             }

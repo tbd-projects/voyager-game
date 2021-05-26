@@ -1,7 +1,6 @@
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
 #include "debug/exception.hpp"
-#include "game/exceptions.hpp"
 #include "loaders/level_loader.hpp"
 #include "math.hpp"
 #include <memory>
@@ -9,8 +8,6 @@
 #include "physics/orbit.hpp"
 #include "game_manager/config.hpp"
 #include "debug/exception.hpp"
-
-#define LogicError BaseExceptions
 
 namespace game::external {
 
@@ -24,7 +21,7 @@ namespace game::external {
 /* path: data/levels/ levels: 1.json 2.json 3.json.......*/
     void JsonCreateLevel::create_level(size_t level_num) {
         if (!level_num) {
-            throw LogicError(__FILE__, typeid(*this).name()
+            throw debug::LogicError(__FILE__, typeid(*this).name()
                              , __FUNCTION__, "level num is incorrect");
         }
         pt::ptree tree;

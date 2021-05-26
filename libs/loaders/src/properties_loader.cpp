@@ -1,13 +1,12 @@
 #include "properties_loader.hpp"
 #include "debug/exception.hpp"
-#include "game/exceptions.hpp"
 
 using namespace boost::property_tree;
 
 namespace game::external {
     JsonPlayerPropertiesLoader::JsonPlayerPropertiesLoader(const std::string &root_path) {
         if (root_path.empty()) {
-            throw InvalidArg(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::INVALID_ARG_ERROR();
         }
         this->path = root_path;
     }
@@ -17,7 +16,8 @@ namespace game::external {
         ptree tree;
         read_json(this->path, tree);
         if (!this->has_player(player_id)) {
-            throw LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, std::string("player not found"));
+            throw debug::LogicError(__FILE__, typeid(*this).name()
+                                    , __FUNCTION__, std::string("player not found"));
         }
 
         auto fill_prop = [](ptree &pt) -> properties_t {
@@ -45,7 +45,7 @@ namespace game::external {
 
     void JsonPlayerPropertiesLoader::save_current_properties(const int player_id, properties_t &properties) {
         if (this->path.empty()) {
-            throw FileError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
+            throw debug::ARG_FILE_ERROR_ERROR(this->path);
         }
         auto rewrite = [&player_id](properties_t &properties) -> ptree {
             ptree tree;
@@ -86,7 +86,7 @@ namespace game::external {
 
     bool JsonPlayerPropertiesLoader::has_player(const int player_id) {
         if (this->path.empty()) {
-            throw FileError(__FILE__, typeid(*this).name(), __FUNCTION__, this->path);
+            throw debug::ARG_FILE_ERROR_ERROR(this->path);
         }
         ptree tree;
         bool has_player = false;

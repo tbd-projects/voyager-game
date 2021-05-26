@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 #include "loaders/properties_loader.hpp"
 #include "debug/exception.hpp"
-#include "game/exceptions.hpp"
 
 using namespace boost::property_tree;
 
@@ -15,7 +14,7 @@ std::string path_save = root_dir / "libs/loaders/test/data/example_properties_sa
 
 class JsonPlayerPropertiesLoaderTest : public testing::Test {
 protected:
-    game::JsonPlayerPropertiesLoader loader{prop_path};
+    game::external::JsonPlayerPropertiesLoader loader{prop_path};
 
     void SetUp() {
 
@@ -27,7 +26,7 @@ protected:
 
 class JsonPlayerPropertiesSaverTest : public testing::Test {
 protected:
-    game::JsonPlayerPropertiesLoader loader{path_save};
+    game::external::JsonPlayerPropertiesLoader loader{path_save};
 
 };
 
@@ -42,7 +41,7 @@ TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
 }
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerNotExist) {
     size_t player_id = -1;
-    EXPECT_THROW(this->loader.load_current_properties(player_id), LogicError);
+    EXPECT_THROW(this->loader.load_current_properties(player_id), debug::LogicError);
 }
 TEST_F(JsonPlayerPropertiesSaverTest, hasPropertiesPlayer) {
     int player_id = 0;

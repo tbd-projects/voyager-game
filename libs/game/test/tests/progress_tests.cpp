@@ -58,7 +58,7 @@ TEST_F(BaseProgressLoaderTest, noStats) {
 
 TEST_F(BaseProgressLoaderTest, statsNotFound) {
     int player_id = -1;
-    EXPECT_THROW(this->loader.load(player_id), debug::LoadError);
+    EXPECT_THROW(this->loader.load(player_id), debug::LoadException);
 }
 
 TEST_F(BaseProgressLoaderTest, statsFound) {

@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 #include "game/objects.hpp"
 #include "loaders/level_loader.hpp"
-#include "game/exceptions.hpp"
 #include "math/polygon.hpp"
 #include "physics/orbit.hpp"
 
@@ -14,7 +13,7 @@ using namespace boost::property_tree;
 
 class LevelLoader : public testing::Test {
 protected:
-    game::JsonCreateLevel loader;
+    game::external::JsonCreateLevel loader;
     size_t bg_id;
     size_t cnt_planets;
     size_t cnt_stars;
@@ -25,7 +24,7 @@ protected:
         auto root_dir = std::filesystem::path(
                 __FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
         std::string path_load = root_dir / "libs/game/test/data/";
-        this->loader = game::JsonCreateLevel{path_load};
+        this->loader = game::external::JsonCreateLevel{path_load};
         this->bg_id = 0;
         this->cnt_planets = 3;
         this->cnt_stars = 1;
