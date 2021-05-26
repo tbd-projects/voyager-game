@@ -26,7 +26,7 @@ namespace game {
     }
 
     math::decimal_t SpaceShip::get_fuel_density() {
-        return this->_fuel_density;
+        return this->_fuel_prop._fuel_density;
     }
 
     void SpaceShip::set_fuel(size_t fuel) {
@@ -46,12 +46,12 @@ namespace game {
     }
 
     void SpaceShip::set_fuel_density(math::decimal_t fuel_density) {
-        this->_fuel_density = fuel_density;
+        this->_fuel_prop._fuel_density = fuel_density;
     }
 
-    // @todo add fuel calculation formulas
+    // @todo add _fuel_prop calculation formulas
     bool SpaceShip::update_fuel() {
-        this->_properties.fuel -= this->_base_discarder_mass_of_fuel / this->_fuel_density;
+        this->_properties.fuel -= this->_fuel_prop._base_discarder_mass_of_fuel / this->_fuel_prop._fuel_density;
         return this->_properties.fuel > 0;
     }
 

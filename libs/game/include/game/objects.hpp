@@ -15,9 +15,9 @@ namespace game {
         SpaceShip(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
                   properties_t &properties, math::decimal_t base_discard_pf_fuel, size_t weight = init_weight,
                   math::Vector2d velocity = init_velocity, math::coords_t pos = init_pos) :
-                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos),
-                _base_discarder_mass_of_fuel(base_discard_pf_fuel) {
+                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos){
             this->_properties = properties;
+            this->_fuel_prop._base_discarder_mass_of_fuel = base_discard_pf_fuel;
         };
 
         ~SpaceShip() = default;
@@ -60,8 +60,10 @@ namespace game {
 
     private:
         properties_t _properties;
-        math::decimal_t _base_discarder_mass_of_fuel;
-        math::decimal_t _fuel_density;
+        struct fuel_t {
+            math::decimal_t _base_discarder_mass_of_fuel;
+            math::decimal_t _fuel_density;
+        } _fuel_prop;
     };
 
     class SpaceBody : public GameObject {

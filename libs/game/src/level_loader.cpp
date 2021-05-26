@@ -167,6 +167,7 @@ namespace game {
     }
 
     size_t CreatorLevel::get_current_level() const {
-
+        // func can't usage without implementation in child classes!
+        throw LogicError(__FUNCTION__, typeid(*this).name(), __FILE__);
     }
 } // namespace game

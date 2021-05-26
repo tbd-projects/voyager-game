@@ -12,8 +12,11 @@ namespace game {
     class CreatorLevel {
     public:
         virtual void create_level(size_t level_num) = 0;
+
         virtual size_t get_levels_count() = 0;
-        virtual size_t get_current_level() const;
+
+        [[nodiscard]] virtual size_t get_current_level() const;
+
         virtual ~CreatorLevel() = default;
     };
 
@@ -24,6 +27,7 @@ namespace game {
         explicit JsonCreateLevel(const std::string &level_dir);
 
         size_t get_levels_count() override;
+
 //        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
 
 //        JsonCreateLevel(const JsonCreateLevel &) = delete;
@@ -40,7 +44,8 @@ namespace game {
         std::vector<std::shared_ptr<Star>> &&get_stars();
 
         size_t get_bg_id() const { return this->_bg_id; };
-        math::decimal_t get_fuel_density() const {return this->_density;}
+
+        math::decimal_t get_fuel_density() const { return this->_density; }
 
 
     private:
@@ -55,6 +60,7 @@ namespace game {
         void set_texture();
 
         void load_space_objects(pt::ptree &tree, const std::string &obj_name);
+
     };
 
     class LevelManager : public CreatorLevel {
@@ -63,7 +69,7 @@ namespace game {
 
         void set_current_level(size_t level_num);
 
-        [[nodiscard]] size_t get_current_level() const override {return this->_level_num;}
+        [[nodiscard]] size_t get_current_level() const override { return this->_level_num; }
 
         void load_current_level();
 
