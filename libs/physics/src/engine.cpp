@@ -20,7 +20,7 @@ class Config {
             (math::runge_func, math::coords_t)> creater_runge_kutta;
 };
 
-}
+}  // namespace game_manager
 
 namespace physics {
 
@@ -211,7 +211,7 @@ bool StoreObject::contain_object(const PhysicalObject &object) const {
 }
 
 bool StoreObject::is_objects_with_equal_id(const PhysicalObject &object_1
-                                           , const PhysicalObject &object_2) const {
+                                       , const PhysicalObject &object_2) const {
     return object_1._index == object_2._index;
 }
 

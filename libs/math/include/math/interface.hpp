@@ -1,7 +1,9 @@
 #pragma once
 
-#include <math/utilits.hpp>
 #include <utility>
+
+#include <math/utilits.hpp>
+
 
 namespace math {
 
@@ -30,7 +32,13 @@ class IRungeKuttaMethod {
         _start_x = start_x;
     }
 
+    [[nodiscard]]
+    virtual math::coords_t get_start_x() const {
+        return _start_x;
+    }
+
     virtual ~IRungeKuttaMethod() = default;
+
   protected:
     runge_func _func;
     math::coords_t _start_x;

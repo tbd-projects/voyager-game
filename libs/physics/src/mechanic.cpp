@@ -11,8 +11,7 @@ namespace physics {
 NewtonForce::NewtonForce() {}
 
 math::Vector2d NewtonForce::get_force(const PhysicalObject &object
-                                      , const PhysicalObject &other_object) const {
-
+                                  , const PhysicalObject &other_object) const {
     math::Vector2d r = math::Vector2d(other_object.get_pos()
                                       - object.get_pos());
     math::decimal_t force =
@@ -52,7 +51,7 @@ math::decimal_t Mechanic::get_effective_circle_orbit(
 }
 
 math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object
-                                              , const StoreObject &objects) const {
+                                          , const StoreObject &objects) const {
     std::vector<std::reference_wrapper<const PhysicalObject>> other_object;
 
     auto tmp = objects.get_active_object();

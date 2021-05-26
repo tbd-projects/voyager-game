@@ -68,14 +68,15 @@ Orbit::orbit_properties_t Orbit::get_orbit_properties() const {
 }
 
 void Orbit::relocate_on_orbit(math::decimal_t angle) {
-    _current_epoch_time = ( math::Utilits::to_rad(angle) / math::const_2_pi)
+    _current_epoch_time = (math::Utilits::to_rad(angle) / math::const_2_pi)
                           * _period;
 }
 
 void Orbit::_kepler_move(PhysicalObject &object
                          , const Engine &physical_engine) {
     _current_epoch_time += physical_engine.get_part_of_seconds_in_tick();
-    _current_epoch_time -= _period < _current_epoch_time ? _period : math::dec(0);
+    _current_epoch_time
+            -= _period < _current_epoch_time ? _period : math::dec(0);
     _set_pos_on_kepler_orbit(object);
 }
 

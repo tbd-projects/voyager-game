@@ -15,6 +15,25 @@ class PolygonFixture : public testing::Test {
         , rectangle_scale(0.6)
         , triangle_scale(0.4) {}
 
+    void test_getters() {
+        EXPECT_PRED2(math::Utilits::is_equal, circle.get_radius(), 5.65685);
+        EXPECT_PRED2(math::Utilits::is_equal, rectangle.get_height(), 7);
+        EXPECT_PRED2(math::Utilits::is_equal, rectangle.get_width(), 6.40985);
+        EXPECT_PRED2(math::Utilits::is_equal, triangle.get_width(), 5.664899);
+        EXPECT_PRED2(math::Utilits::is_equal, triangle.get_height(), 8);
+
+        EXPECT_PRED2(math::Utilits::is_equal, circle.get_circumscribed_circ()
+                     , 5.65685);
+        EXPECT_PRED2(math::Utilits::is_equal, triangle.get_circumscribed_circ()
+                     , 8 / math::dec(3) * 2);
+        EXPECT_PRED2(math::Utilits::is_equal, rectangle.get_circumscribed_circ()
+                     , 4.745686911);
+
+        EXPECT_EQ(circle.get_pos(), math::coords_t(0, 0));
+        EXPECT_EQ(rectangle.get_pos(), math::coords_t(7.58342, 4.99844));
+        EXPECT_EQ(triangle.get_pos(), math::coords_t(2.33347, 6.92783));
+    }
+
   protected:
     math::CirclePolygon circle;
     math::RectanglePolygon rectangle;
@@ -71,3 +90,6 @@ TEST_F(PolygonFixture, ResizeAndIntresect) {
     EXPECT_TRUE(triangle.intresect(circle));
 }
 
+TEST_F(PolygonFixture, GettersTest) {
+    test_getters();
+}
