@@ -25,7 +25,7 @@ void graphics::sf::SfOrbitShape::set_orbit(const physics::Orbit::orbit_propertie
 
     if (!axis.x || !axis.y) return;
 
-    size_t nums = std::min(50., 2 * M_PI * std::max(axis.x, axis.y));
+    size_t nums = std::min(100., 2 * M_PI * std::max(axis.x, axis.y));
 
     auto step = 2 * M_PI / nums;
 
@@ -42,6 +42,18 @@ void graphics::sf::SfOrbitShape::set_orbit(const physics::Orbit::orbit_propertie
 
         _shape.setPoint(i, ::sf::Vector2<float>(x, y));
     }
+
+    auto fnc = [](math::coords_t basis, math::coords_t varibles) -> math::coords_t {
+        if (varibles.x < varibles.y) {
+            std::swap(varibles.x, varibles.y);
+        }
+
+        return basis + math::coords_t(std::sqrt(varibles.x * varibles.x - varibles.y * varibles.y), 0);
+    };
+
+    auto focus = fnc({0,0}, axis);
+
+    _shape.setOrigin(focus.x, focus.y);
 
     _shape.setRotation(-rot);
 }

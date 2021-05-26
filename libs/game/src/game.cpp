@@ -106,8 +106,18 @@ namespace game {
 
             _camera->apply_object(*obj);
 
+//            auto fnc = [](math::coords_t basis, math::coords_t varibles) -> math::coords_t {
+//                if (varibles.x < varibles.y) {
+//                    std::swap(varibles.x, varibles.y);
+//                }
+//
+//                return basis - math::coords_t(- std::sqrt(varibles.x * varibles.x - varibles.y * varibles.y), 0);
+//            };
+
             shape->set_orbit(obj->get_orbit().get_orbit_properties());
-            shape->set_pos(_camera->get_coords(obj->get_orbit().get_orbit_properties().basis));
+            auto orbit = obj->get_orbit().get_orbit_properties();
+
+            shape->set_pos(_camera->get_coords(orbit.basis));
             shape->scale(_camera->get_size());
             shape->draw(canvas);
 
