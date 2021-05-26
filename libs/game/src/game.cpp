@@ -167,6 +167,9 @@ namespace game {
             case event_controller::Key::W:
                 this->set_impulse(this->_ship);
                 break;
+            case event_controller::Key::S:
+                this->_ship->add_impulse(this->_ship->get_rotation() - 180);
+                break;
             default:
                 break;
         }
