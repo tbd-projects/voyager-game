@@ -24,15 +24,15 @@ namespace graphics {
         auto scale = get_scale();
         _sprite->scale(scale);
 
-        int ww = _sprite->get_texture_size().first * scale;
-        int hh = _sprite->get_texture_size().second * scale;
+        auto ww = _sprite->get_texture_size().first * scale;
+        auto hh = _sprite->get_texture_size().second * scale;
 
-        new_pos.x = (int(pos.x) % ww + ww) % ww - ww;
-        new_pos.y = (int(pos.y) % hh + hh) % hh - hh;
+        new_pos.x = ww * int(-pos.x/ww - 1) + pos.x;
+        new_pos.y = hh * int(-pos.y/hh - 1) + pos.y;
 
-        for (int x = new_pos.x; x < w + ww; x+=ww)
+        for (auto x = new_pos.x; x < w + ww; x += ww)
         {
-            for (int y = new_pos.y; y < h + hh; y +=hh)
+            for (auto y = new_pos.y; y < h + hh; y += hh)
             {
                 _sprite->set_pos(math::coords_t(x, y));
                 _sprite->draw(canvas);
