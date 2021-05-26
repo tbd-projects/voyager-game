@@ -233,7 +233,7 @@ INSTANTIATE_TEST_SUITE_P(SelectValues, AlgebraTest
             return {std::pow(x, 4) + std::pow(x, 3) + 2. * x * x - x - 3.,
                     4. * std::pow(x, 3) + 3. * std::pow(x, 2) + 4 * x - 1,
                     12. * std::pow(x, 2) + 6. * x + 4};
-        }, math::d(0.8), 10, math::d(1)}, algebra_test_tuple{
+        }, math::dec(0.8), 10, math::dec(1)}, algebra_test_tuple{
                 [](auto x) -> return_alg {
                     return
                             {std::pow(x, 4) + std::pow(x, 3)
@@ -241,19 +241,19 @@ INSTANTIATE_TEST_SUITE_P(SelectValues, AlgebraTest
                              4. * std::pow(x, 3)
                              + 3. * std::pow(x, 2) + 4 * x - 1,
                              12. * std::pow(x, 2) + 6. * x + 4};
-                }, math::d(-0.8), 5, math::d(-1)}, algebra_test_tuple{
+                }, math::dec(-0.8), 5, math::dec(-1)}, algebra_test_tuple{
                 [](auto x) -> return_alg {
                     return {sqrt(2 * x + 1) - 3, 1 / sqrt(2 * x + 1),
                             -1 / ((2 * x + 1) * sqrt(2 * x + 1))};
-                }, math::d(0.1), 30, math::d(4)}, algebra_test_tuple{
+                }, math::dec(0.1), 30, math::dec(4)}, algebra_test_tuple{
                 [](auto x) -> return_alg {
                     return {std::log10(x - 3) + std::log10(x - 2)
                             - 1 + std::log10(5), 1 / ((x - 3) * std::log(10))
                                                  + 1 / ((x - 2) * std::log(10)),
                             (1 / ((x - 3) * (x - 3)) +
                              1 / ((x - 2) * (x - 2))) / std::log(10)};
-                }, math::d(4.5), 25, math::d(4)}, algebra_test_tuple{
+                }, math::dec(4.5), 25, math::dec(4)}, algebra_test_tuple{
                 [](auto x) -> return_alg {
                     return {sin(x), cos(x), -sin(x)};
-                }, math::d(0.8), 3, math::d(0)})
+                }, math::dec(0.8), 3, math::dec(0)})
 );

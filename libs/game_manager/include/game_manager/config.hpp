@@ -39,6 +39,8 @@ class Config {
     std::shared_ptr<game::ProgressLoader> progress_loader;
     std::shared_ptr<game::CreatorLevel> levels_loader;
 
+    std::function<std::unique_ptr<math::IRungeKuttaMethod>
+            (math::runge_func, math::coords_t)> creater_runge_kutta;
   protected:
     Config();
 

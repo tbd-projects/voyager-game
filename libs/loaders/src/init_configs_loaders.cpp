@@ -19,6 +19,7 @@ void InitLoadersForConfig::init(Config &config) const {
             config.stats_path);
     config.levels_loader = std::make_shared<game::external::JsonCreateLevel>(
             config.levels_path);
+
 }
 
 }  // namespace game_manager::imported

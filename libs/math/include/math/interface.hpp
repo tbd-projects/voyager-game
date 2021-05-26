@@ -1,8 +1,48 @@
 #pragma once
 
+#include <utility>
+
 #include <math/utilits.hpp>
 
+
 namespace math {
+
+using runge_func = std::function<void(const math::coords_t &
+                                      , math::coords_t &, math::decimal_t)>;
+
+using visit_runge_func = std::function<void(const math::coords_t &
+                                            , math::decimal_t)>;
+
+class IRungeKuttaMethod {
+  public:
+    IRungeKuttaMethod() = delete;
+
+    IRungeKuttaMethod(runge_func func, math::coords_t start_x)
+            : _func(std::move(func))
+              , _start_x(start_x) {}
+
+    virtual math::decimal_t do_step(math::decimal_t t, math::decimal_t dt) = 0;
+
+    virtual void do_duration_step(math::decimal_t start_t
+                                  , math::decimal_t end_t
+                                  , math::decimal_t dt
+                                  , visit_runge_func visitor) = 0;
+
+    virtual void update_start_x(math::coords_t start_x) {
+        _start_x = start_x;
+    }
+
+    [[nodiscard]]
+    virtual math::coords_t get_start_x() const {
+        return _start_x;
+    }
+
+    virtual ~IRungeKuttaMethod() = default;
+
+  protected:
+    runge_func _func;
+    math::coords_t _start_x;
+};
 
 class IScalable {
   public:

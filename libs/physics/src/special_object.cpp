@@ -68,4 +68,8 @@ void ColideObject::set_rotation(math::decimal_t angle) {
     _polygon->set_rotation(angle);
 }
 
+const std::unique_ptr<math::Polygon> &ColideObject::get_polygon() const {
+    return _polygon;
+}
+
 }  // namespace physics
