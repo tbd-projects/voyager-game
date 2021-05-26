@@ -60,7 +60,11 @@ class ColideObject : public math::IPositionable, public math::IRotatable {
 
     void set_rotation(math::decimal_t angle) override;
 
+    [[nodiscard]]
     std::unique_ptr<math::Polygon>& get_polygon();
+
+    [[nodiscard]]
+    const std::unique_ptr<math::Polygon>& get_polygon() const;
 
   protected:
     std::unique_ptr<math::Polygon> _polygon;

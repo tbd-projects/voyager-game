@@ -33,9 +33,8 @@ class PhysicalObject;
 class Force {
   public:
     [[nodiscard]]
-    virtual math::Vector2d get_force(PhysicalObject &object
-              , const std::vector<std::reference_wrapper<PhysicalObject>>
-              &other_objects) const = 0;
+    virtual math::Vector2d get_force(const PhysicalObject &object
+              , const PhysicalObject &other_objects) const = 0;
 
     virtual ~Force() = default;
 };

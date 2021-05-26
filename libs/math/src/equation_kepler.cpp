@@ -23,13 +23,13 @@ EquationKepler::EquationKepler(decimal_t eccentricity
 }
 
 decimal_t EquationKepler::solve() const {
-    if (_eccentricity == d(0)) {
+    if (_eccentricity == dec(0)) {
         return _mean_anomaly;
     }
-    if (_eccentricity < d(1.)) {
+    if (_eccentricity < dec(1.)) {
         return base_solve();
     }
-    if (_eccentricity == d(1.)) {
+    if (_eccentricity == dec(1.)) {
         return _mean_anomaly;
     }
     return hyp_solve();
@@ -60,7 +60,7 @@ decimal_t EquationKepler::hyp_solve() const {
     };
 
     AlgebraicMethods algebra;
-    decimal_t start_x = std::log(2 * M / e + d(1.85));
+    decimal_t start_x = std::log(2 * M / e + dec(1.85));
 
     if (std::isnan(start_x)) {
         start_x = M;

@@ -144,6 +144,10 @@ math::decimal_t RectanglePolygon::get_width() const noexcept {
     return _width;
 }
 
+decimal_t RectanglePolygon::get_circumscribed_circ() const {
+    return Vector2d(coords_t{_width, _height}).len() / dec(2);
+}
+
 
 //  ---------------------------TrianglePolygon-------------------------------
 
@@ -176,9 +180,9 @@ void TrianglePolygon::scale(math::decimal_t scale) {
 }
 
 bool TrianglePolygon::is_point_in_polygon(math::coords_t point) const {
-    math::coords_t top = _pos + coords_t(0, _height * 2 / d(3));
-    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / d(3));
-    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / d(3));
+    math::coords_t top = _pos + coords_t(0, _height * 2 / dec(3));
+    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / dec(3));
+    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / dec(3));
 
     GeometryFunction geometry;
 
@@ -203,9 +207,9 @@ bool TrianglePolygon::is_point_in_polygon(math::coords_t point) const {
 }
 
 bool TrianglePolygon::intresect(const IIntresectable &object) const {
-    math::coords_t top = _pos + coords_t(0, _height * 2 / d(3));
-    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / d(3));
-    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / d(3));
+    math::coords_t top = _pos + coords_t(0, _height * 2 / dec(3));
+    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / dec(3));
+    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / dec(3));
 
     GeometryFunction geometry;
 
@@ -224,6 +228,10 @@ math::decimal_t TrianglePolygon::get_height() const noexcept {
 
 math::decimal_t TrianglePolygon::get_width() const noexcept {
     return _width;
+}
+
+decimal_t TrianglePolygon::get_circumscribed_circ() const {
+    return _height * 2 / dec(3);
 }
 
 
@@ -259,7 +267,7 @@ bool CirclePolygon::is_point_in_polygon(math::coords_t point) const {
 #define LINE_IN_CIRCLE 30
 
 bool CirclePolygon::intresect(const IIntresectable &object) const {
-    math::decimal_t angle = d(360) / (decimal_t) LINE_IN_CIRCLE;
+    math::decimal_t angle = dec(360) / (decimal_t) LINE_IN_CIRCLE;
 
     coords_t point = {_pos.x, _pos.y + _radius};
 
@@ -275,6 +283,10 @@ bool CirclePolygon::intresect(const IIntresectable &object) const {
 }
 
 math::decimal_t CirclePolygon::get_radius() const noexcept {
+    return _radius;
+}
+
+decimal_t CirclePolygon::get_circumscribed_circ() const {
     return _radius;
 }
 

@@ -2,6 +2,7 @@
 
 #include <debug/exception.hpp>
 
+#include "math/interface.hpp"
 #include "special_object.hpp"
 #include "physical_object.hpp"
 #include "game_manager/config.hpp"
@@ -21,9 +22,9 @@ Engine::Engine()
 
 Engine::Engine(std::unique_ptr<Force> &&force)
         : _cals_in_tick(20)
-        , _part_of_second_in_tick(
-            (math::decimal_t) game_manager::Config::get_instance().fps
-            / MILISECOND_IN_SECOND)
+          , _part_of_second_in_tick(
+                (math::decimal_t) game_manager::Config::get_instance().fps
+                / MILISECOND_IN_SECOND)
           , _mechanic(std::move(force)) {}
 
 math::Vector2d Engine::calc_force_by_object(PhysicalObject &object) const {
@@ -31,8 +32,12 @@ math::Vector2d Engine::calc_force_by_object(PhysicalObject &object) const {
         throw debug::PhysicalException("Working with an unregistered object");
     }
 
-    return _mechanic.calc_force_by_object(object, _objects)
-           * _part_of_second_in_tick;
+    math::Vector2d ans = _mechanic.calc_force_by_object(object, _objects);
+    if (object.have_some_impulse()) {
+        ans += math::Vector2d(object.target_impulse(), base_impulse);
+    }
+
+    return ans * _part_of_second_in_tick;
 }
 
 math::decimal_t Engine::get_effective_circle_orbit
@@ -66,9 +71,6 @@ void Engine::delete_object(std::weak_ptr<PhysicalObject> object) {
     _objects.delete_object(std::move(object));
 }
 
-math::Vector2d Engine::get_velocity_in_tick(math::Vector2d velocity) const {
-    return math::Vector2d((velocity * _part_of_second_in_tick) / one_dist);
-}
 
 size_t Engine::get_cals_in_tick() const {
     return _cals_in_tick;
@@ -80,6 +82,71 @@ math::decimal_t Engine::get_part_of_seconds_in_tick() const {
 
 math::decimal_t Engine::get_mass_fuel_by_one_impulse() const {
     return base_impulse / one_ton;
+}
+
+std::vector<math::coords_t> Engine::get_orbit_outline(
+        const PhysicalObject &object) const {
+    auto calc_force = [this] (const PhysicalObject& object) -> math::Vector2d {
+        math::Vector2d ans{};
+        for (const auto &obj : _objects.get_active_object()) {
+            if (!_objects.is_objects_with_equal_id(*obj.lock(), object)) {
+                ans += _mechanic.get_force()->get_force(object, *obj.lock());
+            }
+        }
+        return ans;
+    };
+
+    math::coords_t pos = object.get_pos();
+    PhysicalObject tmp_object(std::make_unique<math::CirclePolygon>(), pos
+                       , {}, object.get_weight());
+
+    math::runge_func func_x = [&calc_force, &tmp_object]
+            (const math::coords_t &x
+             , math::coords_t &dx
+             , math::decimal_t t) -> void {
+        auto acelr = calc_force(tmp_object);
+
+        dx.y = acelr.get_coords().x;
+        dx.x = x.y;
+    };
+
+    math::runge_func func_y = [&calc_force, &tmp_object]
+            (const math::coords_t &x
+             , math::coords_t &dx
+             , math::decimal_t t) -> void {
+        auto acelr = calc_force(tmp_object);
+
+        dx.y = acelr.get_coords().y;
+        dx.x = x.y;
+    };
+
+    std::unique_ptr<math::IRungeKuttaMethod> solver_x
+            = game_manager::Config::get_instance().creater_runge_kutta
+                    (func_x, {pos.x, object.get_velocity().get_coords().x});
+
+    std::unique_ptr<math::IRungeKuttaMethod> solver_y
+            = game_manager::Config::get_instance().creater_runge_kutta
+                    (func_y, {pos.y, object.get_velocity().get_coords().y});
+
+    std::vector<math::coords_t> ans = {pos};
+
+    math::decimal_t step = 20;
+    math::decimal_t t = 0;
+    math::coords_t start_pos = pos;
+    math::decimal_t exepc_len = 0;
+
+    while (math::Vector2d(pos, start_pos).sqr_len() > exepc_len) {
+        pos.x = solver_x->do_step(math::dec(t), 20);
+        pos.y = solver_y->do_step(math::dec(t), 20);
+        tmp_object.set_pos(pos);
+        ans.push_back(pos);
+
+        if (t == step * 2) {
+            exepc_len = math::Vector2d(pos, start_pos).sqr_len();
+        }
+    }
+
+    return ans;
 }
 
 

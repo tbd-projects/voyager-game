@@ -16,7 +16,8 @@ AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon)
 AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
                                        , size_t weight
                                        , math::Vector2d velocity
-                                       , math::coords_t pos): PhysicalObject(std::move(polygon), pos, velocity, weight)
+                                       , math::coords_t pos)
+        : PhysicalObject(std::move(polygon), pos, velocity, weight)
           , _orbit() {}
 
 AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
