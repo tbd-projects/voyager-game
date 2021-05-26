@@ -21,9 +21,11 @@ namespace graphics {
 
         auto pos = get_pos();
         math::coords_t new_pos(0,0);
+        auto scale = get_scale();
+        _sprite->scale(scale);
 
-        auto ww = _sprite->get_texture_size().first;
-        auto hh = _sprite->get_texture_size().second;
+        int ww = _sprite->get_texture_size().first * scale;
+        int hh = _sprite->get_texture_size().second * scale;
 
         new_pos.x = (int(pos.x) % ww + ww) % ww - ww;
         new_pos.y = (int(pos.y) % hh + hh) % hh - hh;

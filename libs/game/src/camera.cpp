@@ -4,15 +4,8 @@
 #include "camera.hpp"
 
 
-math::coords_t game::Camera::get_follow_position() {
-    return this->_follow_pos;
+void game::Camera::update() {
+    set_pos(_ship->get_pos());
+    set_size( (1 - std::min(_ship->get_velocity().len() / 4, 0.3)) / 1.7 );
 }
 
-void game::Camera::set_follow_position(math::coords_t follow_pos) {
-    this->_follow_pos = follow_pos;
-}
-
-math::coords_t game::Camera::get_position(math::coords_t observe_pos) {
-    return (observe_pos - _ship->get_pos()) * math::coords_t(1, -1) + _follow_pos;
-
-}

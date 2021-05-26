@@ -25,6 +25,14 @@ namespace graphics {
 
     }
 
+    void Sprite::scale(math::decimal_t scale) {
+        _scale = scale;
+    }
+
+    math::decimal_t Sprite::get_scale() const {
+        return _scale;
+    }
+
 
     int AnimatedSprite::get_frames() {
         return _frames;

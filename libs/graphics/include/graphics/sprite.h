@@ -10,8 +10,9 @@
 #include "math/polygon.hpp"
 
 namespace graphics {
-class Sprite : public IDrawable, public math::PositionateObject, public math::RotateObject {
+class Sprite : public IDrawable, public math::PositionateObject, public math::RotateObject, public math::IScalable  {
     private:
+        math::decimal_t _scale = 1;
         std::pair<int, int> _texture_pos;
         std::pair<int, int> _texture_size;
         ITexture *_texture;
@@ -26,8 +27,10 @@ class Sprite : public IDrawable, public math::PositionateObject, public math::Ro
 
         ~Sprite() override = default;
 
+        void scale(math::decimal_t scale) override;
 
-    };
+        [[nodiscard]] math::decimal_t get_scale() const;
+};
 
     class AnimatedSprite : public Sprite {
 

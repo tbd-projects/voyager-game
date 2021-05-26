@@ -38,8 +38,9 @@ namespace game {
         auto fuel_mass = _engine.get_mass_fuel_by_one_impulse();
         _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties,
                                             fuel_mass);
+        this->_camera = std::make_unique<Camera>(_ship);
         // @todo Follow_pos - width, height of canvas
-        this->_camera = std::make_unique<Camera>(_ship, math::coords_t(500, 500));
+        _camera->set_center( math::coords_t(500, 500));
 
         this->_timer = std::make_unique<Timer>();
 
@@ -88,35 +89,38 @@ namespace game {
     }
 
     bool Map::update(graphics::ICanvas &canvas) {
+        const static auto center = math::coords_t(canvas.get_width() / 2, canvas.get_height() / 2);
 
-        _bg->set_pos(_camera->get_position(math::coords_t(canvas.get_width() / 2, canvas.get_height() / 2)));
+        _ship->move(_engine);
+
+        _camera->update();
+        _camera->apply(*_bg, center);
+
         _bg->draw(canvas);
 
         for (auto &obj : this->_space_objects) {
             obj->move(_engine);
 
-            auto &sprite = obj->get_sprite();
-            sprite->set_pos(_camera->get_position(obj->get_pos()));
-
+            _camera->apply_object(*obj);
+            obj->get_sprite()->draw(canvas);
 
 //            auto &shape = obj->get_shape();
 //            shape.set_pos(_camera->get_position(obj->get_orbit().get_orbit_properties().basis));
 //            shape.draw(canvas);
 
-            sprite->draw(canvas);
         }
         for (auto &obj : this->_stars) {
-            auto &sprite = obj->get_sprite();
-            sprite->set_pos(_camera->get_position(obj->get_pos()));
-            sprite->draw(canvas);
+            _camera->apply_object(*obj);
+            obj->get_sprite()->draw(canvas);
         }
 
         if (_ship->is_die() || _engine.check_collision(*_ship)) {
             return false;
         }
-       // _ship->move(_engine);
+        _camera->apply_object(*_ship);
+
+
         auto &sprite = _ship->get_sprite();
-        sprite->set_pos(_camera->get_position(_ship->get_pos()));
         sprite->set_rotation(_ship->get_polygon()->get_rotation());
 
 //        auto &shape = _ship->get_shape();

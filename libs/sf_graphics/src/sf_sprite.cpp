@@ -38,6 +38,8 @@ void graphics::sf::SfSprite::draw(graphics::ICanvas *canvas) {
     auto angle = get_rotation();
     sprite.setRotation(-angle);
 
+    sprite.setScale(get_scale(), get_scale());
+
     window.draw(sprite);
 }
 
