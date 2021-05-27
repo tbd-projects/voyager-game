@@ -1,3 +1,8 @@
+//
+// Модуль Двитрия Варина
+//
+
+
 #pragma once
 
 #include <vector>
@@ -5,7 +10,7 @@
 
 namespace pt = boost::property_tree;
 
-namespace game {
+namespace game::external {
 
 class CreatorLevel {
   public:
@@ -31,4 +36,4 @@ class LevelManager : public CreatorLevel {
 };
 
 
-}  // namespace game
+}  // namespace game::external

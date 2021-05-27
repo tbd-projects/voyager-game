@@ -30,6 +30,8 @@ class GameManager {
 
     void end_run();
 
+    void free_stash();
+
   private:
     event_controller::Controller _controller;
     graphics::ICanvas &_canvas;

@@ -100,5 +100,4 @@ UnexpectedCallException::UnexpectedCallException(const std::string &filename
                                              , const std::string &arg)
         : BaseExceptions(filename, classname, method_name, arg) {}
 
-
 }  // namespace debug

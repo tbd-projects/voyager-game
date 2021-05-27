@@ -2,7 +2,7 @@
 
 #include <game_manager/config.hpp>
 
-namespace game_manager::imported {
+namespace game_manager::external {
 
 class ConfigJsonLoader : public game_manager::ILoaderConfig {
   public:
@@ -12,4 +12,4 @@ class ConfigJsonLoader : public game_manager::ILoaderConfig {
     void load(const std::filesystem::path& root, Config& config) const override;
 };
 
-}  // namespace game_manager::imported
+}  // namespace game_manager::external

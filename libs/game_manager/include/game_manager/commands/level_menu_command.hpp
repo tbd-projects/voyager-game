@@ -6,17 +6,15 @@
 
 namespace game_manager::command {
 
-class RunMainMenu : public ICommand {
+class RunLevelMenu : public ICommand {
   public:
     void execute(GameManager &manager) override {
         auto creator = [](graphics::ICanvas &canvas
                           , event_controller::IController &controller)
                 -> std::unique_ptr<game_manager::IState> {
-            return std::make_unique<game_manager::states::InMainMenu>(
+            return std::make_unique<game_manager::states::InLevelMenu>(
                     canvas, controller);
         };
-
-        manager.free_stash();
         manager.add_state(creator);
     }
 };

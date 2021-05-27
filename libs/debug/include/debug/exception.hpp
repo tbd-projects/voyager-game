@@ -44,6 +44,7 @@ class MathException : public BaseExceptions {
     explicit MathException(std::string &&error);
 };
 
+
 #define ARG_LOAD_ERROR(args) LoadException(__FILE__, typeid(*this).name() \
                                                     , __FUNCTION__, args)
 #define LOAD_ERROR() LoadException(__FILE__, typeid(*this).name(), __FUNCTION__)
@@ -56,6 +57,7 @@ class LoadException : public BaseExceptions {
                   , const std::string &method_name
                   , const std::string &arg = "");
 };
+
 
 #define ARG_ARGUMENT_ERROR(args) ArgumentException(__FILE__ \
                                         , typeid(*this).name() \

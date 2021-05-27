@@ -1,3 +1,7 @@
+//
+// Модуль Двитрия Варина
+//
+
 #pragma once
 
 #include <cstddef>
@@ -5,7 +9,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-namespace game {
+namespace game::external  {
 
 struct properties_t {
     unsigned int fuel;
@@ -44,4 +48,4 @@ class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
                                  , properties_t &properties) override {}
 };
 
-}  // namespace game
+}  // namespace game::external

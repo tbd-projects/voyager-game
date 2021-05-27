@@ -14,7 +14,7 @@ class IState {
   public:
     virtual void stop(event_controller::IController &controller) = 0;
 
-    virtual void resume(event_controller::IController &controller) = 0;
+    virtual void contine(event_controller::IController &controller) = 0;
 
     virtual ~IState() = default;
 };
@@ -49,7 +49,7 @@ class ICommand {
   public:
     virtual void execute(game_manager::GameManager &manager) = 0;
 
-    virtual ~ICommand() = default;
+   virtual ~ICommand()  = default;
 };
 
 }

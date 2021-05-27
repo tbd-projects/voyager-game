@@ -33,13 +33,14 @@ class Config {
     std::filesystem::path stats_path;
     std::filesystem::path properties_path;
 
-    std::shared_ptr<game::CreatorLevel> level_manager;
     std::shared_ptr<graphics::IGraphicsFactory> graphics_factory;
     std::shared_ptr<graphics::ISpiteLoader> sprite_loader;
-    std::shared_ptr<game::PlayerPropertiesLoader> properties_loader;
-    std::shared_ptr<game::ProgressLoader> progress_loader;
-    std::shared_ptr<game::CreatorLevel> levels_loader;
+    std::shared_ptr<game::external::PlayerPropertiesLoader> properties_loader;
+    std::shared_ptr<game::external::ProgressLoader> progress_loader;
+    std::shared_ptr<game::external::CreatorLevel> levels_loader;
 
+    // std::function<std::unique_ptr<math::IRungeKuttaMethod>
+    //        (math::runge_func, math::coords_t)> creater_runge_kutta;
   protected:
     Config();
 

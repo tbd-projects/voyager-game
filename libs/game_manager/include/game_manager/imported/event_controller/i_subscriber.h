@@ -1,5 +1,5 @@
 //
-// Created by volodya on 08.05.2021.
+// Модуль Владимира Ларина
 //
 
 #ifndef VOYAGER_I_SUBSCRIBER_H

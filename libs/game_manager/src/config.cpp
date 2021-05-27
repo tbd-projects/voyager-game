@@ -14,6 +14,7 @@ Config::Config()
           , properties_loader(nullptr)
           , progress_loader(nullptr)
           , levels_loader(nullptr) {}
+          //, creater_runge_kutta() {}
 
 const Config &game_manager::Config::get_instance() {
     return _get_instance();

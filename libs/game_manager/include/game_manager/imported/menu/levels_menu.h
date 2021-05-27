@@ -2,8 +2,8 @@
 // Модуль Владимира Ларина
 //
 
-#ifndef VOYAGER_MAIN_MENU_H
-#define VOYAGER_MAIN_MENU_H
+#ifndef VOYAGER_LEVELS_MENU_H
+#define VOYAGER_LEVELS_MENU_H
 
 #include "game_manager/imported/graphics/i_spite_loader.h"
 #include "game_manager/imported/graphics/i_graphics_factory.h"
@@ -12,9 +12,9 @@
 
 namespace menu {
 
-class MainMenu : public VerticalCenteredMenu {
+class LevelsMenu : public VerticalCenteredMenu {
   public:
-    MainMenu(graphics::ICanvas &canvas
+    LevelsMenu(graphics::ICanvas &canvas
              , event_controller::IController &controller)
             : VerticalCenteredMenu(canvas, controller) {}
 
@@ -23,9 +23,9 @@ class MainMenu : public VerticalCenteredMenu {
         return std::make_shared<game_manager::command::DoNothing>();
     }
 
-    ~MainMenu() override = default;
+    ~LevelsMenu() override = default;
 };
 
 }  // namespace menu
 
-#endif  // VOYAGER_MAIN_MENU_H
+#endif  // VOYAGER_LEVELS_MENU_H

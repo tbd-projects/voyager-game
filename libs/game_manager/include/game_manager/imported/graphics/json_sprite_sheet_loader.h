@@ -1,5 +1,5 @@
 //
-// Created by volodya on 15.04.2021.
+// Модуль Владимира Ларина
 //
 
 #ifndef VOYAGER_JSON_SPRITE_SHEET_LOADER_H

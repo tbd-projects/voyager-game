@@ -1,3 +1,8 @@
+//
+// Модуль Двитрия Варина
+//
+
+
 #pragma once
 
 #include <cstddef>
@@ -16,7 +21,7 @@ class Game {
 
     void stop_game() const {}
 
-    void continue_game() const {}
+    void unpause() const {}
 
     void start_game(size_t id_level) {}
 };

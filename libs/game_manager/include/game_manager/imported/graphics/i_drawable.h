@@ -1,5 +1,5 @@
 //
-// Created by volodya on 14.04.2021.
+// Модуль Владимира Ларина
 //
 
 #ifndef VOYAGER_I_DRAWABLE_H

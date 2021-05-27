@@ -1,9 +1,14 @@
+//
+// Модуль Двитрия Варина
+//
+
+
 #pragma once
 
 #include <string>
 #include <vector>
 
-namespace game {
+namespace game::external  {
 
 struct progress_t {
     size_t coins;
@@ -36,4 +41,4 @@ class BaseProgressLoader : public ProgressLoader {
     std::string path;
 };
 
-}  // namespace game
+}  // namespace game::external

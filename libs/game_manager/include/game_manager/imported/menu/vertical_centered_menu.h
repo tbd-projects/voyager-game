@@ -1,5 +1,5 @@
 //
-// Created by volodya on 08.05.2021.
+// Модуль Владимира Ларина
 //
 
 #ifndef VOYAGER_VERTICAL_CENTERED_MENU_H
@@ -21,9 +21,13 @@ class VerticalCenteredMenu : public IMenu {
 
   public:
     VerticalCenteredMenu(graphics::ICanvas &canvas
-                         , event_controller::IController &controller);
+                             , event_controller::IController &controller)
+            : _canvas(canvas)
+              , _controller(controller) {}
 
-    event_controller::IController &get_controller() override;
+    event_controller::IController &get_controller() {
+        return _controller;
+    }
 };
 }  // namespace menu
 
