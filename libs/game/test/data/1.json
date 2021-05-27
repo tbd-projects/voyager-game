@@ -74,5 +74,16 @@
   "background": {
     "sprite_id": 0
   },
-  "density": 100
+  "ship": {
+    "init_pos": {
+      "x": -600,
+      "y": -300
+    },
+    "init_velocity": {
+      "x": 0,
+      "y": 0.08
+    },
+    "init_weight": 1,
+    "density": 100
+  }
 }

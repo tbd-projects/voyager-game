@@ -8,10 +8,11 @@
 namespace game {
 
     class SpaceBody;
+
     class Star;
 
     class CreatorLevel {
-      public:
+    public:
         virtual void create_level(size_t level_num) = 0;
 
         virtual size_t get_levels_count() = 0;
@@ -20,15 +21,15 @@ namespace game {
 
         virtual std::vector<std::shared_ptr<Star>> &&get_stars() = 0;
 
-        virtual size_t get_bg_id() const = 0;
+        [[nodiscard]] virtual size_t get_bg_id() const = 0;
 
-        virtual math::decimal_t get_fuel_density() const = 0;
+        [[nodiscard]] virtual ship_init_t get_ship_character() const = 0;
 
         virtual ~CreatorLevel() = default;
     };
 
     class ProgressLoader {
-      public:
+    public:
         virtual progress_t load(size_t player_id) = 0;
 
         virtual void save(size_t player_id, progress_t &progress) = 0;
@@ -37,7 +38,7 @@ namespace game {
     };
 
     class PlayerPropertiesLoader {
-      public:
+    public:
         virtual properties_t load_current_properties(int player_id) = 0;
 
         virtual void save_current_properties(int player_id, properties_t &properties) = 0;

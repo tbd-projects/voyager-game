@@ -38,7 +38,7 @@ namespace game {
             throw debug::INVALID_ARG_ERROR();
         }
         ssize_t num_of_struct = -1;
-        for (ssize_t i = 0; i < _progress.levels.size(); ++i) {
+        for (size_t i = 0; i < _progress.levels.size(); ++i) {
             if (_progress.levels[i].num == level_num) {
                 num_of_struct = i;
                 break;
@@ -57,7 +57,7 @@ namespace game {
             throw debug::INVALID_ARG_ERROR();
         }
         ssize_t num_of_struct = -1;
-        for (ssize_t i = 0; i < _progress.levels.size(); ++i) {
+        for (size_t i = 0; i < _progress.levels.size(); ++i) {
             if (_progress.levels[i].num == level_num) {
                 num_of_struct = i;
                 break;

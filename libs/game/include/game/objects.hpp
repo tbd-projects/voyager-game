@@ -6,21 +6,21 @@
 
 namespace game {
 
-    const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0.08f));
-    const size_t init_weight = 1;
-    const math::coords_t init_pos = math::coords_t(-600, 300);
+//    const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0.32));
+//    const size_t init_weight = 1;
+//    const math::coords_t init_pos = math::coords_t(2700, 500);
 
     class SpaceShip : public GameObject {
     public:
         SpaceShip(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-                  properties_t &properties, math::decimal_t base_discard_pf_fuel, size_t weight = init_weight,
-                  math::Vector2d velocity = init_velocity, math::coords_t pos = init_pos) :
+                  properties_t &properties, math::decimal_t base_discard_pf_fuel, size_t weight,
+                  math::Vector2d velocity, math::coords_t pos) :
                 GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos){
             this->_properties = properties;
             this->_fuel_prop._base_discarder_mass_of_fuel = base_discard_pf_fuel;
         };
 
-        ~SpaceShip() = default;
+        ~SpaceShip() override = default;
 
         SpaceShip(const SpaceShip &ship) = delete;
 

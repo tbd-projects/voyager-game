@@ -26,7 +26,7 @@ namespace game {
         size_t coins;
         std::vector<level_stat> levels;
 
-        bool is_empty() {
+        [[nodiscard]] bool is_empty() const {
             return !coins && levels.empty();
         }
 
@@ -53,6 +53,23 @@ namespace game {
         ALL
     };
 
+    struct ship_init_t {
+        math::coords_t pos;
+        math::Vector2d velocity;
+        math::decimal_t density;
+        size_t weight;
+
+        ship_init_t() = default;
+
+        ship_init_t(const math::coords_t pos, math::Vector2d velocity, math::decimal_t density, size_t weight) :
+                pos(pos), velocity(velocity), density(density), weight(weight) {}
+
+        bool operator==(const ship_init_t &b) const {
+            return this->weight == b.weight && this->density == b.density && this->velocity == b.velocity &&
+                   this->pos == b.pos;
+        }
+    };
+
     struct properties_t {
         math::decimal_t fuel;
         unsigned int health;
@@ -60,9 +77,10 @@ namespace game {
         unsigned int engine_power;
         unsigned int sprite_id;
 
-        bool is_empty() const {
+        [[nodiscard]] bool is_empty() const {
             return math::Utilits::is_null(fuel) && !health && !battery && !engine_power && !sprite_id;
         }
+
         friend bool operator==(const properties_t &a, const properties_t &b) {
             return a.fuel == b.fuel && a.health == b.health && a.battery == b.battery &&
                    a.engine_power == b.engine_power && a.sprite_id == b.sprite_id;
