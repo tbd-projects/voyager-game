@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include <debug/exception.hpp>
 
 #include "polygon.hpp"

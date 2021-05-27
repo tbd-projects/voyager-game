@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include <game_manager/config.hpp>
 
 #include <sf_graphics/sf_graphics_factory.h>

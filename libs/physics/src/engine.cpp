@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include <functional>
 
 #include <debug/exception.hpp>

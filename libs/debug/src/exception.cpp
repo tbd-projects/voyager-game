@@ -1,4 +1,6 @@
 // Дмитрий Варин BaseException, FileError, InvalidArg, LoadException
+// Ветошкин Артём Exception, PhysicalException, MathException
+// , ArgumentException, UnexpectedCallException
 #include "exception.hpp"
 
 namespace debug {

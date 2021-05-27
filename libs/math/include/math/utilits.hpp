@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #pragma once
 
 #define _USE_MATH_DEFINES
