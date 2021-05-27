@@ -1,4 +1,4 @@
-image: volodyalarin/tp_cpp_course_env:project
+image: volodyalarin/tp_cpp_course_env:ubuntu
 
 variables:
   COVER_LOG: cover.log
@@ -71,7 +71,6 @@ pages:
   script:
     - git submodule init
     - git submodule update
-    - apk add --no-cache -f -q doxygen graphviz
     - doxygen Doxyfile
     - mv docs/html/ public/
   artifacts:
