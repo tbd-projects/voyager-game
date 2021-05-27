@@ -2,7 +2,7 @@
 
 #include <event_controller/i_controller.h>
 #include <graphics/i_drawable.h>
-#include <menu/main_menu.h>
+#include <menu/end_game_menu.h>
 #include <game_manager/interface.hpp>
 #include <game/structs.hpp>
 
@@ -24,7 +24,7 @@ class GameOver : public IState {
     void contine(event_controller::IController &controller) override;
 
   private:
-    menu::MainMenu _game_over_menu;
+    menu::EndGameMenu _game_over_menu;
 };
 
 }  // namespace game_manager::states

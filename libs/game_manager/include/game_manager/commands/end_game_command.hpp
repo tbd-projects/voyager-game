@@ -14,11 +14,11 @@ class EndGame : public ICommand {
         ,  _stats(stats) {}
 
     void execute(GameManager &manager) override {
-        auto creator = [](graphics::ICanvas &canvas
+        auto creator = [this](graphics::ICanvas &canvas
                           , event_controller::IController &controller)
                 -> std::unique_ptr<game_manager::IState> {
-            return std::make_unique<game_manager::states::InMainMenu>(
-                    canvas, controller);
+            return std::make_unique<game_manager::states::GameOver>(
+                    canvas, controller, this->_status, this->_stats);
         };
         manager.add_state(creator);
     }

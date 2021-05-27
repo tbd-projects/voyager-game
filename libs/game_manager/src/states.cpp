@@ -8,7 +8,9 @@ namespace game_manager::states {
 GameOver::GameOver(graphics::ICanvas &canvas
                          , event_controller::IController &controller
                    , bool status, const game::level_stat& stat)
-        : _game_over_menu(canvas, controller) {}
+        : _game_over_menu(canvas, controller) {
+    _game_over_menu.set_data(status, stat);
+}
 
 void GameOver::stop(event_controller::IController &controller)  {
 }

@@ -34,7 +34,7 @@ namespace menu {
         std::shared_ptr<event_controller::ICommand> update(event_controller::Event &event) override;
 
         [[nodiscard]] const CommandButton& get_active_button() const;
-        void set_active_id(int i);
+        virtual void set_active_id(int i);
 
         [[nodiscard]] event_controller::IController &get_controller() const override;
 
