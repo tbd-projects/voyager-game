@@ -1,0 +1,140 @@
+{
+  "stars": [
+    {
+      "velocity": {
+        "x": 0.1,
+        "y": -0.01
+      },
+      "pos": {
+        "x": 500,
+        "y": 500
+      },
+      "weight": 1000000,
+      "polygon": {
+        "type": "circle",
+        "radius": 10,
+        "angle": 0
+      },
+      "sprite_id": 5
+    }
+  ],
+  "planets": [
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 1000,
+        "b": 500,
+        "angle": -60.0,
+        "period": 1800.0
+      },
+      "weight": 5000,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 10
+      },
+      "sprite_id": 4
+    },
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 1200,
+        "b": 500,
+        "angle": 90.0,
+        "period": 2500.0
+      },
+      "weight": 6000,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 9
+      },
+      "sprite_id": 5
+    },
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 2000,
+        "b": 1800,
+        "angle": 0,
+        "period": 2100
+      },
+      "weight": 3000,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 15
+      },
+      "sprite_id": 6
+    },
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 2800,
+        "b": 900,
+        "angle": -123.0,
+        "period": 1900
+      },
+      "weight": 1000,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 9
+      },
+      "sprite_id": 5
+    },
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 5000,
+        "b": 1800,
+        "angle": -40.0,
+        "period": 5000
+      },
+      "weight": 1800,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 9
+      },
+      "sprite_id": 5
+    },
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 8000,
+        "b": 1400,
+        "angle": -180.0,
+        "period": 7000.0
+      },
+      "weight": 1500,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 9
+      },
+      "sprite_id": 5
+    }
+  ],
+  "background": {
+    "sprite_id": 0
+  },
+  "ship": {
+    "init_pos": {
+      "x": -600,
+      "y": -300
+    },
+    "init_velocity": {
+      "x": 0,
+      "y": 0.08
+    },
+    "init_weight": 1,
+    "density": 100
+  }
+}
