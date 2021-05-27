@@ -8,11 +8,6 @@
 using runge_kutta_test_tuple = std::tuple<math::runge_func,
         math::coords_t, math::decimal_t, math::decimal_t, math::decimal_t>;
 
-// this fix valgrind errors when gtest try print std::functional
-std::ostream& operator<<(std::ostream& os, const math::runge_func& func) {
-    return os << "This is function for runge kutta method";
-}
-
 class RungeKuttaTestOneStep
         : public testing::TestWithParam<runge_kutta_test_tuple> {
   public:
