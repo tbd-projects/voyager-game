@@ -1,3 +1,4 @@
+// Дмитрий Варин BaseException, FileError, InvalidArg, LoadException
 #pragma once
 
 #include <stdexcept>

@@ -1,3 +1,4 @@
+// Дмитрий Варин
 #include "loaders/progress_loader.hpp"
 #include "debug/exception.hpp"
 #include <fstream>
@@ -74,7 +75,6 @@ namespace game::external {
 
         pt::ptree temp;
         temp = rewrite();
-//        tree.add_child("stats", temp);
 
         pt::ptree &players = tree.get_child("players");
 

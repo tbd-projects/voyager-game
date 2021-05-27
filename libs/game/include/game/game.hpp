@@ -1,3 +1,4 @@
+// Дмитрий Варин
 #pragma once
 
 #include <cstddef>
