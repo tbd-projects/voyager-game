@@ -64,7 +64,7 @@ namespace game {
             }
         }
         if (num_of_struct == -1) {
-            throw debug::LogicError(__FILE__, typeid(*this).name(), __FUNCTION__);
+            _progress.levels.push_back(progress);
         } else {
             _progress.levels[num_of_struct] = progress;
         }
