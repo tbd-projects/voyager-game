@@ -204,6 +204,12 @@ using algebra_test_tuple = std::tuple<
         std::function<return_alg(
                 math::decimal_t)>, math::decimal_t, size_t, math::decimal_t>;
 
+// this fix valgrind errors when gtest try print std::functional
+std::ostream& operator<<(std::ostream& os, const std::function<return_alg(
+        math::decimal_t)>& func) {
+    return os << "This is function of equastion";
+}
+
 class AlgebraTest
         : public testing::TestWithParam<algebra_test_tuple> {
   public:
