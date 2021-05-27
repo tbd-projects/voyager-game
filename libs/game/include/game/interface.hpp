@@ -21,9 +21,9 @@ namespace game {
 
         virtual std::vector<std::shared_ptr<Star>> &&get_stars() = 0;
 
-        virtual size_t get_bg_id() const = 0;
+        [[nodiscard]] virtual size_t get_bg_id() const = 0;
 
-        virtual ship_init_t get_ship_character() const = 0;
+        [[nodiscard]] virtual ship_init_t get_ship_character() const = 0;
 
         virtual ~CreatorLevel() = default;
     };

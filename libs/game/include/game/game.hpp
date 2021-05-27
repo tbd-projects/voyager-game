@@ -56,15 +56,7 @@ namespace game {
         physics::Engine _engine;
         std::unique_ptr<Camera> _camera;
 
-        void check_all_collision();
-
         void set_sprites(MapSpriteCreator &factory);
-
-
-
-//    void create_ship(size_t player_id);
-
-//    void create_level();
     };
 
     class Game : public event_controller::ISubscriber {
@@ -87,9 +79,7 @@ namespace game {
         graphics::ICanvas &_canvas;
         event_controller::IController &_controller;
         game::Progress _progress;
-//        progress_t _progress;
         size_t fps_counter;
-
         size_t _id_level;
 
         void _subscribe_events();

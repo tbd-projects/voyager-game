@@ -26,7 +26,7 @@ namespace game {
         size_t coins;
         std::vector<level_stat> levels;
 
-        bool is_empty() {
+        [[nodiscard]] bool is_empty() const {
             return !coins && levels.empty();
         }
 
@@ -64,7 +64,7 @@ namespace game {
         ship_init_t(const math::coords_t pos, math::Vector2d velocity, math::decimal_t density, size_t weight) :
                 pos(pos), velocity(velocity), density(density), weight(weight) {}
 
-        bool operator==(const ship_init_t &b) {
+        bool operator==(const ship_init_t &b) const {
             return this->weight == b.weight && this->density == b.density && this->velocity == b.velocity &&
                    this->pos == b.pos;
         }
@@ -77,7 +77,7 @@ namespace game {
         unsigned int engine_power;
         unsigned int sprite_id;
 
-        bool is_empty() const {
+        [[nodiscard]] bool is_empty() const {
             return math::Utilits::is_null(fuel) && !health && !battery && !engine_power && !sprite_id;
         }
 
