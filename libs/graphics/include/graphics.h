@@ -1,3 +1,5 @@
+// Владимир Ларин
+
 #ifndef __GRAPHICS_H__
 #define __GRAPHICS_H__
 

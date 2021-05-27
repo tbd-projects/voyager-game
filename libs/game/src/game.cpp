@@ -103,6 +103,7 @@ namespace game {
         _bg->draw(canvas);
 
         auto shape = game_manager::Config::get_instance().graphics_factory->create_orbit();
+        shape->set_color(Color(255,255,255,128));
 
         for (auto &obj : this->_space_objects) {
             auto orbit = obj->get_orbit().get_orbit_properties();

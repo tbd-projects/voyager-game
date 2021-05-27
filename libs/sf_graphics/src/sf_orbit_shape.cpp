@@ -1,4 +1,4 @@
-//
+// Владимир Ларин
 // Created by volodya on 24.05.2021.
 //
 
@@ -25,7 +25,7 @@ void graphics::sf::SfOrbitShape::set_orbit(const physics::Orbit::orbit_propertie
 
     if (!axis.x || !axis.y) return;
 
-    size_t nums = std::min(100., 2 * M_PI * std::max(axis.x, axis.y));
+    size_t nums = std::min(100., 2 * M_PI * std::max(axis.x, axis.y) / 8);
 
     auto step = 2 * M_PI / nums;
 

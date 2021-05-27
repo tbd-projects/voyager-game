@@ -1,4 +1,4 @@
-//
+// Владимир Ларин
 // Created by volodya on 06.05.2021.
 //
 #include <SFML/Graphics/Texture.hpp>

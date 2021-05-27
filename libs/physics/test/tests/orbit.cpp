@@ -43,7 +43,7 @@ TEST_F(OrbitFixture, kepler_test) {
              _kepler_orbit.get_orbit().get_orbit_properties().period) *
             math::Utilits::to_grad(math::const_2_pi));
 
-    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick).Times(1).WillOnce(
+    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick()).Times(1).WillOnce(
             testing::Return(1.f));
     _kepler_orbit.move(mock_engine);
 
@@ -67,7 +67,7 @@ TEST_F(OrbitFixture, kepler_test) {
                         << "Is not equal y: "
                         << _kepler_orbit.get_pos().y << " and " << ans_y;
 
-    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick).Times(1).WillOnce(
+    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick()).Times(1).WillOnce(
             testing::Return((_down_kepler_pos / math::const_2_pi)
                             * period - period / math::dec(2)));
     _kepler_orbit.move(mock_engine);
@@ -93,7 +93,7 @@ TEST_F(OrbitFixture, kepler_test_with_rotate_orbit) {
              _kepler_orbit.get_orbit().get_orbit_properties().period) *
             math::Utilits::to_grad(math::const_2_pi));
 
-    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick).Times(1).WillOnce(
+    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick()).Times(1).WillOnce(
             testing::Return(1.f));
     _kepler_orbit_rotated.move(mock_engine);
 
@@ -121,7 +121,7 @@ TEST_F(OrbitFixture, kepler_test_with_rotate_orbit) {
                         << _kepler_orbit_rotated.get_orbit()
                                 .get_orbit_properties().basis.y;
 
-    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick).Times(1).WillOnce(
+    EXPECT_CALL(mock_engine, get_part_of_seconds_in_tick()).Times(1).WillOnce(
             testing::Return((_down_kepler_pos / math::const_2_pi)
                             * period - period / math::dec(2)));
     _kepler_orbit_rotated.move(mock_engine);
@@ -144,7 +144,7 @@ TEST_F(OrbitFixture, kepler_test_with_rotate_orbit) {
 TEST_F(OrbitFixture, newton_test) {
     MockEngine mock_engine;
 
-    EXPECT_CALL(mock_engine, get_cals_in_tick).Times(1).WillOnce(
+    EXPECT_CALL(mock_engine, get_cals_in_tick()).Times(1).WillOnce(
             testing::Return(10));
     EXPECT_CALL(mock_engine, calc_force_by_object(testing::Ref(_newton_orbit)))
             .Times(10)
