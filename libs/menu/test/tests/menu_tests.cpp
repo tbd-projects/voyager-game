@@ -37,6 +37,7 @@ public:
     }
 };
 
+/*
 class MenuTests : public ::testing::Test {
 protected:
     std::filesystem::path _cur_dir = std::filesystem::path(__FILE__).parent_path();
@@ -146,3 +147,4 @@ TEST_F(MenuTests, some2)
 
 
 }
+*/

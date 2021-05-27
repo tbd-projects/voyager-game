@@ -11,7 +11,7 @@
 #include <cmath>
 #include <memory>
 
-
+/*
 class MockJSONSpriteSheetLoader
         : public graphics::JsonSpriteSheetLoader
         {
@@ -274,3 +274,5 @@ TEST_F (GraphicsTests, Shape) {
         _canvas->apply();
     }
 }
+
+*/
