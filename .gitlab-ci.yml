@@ -1,4 +1,4 @@
-image: volodyalarin/tp_cpp_course_env:project
+image: volodyalarin/tp_cpp_course_env:ubuntu
 
 variables:
   COVER_LOG: cover.log
