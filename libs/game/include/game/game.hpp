@@ -35,6 +35,8 @@ namespace game {
 
         bool update_ship(ship_character type);
 
+        void init_ship(ship_init_t &&inits);
+
 
         std::shared_ptr<event_controller::ICommand> process_keyboard(event_controller::KeyboardEvent &ev);
 

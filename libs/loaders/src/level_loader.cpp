@@ -21,25 +21,31 @@ namespace game::external {
 /* path: data/levels/ levels: 1.json 2.json 3.json.......*/
     void JsonCreateLevel::create_level(size_t level_num) {
         if (!level_num) {
-            throw debug::LogicError(__FILE__, typeid(*this).name()
-                             , __FUNCTION__, "level num is incorrect");
+            throw debug::LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
         }
         pt::ptree tree;
         std::string level_path = this->_path + std::to_string(level_num) + ".json";
         pt::read_json(level_path, tree);
 
         this->_bg_id = tree.get<size_t>("background.sprite_id");
-        this->_density = tree.get<math::decimal_t>("density");
-
-
 //    this->_level_texture = new ISprite(background_id);
 
+        this->load_ship_init(tree.get_child("ship"));
         this->load_space_objects(tree, "stars");
         this->load_space_objects(tree, "planets");
 
 
     }
+    void JsonCreateLevel::load_ship_init(pt::ptree &ship_init) {
+        this->_ship_init.density = ship_init.get<math::decimal_t>("density");
+        this->_ship_init.pos.x = ship_init.get<math::decimal_t>("init_pos.x");
+        this->_ship_init.pos.y = ship_init.get<math::decimal_t>("init_pos.y");
 
+        this->_ship_init.velocity = math::Vector2d(ship_init.get<math::decimal_t>("init_velocity.x"),
+                                                   ship_init.get<math::decimal_t>("init_velocity.x"));
+        this->_ship_init.weight = ship_init.get<size_t>("init_weight");
+
+    }
     void JsonCreateLevel::load_star(pt::ptree::value_type &star) {
         math::coords_t velocity;
         math::coords_t pos;
@@ -107,8 +113,7 @@ namespace game::external {
 
     }
 
-    void JsonCreateLevel::load_space_objects(pt::ptree &tree
-                                             , const std::string &obj_name) {
+    void JsonCreateLevel::load_space_objects(pt::ptree &tree, const std::string &obj_name) {
         if (obj_name == "stars") {
             for (pt::ptree::value_type &star : tree.get_child(obj_name)) {
                 this->load_star(star);
@@ -141,6 +146,10 @@ namespace game::external {
                 directory_iterator{},
                 (fp) std::filesystem::is_regular_file
         );
+    }
+
+    ship_init_t JsonCreateLevel::get_ship_character() const {
+        return this->_ship_init;
     }
 
 } // namespace game

@@ -58,9 +58,10 @@ namespace game {
         _space_objects = current_level.get_planets();
         _stars = current_level.get_stars();
         _bg_id = current_level.get_bg_id();
-        auto fuel_density = current_level.get_fuel_density();
-
-        this->_ship->set_fuel_density(fuel_density);
+        this->init_ship(current_level.get_ship_character());
+//        auto fuel_density = current_level.get_fuel_density();
+//
+//        this->_ship->set_fuel_density(fuel_density);
 
         auto &factory = *config.sprite_loader;
 
@@ -218,6 +219,13 @@ namespace game {
 
     Timer &Map::get_timer() {
         return *_timer;
+    }
+
+    void Map::init_ship(ship_init_t &&inits) {
+        this->_ship->set_fuel_density(inits.density);
+        this->_ship->set_pos(inits.pos);
+        this->_ship->set_velocity(inits.velocity);
+        this->_ship->set_weight(inits.weight);
     }
 
 // Game

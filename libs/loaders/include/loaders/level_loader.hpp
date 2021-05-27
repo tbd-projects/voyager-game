@@ -26,16 +26,16 @@ class JsonCreateLevel : public CreatorLevel {
 
     std::vector<std::shared_ptr<Star>> &&get_stars() override;
 
-    size_t get_bg_id() const override { return this->_bg_id; };
+    [[nodiscard]] ship_init_t get_ship_character() const override;
 
-    math::decimal_t get_fuel_density() const override { return this->_density; }
+    size_t get_bg_id() const override { return this->_bg_id; };
 
   private:
     std::string _path;
     std::vector<std::shared_ptr<SpaceBody>> _objects_active;
     std::vector<std::shared_ptr<Star>> _objects_not_active;
     size_t _bg_id;
-    math::decimal_t _density;
+    ship_init_t _ship_init;
 
     void create_objects();
 
@@ -46,6 +46,8 @@ class JsonCreateLevel : public CreatorLevel {
     void load_planet(pt::ptree::value_type &planet);
 
     void load_space_objects(pt::ptree &tree, const std::string &obj_name);
+
+    void load_ship_init(pt::ptree &ship_init);
 
 };
 
