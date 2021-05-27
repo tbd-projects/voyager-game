@@ -1,0 +1,6 @@
+[submodule "cmake-modules"]
+	path = cmake-modules
+	url = https://github.com/bilke/cmake-modules.git
+[submodule "doxygen-awesome-css"]
+	path = doxygen-awesome-css
+	url = https://github.com/jothepro/doxygen-awesome-css.git

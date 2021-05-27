@@ -1,0 +1,44 @@
+{
+  "players": [
+    {
+      "id": "1",
+      "stats": {
+        "coins": "100",
+        "levels": [
+          {
+            "num": "1",
+            "stars": "1",
+            "time": "90",
+            "is_win": true
+          },
+          {
+            "num": "2",
+            "stars": "2",
+            "time": "90",
+            "is_win": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "stats": {
+        "coins": "50",
+        "levels": [
+          {
+            "num": "1",
+            "stars": "1",
+            "time": "60",
+            "is_win": true
+          },
+          {
+            "num": "2",
+            "stars": "2",
+            "time": "10",
+            "is_win": false
+          }
+        ]
+      }
+    }
+  ]
+}
