@@ -161,12 +161,12 @@
   },
   "ship": {
     "init_pos": {
-      "x": -600,
-      "y": -300
+      "x": 1800,
+      "y": 500
     },
     "init_velocity": {
       "x": 0,
-      "y": 0.08
+      "y": 0.4
     },
     "init_weight": 1,
     "density": 100
