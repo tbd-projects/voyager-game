@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #pragma once
 
 #include <game_manager/states/game_over_state.hpp>

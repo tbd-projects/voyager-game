@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include "astronomical_object.hpp"
 #include <memory>
 #include <iostream>

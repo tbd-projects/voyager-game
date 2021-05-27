@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include <gtest/gtest.h>
 
 #include <vector>

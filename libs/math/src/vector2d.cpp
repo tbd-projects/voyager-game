@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include <cmath>
 #include "debug/exception.hpp"
 #include "vector2d.hpp"

@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include <memory>
 #include <functional>
 #include <utility>

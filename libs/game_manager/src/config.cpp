@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include "config.hpp"
 
 namespace game_manager {

@@ -1,3 +1,4 @@
+// Дмитрий Варин
 #include "objects.hpp"
 
 namespace game {

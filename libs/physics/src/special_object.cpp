@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include "special_object.hpp"
 #include "math/polygon.hpp"
 

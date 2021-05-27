@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include "physical_object.hpp"
 #include "mechanic.hpp"
 

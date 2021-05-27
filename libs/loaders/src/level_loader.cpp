@@ -1,3 +1,4 @@
+// Дмитрий Варин
 #include "boost/property_tree/ptree.hpp"
 #include "boost/property_tree/json_parser.hpp"
 #include "debug/exception.hpp"
@@ -28,7 +29,6 @@ namespace game::external {
         pt::read_json(level_path, tree);
 
         this->_bg_id = tree.get<size_t>("background.sprite_id");
-//    this->_level_texture = new ISprite(background_id);
 
         this->load_ship_init(tree.get_child("ship"));
         this->load_space_objects(tree, "stars");

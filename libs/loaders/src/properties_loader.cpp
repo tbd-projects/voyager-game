@@ -1,3 +1,4 @@
+// Дмитрий Варин
 #include "properties_loader.hpp"
 #include "debug/exception.hpp"
 

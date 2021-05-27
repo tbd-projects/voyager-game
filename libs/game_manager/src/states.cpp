@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #include "states.hpp"
 
 namespace game_manager::states {

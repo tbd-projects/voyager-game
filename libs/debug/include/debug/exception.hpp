@@ -1,3 +1,6 @@
+// Дмитрий Варин BaseException, FileError, InvalidArg, LoadException
+// Ветошкин Артём Exception, PhysicalException, MathException
+// , ArgumentException, UnexpectedCallException
 #pragma once
 
 #include <stdexcept>

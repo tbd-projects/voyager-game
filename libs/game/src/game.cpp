@@ -1,3 +1,4 @@
+// Дмитрий Варин
 #include <stdexcept>
 #include <game_manager/commands.hpp>
 #include <game_manager/config.hpp>

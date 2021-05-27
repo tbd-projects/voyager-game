@@ -1,3 +1,7 @@
+//
+// Модуль Ветошкина Артёма
+//
+
 #pragma once
 
 #include <event_controller/i_controller.h>
