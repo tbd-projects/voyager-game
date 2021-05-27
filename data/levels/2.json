@@ -47,7 +47,7 @@
     },
     "init_velocity": {
       "x": 0,
-      "y": 0.08
+      "y": 0.3
     },
     "init_weight": 1,
     "density": 100

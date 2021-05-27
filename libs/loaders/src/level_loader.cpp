@@ -41,8 +41,8 @@ namespace game::external {
         this->_ship_init.pos.x = ship_init.get<math::decimal_t>("init_pos.x");
         this->_ship_init.pos.y = ship_init.get<math::decimal_t>("init_pos.y");
 
-        this->_ship_init.velocity = math::Vector2d(ship_init.get<math::decimal_t>("init_velocity.x"),
-                                                   ship_init.get<math::decimal_t>("init_velocity.x"));
+        this->_ship_init.velocity = math::Vector2d(math::coords_t(ship_init.get<math::decimal_t>("init_velocity.x"),
+                                                   ship_init.get<math::decimal_t>("init_velocity.y")));
         this->_ship_init.weight = ship_init.get<size_t>("init_weight");
 
     }

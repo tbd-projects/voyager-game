@@ -306,6 +306,10 @@ namespace game {
                     return std::make_shared<game_manager::command::EndGame>(is_live,
                                                                             this->_progress.get_level_stat(_id_level));
                 }
+                if (key.key == event_controller::Key::L) {
+                    return std::make_shared<game_manager::command::EndGame>(true
+                                                                            , _progress.get_level_stat(_id_level));
+                }
                 return this->_map.process_keyboard(key);
             }
             default:
