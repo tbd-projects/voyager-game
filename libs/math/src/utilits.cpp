@@ -148,11 +148,4 @@ decimal_t AlgebraicMethods::solve_equastion_by_Halley(
     return start_x_value;
 }
 
-std::ostream &operator<<(std::ostream &os
-             , const AlgebraicMethods::return_for_solve_equastion &some_v) {
-    return os << "This is return value from function"
-              << some_v.res_base_func << " "
-              << some_v.res_first_deriv_func << " "
-              << some_v.res_second_deriv_func;
-}
 }  // namespace math

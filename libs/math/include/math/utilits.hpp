@@ -67,9 +67,6 @@ class AlgebraicMethods {
         decimal_t res_base_func;
         decimal_t res_first_deriv_func;
         decimal_t res_second_deriv_func;
-
-        friend std::ostream& operator<<(std::ostream& os
-                , const return_for_solve_equastion& some_v);
     };
 
     decimal_t solve_equastion_by_Halley(
