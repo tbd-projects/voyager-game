@@ -38,7 +38,7 @@
     }
   ],
   "background": {
-    "sprite_id": 0
+    "sprite_id": 7
   },
   "ship": {
     "init_pos": {

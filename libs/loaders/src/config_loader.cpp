@@ -14,8 +14,8 @@ namespace game_manager::external {
 void ConfigJsonLoader::load(const std::filesystem::path& root
                                 , Config &config) const {
     if (root.empty()) {
-        throw debug::ARG_ARGUMENT_ERROR("empty file for load in path :"
-                                        + root.string());
+        throw debug::ARG_ARGUMENT_ERROR(("empty file for load in path :"
+                                        + root.string()).c_str());
     }
 
     namespace pt = boost::property_tree;
@@ -26,7 +26,7 @@ void ConfigJsonLoader::load(const std::filesystem::path& root
     auto &text_config = tree.get_child("config");
 
     if (text_config.empty()) {
-        throw debug::ARG_LOAD_ERROR(root);
+        throw debug::ARG_LOAD_ERROR(root.c_str());
     }
 
     auto &current_config = text_config;
