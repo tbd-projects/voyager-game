@@ -4,16 +4,16 @@
 #pragma once
 
 #include <stdexcept>
-#include <string>
+#include <string_view>
 
 
 namespace debug {
 
-class Exception : public std::exception {
+class VAException : public std::exception {
   public:
-    Exception();
+    VAException();
 
-    explicit Exception(std::string &&error);
+    explicit VAException(const std::string_view &error);
 
     [[nodiscard]]
     const char *what() const noexcept override;
@@ -22,29 +22,30 @@ class Exception : public std::exception {
     std::string _name_error;
 };
 
-class BaseExceptions : public Exception {
+class BaseExceptions : public VAException {
   public:
     BaseExceptions();
 
-    explicit BaseExceptions(std::string &&error);
+    explicit BaseExceptions(const std::string_view &error);
 
-    BaseExceptions(const std::string &filename, const std::string &classname
-                   , const std::string &method_name
-                   , const std::string &arg = "");
+    BaseExceptions(const std::string_view &filename,
+                   const std::string_view &classname,
+                   const std::string_view &method_name,
+                   const std::string_view &arg = "");
 };
 
 class PhysicalException : public BaseExceptions {
   public:
     PhysicalException();
 
-    explicit PhysicalException(std::string &&error);
+    explicit PhysicalException(const std::string_view &error);
 };
 
 class MathException : public BaseExceptions {
   public:
     MathException();
 
-    explicit MathException(std::string &&error);
+    explicit MathException(const std::string_view &error);
 };
 
 
@@ -56,9 +57,10 @@ class LoadException : public BaseExceptions {
   public:
     LoadException();
 
-    LoadException(const std::string &filename, const std::string &classname
-                  , const std::string &method_name
-                  , const std::string &arg = "");
+    LoadException(const std::string_view &filename,
+                  const std::string_view &classname,
+                  const std::string_view &method_name,
+                  const std::string_view &arg = "");
 };
 
 
@@ -72,9 +74,10 @@ class ArgumentException : public BaseExceptions {
   public:
     ArgumentException();
 
-    ArgumentException(const std::string &filename, const std::string &classname
-                      , const std::string &method_name
-                      , const std::string &arg = "");
+    ArgumentException(const std::string_view &filename,
+                      const std::string_view &classname,
+                      const std::string_view &method_name,
+                      const std::string_view &arg = "");
 };
 
 
@@ -89,10 +92,10 @@ class UnexpectedCallException : public BaseExceptions {
   public:
     UnexpectedCallException();
 
-    UnexpectedCallException(const std::string &filename
-                            , const std::string &classname
-                            , const std::string &method_name
-                            , const std::string &arg = "");
+    UnexpectedCallException(const std::string_view &filename,
+                            const std::string_view &classname,
+                            const std::string_view &method_name,
+                            const std::string_view &arg = "");
 };
 
 typedef BaseExceptions LogicError;
@@ -104,8 +107,9 @@ typedef BaseExceptions LogicError;
 
 class InvalidArg : public BaseExceptions {
   public:
-    InvalidArg(const std::string& filename, const std::string& classname
-               , const std::string& methodname);
+    InvalidArg(const std::string_view &filename,
+               const std::string_view &classname,
+               const std::string_view &methodname);
 
     [[nodiscard]]
     const char *what() const noexcept override;
@@ -118,8 +122,10 @@ class InvalidArg : public BaseExceptions {
 
 class FileError : public BaseExceptions {
   public:
-    FileError(const std::string& filename, const std::string& classname
-              , const std::string& methodname, const std::string& arg);
+    FileError(const std::string_view &filename,
+              const std::string_view &classname,
+              const std::string_view &methodname,
+              const std::string_view &arg);
 
     [[nodiscard]]
     const char *what() const noexcept override;
