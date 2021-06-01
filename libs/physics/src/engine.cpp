@@ -5,22 +5,9 @@
 #include "math/interface.hpp"
 #include "special_object.hpp"
 #include "physical_object.hpp"
-// #include "game_manager/config.hpp"
+#include "game_manager/config.hpp"
 #include "engine.hpp"
 
-namespace game_manager {
-
-class Config {
-  public:
-    static Config get_instance() { return Config(); }
-
-    size_t fps = 60;
-
-    std::function<std::unique_ptr<math::IRungeKuttaMethod>
-            (math::runge_func, math::coords_t)> creater_runge_kutta;
-};
-
-}  // namespace game_manager
 
 namespace physics {
 
@@ -59,16 +46,19 @@ math::decimal_t Engine::get_effective_circle_orbit
 }
 
 bool Engine::check_collision(const PhysicalObject &object) const {
-    auto objects = _objects.get_active_object();
+    auto objects = _objects.get_active_objects();
 
-    return std::any_of(objects.begin(), objects.end(), [&object](
+    return std::any_of(objects.begin(), objects.end(), [this, &object](
             const std::weak_ptr<PhysicalObject> &obj) {
-        if (obj.lock()->_index != object._index) {
-            math::decimal_t distance = math::Vector2d(
-                    object.get_pos() - obj.lock()->get_pos()).sqr_len();
-            if (distance <= COLLIDE_DISTANCE * COLLIDE_DISTANCE) {
-                if (object.is_colide(*obj.lock())) {
-                    return true;
+        if (!obj.expired()) {
+            auto gotten_object = obj.lock();
+            if (!_objects.is_objects_with_equal_id(*gotten_object, object)) {
+                math::decimal_t distance = math::Vector2d(
+                        object.get_pos() - gotten_object->get_pos()).sqr_len();
+                if (distance <= COLLIDE_DISTANCE * COLLIDE_DISTANCE) {
+                    if (object.is_colides(*gotten_object)) {
+                        return true;
+                    }
                 }
             }
         }
@@ -99,38 +89,43 @@ math::decimal_t Engine::get_mass_fuel_by_one_impulse() const {
 
 std::vector<math::coords_t> Engine::get_orbit_outline(
         const PhysicalObject &object) const {
-    auto calc_force = [this] (const PhysicalObject& object) -> math::Vector2d {
+    auto calc_force = [this](const PhysicalObject &object) -> math::Vector2d {
         math::Vector2d ans{};
-        for (const auto &obj : _objects.get_active_object()) {
-            if (!_objects.is_objects_with_equal_id(*obj.lock(), object)) {
-                ans += _mechanic.get_force()->get_force(object, *obj.lock());
+        for (const auto &obj : _objects.get_active_objects()) {
+            if (!obj.expired()) {
+                auto gotten_object = obj.lock();
+                if (!_objects.is_objects_with_equal_id(
+                        *gotten_object, object)) {
+                    ans += _mechanic.get_force()->get_force(object,
+                                                            *gotten_object);
+                }
             }
         }
         return ans;
     };
 
     math::coords_t pos = object.get_pos();
-    PhysicalObject tmp_object(std::make_unique<math::CirclePolygon>(), pos
-                       , {}, object.get_weight());
+    PhysicalObject tmp_object(std::make_unique<math::CirclePolygon>(), pos, {},
+                              object.get_weight());
 
     math::runge_func func_x = [&calc_force, &tmp_object]
-            (const math::coords_t &x
-             , math::coords_t &dx
-             , math::decimal_t t) -> void {
+            (const math::system_of_diff_equations &x,
+             math::system_of_diff_equations &dx,
+             math::decimal_t t) -> void {
         auto acelr = calc_force(tmp_object);
 
-        dx.y = acelr.get_coords().x;
-        dx.x = x.y;
+        dx.result_second_equation = acelr.get_coords().x;
+        dx.result_first_equation = x.result_second_equation;
     };
 
     math::runge_func func_y = [&calc_force, &tmp_object]
-            (const math::coords_t &x
-             , math::coords_t &dx
-             , math::decimal_t t) -> void {
+            (const math::system_of_diff_equations &x,
+             math::system_of_diff_equations &dx,
+             math::decimal_t t) -> void {
         auto acelr = calc_force(tmp_object);
 
-        dx.y = acelr.get_coords().y;
-        dx.x = x.y;
+        dx.result_second_equation = acelr.get_coords().y;
+        dx.result_first_equation = x.result_second_equation;
     };
 
     std::unique_ptr<math::IRungeKuttaMethod> solver_x
@@ -149,8 +144,8 @@ std::vector<math::coords_t> Engine::get_orbit_outline(
     math::decimal_t exepc_len = 0;
 
     while (math::Vector2d(pos, start_pos).sqr_len() > exepc_len) {
-        pos.x = solver_x->do_step(math::dec(t), 20);
-        pos.y = solver_y->do_step(math::dec(t), 20);
+        pos.x = solver_x->do_step(math::decm(t), 20);
+        pos.y = solver_y->do_step(math::decm(t), 20);
         tmp_object.set_pos(pos);
         ans.push_back(pos);
 
@@ -163,26 +158,31 @@ std::vector<math::coords_t> Engine::get_orbit_outline(
 }
 
 
-//  -----------------------------StoreObject------------------------------------
+//  -----------------------------StoreObjects------------------------------------
 
 
-void StoreObject::add_object(std::weak_ptr<PhysicalObject> object) {
-    if (object.lock()->_index != -1) {
+void StoreObjects::add_object(std::weak_ptr<PhysicalObject> object) {
+    if (object.expired()) {
+        return;
+    }
+
+    auto gotten_object = object.lock();
+    if (gotten_object->_index != -1) {
         return;
     }
 
     if (_deleted_objects.empty()) {
-        object.lock()->_index = (ssize_t) _objects.size();
+        gotten_object->_index = (ssize_t) _objects.size();
         _objects.push_back(object);
     } else {
-        object.lock()->_index = (ssize_t) *_deleted_objects.begin();
+        gotten_object->_index = (ssize_t) *_deleted_objects.begin();
         _objects[*_deleted_objects.begin()] = object;
         _deleted_objects.erase(_deleted_objects.begin());
     }
 }
 
 std::vector<std::weak_ptr<PhysicalObject>>
-StoreObject::get_active_object() const {
+StoreObjects::get_active_objects() const {
     std::vector<std::weak_ptr<PhysicalObject>> out;
     for (const auto &current_object : _objects) {
         if (current_object.expired()) {
@@ -199,20 +199,22 @@ StoreObject::get_active_object() const {
     return out;
 }
 
-void StoreObject::delete_object(std::weak_ptr<PhysicalObject> object) {
-    _deleted_objects.insert(object.lock()->_index);
-    object.lock()->_index = -1;
+void StoreObjects::delete_object(std::weak_ptr<PhysicalObject> object) {
+    if (!object.expired()) {
+        _deleted_objects.insert(object.lock()->_index);
+        object.lock()->_index = -1;
+    }
 }
 
-bool StoreObject::contain_object(const PhysicalObject &object) const {
+bool StoreObjects::contain_object(const PhysicalObject &object) const {
     ssize_t index = object._index;
     return index != -1 && _deleted_objects.find(index) == _deleted_objects.end()
            && (size_t) index < _objects.size();
 }
 
-bool StoreObject::is_objects_with_equal_id(const PhysicalObject &object_1
-                                       , const PhysicalObject &object_2) const {
-    return object_1._index == object_2._index;
+bool StoreObjects::is_objects_with_equal_id(const PhysicalObject &first_object,
+                                    const PhysicalObject &second_object) const {
+    return first_object._index == second_object._index;
 }
 
 

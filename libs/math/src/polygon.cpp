@@ -37,7 +37,7 @@ void RotateObject::set_rotation(math::decimal_t angle) {
     _angle = angle;
 }
 
-void RotateObject::add_rotation(math::decimal_t offset_angle) {
+void RotateObject::rotate(math::decimal_t offset_angle) {
     _angle += offset_angle;
 }
 
@@ -62,10 +62,8 @@ RectanglePolygon::RectanglePolygon()
           , _height(0)
           , _width(0) {}
 
-RectanglePolygon::RectanglePolygon(math::coords_t pos
-                                   , math::decimal_t height
-                                   , math::decimal_t width
-                                   , math::decimal_t angle)
+RectanglePolygon::RectanglePolygon(math::coords_t pos, math::decimal_t height,
+                                   math::decimal_t width, math::decimal_t angle)
         : Polygon(pos, angle)
           , _height(height)
           , _width(width) {}
@@ -117,7 +115,7 @@ bool RectanglePolygon::is_point_in_polygon(math::coords_t point) const {
            && over_bottom_line == GeometryFunction::point_relative::at_right;
 }
 
-bool RectanglePolygon::intresect(const IIntresectable &object) const {
+bool RectanglePolygon::intersects(const IIntresectable &object) const {
     math::coords_t left_top = _pos + coords_t(-_width / 2, _height / 2);
     math::coords_t left_bottom = _pos + coords_t(-_width / 2, -_height / 2);
     math::coords_t right_top = _pos + coords_t(_width / 2, _height / 2);
@@ -145,7 +143,7 @@ math::decimal_t RectanglePolygon::get_width() const noexcept {
 }
 
 decimal_t RectanglePolygon::get_circumscribed_circ() const {
-    return Vector2d(coords_t{_width, _height}).len() / dec(2);
+    return Vector2d(coords_t{_width, _height}).len() / decm(2);
 }
 
 
@@ -157,10 +155,8 @@ TrianglePolygon::TrianglePolygon()
           , _height(0)
           , _width(0) {}
 
-TrianglePolygon::TrianglePolygon(math::coords_t pos
-                                 , math::decimal_t height
-                                 , math::decimal_t width
-                                 , math::decimal_t angle)
+TrianglePolygon::TrianglePolygon(math::coords_t pos, math::decimal_t height,
+                                 math::decimal_t width, math::decimal_t angle)
         : Polygon(pos, angle)
           , _height(height)
           , _width(width) {}
@@ -180,9 +176,9 @@ void TrianglePolygon::scale(math::decimal_t scale) {
 }
 
 bool TrianglePolygon::is_point_in_polygon(math::coords_t point) const {
-    math::coords_t top = _pos + coords_t(0, _height * 2 / dec(3));
-    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / dec(3));
-    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / dec(3));
+    math::coords_t top = _pos + coords_t(0, _height * 2 / decm(3));
+    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / decm(3));
+    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / decm(3));
 
     GeometryFunction geometry;
 
@@ -206,10 +202,10 @@ bool TrianglePolygon::is_point_in_polygon(math::coords_t point) const {
            && over_bottom_line == GeometryFunction::point_relative::at_right;
 }
 
-bool TrianglePolygon::intresect(const IIntresectable &object) const {
-    math::coords_t top = _pos + coords_t(0, _height * 2 / dec(3));
-    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / dec(3));
-    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / dec(3));
+bool TrianglePolygon::intersects(const IIntresectable &object) const {
+    math::coords_t top = _pos + coords_t(0, _height * 2 / decm(3));
+    math::coords_t left = _pos + coords_t(-_width / 2, -_height * 1 / decm(3));
+    math::coords_t right = _pos + coords_t(_width / 2, -_height * 1 / decm(3));
 
     GeometryFunction geometry;
 
@@ -231,7 +227,7 @@ math::decimal_t TrianglePolygon::get_width() const noexcept {
 }
 
 decimal_t TrianglePolygon::get_circumscribed_circ() const {
-    return _height * 2 / dec(3);
+    return _height * 2 / decm(3);
 }
 
 
@@ -242,9 +238,8 @@ CirclePolygon::CirclePolygon()
         : Polygon()
           , _radius(0) {}
 
-CirclePolygon::CirclePolygon(math::coords_t pos
-                             , math::decimal_t radius
-                             , math::decimal_t angle)
+CirclePolygon::CirclePolygon(math::coords_t pos, math::decimal_t radius,
+                             math::decimal_t angle)
         : Polygon(pos, angle)
           , _radius(radius) {}
 
@@ -264,15 +259,15 @@ bool CirclePolygon::is_point_in_polygon(math::coords_t point) const {
     return Vector2d(point - _pos).sqr_len() <= _radius * _radius;
 }
 
-#define LINE_IN_CIRCLE 30
+static constexpr size_t sides_in_circle = 30;
 
-bool CirclePolygon::intresect(const IIntresectable &object) const {
-    math::decimal_t angle = dec(360) / (decimal_t) LINE_IN_CIRCLE;
+bool CirclePolygon::intersects(const IIntresectable &object) const {
+    math::decimal_t angle = decm(360) / (decimal_t) sides_in_circle;
 
     coords_t point = {_pos.x, _pos.y + _radius};
 
     GeometryFunction geometry;
-    for (size_t i = 0; i < LINE_IN_CIRCLE; ++i) {
+    for (size_t i = 0; i < sides_in_circle; ++i) {
         point = geometry.rotate_point(point, i == 0 ? 0 : angle, _pos);
 
         if (object.is_point_in_polygon(point)) {

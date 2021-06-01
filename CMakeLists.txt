@@ -46,11 +46,11 @@ foreach(LIBRARY ${LIBRARIES})
     add_subdirectory("${LIBRARIES_DIR}/${LIBRARY}")
 endforeach(LIBRARY)
 
-target_link_libraries(math_lib debug_lib math_external_lib)
+target_link_libraries(math_lib debug_lib math_external_lib game_manager_lib)
 target_link_libraries(physics_lib debug_lib math_lib)
 target_link_libraries(game_manager_lib debug_lib math_lib)
 target_link_libraries(math_external_lib debug_lib math_lib)
-target_link_libraries(loaders_lib game_manager_lib math_lib math_external_lib)
+target_link_libraries(loaders_lib game_manager_lib math_lib)
 
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 

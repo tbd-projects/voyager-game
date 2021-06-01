@@ -11,15 +11,16 @@ class InMainMenu : public IState {
   public:
     InMainMenu() = delete;
 
-    InMainMenu(const InMainMenu&) = delete;
-    InMainMenu& operator=(const InMainMenu&) = delete;
+    InMainMenu(const InMainMenu &) = delete;
 
-    InMainMenu(graphics::ICanvas& canvas
-               ,  event_controller::IController &controller);
+    InMainMenu &operator=(const InMainMenu &) = delete;
+
+    InMainMenu(graphics::ICanvas &canvas,
+               event_controller::IController &controller);
 
     void stop(event_controller::IController &controller) override;
 
-    void contine(event_controller::IController &controller) override;
+    void resume(event_controller::IController &controller) override;
 
   private:
     menu::MainMenu _main_menu;

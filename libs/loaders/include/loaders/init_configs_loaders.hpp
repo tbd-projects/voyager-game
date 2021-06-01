@@ -4,7 +4,7 @@
 
 namespace game_manager::external {
 
-class InitLoadersForConfig : public IInitImportImplForConfig {
+class InitLoadersForConfig : public IInitDependencies {
   public:
     InitLoadersForConfig() = default;
 

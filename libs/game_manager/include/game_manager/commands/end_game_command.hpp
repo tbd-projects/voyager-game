@@ -9,14 +9,13 @@ namespace game_manager::command {
 
 class EndGame : public ICommand {
   public:
-    EndGame(bool status, const game::level_stat& stats)
-        : _status(status)
-        ,  _stats(stats) {}
+    EndGame(bool status, const game::level_stat &stats)
+            : _status(status)
+              , _stats(stats) {}
 
     void execute(GameManager &manager) override {
-        auto creator = [this](graphics::ICanvas &canvas
-                          , event_controller::IController &controller)
-                -> std::unique_ptr<game_manager::IState> {
+        auto creator = [this](graphics::ICanvas &canvas,
+                              event_controller::IController &controller) {
             return std::make_unique<game_manager::states::GameOver>(
                     canvas, controller, _status, _stats);
         };

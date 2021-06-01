@@ -113,18 +113,18 @@ bool Utilits::is_null(decimal_t value) {
 }
 
 decimal_t Utilits::to_grad(decimal_t angle) {
-    return angle * dec(180.0) / (decimal_t) M_PI;
+    return angle * decm(180.0) / (decimal_t) M_PI;
 }
 
 decimal_t Utilits::to_rad(decimal_t angle) {
-    return angle * (decimal_t) M_PI / dec(180.0);
+    return angle * (decimal_t) M_PI / decm(180.0);
 }
 
 bool Utilits::is_equal(decimal_t value_1, decimal_t value_2) {
     return is_null(value_1 - value_2);
 }
 
-decimal_t Utilits::decimal_epsilon = dec(1e-5);
+decimal_t Utilits::decimal_epsilon = decm(1e-5);
 
 
 //  ---------------------------AlgebraicMethods---------------------------------
@@ -136,10 +136,10 @@ decimal_t AlgebraicMethods::solve_equastion_by_Halley(
     for (size_t i = 0; i < number_iteration; ++i) {
         math::decimal_t last_x = start_x_value;
         return_for_solve_equastion returns = func(start_x_value);
-        math::decimal_t first_devide =
+        math::decimal_t first_devide = returns.res_first_deriv_func == 0 ? 0 :
                 returns.res_base_func / returns.res_first_deriv_func;
-        math::decimal_t second_devide =
-                returns.res_second_deriv_func / (dec(2) *
+        math::decimal_t second_devide = returns.res_first_deriv_func == 0 ? 0 :
+                returns.res_second_deriv_func / (decm(2) *
                 returns.res_first_deriv_func);
 
         start_x_value =

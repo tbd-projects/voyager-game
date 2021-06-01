@@ -8,16 +8,16 @@
 
 namespace physics {
 
-class PhysicalObject : public EnginesIndexedObject
-                    , public ColideObject, public AcceleratableObject {
+class PhysicalObject : public EnginesIndexedObject, public ColideObject,
+                       public AcceleratableObject {
   public:
     PhysicalObject() = delete;
 
     explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon);
 
-    explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon
-                            , math::coords_t pos, math::Vector2d velocity
-                            , size_t weight);
+    explicit PhysicalObject(std::unique_ptr<math::Polygon> &&polygon,
+                            math::coords_t pos, math::Vector2d velocity,
+                            size_t weight);
 
     [[nodiscard]]
     size_t get_weight() const noexcept;

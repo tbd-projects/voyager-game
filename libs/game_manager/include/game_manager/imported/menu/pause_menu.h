@@ -5,10 +5,10 @@
 #ifndef VOYAGER_PAUSE_MENU_H
 #define VOYAGER_PAUSE_MENU_H
 
-#include "game_manager/imported/menu/i_menu.h"
+#include <game_manager/imported/menu/i_menu.h>
 #include <game_manager/imported/event_controller/event.h>
 #include <game_manager/imported/graphics/i_drawable.h>
-#include "game_manager/commands/nothing_command.hpp"
+#include <game_manager/commands/nothing_command.hpp>
 
 namespace menu {
 class PauseMenu : public IMenu {

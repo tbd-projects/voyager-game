@@ -10,8 +10,8 @@ namespace physics {
 
 NewtonForce::NewtonForce() {}
 
-math::Vector2d NewtonForce::get_force(const PhysicalObject &object
-                                  , const PhysicalObject &other_object) const {
+math::Vector2d NewtonForce::get_force(const PhysicalObject &object,
+                                  const PhysicalObject &other_object) const {
     math::Vector2d r = math::Vector2d(other_object.get_pos()
                                       - object.get_pos());
     math::decimal_t force =
@@ -29,8 +29,8 @@ math::decimal_t OrbitalMechanic::get_effective_radius_orbit
         (const Force &force, const PhysicalObject &object) const {
     math::decimal_t object_dimensions = object.get_polygon()
             ->get_circumscribed_circ();
-    PhysicalObject tmp(std::make_unique<math::CirclePolygon>()
-                       , object.get_pos() + object_dimensions, {}, 1);
+    PhysicalObject tmp(std::make_unique<math::CirclePolygon>(),
+                       object.get_pos() + object_dimensions, {}, 1);
 
     math::decimal_t force_to_one_ton = force.get_force(tmp, object).sqr_len();
 
@@ -50,11 +50,11 @@ math::decimal_t Mechanic::get_effective_circle_orbit(
     return _orbit_mechanic.get_effective_radius_orbit(*_force, object);
 }
 
-math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object
-                                          , const StoreObject &objects) const {
+math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object,
+                                          const StoreObjects &objects) const {
     std::vector<std::reference_wrapper<const PhysicalObject>> other_object;
 
-    auto tmp = objects.get_active_object();
+    auto tmp = objects.get_active_objects();
 
     math::Vector2d ans{};
     math::decimal_t object_dimensions = object.get_polygon()
@@ -72,11 +72,11 @@ math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object
             math::decimal_t lower_bounder = effective_orbit - object_dimensions;
 
             math::decimal_t distance
-                    = math::Vector2d(obj.lock()->get_pos()
-                                     , object.get_pos()).sqr_len();
+                    = math::Vector2d(obj.lock()->get_pos(),
+                                     object.get_pos()).sqr_len();
             if (upper_bounder * upper_bounder >= distance
                 && lower_bounder * lower_bounder <= distance) {
-                ans += normal_velocity * math::dec(0.1);
+                ans += normal_velocity * math::decm(0.1);
             }
         }
     }

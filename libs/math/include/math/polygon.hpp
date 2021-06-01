@@ -23,7 +23,7 @@ class PositionateObject : public IPositionable {
 };
 
 
-class RotateObject: public IRotatable{
+class RotateObject : public IRotatable {
   public:
     RotateObject();
 
@@ -31,7 +31,7 @@ class RotateObject: public IRotatable{
 
     void set_rotation(math::decimal_t angle) override;
 
-    void add_rotation(math::decimal_t offset_angle) override;
+    void rotate(math::decimal_t offset_angle) override;
 
     [[nodiscard]]
     math::decimal_t get_rotation() const noexcept override;
@@ -42,8 +42,11 @@ class RotateObject: public IRotatable{
     math::decimal_t _angle;
 };
 
-class Polygon : public IIntresectable, public IScalable
-                , public RotateObject, public PositionateObject {
+class Polygon
+        : public IIntresectable,
+          public IScalable,
+          public RotateObject,
+          public PositionateObject {
   public:
     Polygon() = default;
 
@@ -55,7 +58,7 @@ class Polygon : public IIntresectable, public IScalable
     bool is_point_in_polygon(math::coords_t point) const override = 0;
 
     [[nodiscard]]
-    bool intresect(const IIntresectable &object) const override = 0;
+    bool intersects(const IIntresectable &object) const override = 0;
 
     [[nodiscard]]
     virtual decimal_t get_circumscribed_circ() const = 0;
@@ -67,8 +70,8 @@ class RectanglePolygon : public Polygon {
   public:
     RectanglePolygon();
 
-    RectanglePolygon(math::coords_t pos, math::decimal_t height
-                     , math::decimal_t width, math::decimal_t angle = 0);
+    RectanglePolygon(math::coords_t pos, math::decimal_t height,
+                     math::decimal_t width, math::decimal_t angle = 0);
 
     void resize(math::decimal_t height, math::decimal_t width);
 
@@ -78,7 +81,7 @@ class RectanglePolygon : public Polygon {
     bool is_point_in_polygon(math::coords_t point) const override;
 
     [[nodiscard]]
-    bool intresect(const IIntresectable &object) const override;
+    bool intersects(const IIntresectable &object) const override;
 
     [[nodiscard]]
     math::decimal_t get_height() const noexcept;
@@ -100,8 +103,8 @@ class TrianglePolygon : public Polygon {
   public:
     TrianglePolygon();
 
-    TrianglePolygon(math::coords_t pos, math::decimal_t height
-                    , math::decimal_t width, math::decimal_t angle = 0);
+    TrianglePolygon(math::coords_t pos, math::decimal_t height,
+                    math::decimal_t width, math::decimal_t angle = 0);
 
     void resize(math::decimal_t height, math::decimal_t width);
 
@@ -111,7 +114,7 @@ class TrianglePolygon : public Polygon {
     bool is_point_in_polygon(math::coords_t point) const override;
 
     [[nodiscard]]
-    bool intresect(const IIntresectable &object) const override;
+    bool intersects(const IIntresectable &object) const override;
 
     [[nodiscard]]
     math::decimal_t get_height() const noexcept;
@@ -133,8 +136,8 @@ class CirclePolygon : public Polygon {
   public:
     CirclePolygon();
 
-    CirclePolygon(math::coords_t pos, math::decimal_t radius
-                  , math::decimal_t angle = 0);
+    CirclePolygon(math::coords_t pos, math::decimal_t radius,
+                  math::decimal_t angle = 0);
 
     void resize(math::decimal_t radius);
 
@@ -144,7 +147,7 @@ class CirclePolygon : public Polygon {
     bool is_point_in_polygon(math::coords_t point) const override;
 
     [[nodiscard]]
-    bool intresect(const IIntresectable &object) const override;
+    bool intersects(const IIntresectable &object) const override;
 
     [[nodiscard]]
     math::decimal_t get_radius() const noexcept;

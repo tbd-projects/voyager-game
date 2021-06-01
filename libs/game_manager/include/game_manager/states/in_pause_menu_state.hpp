@@ -12,15 +12,16 @@ class InPauseMenu : public IState {
   public:
     InPauseMenu() = delete;
 
-    InPauseMenu(const InPauseMenu&) = delete;
-    InPauseMenu& operator=(const InPauseMenu&) = delete;
+    InPauseMenu(const InPauseMenu &) = delete;
 
-    InPauseMenu(graphics::ICanvas& canvas
-                ,  event_controller::IController &controller);
+    InPauseMenu &operator=(const InPauseMenu &) = delete;
+
+    InPauseMenu(graphics::ICanvas &canvas,
+                event_controller::IController &controller);
 
     void stop(event_controller::IController &controller) override;
 
-    void contine(event_controller::IController &controller) override;
+    void resume(event_controller::IController &controller) override;
 
   private:
     menu::PauseMenu _pause_menu;

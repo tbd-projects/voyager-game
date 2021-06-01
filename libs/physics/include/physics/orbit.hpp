@@ -17,19 +17,18 @@ class Orbit {
         math::decimal_t angle_target;
         math::decimal_t period;
 
-        orbit_properties_t(math::coords_t variables = {}
-                           , math::coords_t basis = {}
-                           , math::decimal_t angle_target = {}
-                           , math::decimal_t period = {});
+        orbit_properties_t(math::coords_t variables = {},
+                           math::coords_t basis = {},
+                           math::decimal_t angle_target = {},
+                           math::decimal_t period = {});
     };
 
     Orbit();
 
-    explicit Orbit(PhysicalObject &object
-                   , orbit_properties_t orbit_properties);
+    explicit Orbit(PhysicalObject &object, orbit_properties_t orbit_properties);
 
-    math::coords_t get_current_pos(PhysicalObject &object
-                                   , const Engine &physical_engine);
+    math::coords_t
+    get_current_pos(PhysicalObject &object, const Engine &physical_engine);
 
     [[nodiscard]]
     orbit_properties_t get_orbit_properties() const;
@@ -46,13 +45,11 @@ class Orbit {
     math::coords_t _basis;
     bool _use_kepler;
 
-    void _kepler_move(PhysicalObject &object
-                      , const Engine &physical_engine);
+    void _kepler_move(PhysicalObject &object, const Engine &physical_engine);
 
     void _set_pos_on_kepler_orbit(PhysicalObject &object) const;
 
-    void _newtom_move(PhysicalObject &object
-                      , const Engine &physical_engine);
+    void _newton_move(PhysicalObject &object, const Engine &physical_engine);
 };
 
 }  // namespace physics

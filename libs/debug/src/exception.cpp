@@ -1,18 +1,22 @@
+// Дмитрий Варин BaseException, FileError, InvalidArg, LoadException
+// Ветошкин Артём Exception, PhysicalException, MathException
+// , ArgumentException, UnexpectedCallException
 #include "exception.hpp"
+#include <string>
 
 namespace debug {
 
 
-//  -------------------------------Exception------------------------------------
+//  -----------------------------VAException------------------------------------
 
 
-Exception::Exception()
+VAException::VAException()
         : _name_error("\nERROR:" + (std::string) "Some error") {}
 
-Exception::Exception(std::string &&error)
+VAException::VAException(const std::string_view &error)
         : _name_error(error) {}
 
-const char *Exception::what() const noexcept {
+const char *VAException::what() const noexcept {
     return _name_error.c_str();
 }
 
@@ -21,56 +25,56 @@ const char *Exception::what() const noexcept {
 
 
 BaseExceptions::BaseExceptions()
-        : Exception("\nError: unknown game error") {}
+        : VAException("\nError: unknown game error") {}
 
-BaseExceptions::BaseExceptions(const std::string &filename
-                               , const std::string &classname
-                               , const std::string &method_name
-                               , const std::string &arg) {
-    _name_error = "\nFile: " + filename + \
-                     "\nClass: " + classname + \
-                     "\nMethod: " + method_name;
+BaseExceptions::BaseExceptions(const std::string_view &filename,
+                               const std::string_view &classname,
+                               const std::string_view &method_name,
+                               const std::string_view &arg) {
+    _name_error = "\nFile: " + (std::string)filename + \
+                     "\nClass: " + (std::string)classname + \
+                     "\nMethod: " + (std::string)method_name;
     if (!arg.empty()) {
-        _name_error += "\n Argument: " + arg;
+        _name_error += "\n Argument: " + (std::string)arg;
     }
 
     _name_error = "\nError: " + _name_error;
 }
 
-BaseExceptions::BaseExceptions(std::string &&error)
-        : Exception(std::move(error)) {}
+BaseExceptions::BaseExceptions(const std::string_view &error)
+        : VAException(error) {}
 
 
 //  --------------------------PhysicalException---------------------------------
 
 
 PhysicalException::PhysicalException()
-        : BaseExceptions("\nError: some physical error") {}
+        : BaseExceptions("Error: some physical error") {}
 
-PhysicalException::PhysicalException(std::string &&error)
-        : BaseExceptions("\nError in physics: " + error) {}
+PhysicalException::PhysicalException(const std::string_view &error)
+        : BaseExceptions("Error in physics: " + (std::string)error) {}
 
 
 //  --------------------------MathException-------------------------------------
 
 
 MathException::MathException()
-        : BaseExceptions("\nError: some math error") {}
+        : BaseExceptions("Error: some math error") {}
 
-MathException::MathException(std::string &&error)
-        : BaseExceptions("\nError in math: " + error) {}
+MathException::MathException(const std::string_view &error)
+        : BaseExceptions("Error in math: " + (std::string)error) {}
 
 
 //  --------------------------LoadException-------------------------------------
 
 
 LoadException::LoadException()
-        : BaseExceptions("\nError: some load error") {}
+        : BaseExceptions("Error: some load error") {}
 
-LoadException::LoadException(const std::string &filename
-                             , const std::string &classname
-                             , const std::string &method_name
-                             , const std::string &arg)
+LoadException::LoadException(const std::string_view &filename,
+                             const std::string_view &classname,
+                             const std::string_view &method_name,
+                             const std::string_view &arg)
         : BaseExceptions(filename, classname, method_name, arg) {}
 
 
@@ -78,12 +82,12 @@ LoadException::LoadException(const std::string &filename
 
 
 ArgumentException::ArgumentException()
-        : BaseExceptions("\nError: some incorrect argument") {}
+        : BaseExceptions("Error: some incorrect argument") {}
 
-ArgumentException::ArgumentException(const std::string &filename
-                                     , const std::string &classname
-                                     , const std::string &method_name
-                                     , const std::string &arg)
+ArgumentException::ArgumentException(const std::string_view &filename,
+                                     const std::string_view &classname,
+                                     const std::string_view &method_name,
+                                     const std::string_view &arg)
         : BaseExceptions(filename, classname, method_name, arg) {}
 
 
@@ -91,14 +95,12 @@ ArgumentException::ArgumentException(const std::string &filename
 
 
 UnexpectedCallException::UnexpectedCallException()
-        : BaseExceptions("\nError: some function unexpect, "
+        : BaseExceptions("Error: some function unexpect, "
                          "that it will be called") {}
 
-UnexpectedCallException::UnexpectedCallException(const std::string &filename
-                                             , const std::string &classname
-                                             , const std::string &method_name
-                                             , const std::string &arg)
+UnexpectedCallException::UnexpectedCallException
+        (const std::string_view &filename, const std::string_view &classname,
+         const std::string_view &method_name, const std::string_view &arg)
         : BaseExceptions(filename, classname, method_name, arg) {}
-
 
 }  // namespace debug

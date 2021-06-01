@@ -1,16 +1,18 @@
 #include <debug/exception.hpp>
+#include <game_manager/config.hpp>
 
 #include "math_external/utilits.hpp"
 
+
 namespace math::external {
 
-RungeKuttaBoostMethod::RungeKuttaBoostMethod(runge_func func
-                                             , math::coords_t start_x)
-        : IRungeKuttaMethod(std::move(func), start_x)
+RungeKuttaBoostMethod::RungeKuttaBoostMethod(runge_func func,
+                                 math::system_of_diff_equations start_value)
+        : IRungeKuttaMethod(std::move(func), start_value)
           , _stepper() {}
 
-math::decimal_t RungeKuttaBoostMethod::do_step(math::decimal_t t
-                                               , math::decimal_t dt) {
+math::decimal_t RungeKuttaBoostMethod::do_step(math::decimal_t t,
+                                               math::decimal_t dt) {
     if (dt < 0) {
         throw debug::ARG_ARGUMENT_ERROR("Got negative dt in loop "
                                         "duration_step of Runge Kutta method, "
@@ -18,29 +20,30 @@ math::decimal_t RungeKuttaBoostMethod::do_step(math::decimal_t t
                                         + std::to_string(dt));
     }
 
-    auto func = [this](const state_type& x, state_type& dx, double t) -> void {
-        math::coords_t v_x = {x[0], x[1]};
-        math::coords_t v_dx = {dx[0], dx[1]};
+    auto func = [this](const state_type &x, state_type &dx, double t) -> void {
+        math::system_of_diff_equations v_x = {x[0], x[1]};
+        math::system_of_diff_equations v_dx = {dx[0], dx[1]};
 
         _func(v_x, v_dx, t);
 
-        dx[0] = v_dx.x;
-        dx[1] = v_dx.y;
+        dx[0] = v_dx.result_first_equation;
+        dx[1] = v_dx.result_second_equation;
     };
 
-    state_type x = {_start_x.x, _start_x.y};
+    state_type x = {_system_equations.result_first_equation,
+                    _system_equations.result_second_equation};
     _stepper.do_step(func, x, t, dt);
 
-    _start_x.x = x[0];
-    _start_x.y = x[1];
+    _system_equations.result_first_equation = x[0];
+    _system_equations.result_second_equation = x[1];
 
-    return  _start_x.x;
+    return _system_equations.result_first_equation;
 }
 
-void RungeKuttaBoostMethod::do_duration_step(math::decimal_t start_t
-                                             , math::decimal_t end_t
-                                             , math::decimal_t dt
-                                             , visit_runge_func visitor) {
+void RungeKuttaBoostMethod::do_duration_step(math::decimal_t start_t,
+                                             math::decimal_t end_t,
+                                             math::decimal_t dt,
+                                             visit_runge_func visitor) {
     if (math::Utilits::is_null(dt) || dt < 0) {
         throw debug::ARG_ARGUMENT_ERROR("Got zero or negative dt in loop "
                                         "duration_step of Runge Kutta method, "
@@ -55,30 +58,39 @@ void RungeKuttaBoostMethod::do_duration_step(math::decimal_t start_t
                                         + std::to_string(end_t));
     }
 
-    auto func = [this](const state_type& x, state_type& dx, double t) -> void {
-        math::coords_t v_x = {x[0], x[1]};
-        math::coords_t v_dx = {dx[0], dx[1]};
+    auto func = [this](const state_type &x, state_type &dx, double t) -> void {
+        math::system_of_diff_equations v_x = {x[0], x[1]};
+        math::system_of_diff_equations v_dx = {dx[0], dx[1]};
 
         _func(v_x, v_dx, t);
 
-        dx[0] = v_dx.x;
-        dx[1] = v_dx.y;
+        dx[0] = v_dx.result_first_equation;
+        dx[1] = v_dx.result_second_equation;
     };
 
-    auto visit = [visitor](const state_type& x, double t) -> void {
-        math::coords_t v_x = {x[0], x[1]};
+    auto visit = [visitor](const state_type &x, double t) -> void {
+        math::system_of_diff_equations v_x = {x[0], x[1]};
 
         visitor(v_x, t);
     };
 
-    state_type x = {_start_x.x, _start_x.y};
-    boost::numeric::odeint::integrate_const(_stepper, func, x
-                                            , start_t, end_t, dt , visit);
+    state_type x = {_system_equations.result_first_equation,
+                    _system_equations.result_second_equation};
+    boost::numeric::odeint::integrate_const(_stepper, func, x, start_t, end_t,
+                                            dt, visit);
 
-    _start_x.x = x[0];
-    _start_x.y = x[1];
+    _system_equations.result_first_equation = x[0];
+    _system_equations.result_second_equation = x[1];
 }
 
-const math::decimal_t RungeKuttaBoostMethod::method_epsilon = 1e-3;
+const math::decimal_t RungeKuttaBoostMethod::kMethodEpsilon = 1e-3;
+
+void RungeKuttaBoostMethod::init(game_manager::Config &config) const {
+    config.creater_runge_kutta = [](math::runge_func func,
+                                math::system_of_diff_equations start_value) {
+        return std::make_unique<math::external::RungeKuttaBoostMethod>(
+                std::move(func), start_value);
+    };
+}
 
 }  // namespace math::external

@@ -16,9 +16,9 @@ class PhysicalObject;
 
 class EnginesIndexedObject;
 
-class StoreObject : public IConnectToEngine {
+class StoreObjects : public IConnectToEngine {
   public:
-    StoreObject() = default;
+    StoreObjects() = default;
 
     void add_object(std::weak_ptr<PhysicalObject> object) override;
 
@@ -28,11 +28,11 @@ class StoreObject : public IConnectToEngine {
     bool contain_object(const PhysicalObject &object) const;
 
     [[nodiscard]]
-    bool is_objects_with_equal_id(const PhysicalObject &object_1
-                                  , const PhysicalObject &object_2) const;
+    bool is_objects_with_equal_id(const PhysicalObject &first_object,
+                                  const PhysicalObject &second_object) const;
 
     [[nodiscard]]
-    std::vector<std::weak_ptr<PhysicalObject>> get_active_object() const;
+    std::vector<std::weak_ptr<PhysicalObject>> get_active_objects() const;
 
   private:
     std::vector<std::weak_ptr<PhysicalObject>> _objects;
@@ -80,7 +80,7 @@ class Engine : public IConnectToEngine {
     const size_t _cals_in_tick;
     const math::decimal_t _part_of_second_in_tick;
     Mechanic _mechanic;
-    StoreObject _objects;
+    StoreObjects _objects;
 };
 
 }  // namespace physics
