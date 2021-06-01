@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <game_manager/commands.hpp>

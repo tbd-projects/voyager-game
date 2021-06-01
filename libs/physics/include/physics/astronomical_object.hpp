@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <memory>
@@ -18,13 +14,12 @@ class AstronomicalObject : public IMovable, public PhysicalObject {
 
     explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon);
 
-    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
-                                , size_t weight
-                                , math::Vector2d velocity, math::coords_t pos);
+    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon,
+                                size_t weight, math::Vector2d velocity,
+                                math::coords_t pos);
 
-    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&
-                                , size_t weight
-                                , Orbit::orbit_properties_t orbit);
+    explicit AstronomicalObject(std::unique_ptr<math::Polygon> &&,
+                                size_t weight, Orbit::orbit_properties_t orbit);
 
     [[nodiscard]]
     const Orbit &get_orbit() const noexcept;

@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #define _USE_MATH_DEFINES
 
 #include <cmath>
@@ -14,10 +10,10 @@ namespace physics {
 //  ---------------------------------Orbit-------------------------------------
 
 
-Orbit::orbit_properties_t::orbit_properties_t(math::coords_t variables
-                                              , math::coords_t basis
-                                              , math::decimal_t angle_target
-                                              , math::decimal_t period)
+Orbit::orbit_properties_t::orbit_properties_t(math::coords_t variables,
+                                              math::coords_t basis,
+                                              math::decimal_t angle_target,
+                                              math::decimal_t period)
         : variables(variables)
           , basis(basis)
           , angle_target(angle_target)
@@ -28,8 +24,8 @@ Orbit::Orbit(PhysicalObject &object, Orbit::orbit_properties_t orbit_properties)
           , _small_axis(orbit_properties.variables.y)
           , _eccentricity(0)
           , _lgitude_of_periapsis(orbit_properties.angle_target
-                                  + math::Utilits::to_grad(math::dec(M_PI)
-                                                           + math::dec(M_PI_2)))
+                                  + math::Utilits::to_grad(math::decm(M_PI)
+                                                       + math::decm(M_PI_2)))
           , _period(orbit_properties.period)
           , _current_epoch_time(0)
           , _basis(orbit_properties.basis)
@@ -56,12 +52,12 @@ Orbit::Orbit()
           , _basis()
           , _use_kepler(false) {}
 
-math::coords_t Orbit::get_current_pos(PhysicalObject &object
-                                      , const Engine &physical_engine) {
+math::coords_t
+Orbit::get_current_pos(PhysicalObject &object, const Engine &physical_engine) {
     if (_use_kepler) {
         _kepler_move(object, std::move(physical_engine));
     } else {
-        _newtom_move(object, std::move(physical_engine));
+        _newton_move(object, std::move(physical_engine));
     }
     return object.get_pos();
 }
@@ -76,11 +72,11 @@ void Orbit::relocate_on_orbit(math::decimal_t angle) {
                           * _period;
 }
 
-void Orbit::_kepler_move(PhysicalObject &object
-                         , const Engine &physical_engine) {
+void
+Orbit::_kepler_move(PhysicalObject &object, const Engine &physical_engine) {
     _current_epoch_time += physical_engine.get_part_of_seconds_in_tick();
     _current_epoch_time
-            -= _period < _current_epoch_time ? _period : math::dec(0);
+            -= _period < _current_epoch_time ? _period : math::decm(0);
     _set_pos_on_kepler_orbit(object);
 }
 
@@ -114,8 +110,7 @@ void Orbit::_set_pos_on_kepler_orbit(PhysicalObject &object) const {
     object.set_pos(new_pos);
 }
 
-void Orbit::_newtom_move(PhysicalObject &object
-                         , const Engine &physical_engine) {
+void Orbit::_newton_move(PhysicalObject &object, const Engine &physical_engine) {
     size_t times_calc = physical_engine.get_cals_in_tick();
     for (size_t i = 0; i < times_calc; ++i) {
         auto acceleration = physical_engine.calc_force_by_object(object);

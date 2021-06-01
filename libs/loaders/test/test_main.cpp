@@ -1,4 +1,3 @@
-// Дмитрий Варин
 #include <gtest/gtest.h>
 
 

@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <math/vector2d.hpp>

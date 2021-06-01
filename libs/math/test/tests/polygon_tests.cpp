@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include <gtest/gtest.h>
 
 #include <math/polygon.hpp>
@@ -29,7 +25,7 @@ class PolygonFixture : public testing::Test {
         EXPECT_PRED2(math::Utilits::is_equal, circle.get_circumscribed_circ()
                      , 5.65685);
         EXPECT_PRED2(math::Utilits::is_equal, triangle.get_circumscribed_circ()
-                     , 8 / math::dec(3) * 2);
+                     , 8 / math::decm(3) * 2);
         EXPECT_PRED2(math::Utilits::is_equal, rectangle.get_circumscribed_circ()
                      , 4.745686911);
 
@@ -51,11 +47,11 @@ class PolygonFixture : public testing::Test {
 };
 
 TEST_F(PolygonFixture, Intresect) {
-    EXPECT_TRUE(circle.intresect(rectangle));
-    EXPECT_TRUE(circle.intresect(triangle));
-    EXPECT_TRUE(rectangle.intresect(circle));
-    EXPECT_TRUE(triangle.intresect(rectangle));
-    EXPECT_TRUE(triangle.intresect(circle));
+    EXPECT_TRUE(circle.intersects(rectangle));
+    EXPECT_TRUE(circle.intersects(triangle));
+    EXPECT_TRUE(rectangle.intersects(circle));
+    EXPECT_TRUE(triangle.intersects(rectangle));
+    EXPECT_TRUE(triangle.intersects(circle));
 }
 
 TEST_F(PolygonFixture, ContainPoint) {
@@ -66,32 +62,32 @@ TEST_F(PolygonFixture, ContainPoint) {
 
 TEST_F(PolygonFixture, ScaleAndIntresect) {
     rectangle.scale(rectangle_scale);
-    EXPECT_FALSE(circle.intresect(rectangle));
-    EXPECT_FALSE(rectangle.intresect(circle));
+    EXPECT_FALSE(circle.intersects(rectangle));
+    EXPECT_FALSE(rectangle.intersects(circle));
 
     triangle.scale(triangle_scale);
-    EXPECT_FALSE(circle.intresect(triangle));
-    EXPECT_FALSE(triangle.intresect(circle));
+    EXPECT_FALSE(circle.intersects(triangle));
+    EXPECT_FALSE(triangle.intersects(circle));
 
     circle.scale(circle_scale);
-    EXPECT_TRUE(circle.intresect(rectangle));
-    EXPECT_TRUE(circle.intresect(triangle));
-    EXPECT_TRUE(rectangle.intresect(circle));
-    EXPECT_TRUE(triangle.intresect(circle));
+    EXPECT_TRUE(circle.intersects(rectangle));
+    EXPECT_TRUE(circle.intersects(triangle));
+    EXPECT_TRUE(rectangle.intersects(circle));
+    EXPECT_TRUE(triangle.intersects(circle));
 }
 
 TEST_F(PolygonFixture, ResizeAndIntresect) {
     rectangle.resize(1, 1);
-    EXPECT_FALSE(circle.intresect(rectangle));
-    EXPECT_FALSE(rectangle.intresect(circle));
+    EXPECT_FALSE(circle.intersects(rectangle));
+    EXPECT_FALSE(rectangle.intersects(circle));
 
     triangle.resize(1, 1);
-    EXPECT_FALSE(circle.intresect(triangle));
-    EXPECT_FALSE(triangle.intresect(circle));
+    EXPECT_FALSE(circle.intersects(triangle));
+    EXPECT_FALSE(triangle.intersects(circle));
 
     circle.resize(100);
-    EXPECT_TRUE(rectangle.intresect(circle));
-    EXPECT_TRUE(triangle.intresect(circle));
+    EXPECT_TRUE(rectangle.intersects(circle));
+    EXPECT_TRUE(triangle.intersects(circle));
 }
 
 TEST_F(PolygonFixture, GettersTest) {

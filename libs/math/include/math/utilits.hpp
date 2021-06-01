@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #define _USE_MATH_DEFINES
@@ -9,12 +5,13 @@
 #include <functional>
 #include <utility>
 #include <cmath>
+#include <ostream>
 
 namespace math {
 
 typedef double decimal_t;
 
-#define dec(var) decimal_t(var)
+#define decm(var) decimal_t(var)
 
 class Vector2d;
 
@@ -49,7 +46,7 @@ struct coords_t {
     coords_t &operator+=(decimal_t offset);
 };
 
-const math::decimal_t const_2_pi = dec(2) * (decimal_t)M_PI;
+const math::decimal_t const_2_pi = decm(2) * (decimal_t) M_PI;
 
 class Utilits {
   public:
@@ -73,8 +70,8 @@ class AlgebraicMethods {
     };
 
     decimal_t solve_equastion_by_Halley(
-            const std::function<return_for_solve_equastion(decimal_t x)>& func
-            , decimal_t start_x_value, size_t number_iteration);
+            const std::function<return_for_solve_equastion(decimal_t x)> &func,
+            decimal_t start_x_value, size_t number_iteration);
 };
 
 class GeometryFunction {
@@ -87,8 +84,8 @@ class GeometryFunction {
 
     coords_t rotate_point(coords_t point, decimal_t angle, coords_t basis);
 
-    point_relative point_relative_line(Vector2d line, coords_t start_line
-                                       , coords_t point);
+    point_relative
+    point_relative_line(Vector2d line, coords_t start_line, coords_t point);
 };
 
 }  // namespace math

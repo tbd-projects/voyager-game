@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <event_controller/i_controller.h>
@@ -16,16 +12,17 @@ class GameOver : public IState {
   public:
     GameOver() = delete;
 
-    GameOver(const GameOver&) = delete;
-    GameOver& operator=(const GameOver&) = delete;
+    GameOver(const GameOver &) = delete;
 
-    GameOver(graphics::ICanvas& canvas
-           ,  event_controller::IController &controller
-           , bool status, const game::level_stat& stat);
+    GameOver &operator=(const GameOver &) = delete;
+
+    GameOver(graphics::ICanvas &canvas,
+             event_controller::IController &controller, bool status,
+             const game::level_stat &stat);
 
     void stop(event_controller::IController &controller) override;
 
-    void contine(event_controller::IController &controller) override;
+    void resume(event_controller::IController &controller) override;
 
   private:
     menu::EndGameMenu _game_over_menu;

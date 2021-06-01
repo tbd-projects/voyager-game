@@ -1,14 +1,8 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include <memory>
 #include <functional>
 #include <utility>
 
 #include <debug/exception.hpp>
-#include <menu/pause_menu.h>
-#include <menu/main_menu.h>
 
 #include "game_manager.hpp"
 #include "config.hpp"
@@ -42,7 +36,7 @@ void GameManager::apply_state() {
 
     _current_state = std::move(_stash_state);
     _stash_state = nullptr;
-    _current_state->contine(_controller);
+    _current_state->resume(_controller);
 }
 
 void GameManager::add_state(const func_create_state& creator_state) {
@@ -54,9 +48,7 @@ void GameManager::end_run() {
 }
 
 void GameManager::free_stash() {
-    if (_stash_state != nullptr) {
-        _stash_state = nullptr;
-    }
+    _stash_state = nullptr;
 }
 
 }  // namespace game_manager

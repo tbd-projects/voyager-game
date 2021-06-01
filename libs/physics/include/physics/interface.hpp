@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <unistd.h>
@@ -37,8 +33,8 @@ class PhysicalObject;
 class Force {
   public:
     [[nodiscard]]
-    virtual math::Vector2d get_force(const PhysicalObject &object
-              , const PhysicalObject &other_objects) const = 0;
+    virtual math::Vector2d get_force(const PhysicalObject &object,
+                             const PhysicalObject &other_objects) const = 0;
 
     virtual ~Force() = default;
 };

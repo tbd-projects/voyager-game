@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <game_manager/interface.hpp>
@@ -15,13 +11,12 @@ class RunGame : public ICommand {
     RunGame() = delete;
 
     explicit RunGame(size_t id_level)
-        : _id_level(id_level) {}
+            : _id_level(id_level) {}
 
     void execute(GameManager &manager) override {
         size_t out_id_level = _id_level;
-        auto creator = [out_id_level](graphics::ICanvas &canvas
-                          , event_controller::IController &controller)
-                -> std::unique_ptr<game_manager::IState> {
+        auto creator = [out_id_level](graphics::ICanvas &canvas,
+                                  event_controller::IController &controller) {
             return std::make_unique<game_manager::states::InGame>(
                     canvas, controller, out_id_level);
         };

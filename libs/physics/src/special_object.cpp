@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include "special_object.hpp"
 #include "math/polygon.hpp"
 
@@ -43,9 +39,9 @@ void AcceleratableObject::complete_add_impulse() {
 ColideObject::ColideObject(std::unique_ptr<math::Polygon> &&polygon)
         : _polygon(std::move(polygon)) {}
 
-bool ColideObject::is_colide(const ColideObject &object) const {
-    return _polygon->intresect(*object._polygon) ||
-           object._polygon->intresect(*_polygon);
+bool ColideObject::is_colides(const ColideObject &object) const {
+    return _polygon->intersects(*object._polygon) ||
+           object._polygon->intersects(*_polygon);
 }
 
 math::coords_t ColideObject::get_pos() const noexcept {
@@ -64,8 +60,8 @@ math::decimal_t ColideObject::get_rotation() const noexcept {
     return _polygon->get_rotation();
 }
 
-void ColideObject::add_rotation(math::decimal_t offset_angle) {
-    _polygon->add_rotation(offset_angle);
+void ColideObject::rotate(math::decimal_t offset_angle) {
+    _polygon->rotate(offset_angle);
 }
 
 void ColideObject::set_rotation(math::decimal_t angle) {

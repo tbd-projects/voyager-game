@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include "states.hpp"
 
 namespace game_manager::states {
@@ -19,7 +15,7 @@ GameOver::GameOver(graphics::ICanvas &canvas
 void GameOver::stop(event_controller::IController &controller)  {
 }
 
-void GameOver::contine(event_controller::IController &controller)  {
+void GameOver::resume(event_controller::IController &controller)  {
 }
 
 
@@ -33,7 +29,7 @@ InLevelMenu::InLevelMenu(graphics::ICanvas &canvas
 void InLevelMenu::stop(event_controller::IController &controller)  {
 }
 
-void InLevelMenu::contine(event_controller::IController &controller)  {
+void InLevelMenu::resume(event_controller::IController &controller)  {
 }
 
 
@@ -47,7 +43,7 @@ InMainMenu::InMainMenu(graphics::ICanvas &canvas
 void InMainMenu::stop(event_controller::IController &controller)  {
 }
 
-void InMainMenu::contine(event_controller::IController &controller)  {
+void InMainMenu::resume(event_controller::IController &controller)  {
 }
 
 
@@ -60,7 +56,7 @@ InPauseMenu::InPauseMenu(graphics::ICanvas &canvas
 void InPauseMenu::stop(event_controller::IController &controller)  {
 }
 
-void InPauseMenu::contine(
+void InPauseMenu::resume(
         event_controller::IController &controller)  {
 }
 
@@ -79,7 +75,7 @@ void InGame::stop(event_controller::IController &controller)  {
     _game.stop_game();
 }
 
-void InGame::contine(event_controller::IController &controller)  {
+void InGame::resume(event_controller::IController &controller)  {
     _game.unpause();
 }
 

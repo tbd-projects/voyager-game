@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include "physical_object.hpp"
 #include "mechanic.hpp"
 
@@ -16,9 +12,9 @@ PhysicalObject::PhysicalObject(std::unique_ptr<math::Polygon> &&polygon)
           , _weight(1)
           , _velocity(math::Vector2d(0, 0)) {}
 
-PhysicalObject::PhysicalObject(std::unique_ptr<math::Polygon> &&polygon
-                               , math::coords_t pos
-                               , math::Vector2d velocity, size_t weight)
+PhysicalObject::PhysicalObject(std::unique_ptr<math::Polygon> &&polygon,
+                               math::coords_t pos, math::Vector2d velocity,
+                               size_t weight)
         : ColideObject(std::move(polygon))
           , _weight(weight)
           , _velocity(velocity) {

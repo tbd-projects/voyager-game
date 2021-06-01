@@ -1,8 +1,5 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
+
 #include <filesystem>
 #include <event_controller/i_command.h>
 
@@ -19,7 +16,7 @@ class IState {
   public:
     virtual void stop(event_controller::IController &controller) = 0;
 
-    virtual void contine(event_controller::IController &controller) = 0;
+    virtual void resume(event_controller::IController &controller) = 0;
 
     virtual ~IState() = default;
 };
@@ -28,19 +25,19 @@ class Config;
 
 class ILoaderConfig {
   protected:
-    virtual void load(const std::filesystem::path& root
-                      , Config &config) const = 0;
+    virtual void load(const std::filesystem::path &root,
+                      Config &config) const = 0;
 
     virtual ~ILoaderConfig() = default;
 
     friend class Config;
 };
 
-class IInitImportImplForConfig {
+class IInitDependencies {
   protected:
     virtual void init(Config &config) const = 0;
 
-    virtual ~IInitImportImplForConfig() = default;
+    virtual ~IInitDependencies() = default;
 
     friend class Config;
 };

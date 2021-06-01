@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <loaders/config_loader.hpp>
 #include <loaders/init_configs_loaders.hpp>
+#include <math_external/utilits.hpp>
 #include <iostream>
 
 
@@ -18,14 +19,15 @@ int main() {
 
     window.setFramerateLimit(60);
 
-
+    math::external::RungeKuttaBoostMethod initer_math({}, {});
     game_manager::SfWindow sf_window(window);
 
     game_manager::external::ConfigJsonLoader loader;
-    game_manager::external::InitLoadersForConfig initer;
+    game_manager::external::InitLoadersForConfig initer_loaders;
 
-    game_manager::Config::load(std::filesystem::path(__FILE__).parent_path() / "../config.json", loader, initer);
-
+    game_manager::Config::load(std::filesystem::path(__FILE__).parent_path() / "../config.json", loader);
+    game_manager::Config::init(initer_math);
+    game_manager::Config::init(initer_loaders);
     game_manager::GameManager manager(sf_window, sf_window);
 
     game_manager::command::RunMainMenu main_menu;

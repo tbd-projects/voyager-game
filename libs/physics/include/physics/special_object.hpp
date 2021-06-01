@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <physics/interface.hpp>
@@ -15,8 +11,7 @@ class EnginesIndexedObject {
 
     virtual ~EnginesIndexedObject() = default;
 
-    friend class StoreObject;
-    friend class Engine;
+    friend class StoreObjects;
 
   protected:
     ssize_t _index;
@@ -50,7 +45,7 @@ class ColideObject : public math::IPositionable, public math::IRotatable {
     explicit ColideObject(std::unique_ptr<math::Polygon> &&polygon);
 
     [[nodiscard]]
-    bool is_colide(const ColideObject &object) const;
+    bool is_colides(const ColideObject &object) const;
 
     [[nodiscard]]
     math::coords_t get_pos() const noexcept final;
@@ -60,15 +55,15 @@ class ColideObject : public math::IPositionable, public math::IRotatable {
     [[nodiscard]]
     math::decimal_t get_rotation() const noexcept override;
 
-    void add_rotation(math::decimal_t offset_angle) override;
+    void rotate(math::decimal_t offset_angle) override;
 
     void set_rotation(math::decimal_t angle) override;
 
     [[nodiscard]]
-    std::unique_ptr<math::Polygon>& get_polygon();
+    std::unique_ptr<math::Polygon> &get_polygon();
 
     [[nodiscard]]
-    const std::unique_ptr<math::Polygon>& get_polygon() const;
+    const std::unique_ptr<math::Polygon> &get_polygon() const;
 
   protected:
     std::unique_ptr<math::Polygon> _polygon;

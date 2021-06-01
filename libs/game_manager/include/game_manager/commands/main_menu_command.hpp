@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <game_manager/interface.hpp>
@@ -13,9 +9,8 @@ namespace game_manager::command {
 class RunMainMenu : public ICommand {
   public:
     void execute(GameManager &manager) override {
-        auto creator = [](graphics::ICanvas &canvas
-                          , event_controller::IController &controller)
-                -> std::unique_ptr<game_manager::IState> {
+        auto creator = [](graphics::ICanvas &canvas,
+                          event_controller::IController &controller) {
             return std::make_unique<game_manager::states::InMainMenu>(
                     canvas, controller);
         };

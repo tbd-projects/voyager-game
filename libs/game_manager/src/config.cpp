@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include "config.hpp"
 
 namespace game_manager {
@@ -9,10 +5,10 @@ namespace game_manager {
 Config::Config()
         : player_id(0)
           , fps(60)
-          , levels_path("data/levels/example_level.json")
-          , sprites_path("data/sprites.json")
-          , stats_path("data/player/example_stats.json")
-          , properties_path("data/player/example_properties.json")
+          , levels_path()
+          , sprites_path()
+          , stats_path()
+          , properties_path()
           , graphics_factory(nullptr)
           , sprite_loader(nullptr)
           , properties_loader(nullptr)
@@ -30,11 +26,14 @@ Config &Config::_get_instance() {
     return instance;
 }
 
-void Config::load(const std::filesystem::path &root
-                  , const ILoaderConfig &loader
-                  , const IInitImportImplForConfig& initer) {
+void
+Config::load(const std::filesystem::path &root, const ILoaderConfig &loader) {
     auto &config = _get_instance();
     loader.load(root, config);
+}
+
+void Config::init(const IInitDependencies &initer) {
+    auto &config = _get_instance();
     initer.init(config);
 }
 

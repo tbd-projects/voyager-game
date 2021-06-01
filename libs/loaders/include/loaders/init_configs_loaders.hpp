@@ -1,14 +1,10 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <game_manager/interface.hpp>
 
 namespace game_manager::external {
 
-class InitLoadersForConfig : public IInitImportImplForConfig {
+class InitLoadersForConfig : public IInitDependencies {
   public:
     InitLoadersForConfig() = default;
 
@@ -16,4 +12,4 @@ class InitLoadersForConfig : public IInitImportImplForConfig {
     void init(Config &config) const override;
 };
 
-}  // namespace game_manager::imported
+}  // namespace game_manager::external

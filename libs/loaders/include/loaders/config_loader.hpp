@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #pragma once
 
 #include <game_manager/config.hpp>
@@ -16,4 +12,4 @@ class ConfigJsonLoader : public game_manager::ILoaderConfig {
     void load(const std::filesystem::path& root, Config& config) const override;
 };
 
-}  // namespace game_manager::imported
+}  // namespace game_manager::external

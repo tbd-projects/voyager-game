@@ -1,7 +1,3 @@
-//
-// Модуль Ветошкина Артёма
-//
-
 #include "astronomical_object.hpp"
 #include <memory>
 #include <iostream>
@@ -17,16 +13,15 @@ AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon)
         : PhysicalObject(std::move(polygon))
           , _orbit() {}
 
-AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
-                                       , size_t weight
-                                       , math::Vector2d velocity
-                                       , math::coords_t pos)
+AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon,
+                                       size_t weight, math::Vector2d velocity,
+                                       math::coords_t pos)
         : PhysicalObject(std::move(polygon), pos, velocity, weight)
           , _orbit() {}
 
-AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon
-                                       , size_t weight
-                                       , Orbit::orbit_properties_t orbit)
+AstronomicalObject::AstronomicalObject(std::unique_ptr<math::Polygon> &&polygon,
+                                       size_t weight,
+                                       Orbit::orbit_properties_t orbit)
         : PhysicalObject(std::move(polygon), {0, 0}, math::Vector2d(), weight)
           , _orbit(*this, orbit) {}
 

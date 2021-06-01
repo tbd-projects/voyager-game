@@ -163,10 +163,10 @@ namespace game {
             case event_controller::Key::Escape:
                 return std::make_shared<game_manager::command::RunPause>();
             case event_controller::Key::A:
-                this->_ship->add_rotation(angle);
+                this->_ship->rotate(angle);
                 break;
             case event_controller::Key::D:
-                this->_ship->add_rotation(-angle);
+                this->_ship->rotate(-angle);
                 break;
             case event_controller::Key::W:
                 this->set_impulse(this->_ship);
