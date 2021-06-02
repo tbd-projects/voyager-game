@@ -127,7 +127,7 @@ namespace game {
 
         auto shape = \
                 game_manager::Config::get_instance() \
-.graphics_factory->create_orbit();
+                .graphics_factory->create_orbit();
         shape->set_color(Color(255, 255, 255, 128));
 
         for (auto &obj : this->_space_objects) {
@@ -195,9 +195,11 @@ namespace game {
                 break;
             case event_controller::Key::W:
                 this->set_impulse(this->_ship);
+                this->update_ship(FUEL);
                 break;
             case event_controller::Key::S:
                 this->_ship->add_impulse(this->_ship->get_rotation() - 180);
+                this->update_ship(FUEL);
                 break;
             default:
                 break;
@@ -332,7 +334,7 @@ namespace game {
             case event_controller::EventType::keyboard: {
                 auto key = \
                         dynamic_cast<event_controller::KeyboardEvent &>(event);
-                is_live = this->_map.update_ship(FUEL);
+                is_live = this->_map.ship_alive();
                 if (!is_live) {
                     _map.get_timer().stop();
                     this->update_stats(is_live);

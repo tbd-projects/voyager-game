@@ -46,23 +46,23 @@ public:
 
     math::decimal_t get_fuel_density() const;
 
-        void set_fuel(size_t fuel);
+    void set_fuel(size_t fuel);
 
-        void set_health(size_t health);
+    void set_health(size_t health);
 
-        void set_battery(size_t battery);
+    void set_battery(size_t battery);
 
-        void set_engine(size_t engine);
+    void set_engine(size_t engine);
 
-        void set_fuel_density(math::decimal_t fuel_density);
+    void set_fuel_density(math::decimal_t fuel_density);
 
-        bool update_fuel();
+    bool update_fuel();
 
-        bool update_battery();
+    bool update_battery();
 
-        bool is_live();
+    bool is_live();
 
-        bool is_die();
+    bool is_die();
 
     private:
         properties_t _properties;

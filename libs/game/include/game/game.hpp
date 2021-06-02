@@ -28,7 +28,7 @@ public:
 
     void load_level(size_t level_num);
 
-        void set_rotate(math::decimal_t angle);
+    void set_rotate(math::decimal_t angle);
 
     void set_impulse(std::shared_ptr<GameObject> obj);
 
@@ -38,6 +38,7 @@ public:
 
     void init_ship(ship_init_t &&inits);
 
+    bool ship_alive() { return this->_ship->is_live(); }
 
     std::shared_ptr<event_controller::ICommand> process_keyboard(
             event_controller::KeyboardEvent &ev);
