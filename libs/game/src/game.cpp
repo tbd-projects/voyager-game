@@ -303,19 +303,15 @@ namespace game {
     std::shared_ptr<event_controller::ICommand> Game::update(
             event_controller::Event &event) {
         auto &config = ::game_manager::Config::get_instance();
-        if (fps_counter % config.fps == 0) {
-            fps_counter = 0;
-        }
+        this->fps_counter = !(this->fps_counter % config.fps) ? 0 : fps_counter;
         ++fps_counter;
 
-        bool is_live = _map.update(_canvas);;
-
-
+        bool is_live = true;
         switch (event.type) {
             case event_controller::EventType::fps:
                 is_live = _map.update(_canvas);
                 if (is_live) {
-                    if (this->fps_counter % config.fps == 0) {
+                    if (!(this->fps_counter % config.fps)) {
                         is_live = this->_map.update_ship(BATTERY);
                     }
                 }
@@ -328,7 +324,6 @@ namespace game {
                             this->_progress.get_level_stat(_id_level));
                 }
                 break;
-
             case event_controller::EventType::close:
                 return std::make_shared<game_manager::command::Exit>();
             case event_controller::EventType::keyboard: {
