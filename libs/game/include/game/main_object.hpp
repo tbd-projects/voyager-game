@@ -12,8 +12,8 @@ public:
             size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite,
             std::unique_ptr<math::Polygon> &&pol,
             size_t weight, physics::Orbit::orbit_properties_t orbit)
-            : physics::AstronomicalObject(std::move(pol), weight, orbit),
-              IGameObject(std::move(sprite), sprite_id) {}
+            : IGameObject(std::move(sprite), sprite_id),
+              physics::AstronomicalObject(std::move(pol), weight, orbit) {}
 
     explicit GameObject(
             size_t sprite_id,
@@ -21,9 +21,9 @@ public:
             std::unique_ptr<math::Polygon> &&pol,
             size_t weight, math::Vector2d velocity,
             math::coords_t pos)
-            : physics::AstronomicalObject(
-            std::move(pol), weight, velocity, pos),
-              IGameObject(std::move(sprite), sprite_id) {}
+            : IGameObject(std::move(sprite), sprite_id),
+              physics::AstronomicalObject(
+                      std::move(pol), weight, velocity, pos) {}
 
     const std::unique_ptr<graphics::Sprite> &get_sprite() override;
 
