@@ -20,24 +20,82 @@ namespace game::external {
 
 /* path: data/levels/ levels: 1.json 2.json 3.json.......*/
     void JsonCreateLevel::create_level(size_t level_num) {
-        if (!level_num) {
-            throw debug::LogicError(
-                    __FILE__,
-                    typeid(*this).name(),
-                    __FUNCTION__,
-                    "level num is incorrect");
-        }
-        pt::ptree tree;
-        std::string level_path = \
-                this->_path + std::to_string(level_num) + ".json";
-        pt::read_json(level_path, tree);
-
-        this->_bg_id = tree.get<size_t>("background.sprite_id");
-
-        this->load_ship_init(tree.get_child("ship"));
-        this->load_space_objects(tree, "stars");
-        this->load_space_objects(tree, "planets");
+    if (!level_num) {
+        throw debug::LogicError(
+                __FILE__,
+                typeid(*this).name(),
+                __FUNCTION__,
+                "level num is incorrect");
     }
+    pt::ptree tree;
+    std::string level_path = \
+                this->_path + std::to_string(level_num) + ".json";
+    pt::read_json(level_path, tree);
+
+    this->_bg_id = tree.get<size_t>("background.sprite_id");
+
+    this->load_ship_init(tree.get_child("ship"));
+    this->load_space_objects(tree, "stars");
+    this->load_space_objects(tree, "planets");
+
+    math::coords_t left;
+    math::coords_t right;
+
+    left.x = tree.get<math::decimal_t>("border.left.x");
+    left.y = tree.get<math::decimal_t>("border.left.y");
+
+    right.x = tree.get<math::decimal_t>("border.right.x");
+    right.y = tree.get<math::decimal_t>("border.right.y");
+
+    size_t sprite_id = 4;
+    math::decimal_t size = 500;
+    size_t weight = 1000000;
+
+    for (math::decimal_t cur_x = left.x; cur_x < right.x; cur_x += size * 2) {
+        std::unique_ptr<math::Polygon> polygon =
+                std::make_unique<math::RectanglePolygon>(
+                        math::coords_t(cur_x, left.y),
+                        size, size);
+        std::shared_ptr<Star> obj = \
+        std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(cur_x, left.y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+        polygon = std::make_unique<math::RectanglePolygon>(
+                math::coords_t(cur_x, right.y),
+                size, size);
+        obj = std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(cur_x, right.y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+    }
+    for (math::decimal_t cur_y = left.y; cur_y < right.y; cur_y += size * 2) {
+        std::unique_ptr<math::Polygon> polygon = \
+                std::make_unique<math::RectanglePolygon>(
+                        math::coords_t(left.x, cur_y),
+                        size, size);
+        std::shared_ptr<Star> obj = \
+        std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(left.x, cur_y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+        polygon = std::make_unique<math::RectanglePolygon>(
+                math::coords_t(right.x, cur_y),
+                size, size);
+        obj = std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(right.x, cur_y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+    }
+}
 
     void JsonCreateLevel::load_ship_init(pt::ptree &ship_init) {
         this->_ship_init.density = \
