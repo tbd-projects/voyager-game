@@ -48,14 +48,14 @@ namespace game::external {
     right.y = tree.get<math::decimal_t>("border.right.y");
 
     size_t sprite_id = 4;
-    math::decimal_t size = 500;
-    size_t weight = 1000000;
+    math::decimal_t size = 800;
+    size_t weight = 10000;
 
     for (math::decimal_t cur_x = left.x; cur_x < right.x; cur_x += size * 2) {
         std::unique_ptr<math::Polygon> polygon =
                 std::make_unique<math::RectanglePolygon>(
                         math::coords_t(cur_x, left.y),
-                        size, size);
+                        size, size*2);
         std::shared_ptr<Star> obj = \
         std::make_shared<Star>(
                 sprite_id, nullptr,
@@ -65,7 +65,7 @@ namespace game::external {
 
         polygon = std::make_unique<math::RectanglePolygon>(
                 math::coords_t(cur_x, right.y),
-                size, size);
+                size, size * 2);
         obj = std::make_shared<Star>(
                 sprite_id, nullptr,
                 std::move(polygon), math::coords_t(cur_x, right.y),
@@ -77,7 +77,7 @@ namespace game::external {
         std::unique_ptr<math::Polygon> polygon = \
                 std::make_unique<math::RectanglePolygon>(
                         math::coords_t(left.x, cur_y),
-                        size, size);
+                        size * 2, size);
         std::shared_ptr<Star> obj = \
         std::make_shared<Star>(
                 sprite_id, nullptr,
@@ -87,7 +87,7 @@ namespace game::external {
 
         polygon = std::make_unique<math::RectanglePolygon>(
                 math::coords_t(right.x, cur_y),
-                size, size);
+                size * 2, size);
         obj = std::make_shared<Star>(
                 sprite_id, nullptr,
                 std::move(polygon), math::coords_t(right.x, cur_y),

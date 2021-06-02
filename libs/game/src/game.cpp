@@ -38,8 +38,8 @@ namespace game {
         std::unique_ptr<math::Polygon> pol = \
                 std::make_unique<math::TrianglePolygon>(
                 math::coords_t(math::decimal_t(0), math::decimal_t(0)),
-                sprite->get_texture_size().first,
-                sprite->get_texture_size().second);
+                sprite->get_texture_size().first / 2,
+                sprite->get_texture_size().second / 2);
 
         auto fuel_mass = _engine.get_mass_fuel_by_one_impulse();
         // default params

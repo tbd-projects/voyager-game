@@ -63,20 +63,30 @@ math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object,
     math::Vector2d normal_velocity = object.get_velocity().normalize();
 
     for (const auto &obj : tmp) {
-        if (!objects.is_objects_with_equal_id(*obj.lock(), object)) {
-            ans += _force->get_force(object, *obj.lock());
-            math::decimal_t effective_orbit
-                    = get_effective_circle_orbit(*obj.lock());
+        if (!obj.expired()) {
+            auto current_object = obj.lock();
+            if (!objects.is_objects_with_equal_id(*current_object, object)) {
+                ans += _force->get_force(object, *current_object);
 
-            math::decimal_t upper_bounder = effective_orbit + object_dimensions;
-            math::decimal_t lower_bounder = effective_orbit - object_dimensions;
+                if (!current_object->have_effective_orbit()) {
+                    continue;
+                }
 
-            math::decimal_t distance
-                    = math::Vector2d(obj.lock()->get_pos()
-                                     , object.get_pos()).sqr_len();
-            if (upper_bounder * upper_bounder >= distance
-                && lower_bounder * lower_bounder <= distance) {
-                ans += normal_velocity * math::decm(0.0006);
+                math::decimal_t effective_orbit
+                        = get_effective_circle_orbit(*current_object);
+
+                math::decimal_t upper_bounder =
+                        effective_orbit + object_dimensions;
+                math::decimal_t lower_bounder =
+                        effective_orbit - object_dimensions;
+
+                math::decimal_t distance
+                        = math::Vector2d(current_object->get_pos(),
+                                         object.get_pos()).sqr_len();
+                if (upper_bounder * upper_bounder >= distance
+                    && lower_bounder * lower_bounder <= distance) {
+                    ans += normal_velocity * math::decm(0.0006);
+                }
             }
         }
     }

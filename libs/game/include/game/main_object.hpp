@@ -65,6 +65,6 @@ public:
             math::Vector2d velocity,
             size_t weight) :
             IGameObject(std::move(sprite), sprite_id),
-            physics::PhysicalObject(std::move(pol), pos, velocity, weight) {}
+            physics::PhysicalObject(std::move(pol), pos, velocity, weight, false) {}
 };
 }  // namespace game

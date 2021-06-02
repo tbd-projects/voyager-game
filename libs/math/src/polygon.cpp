@@ -146,6 +146,10 @@ decimal_t RectanglePolygon::get_circumscribed_circ() const {
     return Vector2d(coords_t{_width, _height}).len() / decm(2);
 }
 
+decimal_t RectanglePolygon::get_circumscribed_circ_sqr() const {
+    return Vector2d(coords_t{_width, _height}).sqr_len() / decm(4);
+}
+
 
 //  ---------------------------TrianglePolygon-------------------------------
 
@@ -230,6 +234,10 @@ decimal_t TrianglePolygon::get_circumscribed_circ() const {
     return _height * 2 / decm(3);
 }
 
+decimal_t TrianglePolygon::get_circumscribed_circ_sqr() const {
+    return _height * _height *  4 / decm(9);
+}
+
 
 //  ---------------------------CirclePolygon---------------------------------
 
@@ -283,6 +291,10 @@ math::decimal_t CirclePolygon::get_radius() const noexcept {
 
 decimal_t CirclePolygon::get_circumscribed_circ() const {
     return _radius;
+}
+
+decimal_t CirclePolygon::get_circumscribed_circ_sqr() const {
+    return _radius * _radius;
 }
 
 }  // namespace math

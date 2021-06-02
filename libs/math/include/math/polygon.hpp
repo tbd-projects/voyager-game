@@ -63,6 +63,9 @@ class Polygon
     [[nodiscard]]
     virtual decimal_t get_circumscribed_circ() const = 0;
 
+    [[nodiscard]]
+    virtual decimal_t get_circumscribed_circ_sqr() const = 0;
+
     ~Polygon() override = default;
 };
 
@@ -91,6 +94,9 @@ class RectanglePolygon : public Polygon {
 
     [[nodiscard]]
     decimal_t get_circumscribed_circ() const override;
+
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ_sqr() const override;
 
     ~RectanglePolygon() override = default;
 
@@ -125,6 +131,9 @@ class TrianglePolygon : public Polygon {
     [[nodiscard]]
     decimal_t get_circumscribed_circ() const override;
 
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ_sqr() const override;
+
     ~TrianglePolygon() override = default;
 
   private:
@@ -154,6 +163,9 @@ class CirclePolygon : public Polygon {
 
     [[nodiscard]]
     decimal_t get_circumscribed_circ() const override;
+
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ_sqr() const override;
 
     ~CirclePolygon() override = default;
 
