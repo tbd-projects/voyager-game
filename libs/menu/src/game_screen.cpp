@@ -4,16 +4,16 @@
 
 #include <menu/game_screen.h>
 
-void menu::GameScreen::draw(graphics::ICanvas *canvas) {
+void menu::GameScreen::_draw(graphics::ICanvas *canvas) {
     if (!_screen_width)
         set_screen_width(canvas->get_width());
 
-    _battery_text->draw(canvas);
-    _timer_text->draw(canvas);
-    _fuel_text->draw(canvas);
+    _battery_text->draw(*canvas);
+    _timer_text->draw(*canvas);
+    _fuel_text->draw(*canvas);
 
-    _fuel_icon->draw(canvas);
-    _battery_icon->draw(canvas);
+    _fuel_icon->draw(*canvas);
+    _battery_icon->draw(*canvas);
 }
 
 menu::GameScreen::GameScreen(graphics::IGraphicsFactory &factory, graphics::ISpiteLoader &loader,

@@ -11,7 +11,7 @@ graphics::sf::SfSprite::SfSprite(
 
 }
 
-void graphics::sf::SfSprite::draw(graphics::ICanvas *canvas) {
+void graphics::sf::SfSprite::_draw(graphics::ICanvas *canvas) {
     auto& window = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();
 
     ::sf::Sprite sprite;
@@ -51,7 +51,7 @@ graphics::sf::SfHorizontalAnimatedSprite::SfHorizontalAnimatedSprite(int frames,
     if (!frames) throw std::exception();
 }
 
-void graphics::sf::SfHorizontalAnimatedSprite::draw(graphics::ICanvas *canvas) {
+void graphics::sf::SfHorizontalAnimatedSprite::_draw(graphics::ICanvas *canvas) {
     auto pos = get_texture_pos();
     auto size = get_texture_size();
 
@@ -59,7 +59,7 @@ void graphics::sf::SfHorizontalAnimatedSprite::draw(graphics::ICanvas *canvas) {
     SfSprite sprite(pos, size, &dynamic_cast<SfTexture &>(get_texture()));
     sprite.set_rotation(get_rotation());
     sprite.set_pos(get_pos());
-    sprite.draw(canvas);
+    sprite.draw(*canvas);
 }
 
 graphics::sf::SfHorizontalAnimatedSprite::SfHorizontalAnimatedSprite(

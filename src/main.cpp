@@ -13,7 +13,6 @@ int main() {
             "MyApp",
             sf::Style::Fullscreen);
 
-    window.setFramerateLimit(60);
 
     math::external::RungeKuttaBoostMethod initer_math({}, {});
     game_manager::SfWindow sf_window(window);
@@ -28,6 +27,8 @@ int main() {
     game_manager::GameManager manager(sf_window, sf_window);
 
     game_manager::command::RunMainMenu main_menu;
+
+    window.setFramerateLimit(game_manager::Config::get_instance().fps);
 
     main_menu.execute(manager);
 

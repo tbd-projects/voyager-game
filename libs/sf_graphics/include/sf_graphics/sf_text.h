@@ -10,8 +10,6 @@
 namespace graphics::sf {
     class SfText: public Text{
     public:
-        void draw(ICanvas *canvas) override;
-
         void set_font(std::shared_ptr<Font> font) override;
 
         void set_string(const std::string &string) override;
@@ -21,6 +19,8 @@ namespace graphics::sf {
         void set_pos(math::coords_t pos) override;
 
     private:
+        void _draw(ICanvas *canvas) override;
+
         ::sf::Text _sf_text;
     };
 

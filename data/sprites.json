@@ -96,5 +96,18 @@
     "filename": "./spaces/1.jpg",
     "frames": 0,
     "is_bg": true
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 1000,
+      "y": 1000
+    },
+    "filename": "./sprites/stars/blackhole_01.png",
+    "frames": 0,
+    "is_bg": false
   }
 ]

@@ -7,7 +7,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 
-void graphics::sf::SfRect::draw(graphics::ICanvas *canvas) {
+void graphics::sf::SfRect::_draw(graphics::ICanvas *canvas) {
     auto& sf_canvas = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();
 
     ::sf::RectangleShape rect(::sf::Vector2f(get_width(), get_height()));

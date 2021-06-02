@@ -9,6 +9,8 @@
 namespace graphics {
     class BackgroundSprite: public Sprite {
         std::unique_ptr<Sprite> _sprite;
+
+        void _draw(ICanvas *canvas) override;
     public:
         explicit BackgroundSprite(std::unique_ptr<Sprite> &&sprite);
 
@@ -18,7 +20,7 @@ namespace graphics {
 
         ITexture &get_texture() override;
 
-        void draw(ICanvas *canvas) override;
+        void set_visible(bool visible) override;
     };
 }
 

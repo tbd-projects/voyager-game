@@ -26,13 +26,28 @@ namespace graphics {
     };
 
     class IDrawable {
+    private:
+        bool _is_visible = true;
+
+        virtual void _draw(ICanvas *) = 0;
     public:
-        virtual void draw(ICanvas *) = 0;
         void draw(std::unique_ptr<ICanvas> &canvas) {
-            draw(canvas.get());
+            if (_is_visible) {
+                _draw(canvas.get());
+            }
         }
         void draw(ICanvas &canvas) {
-            draw(&canvas);
+            if (_is_visible) {
+                _draw(&canvas);
+            }
+        }
+
+        bool is_visible() const {
+            return _is_visible;
+        }
+
+        virtual void set_visible(bool visible = true) {
+            _is_visible = visible;
         }
 
         virtual ~IDrawable() = default;

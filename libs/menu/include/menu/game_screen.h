@@ -16,7 +16,7 @@ namespace menu {
                    graphics::TextureStorage &storage,
                    int screen_width = 0);
 
-        void draw(graphics::ICanvas *canvas) override;
+        void _draw(graphics::ICanvas *canvas) override;
 
         void update(int timer, int fuel, int battery);
 

@@ -6,7 +6,7 @@
 #include "sf_text.h"
 #include "sf_font.h"
 
-void graphics::sf::SfText::draw(graphics::ICanvas *canvas) {
+void graphics::sf::SfText::_draw(graphics::ICanvas *canvas) {
     auto& window = dynamic_cast<game_manager::SfWindow *>(canvas)->get_sf_window();
 
     auto color = get_color();

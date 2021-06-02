@@ -21,9 +21,24 @@ void graphics::Camera::set_size(const math::decimal_t &size) {
 }
 
 void graphics::Camera::apply(Sprite &sprite, const math::coords_t &pos) const {
-
-    sprite.set_pos(get_coords(pos));
+    auto screen_pos = get_coords(pos);
+    sprite.set_pos(screen_pos);
     sprite.scale(_size);
+
+    double position_bounds[] = {
+            -sprite.get_size().x * _size,
+            1920 + sprite.get_size().x * _size,
+            -sprite.get_size().y * _size,
+            1080 + sprite.get_size().y * _size
+    };
+
+    sprite.set_visible(!(
+            screen_pos.x < position_bounds[0] ||
+            screen_pos.x > position_bounds[1] ||
+            screen_pos.y < position_bounds[2] ||
+            screen_pos.y > position_bounds[3]
+            ));
+
 }
 
 const math::coords_t &graphics::Camera::get_center() const {

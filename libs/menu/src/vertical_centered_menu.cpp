@@ -62,7 +62,7 @@ void menu::VerticalCenteredMenu::_draw(graphics::ICanvas *canvas) {
     _update_buttons();
 
     for (auto &button: _buttons) {
-        button.draw(canvas);
+        button._draw(canvas);
     }
 }
 

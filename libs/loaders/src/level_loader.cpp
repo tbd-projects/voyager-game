@@ -47,7 +47,7 @@ namespace game::external {
     right.x = tree.get<math::decimal_t>("border.right.x");
     right.y = tree.get<math::decimal_t>("border.right.y");
 
-    size_t sprite_id = 4;
+    size_t sprite_id = 8;
     math::decimal_t size = 800;
     size_t weight = 10000;
 

@@ -16,7 +16,7 @@ namespace graphics {
         return _sprite->get_texture();
     }
 
-    void BackgroundSprite::draw(ICanvas *canvas) {
+    void BackgroundSprite::_draw(ICanvas *canvas) {
         auto w = canvas->get_width() , h = canvas->get_height();
 
         auto pos = get_pos();
@@ -35,7 +35,7 @@ namespace graphics {
             for (auto y = new_pos.y; y < h + hh; y += hh)
             {
                 _sprite->set_pos(math::coords_t(x, y));
-                _sprite->draw(canvas);
+                _sprite->draw(*canvas);
             }
         }
     }
@@ -49,4 +49,6 @@ namespace graphics {
         _sprite(std::move(sprite)) {
 
     }
+
+    void BackgroundSprite::set_visible(bool visible) {}
 }

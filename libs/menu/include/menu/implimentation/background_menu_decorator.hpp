@@ -10,7 +10,7 @@ template <typename T>
 std::shared_ptr<event_controller::ICommand> menu::BackgroundMenuDecorator<T>::update(event_controller::Event &event) {
     if(event.type == event_controller::EventType::fps)
     {
-        _bg->draw(&T::get_canvas());
+        _bg->draw(T::get_canvas());
     }
 
     return T::update(event);

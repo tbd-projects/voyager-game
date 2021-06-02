@@ -18,7 +18,7 @@ namespace graphics {
 
         void set_padding(int padding);
 
-        void draw(ICanvas *canvas) override;
+        void _draw(ICanvas *canvas) override;
 
         void set_rotation(math::decimal_t angle) override;
 

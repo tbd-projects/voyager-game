@@ -169,7 +169,7 @@ namespace game {
 
         sprite->draw(canvas);
 
-        _game_screen->draw(&canvas);
+        _game_screen->draw(canvas);
         return true;
     }
 

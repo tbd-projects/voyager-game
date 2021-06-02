@@ -10,7 +10,7 @@
 namespace graphics::sf {
 
     class SfRect: public Rect {
-        void draw(ICanvas *canvas) override;
+        void _draw(ICanvas *canvas) override;
     };
 }
 

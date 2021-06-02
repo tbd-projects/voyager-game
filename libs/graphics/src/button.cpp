@@ -46,11 +46,11 @@ void graphics::Button::set_focus(bool focused) {
     _is_focused = focused;
 }
 
-void graphics::Button::draw(graphics::ICanvas *canvas) {
+void graphics::Button::_draw(graphics::ICanvas *canvas) {
     _update_drawables();
 
-    _rect->draw(canvas);
-    _text->draw(canvas);
+    _rect->draw(*canvas);
+    _text->draw(*canvas);
 }
 
 void graphics::Button::set_pos(math::coords_t pos) {

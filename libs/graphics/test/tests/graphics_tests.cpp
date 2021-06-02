@@ -269,7 +269,7 @@ TEST_F (GraphicsTests, Shape) {
 
         shape->set_orbit(props);
 
-        shape->draw(_canvas);
+        shape->_draw(_canvas);
 
         _canvas->apply();
     }

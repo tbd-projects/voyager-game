@@ -14,7 +14,7 @@ namespace event_controller {
 
     class Controller : public IController{
     private:
-        bool _is_runned = false;
+        volatile bool _is_runned = false;
         std::map<EventType, std::set<ISubscriber *>> _subscribers;
         game_manager::GameManager &_manager;
         IEventable &_eventable;

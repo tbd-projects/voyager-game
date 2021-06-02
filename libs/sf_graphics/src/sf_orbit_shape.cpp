@@ -7,7 +7,7 @@
 #include <sf_graphics/sf_window.h>
 
 
-void graphics::sf::SfOrbitShape::draw(graphics::ICanvas *canvas) {
+void graphics::sf::SfOrbitShape::_draw(graphics::ICanvas *canvas) {
     auto &window = *dynamic_cast<game_manager::SfWindow *>(canvas);
 
     window.get_sf_window().draw(_shape);

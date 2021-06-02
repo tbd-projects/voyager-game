@@ -13,10 +13,10 @@ namespace graphics::sf {
     class SfOrbitShape: public OrbitShape {
     private:
         ::sf::ConvexShape _shape;
+
+        void _draw(ICanvas *canvas) override;
     public:
         SfOrbitShape();
-
-        void draw(ICanvas *canvas) override;
 
         ~SfOrbitShape() override = default;
 
