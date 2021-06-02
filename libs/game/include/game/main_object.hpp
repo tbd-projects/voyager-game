@@ -64,7 +64,7 @@ public:
             math::coords_t pos,
             math::Vector2d velocity,
             size_t weight) :
-            physics::PhysicalObject(std::move(pol), pos, velocity, weight),
-            IGameObject(std::move(sprite), sprite_id) {}
+            IGameObject(std::move(sprite), sprite_id),
+            physics::PhysicalObject(std::move(pol), pos, velocity, weight) {}
 };
 }  // namespace game
