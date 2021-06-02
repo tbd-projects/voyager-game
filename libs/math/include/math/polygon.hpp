@@ -5,6 +5,39 @@
 
 namespace math {
 
+struct Rect {
+    coords_t left_up;
+    coords_t right_down;
+
+    Rect(coords_t v_left_up, coords_t v_right_down)
+            : left_up(v_left_up)
+              , right_down(v_right_down) {}
+
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ() const {
+        return Vector2d(
+                coords_t{std::abs(left_up.x - right_down.x),
+                         std::abs(left_up.y - right_down.y)}).len() / decm(2);
+    }
+
+    [[nodiscard]]
+    decimal_t get_circumscribed_circ_sqr() const {
+        return Vector2d(
+                coords_t{std::abs(left_up.x - right_down.x),
+                         std::abs(left_up.y -
+                                  right_down.y)}).sqr_len() / decm(4);
+    }
+
+    [[nodiscard]]
+    coords_t size() const {
+        auto ans = left_up - right_down;
+        ans.x = std::abs(ans.x);
+        ans.y = std::abs(ans.y);
+        return ans;
+    }
+};
+
+
 class PositionateObject : public IPositionable {
   public:
     PositionateObject();
@@ -61,10 +94,7 @@ class Polygon
     bool intersects(const IIntresectable &object) const override = 0;
 
     [[nodiscard]]
-    virtual decimal_t get_circumscribed_circ() const = 0;
-
-    [[nodiscard]]
-    virtual decimal_t get_circumscribed_circ_sqr() const = 0;
+    virtual Rect get_bounders_rect() const = 0;
 
     ~Polygon() override = default;
 };
@@ -93,10 +123,7 @@ class RectanglePolygon : public Polygon {
     math::decimal_t get_width() const noexcept;
 
     [[nodiscard]]
-    decimal_t get_circumscribed_circ() const override;
-
-    [[nodiscard]]
-    decimal_t get_circumscribed_circ_sqr() const override;
+    virtual Rect get_bounders_rect() const override;
 
     ~RectanglePolygon() override = default;
 
@@ -129,10 +156,7 @@ class TrianglePolygon : public Polygon {
     math::decimal_t get_width() const noexcept;
 
     [[nodiscard]]
-    decimal_t get_circumscribed_circ() const override;
-
-    [[nodiscard]]
-    decimal_t get_circumscribed_circ_sqr() const override;
+    virtual Rect get_bounders_rect() const override;
 
     ~TrianglePolygon() override = default;
 
@@ -162,10 +186,7 @@ class CirclePolygon : public Polygon {
     math::decimal_t get_radius() const noexcept;
 
     [[nodiscard]]
-    decimal_t get_circumscribed_circ() const override;
-
-    [[nodiscard]]
-    decimal_t get_circumscribed_circ_sqr() const override;
+    virtual Rect get_bounders_rect() const override;
 
     ~CirclePolygon() override = default;
 

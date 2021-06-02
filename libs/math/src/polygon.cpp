@@ -142,14 +142,17 @@ math::decimal_t RectanglePolygon::get_width() const noexcept {
     return _width;
 }
 
-decimal_t RectanglePolygon::get_circumscribed_circ() const {
-    return Vector2d(coords_t{_width, _height}).len() / decm(2);
-}
+Rect RectanglePolygon::get_bounders_rect() const {
+    math::coords_t left_top = _pos + coords_t(-_width / 2, _height / 2);
+    math::coords_t right_bottom = _pos + coords_t(_width / 2, -_height / 2);
 
-decimal_t RectanglePolygon::get_circumscribed_circ_sqr() const {
-    return Vector2d(coords_t{_width, _height}).sqr_len() / decm(4);
-}
+    GeometryFunction geometry;
 
+    left_top = geometry.rotate_point(left_top, _angle, _pos);
+    right_bottom = geometry.rotate_point(right_bottom, _angle, _pos);
+
+    return Rect(left_top, right_bottom);
+}
 
 //  ---------------------------TrianglePolygon-------------------------------
 
@@ -230,12 +233,17 @@ math::decimal_t TrianglePolygon::get_width() const noexcept {
     return _width;
 }
 
-decimal_t TrianglePolygon::get_circumscribed_circ() const {
-    return _height * 2 / decm(3);
-}
+Rect TrianglePolygon::get_bounders_rect() const {
+    math::coords_t left_up =
+            _pos + coords_t(-_width / 2, _height * 2 / decm(3));
+    math::coords_t right_down =
+            _pos + coords_t(_width / 2, -_height * 1 / decm(3));
 
-decimal_t TrianglePolygon::get_circumscribed_circ_sqr() const {
-    return _height * _height *  4 / decm(9);
+    GeometryFunction geometry;
+
+    left_up = geometry.rotate_point(left_up, _angle, _pos);
+    right_down = geometry.rotate_point(right_down, _angle, _pos);
+    return Rect(left_up, right_down);
 }
 
 
@@ -289,12 +297,8 @@ math::decimal_t CirclePolygon::get_radius() const noexcept {
     return _radius;
 }
 
-decimal_t CirclePolygon::get_circumscribed_circ() const {
-    return _radius;
+Rect CirclePolygon::get_bounders_rect() const {
+    return Rect{{_pos.x - _radius, _pos.y + _radius},
+                {_pos.x + _radius, _pos.y - _radius}};
 }
-
-decimal_t CirclePolygon::get_circumscribed_circ_sqr() const {
-    return _radius * _radius;
-}
-
 }  // namespace math

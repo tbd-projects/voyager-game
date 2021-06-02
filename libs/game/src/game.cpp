@@ -76,18 +76,18 @@ namespace game {
             planet->set_sprite(
                     factory.load(planet->get_sprite_id(),
                                  *_storage));
-            math::decimal_t size = \
-                    planet->get_polygon()->get_circumscribed_circ();
-            planet->get_sprite()->set_size({size, size});
+            math::coords_t size = \
+                    planet->get_polygon()->get_bounders_rect().size();
+            planet->get_sprite()->set_size(size);
         }
         for (auto &star : this->_stars) {
             star->set_sprite(
                     factory.load(
                             star->get_sprite_id(),
                             *_storage));
-            math::decimal_t size = \
-                    star->get_polygon()->get_circumscribed_circ();
-            star->get_sprite()->set_size({size, size});
+            math::coords_t size = \
+                    star->get_polygon()->get_bounders_rect().size();
+            star->get_sprite()->set_size(size);
         }
 
         _bg = factory.load(_bg_id, *_storage);

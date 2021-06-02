@@ -56,7 +56,8 @@ bool Engine::check_collision(const PhysicalObject &object) const {
                 math::decimal_t distance = math::Vector2d(
                         object.get_pos() - gotten_object->get_pos()).sqr_len();
                 if (distance <=
-                    gotten_object->get_polygon()->get_circumscribed_circ_sqr()) {
+                    gotten_object->get_polygon()->get_bounders_rect()
+                            .get_circumscribed_circ_sqr()) {
                     if (object.is_colides(*gotten_object)) {
                         return true;
                     }
@@ -214,7 +215,7 @@ bool StoreObjects::contain_object(const PhysicalObject &object) const {
 }
 
 bool StoreObjects::is_objects_with_equal_id(const PhysicalObject &first_object,
-                                            const PhysicalObject &second_object) const {
+                                const PhysicalObject &second_object) const {
     return first_object._index == second_object._index;
 }
 
