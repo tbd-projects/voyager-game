@@ -6,7 +6,7 @@ class Product {
 public:
     Product(std::string name, size_t price);
 
-    Product(ProductsLoader *loader);
+    explicit Product(ProductsLoader *loader);
 
     std::string get_name();
 

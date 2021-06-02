@@ -9,9 +9,6 @@
 #include "math/polygon.hpp"
 #include "physics/orbit.hpp"
 
-
-using namespace boost::property_tree;
-
 class LevelLoader : public testing::Test {
 protected:
     game::external::JsonCreateLevel loader;
@@ -20,20 +17,27 @@ protected:
     size_t cnt_stars;
     game::ship_init_t ship_inits;
 
-
     void SetUp() {
-        auto root_dir = std::filesystem::path(
-                __FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
+        auto root_dir = \
+                std::filesystem::path(__FILE__) \
+.parent_path().parent_path() \
+.parent_path().parent_path().parent_path();
+
         std::string path_load = root_dir / "libs/game/test/data/";
+
         this->loader = game::external::JsonCreateLevel{path_load};
         this->bg_id = 0;
         this->cnt_planets = 3;
         this->cnt_stars = 1;
-        this->ship_inits = game::ship_init_t(math::coords_t(-600, -300),math::Vector2d(0, 0.08f),math::decimal_t(100), 1);
+        this->ship_inits = \
+                game::ship_init_t(
+                math::coords_t(-600, -300),
+                math::Vector2d(0, 0.08f),
+                math::decimal_t(100),
+                1);
     }
 
-    void TearDown() {};
-
+    void TearDown() {}
 };
 
 TEST_F(LevelLoader, LevelNotFound) {

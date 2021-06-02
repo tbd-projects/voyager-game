@@ -11,10 +11,9 @@ public:
     virtual ProductMap &load_maps() = 0;
 
     virtual std::vector <ProductShip> &load_ships() = 0;
-
 };
 
 class JsonProductsLoader : public ProductsLoader {
 public:
-    JsonProductsLoader(std::string root_path);
+    explicit JsonProductsLoader(std::string root_path);
 };

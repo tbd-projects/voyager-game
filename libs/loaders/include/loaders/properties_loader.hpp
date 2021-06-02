@@ -9,24 +9,24 @@
 #include <game/interface.hpp>
 
 namespace game::external {
+class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
+public:
+    JsonPlayerPropertiesLoader() = delete;
 
-    class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
-    public:
-        JsonPlayerPropertiesLoader() = delete;
+    explicit JsonPlayerPropertiesLoader(const std::string &root_path);
 
-        JsonPlayerPropertiesLoader(const std::string &root_path);
+    properties_t load_current_properties(int player_id) override;
 
-        properties_t load_current_properties(int player_id) override;
+    void save_current_properties(
+            int player_id,
+            properties_t &properties) override;
 
-        void save_current_properties(int player_id, properties_t &properties) override;
+    bool has_player(int player_id);
 
-        bool has_player(int player_id);
-
-      protected:
-        std::string path;
-        size_t _sprite_id;
-        std::unique_ptr<math::Polygon> _pol;
-
-    };
-} // namespace game
+protected:
+    std::string path;
+    size_t _sprite_id;
+    std::unique_ptr<math::Polygon> _pol;
+};
+}  // namespace game::external
 

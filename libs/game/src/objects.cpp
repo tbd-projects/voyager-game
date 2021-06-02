@@ -10,23 +10,23 @@ namespace game {
         this->_properties = properties;
     }
 
-    size_t SpaceShip::get_fuel() {
+    size_t SpaceShip::get_fuel() const {
         return _properties.fuel;
     }
 
-    size_t SpaceShip::get_health() {
+    size_t SpaceShip::get_health() const {
         return _properties.health;
     }
 
-    size_t SpaceShip::get_battery() {
+    size_t SpaceShip::get_battery() const {
         return _properties.battery;
     }
 
-    size_t SpaceShip::get_engine() {
+    size_t SpaceShip::get_engine() const {
         return _properties.engine_power;
     }
 
-    math::decimal_t SpaceShip::get_fuel_density() {
+    math::decimal_t SpaceShip::get_fuel_density() const {
         return this->_fuel_prop._fuel_density;
     }
 
@@ -50,9 +50,10 @@ namespace game {
         this->_fuel_prop._fuel_density = fuel_density;
     }
 
-    // @todo add _fuel_prop calculation formulas
     bool SpaceShip::update_fuel() {
-        this->_properties.fuel -= this->_fuel_prop._base_discarder_mass_of_fuel / this->_fuel_prop._fuel_density;
+        this->_properties.fuel -= \
+                this->_fuel_prop._base_discarder_mass_of_fuel /
+                this->_fuel_prop._fuel_density;
         return this->_properties.fuel > 0;
     }
 
@@ -67,5 +68,5 @@ namespace game {
     bool SpaceShip::is_die() {
         return !this->is_live();
     }
-} // namespace game
+}  // namespace game
 

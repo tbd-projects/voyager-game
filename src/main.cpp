@@ -5,17 +5,13 @@
 #include <loaders/config_loader.hpp>
 #include <loaders/init_configs_loaders.hpp>
 #include <math_external/utilits.hpp>
-#include <iostream>
 
 
 int main() {
-
-
     sf::RenderWindow window(
-    ::sf::VideoMode::getDesktopMode(),
-    "MyApp",
-            sf::Style::Fullscreen
-    );
+            ::sf::VideoMode::getDesktopMode(),
+            "MyApp",
+            sf::Style::Fullscreen);
 
     window.setFramerateLimit(60);
 
@@ -25,7 +21,8 @@ int main() {
     game_manager::external::ConfigJsonLoader loader;
     game_manager::external::InitLoadersForConfig initer_loaders;
 
-    game_manager::Config::load(std::filesystem::path(__FILE__).parent_path() / "../config.json", loader);
+    game_manager::Config::load(std::filesystem::path(__FILE__).parent_path() /
+                               "../config.json", loader);
     game_manager::Config::init(initer_math);
     game_manager::Config::init(initer_loaders);
     game_manager::GameManager manager(sf_window, sf_window);

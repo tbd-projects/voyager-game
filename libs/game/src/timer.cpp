@@ -34,8 +34,10 @@ void game::Timer::pause() {
 
 void game::Timer::unpause() {
     if (this->_is_pause) {
-        this->_pause_sum = this->_pause_sum + std::chrono::duration_cast<std::chrono::milliseconds>(
+        this->_pause_sum = this->_pause_sum + \
+                std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - this->_pause);
+
         this->_is_running = true;
         this->_is_pause = false;
     }

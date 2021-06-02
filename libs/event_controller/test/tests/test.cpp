@@ -79,13 +79,9 @@ public:
         return 0;
     }
 
-    void clear() override {
+    void clear() override {}
 
-    }
-
-    void apply() override {
-
-    }
+    void apply() override {}
 };
 
 TEST(event_controller_tests, controller_constructor) {

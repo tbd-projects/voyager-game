@@ -8,23 +8,22 @@
 #include "debug/exception.hpp"
 #include "loaders/progress_loader.hpp"
 
-using namespace boost::property_tree;
-
-
 class BaseProgressLoaderTest : public testing::Test {
 protected:
     game::external::BaseProgressLoader loader{};
 
-
     void SetUp() {
-        auto root_dir = std::filesystem::path(
-                __FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
-        std::string path_load = root_dir / "libs/game/test/data/example_progress_load.json";
-        this->loader = game::external::BaseProgressLoader{path_load};
+        auto root_dir = \
+                std::filesystem::path(__FILE__) \
+                .parent_path().parent_path() \
+                .parent_path().parent_path().parent_path();
 
+        std::string path_load = \
+                root_dir / "libs/game/test/data/example_progress_load.json";
+        this->loader = game::external::BaseProgressLoader{path_load};
     }
 
-    void TearDown() {};
+    void TearDown() {}
 };
 
 class BaseProgressSaverTest : public testing::Test {
@@ -33,18 +32,24 @@ protected:
     game::progress_t progress;
 
     void SetUp() {
-        auto root_dir = std::filesystem::path(
-                __FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
-        std::string path_save = root_dir / "libs/game/test/data/example_progress_save.json";
-        this->loader = game::external::BaseProgressLoader{path_save};
+        auto root_dir = \
+                std::filesystem::path(__FILE__) \
+                .parent_path().parent_path() \
+                .parent_path().parent_path().parent_path();
 
+        std::string path_save = \
+                root_dir / "libs/game/test/data/example_progress_save.json";
+
+        this->loader = game::external::BaseProgressLoader{path_save};
         this->progress.coins = 999;
+
         for (size_t i = 0; i < 5; ++i) {
-            this->progress.levels.emplace_back(game::level_stat(i, i, i, true));
+            this->progress.levels.emplace_back(game::level_stat(i, i,
+                                                                i, true));
         }
     }
 
-    void TearDown() {};
+    void TearDown() {}
 };
 
 TEST_F(BaseProgressLoaderTest, hasStats) {

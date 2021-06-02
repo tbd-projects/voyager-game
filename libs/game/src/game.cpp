@@ -7,8 +7,7 @@
 #include <physics/orbit.hpp>
 
 namespace game {
-
-    void Map::set_sprites(MapSpriteCreator &factory) {
+    [[maybe_unused]] void Map::set_sprites(MapSpriteCreator &factory) {
         for (auto &planet : this->_space_objects) {
             planet->set_sprite(factory.get_sprite(planet->get_sprite_id()));
         }
@@ -20,35 +19,48 @@ namespace game {
 
     Map::Map(size_t player_id) :
             _storage(
-                    std::make_unique<graphics::TextureStorage>(*game_manager::Config::get_instance().graphics_factory)),
+                    std::make_unique<graphics::TextureStorage>(
+                            *game_manager::Config::get_instance() \
+                                .graphics_factory)),
             _timer(std::make_unique<Timer>()),
-            _game_screen(std::make_unique<menu::GameScreen>(*game_manager::Config::get_instance().graphics_factory,
-                                                            *game_manager::Config::get_instance().sprite_loader,
-                                                            *_storage)) {
-
+            _game_screen(std::make_unique<menu::GameScreen>(
+                    *game_manager::Config::get_instance().graphics_factory,
+                    *game_manager::Config::get_instance().sprite_loader,
+                    *_storage)) {
         auto &config = game_manager::Config::get_instance();
 
-        auto properties = config.properties_loader->load_current_properties(player_id);
+        auto properties = \
+                config.properties_loader->load_current_properties(player_id);
 
-        auto sprite = config.sprite_loader->load(properties.sprite_id, *_storage);
+        auto sprite = \
+                config.sprite_loader->load(properties.sprite_id, *_storage);
 
-        std::unique_ptr<math::Polygon> pol = std::make_unique<math::TrianglePolygon>(
-                math::coords_t(math::decimal_t(0), math::decimal_t(0)), sprite->get_texture_size().first,
+        std::unique_ptr<math::Polygon> pol = \
+                std::make_unique<math::TrianglePolygon>(
+                math::coords_t(math::decimal_t(0), math::decimal_t(0)),
+                sprite->get_texture_size().first,
                 sprite->get_texture_size().second);
 
         auto fuel_mass = _engine.get_mass_fuel_by_one_impulse();
         // default params
-        const math::Vector2d init_velocity = math::Vector2d(math::coords_t(0, 0));
+        const math::Vector2d init_velocity = \
+                math::Vector2d(math::coords_t(0, 0));
         const size_t init_weight = 1;
         const math::coords_t init_pos = math::coords_t(0, 0);
 
-        _ship = std::make_unique<SpaceShip>(properties.sprite_id, std::move(sprite), std::move(pol), properties,
-                                            fuel_mass, init_weight, init_velocity, init_pos);
+        _ship = std::make_unique<SpaceShip>(
+                properties.sprite_id, std::move(sprite),
+                std::move(pol), properties,
+                fuel_mass, init_weight,
+                init_velocity, init_pos);
         this->_camera = std::make_unique<Camera>(_ship);
 
         _camera->set_center(math::coords_t(500, 500));
 
-        _game_screen->update(this->_timer->get_s().count(), this->_ship->get_fuel(), this->_ship->get_battery());
+        _game_screen->update(
+                this->_timer->get_s().count(),
+                this->_ship->get_fuel(),
+                this->_ship->get_battery());
     }
 
     void Map::load_level(size_t level_num) {
@@ -65,13 +77,20 @@ namespace game {
         auto &factory = *config.sprite_loader;
 
         for (auto &planet : this->_space_objects) {
-            planet->set_sprite(factory.load(planet->get_sprite_id(), *_storage));
-            math::decimal_t size = planet->get_polygon()->get_circumscribed_circ();
+            planet->set_sprite(
+                    factory.load(planet->get_sprite_id(),
+                                 *_storage));
+            math::decimal_t size = \
+                    planet->get_polygon()->get_circumscribed_circ();
             planet->get_sprite()->set_size({size, size});
         }
         for (auto &star : this->_stars) {
-            star->set_sprite(factory.load(star->get_sprite_id(), *_storage));
-            math::decimal_t size = star->get_polygon()->get_circumscribed_circ();
+            star->set_sprite(
+                    factory.load(
+                            star->get_sprite_id(),
+                            *_storage));
+            math::decimal_t size = \
+                    star->get_polygon()->get_circumscribed_circ();
             star->get_sprite()->set_size({size, size});
         }
 
@@ -94,7 +113,10 @@ namespace game {
     }
 
     bool Map::update(graphics::ICanvas &canvas) {
-        const static auto center = math::coords_t(canvas.get_width() / 2, canvas.get_height() / 2);
+        static const auto center = \
+                math::coords_t(
+                canvas.get_width() / 2,
+                canvas.get_height() / 2);
 
         _ship->move(_engine);
 
@@ -103,8 +125,10 @@ namespace game {
 
         _bg->draw(canvas);
 
-        auto shape = game_manager::Config::get_instance().graphics_factory->create_orbit();
-        shape->set_color(Color(255,255,255,128));
+        auto shape = \
+                game_manager::Config::get_instance() \
+.graphics_factory->create_orbit();
+        shape->set_color(Color(255, 255, 255, 128));
 
         for (auto &obj : this->_space_objects) {
             auto orbit = obj->get_orbit().get_orbit_properties();
@@ -157,7 +181,8 @@ namespace game {
         this->_ship->add_impulse(angle);
     }
 
-    std::shared_ptr<event_controller::ICommand> Map::process_keyboard(event_controller::KeyboardEvent &ev) {
+    std::shared_ptr<event_controller::ICommand> Map::process_keyboard(
+            event_controller::KeyboardEvent &ev) {
         float angle = 2;
         switch (ev.key) {
             case event_controller::Key::Escape:
@@ -181,8 +206,10 @@ namespace game {
     }
 
     bool Map::update_ship(ship_character type) {
-
-        _game_screen->update(_timer->get_s().count(), _ship->get_fuel(), _ship->get_battery());
+        _game_screen->update(
+                _timer->get_s().count(),
+                _ship->get_fuel(),
+                _ship->get_battery());
 
         bool is_live = true;
         switch (type) {
@@ -217,12 +244,16 @@ namespace game {
 
 // Game
 
-    Game::Game(event_controller::IController &controller, graphics::ICanvas &canvas) :
+    Game::Game(
+            event_controller::IController &controller,
+            graphics::ICanvas &canvas)
+            :
             _map(game_manager::Config::get_instance().player_id),
             _canvas(canvas),
             _controller(controller),
-            _progress(game_manager::Config::get_instance().progress_loader->load(
-                    game_manager::Config::get_instance().player_id)),
+            _progress(
+                    game_manager::Config::get_instance().progress_loader->load(
+                            game_manager::Config::get_instance().player_id)),
             fps_counter(0),
             _id_level(0) {
         _subscribe_events();
@@ -262,12 +293,13 @@ namespace game {
         result.is_win = is_live;
         result.stars = 0;
         this->_progress.update_level(result.num, result);
-        game_manager::Config::get_instance().progress_loader->save(game_manager::Config::get_instance().player_id,
-                                                                   this->_progress.get_progress());
+        game_manager::Config::get_instance().progress_loader->save(
+                game_manager::Config::get_instance().player_id,
+                this->_progress.get_progress());
     }
 
-    std::shared_ptr<event_controller::ICommand> Game::update(event_controller::Event &event) {
-
+    std::shared_ptr<event_controller::ICommand> Game::update(
+            event_controller::Event &event) {
         auto &config = ::game_manager::Config::get_instance();
         if (fps_counter % config.fps == 0) {
             fps_counter = 0;
@@ -289,26 +321,30 @@ namespace game {
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
-                    return std::make_shared<game_manager::command::EndGame>(is_live,
-                                                                            this->_progress.get_level_stat(_id_level));
+                    return std::make_shared<game_manager::command::EndGame>(
+                            is_live,
+                            this->_progress.get_level_stat(_id_level));
                 }
                 break;
 
             case event_controller::EventType::close:
                 return std::make_shared<game_manager::command::Exit>();
             case event_controller::EventType::keyboard: {
-                auto key = dynamic_cast<event_controller::KeyboardEvent &>(event);
+                auto key = \
+                        dynamic_cast<event_controller::KeyboardEvent &>(event);
                 is_live = this->_map.update_ship(FUEL);
                 if (!is_live) {
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
-                    return std::make_shared<game_manager::command::EndGame>(is_live,
-                                                                            this->_progress.get_level_stat(_id_level));
+                    return std::make_shared<game_manager::command::EndGame>(
+                            is_live,
+                            this->_progress.get_level_stat(_id_level));
                 }
                 if (key.key == event_controller::Key::L) {
-                    return std::make_shared<game_manager::command::EndGame>(true
-                                                                            , _progress.get_level_stat(_id_level));
+                    return std::make_shared<game_manager::command::EndGame>(
+                            true,
+                            _progress.get_level_stat(_id_level));
                 }
                 return this->_map.process_keyboard(key);
             }
@@ -324,7 +360,5 @@ namespace game {
         _subscribe_events();
         return true;
     }
-
-
-} // namespace game
+}  // namespace game
 

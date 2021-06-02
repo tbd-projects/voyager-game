@@ -7,28 +7,26 @@
 #include <game/interface.hpp>
 
 namespace game::external {
+class BaseProgressLoader : public ProgressLoader {
+public:
+    BaseProgressLoader() = default;
 
-    class BaseProgressLoader : public ProgressLoader {
-    public:
-        BaseProgressLoader() = default;
+    ~BaseProgressLoader() override = default;
 
-        ~BaseProgressLoader() override = default;
+    BaseProgressLoader(const BaseProgressLoader &) = default;
 
-        BaseProgressLoader(const BaseProgressLoader &) = default;
+    BaseProgressLoader &operator=(const BaseProgressLoader &) = default;
 
-        BaseProgressLoader &operator=(const BaseProgressLoader &) = default;
+    explicit BaseProgressLoader(const std::string &root_path);
 
-        explicit BaseProgressLoader(const std::string &root_path);
+    progress_t load(size_t player_id) override;
 
-        progress_t load(size_t player_id) override;
+    void save(size_t player_id, progress_t &progress) override;
 
-        void save(size_t player_id, progress_t &progress) override;
-
-        bool has_progress(size_t player_id);
+    bool has_progress(size_t player_id);
 
 
-    private:
-        std::string path;
-
-    };
-} // namespace game
+private:
+    std::string path;
+};
+}  // namespace game::external

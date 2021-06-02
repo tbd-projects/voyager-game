@@ -35,7 +35,8 @@ namespace game {
     }
 
     const level_stat &Progress::get_level_stat(unsigned int level_num) {
-        if (level_num > game_manager::Config::get_instance().levels_loader->get_levels_count()) {
+        if (level_num > game_manager::Config::get_instance() \
+                        .levels_loader->get_levels_count()) {
             throw debug::INVALID_ARG_ERROR();
         }
         ssize_t num_of_struct = -1;
@@ -46,15 +47,18 @@ namespace game {
             }
         }
         if (num_of_struct == -1) {
-            throw debug::LogicError(__FILE__, typeid(*this).name(), __FUNCTION__);
+            throw debug::LogicError(
+                    __FILE__,
+                    typeid(*this).name(),
+                    __FUNCTION__);
         } else {
             return _progress.levels[num_of_struct];
         }
-
     }
 
     void Progress::update_level(unsigned int level_num, level_stat progress) {
-        if (level_num > game_manager::Config::get_instance().levels_loader->get_levels_count()) {
+        if (level_num > game_manager::Config::get_instance() \
+.levels_loader->get_levels_count()) {
             throw debug::INVALID_ARG_ERROR();
         }
         ssize_t num_of_struct = -1;
@@ -69,7 +73,6 @@ namespace game {
         } else {
             _progress.levels[num_of_struct] = progress;
         }
-
-
     }
-} // namespace game
+}  // namespace game
+

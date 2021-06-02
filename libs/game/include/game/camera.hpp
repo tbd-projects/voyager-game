@@ -10,21 +10,20 @@
 #include "objects.hpp"
 
 namespace game {
-    class Camera: public graphics::Camera {
-    public:
+class Camera : public graphics::Camera {
+public:
+    explicit Camera(std::shared_ptr<SpaceShip> ship)
+            : _ship(std::move(ship)) {}
 
-        explicit Camera(std::shared_ptr<SpaceShip> ship) : _ship(std::move(ship)) {};
+    void update();
 
+    template<typename T>
+    void apply_object(T &obj) {
+        apply(*obj.get_sprite(), obj.get_pos());
+    }
 
-        void update();
-
-        template<typename T>
-        void apply_object(T &obj) {
-            apply(*obj.get_sprite(), obj.get_pos());
-        }
-
-    private:
-        std::shared_ptr<SpaceShip> _ship;
-    };
-}
+private:
+    std::shared_ptr<SpaceShip> _ship;
+};
+}  // namespace game
 

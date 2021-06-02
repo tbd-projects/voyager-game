@@ -17,10 +17,6 @@ class JsonCreateLevel : public CreatorLevel {
 
     size_t get_levels_count() override;
 
-//        JsonCreateLevel &operator=(const JsonCreateLevel &level) = delete;
-
-//        JsonCreateLevel(const JsonCreateLevel &) = delete;
-
     void create_level(size_t level_num) override;
 
     std::vector<std::shared_ptr<SpaceBody>> &&get_planets() override;
@@ -29,7 +25,7 @@ class JsonCreateLevel : public CreatorLevel {
 
     [[nodiscard]] ship_init_t get_ship_character() const override;
 
-    size_t get_bg_id() const override { return this->_bg_id; };
+    [[nodiscard]] size_t get_bg_id() const override { return this->_bg_id; }
 
   private:
     std::string _path;
@@ -49,7 +45,7 @@ class JsonCreateLevel : public CreatorLevel {
     void load_space_objects(pt::ptree &tree, const std::string &obj_name);
 
     void load_ship_init(pt::ptree &ship_init);
-
 };
 
-} // namespace game
+}  // namespace game::external
+

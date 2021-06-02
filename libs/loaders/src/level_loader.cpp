@@ -8,7 +8,6 @@
 #include "game/objects.hpp"
 #include "physics/orbit.hpp"
 #include "game_manager/config.hpp"
-#include "debug/exception.hpp"
 
 namespace game::external {
 
@@ -22,10 +21,15 @@ namespace game::external {
 /* path: data/levels/ levels: 1.json 2.json 3.json.......*/
     void JsonCreateLevel::create_level(size_t level_num) {
         if (!level_num) {
-            throw debug::LogicError(__FILE__, typeid(*this).name(), __FUNCTION__, "level num is incorrect");
+            throw debug::LogicError(
+                    __FILE__,
+                    typeid(*this).name(),
+                    __FUNCTION__,
+                    "level num is incorrect");
         }
         pt::ptree tree;
-        std::string level_path = this->_path + std::to_string(level_num) + ".json";
+        std::string level_path = \
+                this->_path + std::to_string(level_num) + ".json";
         pt::read_json(level_path, tree);
 
         this->_bg_id = tree.get<size_t>("background.sprite_id");
@@ -33,19 +37,25 @@ namespace game::external {
         this->load_ship_init(tree.get_child("ship"));
         this->load_space_objects(tree, "stars");
         this->load_space_objects(tree, "planets");
-
-
     }
+
     void JsonCreateLevel::load_ship_init(pt::ptree &ship_init) {
-        this->_ship_init.density = ship_init.get<math::decimal_t>("density");
-        this->_ship_init.pos.x = ship_init.get<math::decimal_t>("init_pos.x");
-        this->_ship_init.pos.y = ship_init.get<math::decimal_t>("init_pos.y");
+        this->_ship_init.density = \
+                ship_init.get<math::decimal_t>("density");
+        this->_ship_init.pos.x = \
+                ship_init.get<math::decimal_t>("init_pos.x");
+        this->_ship_init.pos.y = \
+                ship_init.get<math::decimal_t>("init_pos.y");
 
-        this->_ship_init.velocity = math::Vector2d(math::coords_t(ship_init.get<math::decimal_t>("init_velocity.x"),
-                                                   ship_init.get<math::decimal_t>("init_velocity.y")));
-        this->_ship_init.weight = ship_init.get<size_t>("init_weight");
-
+        this->_ship_init.velocity = \
+                math::Vector2d(
+                math::coords_t(
+                        ship_init.get<math::decimal_t>("init_velocity.x"),
+                        ship_init.get<math::decimal_t>("init_velocity.y")));
+        this->_ship_init.weight = \
+                ship_init.get<size_t>("init_weight");
     }
+
     void JsonCreateLevel::load_star(pt::ptree::value_type &star) {
         math::coords_t velocity;
         math::coords_t pos;
@@ -63,15 +73,24 @@ namespace game::external {
 
         std::unique_ptr<math::Polygon> polygon;
         if (polygon_type == "circle") {
-            polygon = std::make_unique<math::CirclePolygon>(math::coords_t(0, 0), radius, angle);
+            polygon = \
+                    std::make_unique<math::CirclePolygon>(
+                    math::coords_t(0, 0),
+                    radius,
+                    angle);
         } else {
             throw debug::INVALID_ARG_ERROR();
         }
 
         auto sprite_id = star.second.get<size_t>("sprite_id");
 
-        std::shared_ptr<Star> obj = std::make_shared<Star>(sprite_id, nullptr, std::move(polygon), pos,
-                                                           math::Vector2d(velocity), weight);
+        std::shared_ptr<Star> obj = \
+                std::make_shared<Star>(sprite_id,
+                                       nullptr,
+                                       std::move(polygon),
+                                       pos,
+                                       math::Vector2d(velocity),
+                                       weight);
         this->_objects_not_active.push_back(obj);
     }
 
@@ -81,16 +100,25 @@ namespace game::external {
         math::decimal_t orbit_angle;
         math::decimal_t orbit_period;
 
-        orbit_pos.x = planet.second.get<math::decimal_t>("orbit_properties.x_c");
-        orbit_pos.y = planet.second.get<math::decimal_t>("orbit_properties.y_c");
+        orbit_pos.x = \
+                planet.second.get<math::decimal_t>("orbit_properties.x_c");
+        orbit_pos.y = \
+                planet.second.get<math::decimal_t>("orbit_properties.y_c");
 
-        orbit_var.x = planet.second.get<math::decimal_t>("orbit_properties.a");
-        orbit_var.y = planet.second.get<math::decimal_t>("orbit_properties.b");
+        orbit_var.x = \
+                planet.second.get<math::decimal_t>("orbit_properties.a");
+        orbit_var.y = \
+                planet.second.get<math::decimal_t>("orbit_properties.b");
 
-        orbit_angle = planet.second.get<math::decimal_t>("orbit_properties.angle");
-        orbit_period = planet.second.get<math::decimal_t>("orbit_properties.period");
+        orbit_angle = \
+                planet.second.get<math::decimal_t>("orbit_properties.angle");
+        orbit_period = \
+                planet.second.get<math::decimal_t>("orbit_properties.period");
 
-        physics::Orbit::orbit_properties_t orb_prop(orbit_var, orbit_pos, orbit_angle, orbit_period);
+        physics::Orbit::orbit_properties_t orb_prop(orbit_var,
+                                                    orbit_pos,
+                                                    orbit_angle,
+                                                    orbit_period);
 
         auto weight = planet.second.get<size_t>("weight");
 
@@ -100,20 +128,28 @@ namespace game::external {
 
         std::unique_ptr<math::Polygon> polygon;
         if (polygon_type == "circle") {
-            polygon = std::make_unique<math::CirclePolygon>(math::coords_t(0, 0), radius, angle);
+            polygon =
+                    std::make_unique<math::CirclePolygon>(
+                            math::coords_t(0, 0),
+                            radius,
+                            angle);
         } else {
             throw debug::INVALID_ARG_ERROR();
         }
 
         auto sprite_id = planet.second.get<size_t>("sprite_id");
-        std::shared_ptr<SpaceBody> obj = std::make_shared<SpaceBody>(sprite_id, nullptr, std::move(polygon),
-                                                                     weight,
-                                                                     orb_prop);
+        std::shared_ptr<SpaceBody> obj = \
+                std::make_shared<SpaceBody>(sprite_id,
+                                            nullptr,
+                                            std::move(polygon),
+                                            weight,
+                                            orb_prop);
         this->_objects_active.push_back(obj);
-
     }
 
-    void JsonCreateLevel::load_space_objects(pt::ptree &tree, const std::string &obj_name) {
+    void JsonCreateLevel::load_space_objects(
+            pt::ptree &tree,
+            const std::string &obj_name) {
         if (obj_name == "stars") {
             for (pt::ptree::value_type &star : tree.get_child(obj_name)) {
                 this->load_star(star);
@@ -123,10 +159,6 @@ namespace game::external {
                 this->load_planet(planet);
             }
         }
-    }
-
-    void JsonCreateLevel::create_objects() {
-
     }
 
     std::vector<std::shared_ptr<SpaceBody>> &&JsonCreateLevel::get_planets() {
@@ -144,12 +176,11 @@ namespace game::external {
         return std::count_if(
                 directory_iterator(path),
                 directory_iterator{},
-                (fp) std::filesystem::is_regular_file
-        );
+                (fp) std::filesystem::is_regular_file);
     }
 
     ship_init_t JsonCreateLevel::get_ship_character() const {
         return this->_ship_init;
     }
 
-} // namespace game
+}  // namespace game::external

@@ -33,4 +33,4 @@ namespace game {
     size_t NotActiveObject::get_sprite_id() {
         return this->_sprite_id;
     }
-} // namespace game
+}  // namespace game

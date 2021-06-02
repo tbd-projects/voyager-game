@@ -7,28 +7,33 @@
 #include "loaders/properties_loader.hpp"
 #include "debug/exception.hpp"
 
-using namespace boost::property_tree;
-
-auto root_dir = std::filesystem::path(__FILE__).parent_path().parent_path().parent_path().parent_path().parent_path();
-std::string prop_path = (root_dir / "data/player/example_properties.json");
-std::string path_save = root_dir / "libs/loaders/test/data/example_properties_save.json";
+const auto root_dir = \
+        std::filesystem::path(__FILE__).parent_path().parent_path().
+        parent_path().parent_path().parent_path();
 
 class JsonPlayerPropertiesLoaderTest : public testing::Test {
 protected:
-    game::external::JsonPlayerPropertiesLoader loader{prop_path};
+    game::external::JsonPlayerPropertiesLoader loader;
 
     void SetUp() {
-
+        std::string prop_path = \
+                root_dir / "data/player/example_properties.json";
+        this->loader = game::external::JsonPlayerPropertiesLoader(prop_path);
     }
 
-    void TearDown() {};
-
+    void TearDown() {}
 };
 
 class JsonPlayerPropertiesSaverTest : public testing::Test {
 protected:
-    game::external::JsonPlayerPropertiesLoader loader{path_save};
+    game::external::JsonPlayerPropertiesLoader loader;
 
+    void SetUp() {
+        std::string path_save = \
+                root_dir /
+                "libs/loaders/test/data/example_properties_save.json";
+        this->loader = game::external::JsonPlayerPropertiesLoader(path_save);
+    }
 };
 
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
@@ -40,22 +45,27 @@ TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerExist) {
     ASSERT_EQ(result.battery, 90);
     ASSERT_EQ(result.engine_power, 50);
 }
+
 TEST_F(JsonPlayerPropertiesLoaderTest, loadTestPlayerNotExist) {
     size_t player_id = -1;
-    EXPECT_THROW(this->loader.load_current_properties(player_id), debug::LogicError);
+    EXPECT_THROW(this->loader.load_current_properties(player_id),
+                 debug::LogicError);
 }
+
 TEST_F(JsonPlayerPropertiesSaverTest, hasPropertiesPlayer) {
     int player_id = 0;
     EXPECT_TRUE(this->loader.has_player(player_id));
 }
+
 TEST_F(JsonPlayerPropertiesSaverTest, noPropertiesPlayer) {
     int player_id = 1;
     EXPECT_FALSE(this->loader.has_player(player_id));
 }
+
 TEST_F(JsonPlayerPropertiesSaverTest, saveTestPlayerNotExist) {
     int player_id = 0;
 
-    game::properties_t prop{10,20,20,30};
+    game::properties_t prop{10, 20, 20, 30};
 
     this->loader.save_current_properties(player_id, prop);
 
@@ -64,7 +74,7 @@ TEST_F(JsonPlayerPropertiesSaverTest, saveTestPlayerNotExist) {
     prop_load = this->loader.load_current_properties(player_id);
 
     ASSERT_EQ(prop, prop_load);
-
 }
+
 
 

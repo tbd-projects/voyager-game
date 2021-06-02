@@ -8,30 +8,28 @@
 #include <iostream>
 
 namespace game {
+class Progress {
+public:
+    Progress() = default;
 
-    class Progress {
-    public:
-        Progress() = default;
+    explicit Progress(ProgressLoader *loader);
 
-        explicit Progress(ProgressLoader *loader);
+    explicit Progress(const progress_t &progress);
 
-        explicit Progress(const progress_t &progress);
+    Progress &operator=(const Progress &progress);
 
-        Progress &operator=(const Progress &progress);
+    ~Progress() = default;
 
-        ~Progress() = default;
+    progress_t &get_progress();
 
-        progress_t &get_progress();
+    const level_stat &get_level_stat(unsigned int level_num);
 
-        const level_stat &get_level_stat(unsigned int level_num);
+    void update_level(unsigned int level_num, level_stat progress);
 
-        void update_level(unsigned int level_num, level_stat progress);
+    progress_t &set_progress(progress_t &progress);
 
-        progress_t &set_progress(progress_t &progress);
-
-    private:
-        progress_t _progress;
-
-    };
-}
+private:
+    progress_t _progress;
+};
+}  // namespace game
 

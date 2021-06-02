@@ -7,35 +7,44 @@
 
 namespace game {
 
-    class SpaceShip : public GameObject {
-    public:
-        SpaceShip(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-                  properties_t &properties, math::decimal_t base_discard_pf_fuel, size_t weight,
-                  math::Vector2d velocity, math::coords_t pos) :
-                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, velocity, pos){
-            this->_properties = properties;
-            this->_fuel_prop._base_discarder_mass_of_fuel = base_discard_pf_fuel;
-        };
+class SpaceShip : public GameObject {
+public:
+    SpaceShip(
+            size_t sprite_id,
+            std::unique_ptr<graphics::Sprite> &&sprite,
+            std::unique_ptr<math::Polygon> &&pol,
+            properties_t &properties,
+            math::decimal_t base_discard_pf_fuel,
+            size_t weight,
+            math::Vector2d velocity,
+            math::coords_t pos)
+            : GameObject(sprite_id, std::move(sprite),
+                         std::move(pol), weight,
+                         velocity, pos),
+              _properties(properties) {
+        this->_fuel_prop._base_discarder_mass_of_fuel = \
+                    base_discard_pf_fuel;
+    }
 
-        ~SpaceShip() override = default;
+    ~SpaceShip() override = default;
 
-        SpaceShip(const SpaceShip &ship) = delete;
+    SpaceShip(const SpaceShip &ship) = delete;
 
-        SpaceShip &operator=(const SpaceShip &ship) = delete;
+    SpaceShip &operator=(const SpaceShip &ship) = delete;
 
-        const properties_t &get_properties();
+    const properties_t &get_properties();
 
-        void set_properties(properties_t &properties);
+    void set_properties(properties_t &properties);
 
-        size_t get_fuel();
+    size_t get_fuel() const;
 
-        size_t get_health();
+    size_t get_health() const;
 
-        size_t get_battery();
+    size_t get_battery() const;
 
-        size_t get_engine();
+    size_t get_engine() const;
 
-        math::decimal_t get_fuel_density();
+    math::decimal_t get_fuel_density() const;
 
         void set_fuel(size_t fuel);
 
@@ -63,38 +72,41 @@ namespace game {
         } _fuel_prop;
     };
 
-    class SpaceBody : public GameObject {
-    public:
-        SpaceBody() = delete;
+class SpaceBody : public GameObject {
+public:
+    SpaceBody() = delete;
 
-        SpaceBody(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-                  size_t weight,
-                  physics::Orbit::orbit_properties_t orbit) :
-                GameObject(sprite_id, std::move(sprite), std::move(pol), weight, orbit) {};
+    SpaceBody(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite,
+              std::unique_ptr<math::Polygon> &&pol, size_t weight,
+              physics::Orbit::orbit_properties_t orbit) :
+            GameObject(sprite_id, std::move(sprite),
+                       std::move(pol), weight,
+                       orbit) {}
 
-        SpaceBody(const SpaceBody &obj) = delete;
+    SpaceBody(const SpaceBody &obj) = delete;
 
-        SpaceBody &operator=(const SpaceBody &obj) = delete;
+    SpaceBody &operator=(const SpaceBody &obj) = delete;
 
-        ~SpaceBody() override = default;
-
+    ~SpaceBody() override = default;
     };
 
-    class Star : public NotActiveObject {
-    public:
-        Star() = delete;
+class Star : public NotActiveObject {
+public:
+    Star() = delete;
 
-        Star(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite, std::unique_ptr<math::Polygon> &&pol,
-             math::coords_t pos,
-             math::Vector2d velocity, size_t weight) :
-                NotActiveObject(sprite_id, std::move(sprite), std::move(pol), pos, velocity, weight) {};
+    Star(size_t sprite_id, std::unique_ptr<graphics::Sprite> &&sprite,
+         std::unique_ptr<math::Polygon> &&pol, math::coords_t pos,
+         math::Vector2d velocity, size_t weight) :
+            NotActiveObject(sprite_id, std::move(sprite),
+                            std::move(pol), pos,
+                            velocity, weight) {}
 
-        Star(const Star &) = delete;
+    Star(const Star &) = delete;
 
-        Star &operator=(const Star &obj) = delete;
+    Star &operator=(const Star &obj) = delete;
 
-        ~Star() override = default;
+    ~Star() override = default;
+};
 
-    };
+}  // namespace game
 
-} // namespace game

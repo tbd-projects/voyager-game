@@ -19,7 +19,7 @@ macro( connect_test project_test_name lib_name main_project_test_name )
 
     target_link_libraries(${project_test_name} ${lib_name} ${GTEST_LIBRARIES} pthread gmock)
 
-    #add_test(${project_test_name} ${project_test_name})
+    add_test(${project_test_name} ${project_test_name})
 
 
 endmacro( connect_test )
