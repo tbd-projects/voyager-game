@@ -4,6 +4,7 @@
 
 #include <graphics/json_sprite_sheet_loader.h>
 #include <create_standart_menu_button.h>
+#include <loaders/locale_loader.h>
 #include "menu/command_button.h"
 #include "end_game_menu.h"
 #include "game_manager/commands.hpp"
@@ -15,6 +16,7 @@ menu::EndGameMenu::EndGameMenu(graphics::ICanvas &canvas, event_controller::ICon
                          graphics::ISpiteLoader &loader) : BackgroundMenuDecorator(canvas, controller, 0, factory, loader),
                                                            _factory(factory),  _loader(loader) {
     _button_creator = std::make_unique<CreateStandartMenuButton>();
+    LocaleLoader locale;
 
     set_gap(10);
     set_buttons_height(50);
@@ -38,17 +40,17 @@ menu::EndGameMenu::EndGameMenu(graphics::ICanvas &canvas, event_controller::ICon
 
     auto restart_command = std::make_unique<game_manager::command::DoNothing>();
     buttons().push_back(
-            _button_creator->create(factory, font, std::move(restart_command), "Restart")
+            _button_creator->create(factory, font, std::move(restart_command), locale.get("restart"))
     );
 
     auto main_menu_command = std::make_unique<game_manager::command::RunMainMenu>();
     buttons().push_back(
-            _button_creator->create(factory, font, std::move(main_menu_command), "Main menu")
+            _button_creator->create(factory, font, std::move(main_menu_command), locale.get("main_menu"))
     );
 
     auto exit_command = std::make_unique<game_manager::command::Exit>();
     buttons().push_back(
-            _button_creator->create(factory, font, std::move(exit_command), "Exit")
+            _button_creator->create(factory, font, std::move(exit_command), locale.get("exit"))
     );
 
     set_active_id(1);
@@ -60,11 +62,11 @@ void menu::EndGameMenu::set_active_id(int i) {
 }
 
 void menu::EndGameMenu::set_data(bool status, const game::level_stat &stat) {
-
-    buttons()[0].set_string(status ? "Win" : "Game over");
-    buttons()[1].set_string("Level: " + std::to_string(stat.num));
-    buttons()[2].set_string("Time: " + std::to_string(stat.time_as_seconds));
-    buttons()[3].set_string("Stars: " + std::to_string(stat.stars));
+    LocaleLoader locale;
+    buttons()[0].set_string(status ? locale.get("win") : locale.get("failure"));
+    buttons()[1].set_string(locale.get("level") + ": " + std::to_string(stat.num));
+    buttons()[2].set_string(locale.get("time") + ": " + std::to_string(stat.time_as_seconds));
+    buttons()[3].set_string(locale.get("stars") + ": " + std::to_string(stat.stars));
 
     auto restart_command = std::make_unique<game_manager::command::RunGame>(stat.num);
     buttons()[4].set_command(std::move(restart_command));

@@ -35,7 +35,7 @@ void graphics::sf::SfText::set_font(std::shared_ptr<Font> font) {
 void graphics::sf::SfText::set_string(const std::string &string) {
     Text::set_string(string);
 
-    _sf_text.setString(string);
+    _sf_text.setString(::sf::String::fromUtf8(string.begin(), string.end()));
 }
 
 int graphics::sf::SfText::get_width() {

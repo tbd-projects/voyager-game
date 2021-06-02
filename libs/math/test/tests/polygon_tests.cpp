@@ -22,11 +22,11 @@ class PolygonFixture : public testing::Test {
         EXPECT_PRED2(math::Utilits::is_equal, triangle.get_width(), 5.664899);
         EXPECT_PRED2(math::Utilits::is_equal, triangle.get_height(), 8);
 
-        EXPECT_PRED2(math::Utilits::is_equal, circle.get_circumscribed_circ()
+        EXPECT_PRED2(math::Utilits::is_equal, circle.get_bounders_rect().get_circumscribed_circ()
                      , 5.65685);
-        EXPECT_PRED2(math::Utilits::is_equal, triangle.get_circumscribed_circ()
+        EXPECT_PRED2(math::Utilits::is_equal, triangle.get_bounders_rect().get_circumscribed_circ()
                      , 8 / math::decm(3) * 2);
-        EXPECT_PRED2(math::Utilits::is_equal, rectangle.get_circumscribed_circ()
+        EXPECT_PRED2(math::Utilits::is_equal, rectangle.get_bounders_rect().get_circumscribed_circ()
                      , 4.745686911);
 
         EXPECT_EQ(circle.get_pos(), math::coords_t(0, 0));

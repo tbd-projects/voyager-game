@@ -5,6 +5,7 @@
 #include <game_manager/commands.hpp>
 #include <event_controller/event.h>
 #include <create_standart_menu_button.h>
+#include <loaders/locale_loader.h>
 #include "levels_menu.h"
 
 menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IController &controller,
@@ -12,6 +13,7 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
                              game::CreatorLevel &level_creator) : BackgroundMenuDecorator(canvas, controller, 0),
                                                                   _factory(factory), _loader(loader),
                                                                   _level_creator(level_creator){
+    LocaleLoader locale;
     _button_creator = std::make_unique<CreateStandartMenuButton>();
 
     set_gap(10);
@@ -26,7 +28,7 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
     auto back_command = std::make_unique<game_manager::command::RunMainMenu>();
 
     buttons().push_back(
-            _button_creator->create(factory, font, std::move(back_command), "Back")
+            _button_creator->create(factory, font, std::move(back_command), locale.get("back"))
     );
     
     for (size_t i = 0; i < _level_creator.get_levels_count(); ++i) {
@@ -35,7 +37,7 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
 
         buttons().push_back(
                 _button_creator->create(factory, font, std::move(command),
-                               "Level " + std::to_string(level)
+                                        locale.get("level") + " " + std::to_string(level)
                 )
         );
     }
