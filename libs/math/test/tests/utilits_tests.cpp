@@ -12,6 +12,11 @@ struct rotate_test {
     math::coords_t answer;
 };
 
+// для фикса утечек gtest при попытки вывода данной структуры
+void PrintTo(const rotate_test& bar, std::ostream* os) {
+    *os << bar.answer.x << " " << bar.answer.y;
+}
+
 class GeometryRotateTest
         : public testing::TestWithParam<rotate_test> {
   public:
@@ -99,6 +104,11 @@ struct relative_line_test {
     math::coords_t point;
     math::GeometryFunction::point_relative answer;
 };
+
+// для фикса утечек gtest при попытки вывода данной структуры
+void PrintTo(const relative_line_test& bar, std::ostream* os) {
+    *os << bar.point.x << " " << bar.point.y;
+}
 
 class GeometryRelativeLineTest
         : public testing::TestWithParam<relative_line_test> {
@@ -222,6 +232,11 @@ struct algebra_test {
     size_t number_itter;
     math::decimal_t answer;
 };
+
+// для фикса утечек gtest при попытки вывода данной структуры
+void PrintTo(const algebra_test& bar, std::ostream* os) {
+    *os << bar.answer;
+}
 
 class AlgebraTest
         : public testing::TestWithParam<algebra_test> {

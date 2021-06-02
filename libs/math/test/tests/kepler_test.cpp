@@ -11,6 +11,11 @@ struct kepler_test {
     math::decimal_t answer;
 };
 
+// для фикса утечек gtest при попытки вывода данной структуры
+void PrintTo(const kepler_test& bar, std::ostream* os) {
+    *os << bar.answer;
+}
+
 class EquationKeplerTest
         : public testing::TestWithParam<kepler_test> {
   public:

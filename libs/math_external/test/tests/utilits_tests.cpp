@@ -12,6 +12,11 @@ struct runge_kutta_test {
     math::decimal_t answer;
 };
 
+// для фикса утечек gtest при попытки вывода данной структуры
+void PrintTo(const runge_kutta_test& bar, std::ostream* os) {
+    *os << bar.answer;
+}
+
 class RungeKuttaTestOneStep
         : public testing::TestWithParam<runge_kutta_test> {
   public:
@@ -126,6 +131,11 @@ struct runge_kutta_test_loop {
     math::decimal_t dt;
     math::decimal_t answer;
 };
+
+// для фикса утечек gtest при попытки вывода данной структуры
+void PrintTo(const runge_kutta_test_loop& bar, std::ostream* os) {
+    *os << bar.answer;
+}
 
 class RungeKuttaTestLoop
         : public testing::TestWithParam<runge_kutta_test_loop> {
