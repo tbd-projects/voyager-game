@@ -79,4 +79,21 @@ void InGame::resume(event_controller::IController &controller)  {
     _game.unpause();
 }
 
+
+//  --------------------------------InGameInfo--------------------------------------
+
+
+    InGameInfo::InGameInfo(graphics::ICanvas &canvas
+            , event_controller::IController &controller)
+            : _game_info(canvas, controller) {
+
+    }
+
+    void InGameInfo::stop(event_controller::IController &controller)  {
+    }
+
+    void InGameInfo::resume(event_controller::IController &controller)  {
+
+    }
+
 }  // namespace game_manager::states

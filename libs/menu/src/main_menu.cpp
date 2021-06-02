@@ -33,7 +33,7 @@ menu::MainMenu::MainMenu(graphics::ICanvas &canvas, event_controller::IControlle
     buttons().push_back(
             _button_creator->create(factory, font, std::move(start_command), locale.get("start_game"))
     );
-    auto other_command = std::make_unique<game_manager::command::DoNothing>();
+    auto other_command = std::make_unique<game_manager::command::RunGameInfo>();
     buttons().push_back(
             _button_creator->create(factory, font, std::move(other_command), locale.get("game_info"))
     );
