@@ -76,33 +76,33 @@
 
 Сделать это можно следующей командой:
 
-``` 
+```bash
 git clone https://gitlab.com/Flash1e/voyager-game
 ```
 
 Далее следует зайти в корневую директорию скачанного проекта и подключить дополнительные модули:
 
-``` 
+```bash
 git submodule init
 git submodule update 
 ```
 
 После чего следует создать папку `build`:
 
-``` 
+```bash
 mkdir build
 ```
 
 И собрать игру командами:
 
-``` 
-cmake  ./build
+```bash
+cmake ./build
 make ./build
 ```
 
 Для того чтобы поиграть, достаточно написать:
 
-```
+```bash
 ./build/voyager
 ```
 
