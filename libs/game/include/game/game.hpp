@@ -38,6 +38,8 @@ public:
 
     void init_ship(ship_init_t &&inits);
 
+    void game_screen_init();
+
     bool ship_alive() { return this->_ship->is_live(); }
 
     std::shared_ptr<event_controller::ICommand> process_keyboard(
@@ -82,8 +84,8 @@ public:
     bool unpause();
 
 private:
-        game::Map _map;
-        graphics::ICanvas &_canvas;
+    game::Map _map;
+    graphics::ICanvas &_canvas;
     event_controller::IController &_controller;
     game::Progress _progress;
     size_t fps_counter;

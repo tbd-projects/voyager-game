@@ -56,11 +56,7 @@ namespace game {
         this->_camera = std::make_unique<Camera>(_ship);
 
         _camera->set_center(math::coords_t(500, 500));
-
-        _game_screen->update(
-                this->_timer->get_s().count(),
-                this->_ship->get_fuel(),
-                this->_ship->get_battery());
+        game_screen_init();
     }
 
     void Map::load_level(size_t level_num) {
@@ -233,32 +229,38 @@ namespace game {
         this->set_rotate(obj->get_rotation());
     }
 
-    Timer &Map::get_timer() {
-        return *_timer;
-    }
+Timer &Map::get_timer() {
+    return *_timer;
+}
 
-    void Map::init_ship(ship_init_t &&inits) {
-        this->_ship->set_fuel_density(inits.density);
-        this->_ship->set_pos(inits.pos);
-        this->_ship->set_velocity(inits.velocity);
-        this->_ship->set_weight(inits.weight);
-    }
+void Map::init_ship(ship_init_t &&inits) {
+    this->_ship->set_fuel_density(inits.density);
+    this->_ship->set_pos(inits.pos);
+    this->_ship->set_velocity(inits.velocity);
+    this->_ship->set_weight(inits.weight);
+}
+
+void Map::game_screen_init() {
+    _game_screen->update(this->_timer->get_s().count(),
+                         this->_ship->get_fuel(),
+                         this->_ship->get_battery());
+}
 
 // Game
 
-    Game::Game(
-            event_controller::IController &controller,
-            graphics::ICanvas &canvas)
-            :
-            _map(game_manager::Config::get_instance().player_id),
-            _canvas(canvas),
-            _controller(controller),
+Game::Game(
+        event_controller::IController &controller,
+        graphics::ICanvas &canvas)
+        :
+        _map(game_manager::Config::get_instance().player_id),
+        _canvas(canvas),
+        _controller(controller),
             _progress(
                     game_manager::Config::get_instance().progress_loader->load(
                             game_manager::Config::get_instance().player_id)),
             fps_counter(0),
             _id_level(0) {
-        _subscribe_events();
+    _subscribe_events();
     }
 
     void Game::_subscribe_events() {

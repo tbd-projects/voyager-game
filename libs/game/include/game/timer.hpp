@@ -37,7 +37,9 @@ class Timer : public ITimer {
 public:
     Timer() :
             _pause_sum(0), _duration(0),
-            _is_running(false), _is_pause(false) {}
+            _is_running(false), _is_pause(false) {
+        start();
+    }
 
     ~Timer() override = default;
 
@@ -49,15 +51,15 @@ public:
 
     void pause() override;
 
-        void unpause() override;
+    void unpause() override;
 
-        std::chrono::milliseconds get_ms() override;
+    std::chrono::milliseconds get_ms() override;
 
-        std::chrono::seconds get_s() override;
+    std::chrono::seconds get_s() override;
 
-        bool is_pause() override;
+    bool is_pause() override;
 
-        bool is_run() override;
+    bool is_run() override;
 
 
 private:
