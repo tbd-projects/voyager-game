@@ -9,6 +9,10 @@
 #include "physics/orbit.hpp"
 #include "game_manager/config.hpp"
 
+#define BLACK_HOLE_SPRITE 8
+#define BLACK_HOLE_SIZE 800
+#define BLACK_HOLE_WEIGHT 10000
+
 namespace game::external {
 
     JsonCreateLevel::JsonCreateLevel(const std::string &level_dir) {
@@ -37,64 +41,7 @@ namespace game::external {
     this->load_ship_init(tree.get_child("ship"));
     this->load_space_objects(tree, "stars");
     this->load_space_objects(tree, "planets");
-
-    math::coords_t left;
-    math::coords_t right;
-
-    left.x = tree.get<math::decimal_t>("border.left.x");
-    left.y = tree.get<math::decimal_t>("border.left.y");
-
-    right.x = tree.get<math::decimal_t>("border.right.x");
-    right.y = tree.get<math::decimal_t>("border.right.y");
-
-    size_t sprite_id = 8;
-    math::decimal_t size = 800;
-    size_t weight = 10000;
-
-    for (math::decimal_t cur_x = left.x; cur_x < right.x; cur_x += size * 2) {
-        std::unique_ptr<math::Polygon> polygon =
-                std::make_unique<math::RectanglePolygon>(
-                        math::coords_t(cur_x, left.y),
-                        size, size*2);
-        std::shared_ptr<Star> obj = \
-        std::make_shared<Star>(
-                sprite_id, nullptr,
-                std::move(polygon), math::coords_t(cur_x, left.y),
-                math::Vector2d(math::coords_t(0, 0)), weight);
-        this->_objects_not_active.push_back(obj);
-
-        polygon = std::make_unique<math::RectanglePolygon>(
-                math::coords_t(cur_x, right.y),
-                size, size * 2);
-        obj = std::make_shared<Star>(
-                sprite_id, nullptr,
-                std::move(polygon), math::coords_t(cur_x, right.y),
-                math::Vector2d(math::coords_t(0, 0)), weight);
-        this->_objects_not_active.push_back(obj);
-
-    }
-    for (math::decimal_t cur_y = left.y; cur_y < right.y; cur_y += size * 2) {
-        std::unique_ptr<math::Polygon> polygon = \
-                std::make_unique<math::RectanglePolygon>(
-                        math::coords_t(left.x, cur_y),
-                        size * 2, size);
-        std::shared_ptr<Star> obj = \
-        std::make_shared<Star>(
-                sprite_id, nullptr,
-                std::move(polygon), math::coords_t(left.x, cur_y),
-                math::Vector2d(math::coords_t(0, 0)), weight);
-        this->_objects_not_active.push_back(obj);
-
-        polygon = std::make_unique<math::RectanglePolygon>(
-                math::coords_t(right.x, cur_y),
-                size * 2, size);
-        obj = std::make_shared<Star>(
-                sprite_id, nullptr,
-                std::move(polygon), math::coords_t(right.x, cur_y),
-                math::Vector2d(math::coords_t(0, 0)), weight);
-        this->_objects_not_active.push_back(obj);
-
-    }
+    this->create_black_holes(tree);
 }
 
     void JsonCreateLevel::load_ship_init(pt::ptree &ship_init) {
@@ -240,5 +187,65 @@ namespace game::external {
     ship_init_t JsonCreateLevel::get_ship_character() const {
         return this->_ship_init;
     }
+
+void JsonCreateLevel::create_black_holes(boost::property_tree::ptree &tree) {
+    math::coords_t left;
+    math::coords_t right;
+
+    left.x = tree.get<math::decimal_t>("border.left.x");
+    left.y = tree.get<math::decimal_t>("border.left.y");
+
+    right.x = tree.get<math::decimal_t>("border.right.x");
+    right.y = tree.get<math::decimal_t>("border.right.y");
+
+    size_t sprite_id = BLACK_HOLE_SPRITE;
+    math::decimal_t size = BLACK_HOLE_SIZE;
+    size_t weight = BLACK_HOLE_WEIGHT;
+
+    for (math::decimal_t cur_x = left.x; cur_x < right.x; cur_x += size) {
+        std::unique_ptr<math::Polygon> polygon =
+                std::make_unique<math::RectanglePolygon>(
+                        math::coords_t(cur_x, left.y),
+                        size, size*2);
+        std::shared_ptr<Star> obj = \
+        std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(cur_x, left.y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+        polygon = std::make_unique<math::RectanglePolygon>(
+                math::coords_t(cur_x, right.y),
+                size, size * 2);
+        obj = std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(cur_x, right.y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+    }
+    for (math::decimal_t cur_y = left.y; cur_y < right.y; cur_y += size) {
+        std::unique_ptr<math::Polygon> polygon = \
+                std::make_unique<math::RectanglePolygon>(
+                math::coords_t(left.x, cur_y),
+                size * 2, size);
+        std::shared_ptr<Star> obj = \
+        std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(left.x, cur_y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+        polygon = std::make_unique<math::RectanglePolygon>(
+                math::coords_t(right.x, cur_y),
+                size * 2, size);
+        obj = std::make_shared<Star>(
+                sprite_id, nullptr,
+                std::move(polygon), math::coords_t(right.x, cur_y),
+                math::Vector2d(math::coords_t(0, 0)), weight);
+        this->_objects_not_active.push_back(obj);
+
+    }
+}
 
 }  // namespace game::external
