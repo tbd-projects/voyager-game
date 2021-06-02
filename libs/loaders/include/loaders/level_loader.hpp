@@ -45,6 +45,8 @@ class JsonCreateLevel : public CreatorLevel {
     void load_space_objects(pt::ptree &tree, const std::string &obj_name);
 
     void load_ship_init(pt::ptree &ship_init);
+
+    void create_black_holes(boost::property_tree::ptree &tree);
 };
 
 }  // namespace game::external
