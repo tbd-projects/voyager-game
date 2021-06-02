@@ -11,7 +11,7 @@
 namespace game::external {
 class JsonPlayerPropertiesLoader : public PlayerPropertiesLoader {
 public:
-    JsonPlayerPropertiesLoader() = delete;
+    JsonPlayerPropertiesLoader() = default;
 
     explicit JsonPlayerPropertiesLoader(const std::string &root_path);
 
