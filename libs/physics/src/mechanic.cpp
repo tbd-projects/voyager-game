@@ -58,7 +58,7 @@ math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object,
 
     math::Vector2d ans{};
     math::decimal_t object_dimensions = object.get_polygon()
-            ->get_bounders_rect().get_circumscribed_circ_sqr();
+            ->get_bounders_rect().get_circumscribed_circ();
 
     math::Vector2d normal_velocity = object.get_velocity().normalize();
 
@@ -75,8 +75,6 @@ math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object,
                 math::decimal_t effective_orbit
                         = get_effective_circle_orbit(*current_object);
 
-                effective_orbit *= effective_orbit;
-
                 math::decimal_t upper_bounder =
                         effective_orbit + object_dimensions;
                 math::decimal_t lower_bounder =
@@ -85,8 +83,8 @@ math::Vector2d Mechanic::calc_force_by_object(const PhysicalObject &object,
                 math::decimal_t distance
                         = math::Vector2d(current_object->get_pos(),
                                          object.get_pos()).sqr_len();
-                if (upper_bounder >= distance && lower_bounder <= distance) {
-                    ans += normal_velocity * math::decm(0.0006);
+                if (upper_bounder*upper_bounder >= distance && lower_bounder*lower_bounder <= distance) {
+                    ans += normal_velocity * math::decm(0.0003);
                 }
             }
         }

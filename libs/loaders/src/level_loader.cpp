@@ -149,6 +149,7 @@ namespace game::external {
                                             std::move(polygon),
                                             weight,
                                             orb_prop);
+        obj->relocate_on_orbit(80);
         this->_objects_active.push_back(obj);
     }
 

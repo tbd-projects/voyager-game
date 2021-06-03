@@ -46,8 +46,8 @@ class EngineFixture : public testing::Test {
 };
 
 TEST_F(EngineFixture, ColideFunction) {
-    EXPECT_TRUE(_engine.check_collision(*_objects[0]));
-    EXPECT_TRUE(_engine.check_collision(*_objects[1]));
+    EXPECT_FALSE(_engine.check_collision(*_objects[0]));
+    EXPECT_FALSE(_engine.check_collision(*_objects[1]));
     EXPECT_TRUE(_engine.check_collision(*_objects[2]));
     _objects[0]->get_polygon()->scale(0.1);
     EXPECT_FALSE(_engine.check_collision(*_objects[0]));

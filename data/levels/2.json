@@ -9,10 +9,10 @@
         "x": 0,
         "y": 500
       },
-      "weight": 100000,
+      "weight": 10000000,
       "polygon": {
         "type": "circle",
-        "radius": 800,
+        "radius": 500,
         "angle": 0
       },
       "sprite_id": 5
@@ -42,15 +42,15 @@
   },
   "ship": {
     "init_pos": {
-      "x": -600,
-      "y": -300
+      "x": -800,
+      "y": 500
     },
     "init_velocity": {
       "x": 0,
-      "y": 0.3
+      "y": 0.92
     },
     "init_weight": 1,
-    "density": 100
+    "density": 20
   },
   "border": {
     "left": {

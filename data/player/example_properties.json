@@ -15,7 +15,7 @@
       "properties": {
         "fuel": 100,
         "health": 100,
-        "battery": 90,
+        "battery": 150,
         "engine_power": 50
       },
       "sprite_id": 1
