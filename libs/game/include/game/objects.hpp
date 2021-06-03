@@ -36,15 +36,15 @@ public:
 
     void set_properties(properties_t &properties);
 
-    size_t get_fuel() const;
+    [[nodiscard]] size_t get_fuel() const;
 
-    size_t get_health() const;
+    [[nodiscard]] size_t get_health() const;
 
-    size_t get_battery() const;
+    [[nodiscard]] size_t get_battery() const;
 
-    size_t get_engine() const;
+    [[nodiscard]] size_t get_engine() const;
 
-    math::decimal_t get_fuel_density() const;
+    [[nodiscard]] math::decimal_t get_fuel_density() const;
 
     void set_fuel(size_t fuel);
 

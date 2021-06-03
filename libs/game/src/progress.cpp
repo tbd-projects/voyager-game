@@ -29,7 +29,7 @@ namespace game {
         return this->_progress;
     }
 
-    progress_t &Progress::set_progress(progress_t &progress) {
+[[maybe_unused]] progress_t &Progress::set_progress(progress_t &progress) {
         this->_progress = progress;
         return progress;
     }

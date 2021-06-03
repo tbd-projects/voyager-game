@@ -26,7 +26,7 @@ public:
 
     void update_level(unsigned int level_num, level_stat progress);
 
-    progress_t &set_progress(progress_t &progress);
+    [[maybe_unused]] progress_t &set_progress(progress_t &progress);
 
 private:
     progress_t _progress;
