@@ -52,6 +52,7 @@ coverage:
   artifacts:
     paths:
       - ./build/${COVER_LOG}
+      - ./build/coverage
   needs: [ "build" ]
 
 memory:
@@ -63,7 +64,7 @@ memory:
     - if [ -z "${NO_LOST}" ] || [ -z "${NO_ERROR}" ]; then cat ${VALGRIND_LOG}; exit 1; fi
   artifacts:
     paths:
-      - ./${VALGRIND_LOG_DATA}
+      - ./${VALGRIND_LOG}
   needs: [ "build" ]
 
 pages:
@@ -71,7 +72,6 @@ pages:
   script:
     - git submodule init
     - git submodule update
-    - apk add --no-cache -f -q doxygen graphviz
     - doxygen Doxyfile
     - mv docs/html/ public/
   artifacts:
