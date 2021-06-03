@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <game/interface.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 namespace game::external {
 class BaseProgressLoader : public ProgressLoader {
@@ -25,6 +26,7 @@ public:
 
     bool has_progress(size_t player_id);
 
+    void check_update_win(boost::property_tree::ptree &tree, boost::property_tree::ptree &new_tree);
 
 private:
     std::string path;

@@ -1,12 +1,10 @@
 // Дмитрий Варин
 #include "loaders/progress_loader.hpp"
 #include "debug/exception.hpp"
-#include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-namespace game::external {
-    namespace pt = boost::property_tree;
 
+namespace game::external {
     BaseProgressLoader::BaseProgressLoader(const std::string &root_path) {
         if (root_path.empty()) {
             throw debug::INVALID_ARG_ERROR();
@@ -19,13 +17,13 @@ namespace game::external {
             throw debug::ARG_LOAD_ERROR(this->path);
         }
 
-        pt::ptree tree;
-        pt::read_json(this->path, tree);
+        boost::property_tree::ptree tree;
+        boost::property_tree::read_json(this->path, tree);
 
-        auto parce_stats = [](pt::ptree &tree) {
+        auto parce_stats = [](boost::property_tree::ptree &tree) {
             progress_t progress;
             progress.coins = tree.get<size_t>("stats.coins");
-            for (pt::ptree::value_type &level :
+            for (boost::property_tree::ptree::value_type &level :
                     tree.get_child("stats.levels")) {
                 level_stat cur_level{};
                 cur_level.num = level.second.get<unsigned int>("num");
@@ -39,7 +37,7 @@ namespace game::external {
         };
 
         progress_t stats{};
-        for (pt::ptree::value_type &player : tree.get_child("players")) {
+        for (boost::property_tree::ptree::value_type &player : tree.get_child("players")) {
             if (player.second.get<size_t>("id") == player_id) {
                 stats = parce_stats(player.second);
                 break;
@@ -49,15 +47,14 @@ namespace game::external {
     }
 
     void BaseProgressLoader::save(size_t player_id, progress_t &progress) {
-        auto rewrite = [&]() -> pt::ptree {
-            pt::ptree tree;
+        auto rewrite = [&]() -> boost::property_tree::ptree {
+            boost::property_tree::ptree tree;
             tree.put("id", player_id);
-//            tree.put("stats.time", progress.time);
             tree.put("stats.coins", progress.coins);
 
-            pt::ptree levels;
+            boost::property_tree::ptree levels;
             for (auto &i : progress.levels) {
-                pt::ptree temp;
+                boost::property_tree::ptree temp;
                 temp.put("num", i.num);
                 temp.put("stars", i.stars);
                 temp.put("time", i.time_as_seconds);
@@ -68,32 +65,33 @@ namespace game::external {
             return tree;
         };
 
-        pt::ptree tree;
-        pt::read_json(this->path, tree);
+        boost::property_tree::ptree tree;
+        boost::property_tree::read_json(this->path, tree);
 
-        pt::ptree temp;
+        boost::property_tree::ptree temp;
         temp = rewrite();
 
-        pt::ptree &players = tree.get_child("players");
+        boost::property_tree::ptree &players = tree.get_child("players");
 
         // обновляем пользователя с id = player_id
         if (!this->has_progress(player_id)) {
             players.push_back(std::make_pair("", temp));
         } else {
-            for (pt::ptree::value_type &player : players) {
+            for (boost::property_tree::ptree::value_type &player : players) {
                 if (player.second.get<size_t>("id") == player_id) {
+                    check_update_win(player.second, temp);
                     player.second = temp;
                 }
             }
             tree.put_child("players", players);
 
-            pt::write_json(this->path, tree);
+            boost::property_tree::write_json(this->path, tree);
         }
     }
 
     bool BaseProgressLoader::has_progress(size_t player_id) {
-        pt::ptree tree;
-        pt::read_json(this->path, tree);
+        boost::property_tree::ptree tree;
+        boost::property_tree::read_json(this->path, tree);
 
         bool has_player = false;
 
@@ -106,6 +104,20 @@ namespace game::external {
 
         return has_player;
     }
+
+void BaseProgressLoader::check_update_win(boost::property_tree::ptree &tree, boost::property_tree::ptree &new_tree) {
+    for (auto &level : tree.get_child("stats.levels")) {
+        auto num = level.second.get<unsigned int>("num");
+        auto status = level.second.get<bool>("is_win");
+        for (auto &new_level : new_tree.get_child("stats.levels")) {
+            if (new_level.second.get<unsigned int>("num") == num) {
+                if (!new_level.second.get<bool>("is_win") && status) {
+                    new_level.second.put("is_win", status);
+                }
+            }
+        }
+    }
+}
 
 
 }  // namespace game::external
