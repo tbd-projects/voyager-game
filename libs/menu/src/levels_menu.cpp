@@ -13,6 +13,10 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
                              game::CreatorLevel &level_creator) : BackgroundMenuDecorator(canvas, controller, 0),
                                                                   _factory(factory), _loader(loader),
                                                                   _level_creator(level_creator){
+    auto &config = game_manager::Config::get_instance();
+
+    auto levels_stats = config.progress_loader->load(config.player_id).levels;
+
     LocaleLoader locale;
     _button_creator = std::make_unique<CreateStandartMenuButton>();
 
@@ -30,19 +34,44 @@ menu::LevelsMenu::LevelsMenu(graphics::ICanvas &canvas, event_controller::IContr
     buttons().push_back(
             _button_creator->create(factory, font, std::move(back_command), locale.get("back"))
     );
-    
+
+    size_t old_is_win = 0;
     for (size_t i = 0; i < _level_creator.get_levels_count(); ++i) {
         size_t level = i + 1;
-        auto command = std::make_unique<game_manager::command::RunGame>(level);
 
-        buttons().push_back(
-                _button_creator->create(factory, font, std::move(command),
-                                        locale.get("level") + " " + std::to_string(level)
-                )
+        auto is_win_func = [level](const game::level_stat &stat) { return stat.num == level && stat.is_win;};
+        auto is_win = std::find_if(levels_stats.begin(), levels_stats.end(), is_win_func) != levels_stats.end();
+
+        std::unique_ptr<game_manager::command::ICommand> command;
+
+        if (is_win || level - 1 == old_is_win)
+        {
+            command = std::make_unique<game_manager::command::RunGame>(level);
+        }else {
+            command = std::make_unique<game_manager::command::DoNothing>();
+        }
+
+        auto btn = _button_creator->create(factory, font, std::move(command),
+                                           locale.get("level") + " " + std::to_string(level) +
+                                           (is_win ? " " + locale.get("is_win"): "")
         );
+
+        if (is_win)
+        {
+            btn.set_bg_color(Color(100,255,100));
+            old_is_win = level;
+        }
+        else if(level - 1 == old_is_win)
+        {
+            btn.set_bg_color(Color(255,100,100));
+        }else {
+            btn.set_bg_color(Color(200,200,200));
+        }
+
+        buttons().push_back(std::move(btn));
     }
 
-    set_active_id(1);
+    set_active_id(old_is_win + 1);
 }
 
 menu::LevelsMenu::~LevelsMenu() = default;
