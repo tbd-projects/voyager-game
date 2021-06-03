@@ -336,11 +336,18 @@ Game::Game(
                     _map.get_timer().stop();
                     this->update_stats(is_live);
                     this->stop_game();
+                    game_manager::Config::get_instance().progress_loader->save(
+                            game_manager::Config::get_instance().player_id, _progress.get_progress());
                     return std::make_shared<game_manager::command::EndGame>(
                             is_live,
                             this->_progress.get_level_stat(_id_level));
                 }
                 if (key.key == event_controller::Key::L) {
+                    _map.get_timer().stop();
+                    this->update_stats(is_live);
+                    this->stop_game();
+                    game_manager::Config::get_instance().progress_loader->save(
+                            game_manager::Config::get_instance().player_id, _progress.get_progress());
                     return std::make_shared<game_manager::command::EndGame>(
                             true,
                             _progress.get_level_stat(_id_level));

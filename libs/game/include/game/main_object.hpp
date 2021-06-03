@@ -33,12 +33,11 @@ public:
 
     size_t get_sprite_id() override;
 
+    GameObject() = delete;
 
-        GameObject() = delete;
+    GameObject(const GameObject &) = delete;
 
-        GameObject(const GameObject &) = delete;
-
-        GameObject &operator=(const GameObject &) = delete;
+    GameObject &operator=(const GameObject &) = delete;
     };
 
 class NotActiveObject : public IGameObject, public physics::PhysicalObject {

@@ -54,12 +54,12 @@ private:
     std::shared_ptr<SpaceShip> _ship;
     std::unique_ptr<graphics::Sprite> _bg;
     std::unique_ptr<Timer> _timer;
-        size_t _bg_id = 0;
+    size_t _bg_id = 0;
 
-        std::unique_ptr<menu::GameScreen> _game_screen;
+    std::unique_ptr<menu::GameScreen> _game_screen;
 
-        physics::Engine _engine;
-        std::unique_ptr<Camera> _camera;
+    physics::Engine _engine;
+    std::unique_ptr<Camera> _camera;
 
     [[maybe_unused]] void set_sprites(MapSpriteCreator &factory);
     };
