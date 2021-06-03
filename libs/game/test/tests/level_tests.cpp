@@ -28,7 +28,7 @@ protected:
         this->loader = game::external::JsonCreateLevel{path_load};
         this->bg_id = 0;
         this->cnt_planets = 3;
-        this->cnt_stars = 1;
+        this->cnt_stars = 501;
         this->ship_inits = \
                 game::ship_init_t(
                 math::coords_t(-600, -300),
