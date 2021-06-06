@@ -1,0 +1,65 @@
+{
+  "stars": [
+    {
+      "velocity": {
+        "x": 0.1,
+        "y": -0.01
+      },
+      "pos": {
+        "x": 0,
+        "y": 500
+      },
+      "weight": 10000000,
+      "polygon": {
+        "type": "circle",
+        "radius": 500,
+        "angle": 0
+      },
+      "sprite_id": 5
+    }
+  ],
+  "planets": [
+    {
+      "orbit_properties": {
+        "x_c": 500.0,
+        "y_c": 500.0,
+        "a": 3500,
+        "b": 1800,
+        "angle": -90.0,
+        "period": 500.0
+      },
+      "weight": 50000,
+      "polygon": {
+        "type": "circle",
+        "angle": 0,
+        "radius": 500
+      },
+      "sprite_id": 4
+    }
+  ],
+  "background": {
+    "sprite_id": 7
+  },
+  "ship": {
+    "init_pos": {
+      "x": -800,
+      "y": 500
+    },
+    "init_velocity": {
+      "x": 0,
+      "y": 0.92
+    },
+    "init_weight": 1,
+    "density": 20
+  },
+  "border": {
+    "left": {
+      "x": -50000,
+      "y": -50000
+    },
+    "right": {
+      "x": 50000,
+      "y": 50000
+    }
+  }
+}

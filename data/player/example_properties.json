@@ -1,0 +1,24 @@
+{
+  "players": [
+    {
+      "id": 1,
+      "properties": {
+        "fuel": 100,
+        "health": 100,
+        "battery": 90,
+        "engine_power": 50
+      },
+      "sprite_id": 1
+    },
+    {
+      "id": 2,
+      "properties": {
+        "fuel": 100,
+        "health": 100,
+        "battery": 150,
+        "engine_power": 50
+      },
+      "sprite_id": 1
+    }
+  ]
+}

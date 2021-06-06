@@ -1,0 +1,113 @@
+[
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 1920,
+      "y": 1080
+    },
+    "filename": "./background.jpg",
+    "frames": 0,
+    "is_bg": true
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 150,
+      "y": 162
+    },
+    "filename": "./sprites/ship.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 53,
+      "y": 70
+    },
+    "filename": "./icons/fuel.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 36,
+      "y": 70
+    },
+    "filename": "./icons/battery.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 300,
+      "y": 300
+    },
+    "filename": "./sprites/planets/planet20.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 300,
+      "y": 300
+    },
+    "filename": "./sprites/planets/planet1.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 300,
+      "y": 300
+    },
+    "filename": "./sprites/planets/planet2.png",
+    "frames": 0
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 7680,
+      "y": 4320
+    },
+    "filename": "./spaces/1.jpg",
+    "frames": 0,
+    "is_bg": true
+  },
+  {
+    "pos": {
+      "x": 0,
+      "y": 0
+    },
+    "size": {
+      "x": 1000,
+      "y": 1000
+    },
+    "filename": "./sprites/stars/blackhole_01.png",
+    "frames": 0,
+    "is_bg": false
+  }
+]
