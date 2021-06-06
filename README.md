@@ -77,7 +77,7 @@
 Сделать это можно следующей командой:
 
 ```bash
-git clone https://gitlab.com/Flash1e/voyager-game
+git clone https://github.com/Flash1ee/voyager-game
 ```
 
 Далее следует зайти в корневую директорию скачанного проекта и подключить дополнительные модули:
