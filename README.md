@@ -87,23 +87,24 @@ git submodule init
 git submodule update 
 ```
 
-После чего следует создать папку `build`:
+После чего следует создать папку `build` и перейти в неё:
 
 ```bash
 mkdir build
+cd build
 ```
 
 И собрать игру командами:
 
 ```bash
-cmake ./build
-make ./build
+cmake ..
+make
 ```
 
 Для того чтобы поиграть, достаточно написать:
 
 ```bash
-./build/voyager
+./voyager
 ```
 
 Или вручную зайти в папку `build` и запустить файл `voyager`
