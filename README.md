@@ -72,9 +72,22 @@
 
 ### Установка
 
-Для установки данной игры необходимо скачать все файлы из данного репозитория.
+Для установки данной игры необходимо скачать все файлы из данного репозитория.  
+А также установить boost, sfml.  
+lcov и gtest для тестирования игры.  
+Сборка проверялась на Ubuntu 19.04
+```bash
+sudo apt install lcov
+sudo apt-get install libsfml-dev
+sudo apt-get install libboost-all-dev
+```
+`gtest for Ubuntu`
+```bash
+https://gist.github.com/Cartexius/4c437c084d6e388288201aadf9c8cdd5
+```
 
-Сделать это можно следующей командой:
+
+Склонировать репозиторий можно следующей командой:
 
 ```bash
 git clone https://github.com/Flash1ee/voyager-game
